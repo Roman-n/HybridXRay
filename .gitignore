@@ -38,3 +38,4 @@ gamedata/textures/
 *.ini
 *.bak
 *.log
+*.sln*.user
