@@ -118,11 +118,7 @@ void xrCore::_initialize(
 
         rtc_initialize();
 
-        if (editor_fs)
-            xr_FS = xr_new<ELocatorAPI>();
-        else
-            xr_FS = xr_new<CLocatorAPI>();
-
+        xr_FS = xr_new<CLocatorAPI>();
         xr_EFS = xr_new<EFS_Utils>();
         //.		R_ASSERT			(co_res==S_OK);
     }

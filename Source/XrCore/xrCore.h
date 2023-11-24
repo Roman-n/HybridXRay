@@ -307,7 +307,6 @@ DEFINE_VECTOR(xr_rtoken, RTokenVec, RTokenVecIt);
 #include "xr_ini.h"
 
 #include "ILocatorAPI.h"
-#include "ELocatorAPI.h"
 #include "LocatorAPI.h"
 
 #include "FileSystem.h"

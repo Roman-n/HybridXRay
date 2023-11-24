@@ -259,9 +259,6 @@
     <ClCompile Include="LocatorAPI_defs.cpp">
       <Filter>FS\LocatorAPI</Filter>
     </ClCompile>
-    <ClCompile Include="ELocatorAPI.cpp">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTimer.h">
@@ -548,9 +545,6 @@
       <Filter>FS\LocatorAPI</Filter>
     </ClInclude>
     <ClInclude Include="LocatorAPI_defs.h">
-      <Filter>FS\LocatorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="ELocatorAPI.h">
       <Filter>FS\LocatorAPI</Filter>
     </ClInclude>
     <ClInclude Include="_matrix_sse.h">

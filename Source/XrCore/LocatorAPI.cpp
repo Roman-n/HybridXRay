@@ -548,7 +548,11 @@ IC bool pred_str_ff(const _finddata_t& x, const _finddata_t& y)
     return xr_strcmp(x.name, y.name) < 0;
 }
 
-extern bool ignore_name(const char* _name);
+bool ignore_name(const char* _name)
+{
+    // ignore processing ".svn" folders
+    return (_name[0] == '.' && _name[1] == 's' && _name[2] == 'v' && _name[3] == 'n' && _name[4] == 0);
+}
 
 // we need to check for ILocatorAPIFile existance
 // because Unicode ILocatorAPIFile names can
