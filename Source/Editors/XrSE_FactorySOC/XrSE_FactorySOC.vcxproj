@@ -158,7 +158,6 @@
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_rtoken_list.h" />
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_rtoken_list_inline.h" />
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_sound_type.h" />
-    <ClInclude Include="..\..\xrServerEntitiesSOC\script_space_forward.h" />
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_stack_tracker.h" />
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_stack_tracker_inline.h" />
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_storage.h" />

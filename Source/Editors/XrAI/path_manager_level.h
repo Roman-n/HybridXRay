@@ -29,8 +29,7 @@ class CPathManager<
 protected:
     typedef CLevelGraph                                               _Graph;
     typedef SBaseParameters<_dist_type, _index_type, _iteration_type> _Parameters;
-    using inherited = typename CPathManagerGeneric<_Graph, _DataStorage, _Parameters, _dist_type, _index_type, _iteration_type>;
-    using const_iterator = typename inherited::const_iterator;
+    using inherited = CPathManagerGeneric<_Graph, _DataStorage, _Parameters, _dist_type, _index_type, _iteration_type>;
 
 protected:
     int              x1;
@@ -48,6 +47,7 @@ protected:
     float            m_distance_xz;
     _Graph::CVertex* best_node;
 public:
+    using const_iterator = typename inherited::const_iterator;
     virtual ~CPathManager();
     IC void setup(
         const _Graph*           graph,

@@ -506,7 +506,7 @@ luabind::object CScriptStorage::name_space(LPCSTR namespace_name)
 	string256			S1;
 	strcpy				(S1,namespace_name);
 	LPSTR				S = S1;
-	luabind::object		lua_namespace = luabind::get_globals(lua());
+	luabind::object		lua_namespace = luabind::globals(lua());
 	for (;;) {
 		if (!xr_strlen(S))
 			return		(lua_namespace);

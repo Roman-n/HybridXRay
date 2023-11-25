@@ -9,7 +9,7 @@
 #pragma once
 
 #include "script_storage_space.h"
-#include "script_space_forward.h"
+#include "script_space.h"
 
 struct lua_State;
 class CScriptThread;

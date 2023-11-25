@@ -178,13 +178,13 @@ namespace luabind {
 			template<class T, class Direction>
 			struct specialize
 			{
-				static_assert(std::is_same< Direction, lua_to_cpp >::value, "Out value policy can only convert from lua to cpp");
+				static_assert(std::is_same_v< Direction, lua_to_cpp >, "Out value policy can only convert from lua to cpp");
 				static_assert(meta::or_< is_nonconst_reference<T>, is_nonconst_pointer<T> >::value, "Out value policy only accepts non const references or pointers");
 
 				// Note to myself:
 				// Using the size and template members instead of a policy templated for the type seems
 				// to be done to tame template bloat. Need to check if this is worth is.
-				using base_type = typename std::remove_pointer< typename std::remove_reference< T >::type >::type;
+				using base_type =  std::remove_pointer_t<std::remove_reference_t< T > >;
 				using type = out_value_converter<base_type, Policies>;
 			};
 		};

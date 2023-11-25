@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////
-// Для персонажей, имеющих инвентарь
+// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 // InventoryOwner.h
 //////////////////////////////////////////////////////
 
@@ -7,7 +7,6 @@
 #include "InfoPortionDefs.h"
 #include "pda_space.h"
 #include "attachment_owner.h"
-#include "script_space_forward.h"
 #include "character_info.h"
 #include "inventory_space.h"
 
@@ -51,7 +50,7 @@ public:
 	virtual void	load						(IReader &input_packet);
 
 	
-	//обновление
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual void	UpdateInventoryOwner		(u32 deltaT);
 	virtual bool	CanPutInSlot				(PIItem item, u32 slot){return true;};
 
@@ -59,18 +58,18 @@ public:
 	CPda* GetPDA		() const;
 
 
-	// инвентарь
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CInventory	*m_inventory;			
 	
 	////////////////////////////////////
-	//торговля и общение с персонажем
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	virtual bool	AllowItemToTrade 	(CInventoryItem const * item, EItemPlace place) const;
 	virtual void	OnFollowerCmd		(int cmd)		{};//redefine for CAI_Stalkker
-	//инициализация объекта торговли
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CTrade* GetTrade();
 
-	//для включения разговора
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual bool OfferTalk		(CInventoryOwner* talk_partner);
 	virtual void StartTalk		(CInventoryOwner* talk_partner, bool start_trade = true);
 	virtual void StopTalk		();
@@ -96,14 +95,14 @@ public:
 	virtual void	 NewPdaContact		(CInventoryOwner*);
 	virtual void	 LostPdaContact		(CInventoryOwner*);
 
-	//игровое имя 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 
 	virtual LPCSTR	Name        () const;
 	LPCSTR				IconName		() const;
 	u32					get_money		() const				{return m_money;}
 	void				set_money		(u32 amount, bool bSendEvent);
 protected:
 	u32					m_money;
-	// торговля
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CTrade*				m_pTrade;
 	bool				m_bTrading;
 	bool				m_bTalking; 
@@ -115,15 +114,15 @@ protected:
 
 	u32					m_tmp_active_slot_num;
 	//////////////////////////////////////////////////////////////////////////
-	// сюжетная информация
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 public:
-	//персонаж получил новую порцию информации
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual bool OnReceiveInfo	(shared_str info_id) const;
-	//убрать информацию
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual void OnDisableInfo	(shared_str info_id) const;
-	//передать/удалить информацию через сервер
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual void TransferInfo	(shared_str info_id, bool add_info) const;
-	//есть ли информация у персонажа
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual bool				HasInfo		(shared_str info_id) const;
 	virtual bool				GetInfo		(shared_str info_id, INFO_DATA&) const;
 
@@ -134,33 +133,33 @@ public:
 	CInfoPortionWrapper			*m_known_info_registry;
 
 	//////////////////////////////////////////////////////////////////////////
-	// инвентарь 
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 public:
 	const CInventory &inventory() const {VERIFY (m_inventory); return(*m_inventory);}
 	CInventory		 &inventory()		{VERIFY (m_inventory); return(*m_inventory);}
 
-	//возвращает текуший разброс стрельбы (в радианах) с учетом движения
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual float GetWeaponAccuracy			() const;
-	//максимальный переносимы вес
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	virtual float MaxCarryWeight			() const;
 
 	virtual CCustomOutfit*			GetOutfit()	const {return NULL;};
 
 	//////////////////////////////////////////////////////////////////////////
-	//игровые характеристики персонажа
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 public:
 	CCharacterInfo&						CharacterInfo		() const {VERIFY(m_pCharacterInfo); return *m_pCharacterInfo;}
 	IC const CSpecificCharacter&		SpecificCharacter	() const {return CharacterInfo().m_SpecificCharacter;};
 	bool								InfinitiveMoney		()	{return CharacterInfo().m_SpecificCharacter.MoneyDef().inf_money;}
 
-	//установка группировки на клиентском и серверном объкте
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual void			SetCommunity	(CHARACTER_COMMUNITY_INDEX);
 	virtual void			SetRank			(CHARACTER_RANK_VALUE);
 	virtual void			ChangeRank		(CHARACTER_RANK_VALUE);
 	virtual void			SetReputation	(CHARACTER_REPUTATION_VALUE);
 	virtual void			ChangeReputation(CHARACTER_REPUTATION_VALUE);
 
-	//для работы с relation system
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ relation system
 	u16								object_id	() const;
 	CHARACTER_COMMUNITY_INDEX		Community	() const {return CharacterInfo().Community().index();};
 	CHARACTER_RANK_VALUE			Rank		() const {return CharacterInfo().Rank().value();};
@@ -187,7 +186,7 @@ public:
 	CInventoryItem* CInventoryOwner::GetCurrentOutfit() const;
 
 	//////////////////////////////////////////////////////////////////////////
-	// связь со скриптами
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//////////////////////////////////////////////////////////////////////////
 protected:
 	shared_str					m_item_to_spawn;

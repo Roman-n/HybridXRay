@@ -10,8 +10,9 @@
 
 #include "script_storage.h"
 #include "script_export_space.h"
-#include "script_space_forward.h"
 #include "../../XrEngine/associative_vector.h"
+
+#include <luabind/luabind.hpp>
 
 extern "C"
 {

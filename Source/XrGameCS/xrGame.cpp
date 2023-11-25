@@ -13,7 +13,6 @@
 #include "profiler.h"
 
 #include "lua/library_linkage.h"
-#include "luabind/library_linkage.h"
 
 #pragma comment(lib,"ode.lib")
 #pragma comment(lib,"xrEngine.lib")

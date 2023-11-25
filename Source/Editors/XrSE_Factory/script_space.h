@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include "script_space_forward.h"
-
 #pragma warning(push)
 
 #pragma warning(disable:4244)

@@ -23,7 +23,6 @@
 // #include "character_reputation.h"
 
 #include <lua/library_linkage.h>
-#include <luabind/library_linkage.h>
 #include "xrServer_Objects_ALife.h"
 
 #pragma comment(lib, "xrCore.lib")

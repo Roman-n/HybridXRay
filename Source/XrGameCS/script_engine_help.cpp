@@ -285,7 +285,7 @@ void print_help							(lua_State *L)
 	luabind::detail::class_registry::get_registry(L)->iterate_classes(L,&print_class);
 	Msg					("End of list of the classes exported to LUA\n");
 	Msg					("\nList of the namespaces exported to LUA\n");
-	print_free_functions(L,luabind::get_globals(L),"","");
+	print_free_functions(L,luabind::globals(L),"","");
 	Msg					("End of list of the namespaces exported to LUA\n");
 }
 #else

@@ -8,8 +8,8 @@
 
 #pragma once
 
+#include <luabind/luabind.hpp>
 #include "script_storage_space.h"
-#include "script_space_forward.h"
 
 struct lua_State;
 class CScriptThread;

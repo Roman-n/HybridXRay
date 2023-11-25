@@ -10,13 +10,9 @@
 
 #include "script_storage.h"
 #include "script_export_space.h"
-#include "script_space_forward.h"
+#include "script_space.h"
 #include "../XrEngine/associative_vector.h"
 
-extern "C" {
-	#include "lua/lua.h"
-	#include "lua/luajit.h"
-};
 //#define DBG_DISABLE_SCRIPTS
 
 //namespace ScriptEngine {

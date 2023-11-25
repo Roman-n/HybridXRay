@@ -273,9 +273,6 @@
     <ClInclude Include="..\..\xrServerEntitiesSOC\script_export_space.h">
       <Filter>Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesSOC\script_space_forward.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="script_space.h">
       <Filter>Scripts</Filter>
     </ClInclude>
