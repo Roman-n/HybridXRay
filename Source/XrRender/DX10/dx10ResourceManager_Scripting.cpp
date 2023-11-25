@@ -319,6 +319,7 @@ static void*       lua_alloc(void* ud, void* ptr, size_t osize, size_t nsize)
 // export
 void CResourceManager::LS_Load()
 {
+    using namespace std::placeholders;
 #ifdef _WIN64
     LSVM = luaL_newstate();
 #else

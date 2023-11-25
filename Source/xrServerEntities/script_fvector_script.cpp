@@ -14,6 +14,7 @@ using namespace luabind;
 #pragma optimize("s", on)
 void CScriptFvector::script_register(lua_State* L)
 {
+    using namespace std::placeholders;
     module(L)
         [class_<Fvector>("vector")
                 .def_readwrite("x", &Fvector::x)

@@ -74,6 +74,7 @@
 #include <map>
 #include <vector>
 #include <cassert>
+#include <functional>
 
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
@@ -903,7 +904,8 @@ namespace luabind
 		template<class Getter>
 		class_& property(const char* name, Getter g)
 		{
-			add_getter(name, boost::bind<int>(detail::get_caller<T, Getter, detail::null_type>(), _1, _2, g));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::get_caller<T, Getter, detail::null_type>(), _1, _2, g));
 			return *this;
 		}
 
@@ -916,17 +918,18 @@ namespace luabind
 		template<class Getter, class Setter, class GetPolicies>
 		class_& property(const char* name, Getter g, Setter s, const GetPolicies& get_policies)
 		{
-			add_getter(name, boost::bind<int>(detail::get_caller<T, Getter, GetPolicies>(get_policies), _1, _2, g));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::get_caller<T, Getter, GetPolicies>(get_policies), _1, _2, g));
 #ifndef LUABIND_NO_ERROR_CHECKING
 			add_setter(
 				name
-				, boost::bind<int>(detail::set_caller<T, Setter, detail::null_type>(), _1, _2, s)
+				, std::bind<int>(detail::set_caller<T, Setter, detail::null_type>(), _1, _2, s)
 				, detail::gen_set_matcher((Setter)0, (detail::null_type*)0)
 				, &detail::get_member_signature<Setter>::apply);
 #else
 			add_setter(
 				name
-				, boost::bind<int>(detail::set_caller<T, Setter, detail::null_type>(), _1, _2, s));
+				, std::bind<int>(detail::set_caller<T, Setter, detail::null_type>(), _1, _2, s));
 #endif
 			return *this;
 		}
@@ -937,11 +940,12 @@ namespace luabind
 									, const GetPolicies& get_policies
 									, const SetPolicies& set_policies)
 		{
-			add_getter(name, boost::bind<int>(detail::get_caller<T, Getter, GetPolicies>(get_policies), _1, _2, g));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::get_caller<T, Getter, GetPolicies>(get_policies), _1, _2, g));
 #ifndef LUABIND_NO_ERROR_CHECKING
 			add_setter(
 				name
-				, boost::bind<int>(detail::set_caller<T, Setter, SetPolicies>(), _1, _2, s)
+				, std::bind<int>(detail::set_caller<T, Setter, SetPolicies>(), _1, _2, s)
 				, detail::gen_set_matcher((Setter)0, (SetPolicies*)0)
 				, &detail::get_member_signature<Setter>::apply);
 #else
@@ -953,29 +957,32 @@ namespace luabind
 		template<class D>
 		class_& def_readonly(const char* name, D T::*member_ptr)
 		{
-			add_getter(name, boost::bind<int>(detail::auto_get<T,D,detail::null_type>(), _1, _2, member_ptr));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::auto_get<T,D,detail::null_type>(), _1, _2, member_ptr));
 			return *this;
 		}
 
 		template<class D, class Policies>
 		class_& def_readonly(const char* name, D T::*member_ptr, const Policies& policies)
 		{
-			add_getter(name, boost::bind<int>(detail::auto_get<T,D,Policies>(policies), _1, _2, member_ptr));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::auto_get<T,D,Policies>(policies), _1, _2, member_ptr));
 			return *this;
 		}
 
 		template<class D>
 		class_& def_readwrite(const char* name, D T::*member_ptr)
 		{
-			add_getter(name, boost::bind<int>(detail::auto_get<T,D,detail::null_type>(), _1, _2, member_ptr));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::auto_get<T,D,detail::null_type>(), _1, _2, member_ptr));
 #ifndef LUABIND_NO_ERROR_CHECKING
 			add_setter(
 				name
-				, boost::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr)
+				, std::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr)
 				, &detail::set_matcher<D, detail::null_type>::apply
 				, &detail::get_setter_signature<D>::apply);
 #else
-			add_setter(name, boost::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr));
+			add_setter(name, std::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr));
 #endif
 			return *this;
 		}
@@ -983,15 +990,16 @@ namespace luabind
 		template<class D, class GetPolicies>
 		class_& def_readwrite(const char* name, D T::*member_ptr, const GetPolicies& get_policies)
 		{
-			add_getter(name, boost::bind<int>(detail::auto_get<T,D,GetPolicies>(get_policies), _1, _2, member_ptr));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::auto_get<T,D,GetPolicies>(get_policies), _1, _2, member_ptr));
 #ifndef LUABIND_NO_ERROR_CHECKING
 			add_setter(
 				name
-				, boost::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr)
+				, std::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr)
 				, &detail::set_matcher<D, detail::null_type>::apply
 				, &detail::get_setter_signature<D>::apply);
 #else
-			add_setter(name, boost::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr));
+			add_setter(name, std::bind<int>(detail::auto_set<T,D,detail::null_type>(), _1, _2, member_ptr));
 #endif
 			return *this;
 		}
@@ -999,15 +1007,16 @@ namespace luabind
 		template<class D, class GetPolicies, class SetPolicies>
 		class_& def_readwrite(const char* name, D T::*member_ptr, const GetPolicies& get_policies, const SetPolicies& set_policies)
 		{
-			add_getter(name, boost::bind<int>(detail::auto_get<T,D,GetPolicies>(get_policies), _1, _2, member_ptr));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::auto_get<T,D,GetPolicies>(get_policies), _1, _2, member_ptr));
 #ifndef LUABIND_NO_ERROR_CHECKING
 			add_setter(
 				name
-				, boost::bind<int>(detail::auto_set<T,D,SetPolicies>(), _1, _2, member_ptr)
+				, std::bind<int>(detail::auto_set<T,D,SetPolicies>(), _1, _2, member_ptr)
 				, &detail::set_matcher<D, SetPolicies>::apply
 				, &detail::get_setter_signature<D>::apply);
 #else
-			add_setter(name, boost::bind<int>(detail::auto_set<T,D,SetPolicies>(set_policies), _1, _2, member_ptr));
+			add_setter(name, std::bind<int>(detail::auto_set<T,D,SetPolicies>(set_policies), _1, _2, member_ptr));
 #endif
 			return *this;
 		}
@@ -1015,6 +1024,7 @@ namespace luabind
 		template<class Derived, class Policies>
 		class_& def(detail::operator_<Derived>, Policies const& policies)
 		{
+			using namespace std::placeholders;
 			return this->def(
 				Derived::name()
 			  , &Derived::template apply<T, Policies>::execute
@@ -1025,6 +1035,7 @@ namespace luabind
 		template<class Derived>
 		class_& def(detail::operator_<Derived>)
 		{
+			using namespace std::placeholders;
 			return this->def(
 				Derived::name()
 			  , &Derived::template apply<T, detail::null_type>::execute
@@ -1179,7 +1190,8 @@ namespace luabind
 									 GetPolicies policies,
 									 boost::mpl::bool_<true>)
 		{
-			add_getter(name, boost::bind<int>(detail::get_caller<T,Getter,GetPolicies>(policies), _1, _2, g));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::get_caller<T,Getter,GetPolicies>(policies), _1, _2, g));
 			return *this;
 		}
 
@@ -1189,15 +1201,16 @@ namespace luabind
 									 Setter s,
 									 boost::mpl::bool_<false>)
 		{
-			add_getter(name, boost::bind<int>(detail::get_caller<T,Getter,detail::null_type>(), _1, _2, g));
+            using namespace std::placeholders;
+			add_getter(name, std::bind<int>(detail::get_caller<T,Getter,detail::null_type>(), _1, _2, g));
 #ifndef LUABIND_NO_ERROR_CHECKING
 			add_setter(
 				name
-				, boost::bind<int>(detail::set_caller<T, Setter, detail::null_type>(), _1, _2, s)
+				, std::bind<int>(detail::set_caller<T, Setter, detail::null_type>(), _1, _2, s)
 				, detail::gen_set_matcher((Setter)0, (detail::null_type*)0)
 				, &detail::get_member_signature<Setter>::apply);
 #else
-			add_setter(name, boost::bind<int>(detail::set_caller<T,Setter,detail::null_type>(), _1, _2, s));
+			add_setter(name, std::bind<int>(detail::set_caller<T,Setter,detail::null_type>(), _1, _2, s));
 #endif
 			return *this;
 		}

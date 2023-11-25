@@ -16,6 +16,7 @@ void CScriptFcolor::script_register(lua_State *L)
 {
 	module(L)
 	[
+		using namespace std::placeholders;
 		class_<Fcolor>("fcolor")
 			.def_readwrite("r",					&Fcolor::r)
 			.def_readwrite("g",					&Fcolor::g)

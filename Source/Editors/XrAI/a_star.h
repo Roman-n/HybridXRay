@@ -74,7 +74,7 @@ class CAStar:
         _iteration_type>
 {
 protected:
-    typedef CDijkstra<
+    using inherited = CDijkstra<
         _dist_type,
         _priority_queue,
         _vertex_manager,
@@ -85,11 +85,10 @@ protected:
         _builder_allocator_constructor,
         _manager_builder_allocator_constructor,
         _data_storage_constructor,
-        _iteration_type>
-                                                inherited;
-    typedef typename CDataStorage::CGraphVertex CGraphVertex;
-    typedef typename CGraphVertex::_dist_type   _dist_type;
-    typedef typename CGraphVertex::_index_type  _index_type;
+        _iteration_type>;
+
+    using CGraphVertex = typename inherited::CDataStorage::CGraphVertex;
+    using _index_type = typename inherited::CGraphVertex::_index_type;
 protected:
     template<typename _PathManager> IC void initialize(_PathManager& path_manager);
     template<typename _PathManager> IC bool step(_PathManager& path_manager);

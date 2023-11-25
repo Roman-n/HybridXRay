@@ -8,6 +8,8 @@
 
 #include "stdafx.h"
 #include "level_spawn_constructor.h"
+
+#include <random>
 #include "game_level_cross_table.h"
 #include "level_graph.h"
 #include "graph_engine_editor.h"
@@ -623,6 +625,8 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions_worker()
     SPAWN_STORAGE  zones;
     l_tpaStack.reserve(1024);
 
+    std::mt19937 rnd {std::random_device()()};
+
     while (InterlockedCompareExchange(&m_generate_artefact_spawn_positions_worker_counter, 0, 0))
     {
         size_t                  Index  = InterlockedDecrement(&m_generate_artefact_spawn_positions_worker_counter);
@@ -654,7 +658,7 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions_worker()
                 l_tpaStack.begin(), l_tpaStack.end(),
                 remove_too_far_predicate(&level_graph(), Abstract->o_Position, zone->m_offline_interactive_radius)),
             l_tpaStack.end());
-        std::random_shuffle(l_tpaStack.begin(), l_tpaStack.end());
+        std::shuffle(l_tpaStack.begin(), l_tpaStack.end(), rnd);
         zone->m_artefact_position_offset = m_level_points.size();
         m_level_points.resize(zone->m_artefact_position_offset + zone->m_artefact_spawn_count);
 

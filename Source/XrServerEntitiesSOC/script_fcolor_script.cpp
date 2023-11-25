@@ -14,6 +14,7 @@ using namespace luabind;
 #pragma optimize("s",on)
 void CScriptFcolor::script_register(lua_State *L)
 {
+	using namespace std::placeholders;
 	module(L)
 	[
 		class_<Fcolor>("fcolor")

@@ -8,6 +8,9 @@
 
 #include "stdafx.h"
 #include "level_spawn_constructor.h"
+
+#include <random>
+
 #include "game_level_cross_table.h"
 #include "level_graph.h"
 #include "graph_engine.h"
@@ -481,6 +484,9 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions()
     l_tpaStack.reserve(1024);
     SPAWN_STORAGE::iterator I = m_spawns.begin();
     SPAWN_STORAGE::iterator E = m_spawns.end();
+
+    std::mt19937 rnd {std::random_device()()};
+
     for (; I != E; I++)
     {
         CSE_ALifeAnomalousZone* zone = smart_cast<CSE_ALifeAnomalousZone*>(*I);
@@ -527,7 +533,7 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions()
         #endif
                 }
                 else		*/
-        std::random_shuffle(l_tpaStack.begin(), l_tpaStack.end());
+        std::shuffle(l_tpaStack.begin(), l_tpaStack.end(), rnd);
 
         zone->m_artefact_position_offset = m_level_points.size();
         m_level_points.resize(zone->m_artefact_position_offset + zone->m_artefact_spawn_count);

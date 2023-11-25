@@ -189,7 +189,7 @@ template <typename T1, typename T2, typename T3, typename T4> struct parameters_
         return *this;
     }
 
-    bool operator==(parameters_tuple3 const& right) const
+    bool operator==(parameters_tuple3<T1, T2, T3> const& right) const
     {
         return (m_t1 == right.m_t1) && (m_t2 == right.m_t2) && (m_t3 == right.m_t3) && (m_t4 == right.m_t4);
     }

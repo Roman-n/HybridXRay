@@ -24,6 +24,7 @@
 namespace
 {
 
+#if 0 // disable in C++17
 #if defined(__BORLANDC__)
 
 static inline boost::arg<1> _1() { return boost::arg<1>(); }
@@ -60,6 +61,7 @@ boost::arg<7> _7;
 boost::arg<8> _8;
 boost::arg<9> _9;
 
+#endif
 #endif
 
 } // unnamed namespace

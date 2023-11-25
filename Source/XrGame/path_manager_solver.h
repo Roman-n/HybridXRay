@@ -40,8 +40,17 @@ class CPathManager<
         _iteration_type>
 {
 protected:
-    typedef CProblemSolver<T1, T2, T3, T4, T5, T6, T7, T8> _Graph;
-    typedef typename _Graph::_edge_type                    _edge_type;
+    using inherited = CPathManagerGeneric<
+        CProblemSolver<T1, T2, T3, T4, T5, T6, T7, T8>,
+        _DataStorage,
+        _Parameters,
+        _dist_type,
+        _index_type,
+        _iteration_type>;
+    using _Graph = CProblemSolver<T1, T2, T3, T4, T5, T6, T7, T8>;
+    using _edge_type = typename _Graph::_edge_type;
+
+    using const_iterator = typename inherited::const_iterator;
 
 protected:
     xr_vector<_edge_type>* m_edge_path;

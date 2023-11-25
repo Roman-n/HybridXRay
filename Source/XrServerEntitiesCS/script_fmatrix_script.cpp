@@ -22,6 +22,7 @@ void matrix_transform (Fmatrix* self, Fvector* v)
 #pragma optimize("s",on)
 void CScriptFmatrix::script_register(lua_State *L)
 {
+	using namespace std::placeholders;
 	module(L)
 	[
 		class_<Fmatrix>("matrix")

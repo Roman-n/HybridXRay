@@ -67,7 +67,7 @@ class CAStar:
         _vertex_allocator,
         euclidian_heuristics,
         _data_storage_base,
-        AStar::_Vertex<_dist_type, _vertex>::_vertex,
+        AStar::_Vertex<_dist_type, _vertex>::template _vertex,
         _builder_allocator_constructor,
         _manager_builder_allocator_constructor,
         _data_storage_constructor,
@@ -81,15 +81,14 @@ protected:
         _vertex_allocator,
         euclidian_heuristics,
         _data_storage_base,
-        AStar::_Vertex<_dist_type, _vertex>::_vertex,
+        AStar::_Vertex<_dist_type, _vertex>::template _vertex,
         _builder_allocator_constructor,
         _manager_builder_allocator_constructor,
         _data_storage_constructor,
         _iteration_type>
                                                 inherited;
-    typedef typename CDataStorage::CGraphVertex CGraphVertex;
-    typedef typename CGraphVertex::_dist_type   _dist_type;
-    typedef typename CGraphVertex::_index_type  _index_type;
+    using CGraphVertex = typename inherited::CDataStorage::CGraphVertex;
+    using _index_type = typename CGraphVertex::_index_type;
 
 protected:
     template <typename _PathManager> IC void initialize(_PathManager& path_manager);

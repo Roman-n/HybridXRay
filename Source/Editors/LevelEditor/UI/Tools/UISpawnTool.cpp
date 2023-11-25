@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
 
+#include <random>
+
 UISpawnTool::UISpawnTool()
 {
     m_selPercent = 100;
@@ -171,7 +173,8 @@ void UISpawnTool::MultiSelByRefObject(bool clear_prev)
         }
         std::sort(sellist.begin(), sellist.end());
         sellist.erase(std::unique(sellist.begin(), sellist.end()), sellist.end());
-        std::random_shuffle(sellist.begin(), sellist.end());
+  	  	std::mt19937 rnd {std::random_device()()};
+        std::shuffle(sellist.begin(), sellist.end(), rnd);
         int max_k = iFloor(float(sellist.size()) / 100.f * float(m_selPercent) + 0.5f);
         int k     = 0;
         for (LPU32It o_it = sellist.begin(); k < max_k; o_it++, k++)

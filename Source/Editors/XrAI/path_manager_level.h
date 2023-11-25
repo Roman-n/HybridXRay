@@ -29,8 +29,9 @@ class CPathManager<
 protected:
     typedef CLevelGraph                                               _Graph;
     typedef SBaseParameters<_dist_type, _index_type, _iteration_type> _Parameters;
-    typedef typename CPathManagerGeneric<_Graph, _DataStorage, _Parameters, _dist_type, _index_type, _iteration_type>
-        inherited;
+    using inherited = typename CPathManagerGeneric<_Graph, _DataStorage, _Parameters, _dist_type, _index_type, _iteration_type>;
+    using const_iterator = typename inherited::const_iterator;
+
 protected:
     int              x1;
     //	float				y1;

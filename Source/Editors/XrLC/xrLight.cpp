@@ -9,6 +9,8 @@
 #include "../../xrcore/xrSyncronize.h"
 #include "net.h"
 // #include "../xrLCLight/net_task_manager.h"
+#include <random>
+
 #include "../xrLCLight/lcnet_task_manager.h"
 #include "../xrLCLight/mu_model_light.h"
 xrCriticalSection task_CS
@@ -73,7 +75,8 @@ void CBuild::LMapsLocal()
 
     // Randomize deflectors
 #ifndef NET_CMP
-    std::random_shuffle(lc_global_data()->g_deflectors().begin(), lc_global_data()->g_deflectors().end());
+    std::mt19937 rnd {std::random_device()()};
+    std::shuffle(lc_global_data()->g_deflectors().begin(), lc_global_data()->g_deflectors().end(), rnd);
 #endif
 
 #ifndef NET_CMP

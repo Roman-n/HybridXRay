@@ -27,6 +27,8 @@
 
 // Borland-specific bug, visit_each() silently fails to produce code
 
+#if 0 // disabled in C++17
+
 #if defined(__BORLANDC__)
 #  define BOOST_BIND_VISIT_EACH boost::visit_each
 #else
@@ -1533,6 +1535,7 @@ _bi::bind_t< R const &, _mfi::dm<R, T>, typename _bi::list_av_1<A1>::type >
 #ifdef BOOST_MSVC
 # pragma warning(default: 4512) // assignment operator could not be generated
 # pragma warning(pop)
+#endif
 #endif
 
 #endif // #ifndef BOOST_BIND_HPP_INCLUDED
