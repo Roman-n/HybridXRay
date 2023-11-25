@@ -139,7 +139,7 @@ u32 game_lua_memory_usage()
 #endif   // USE_DL_ALLOCATOR
 
 static LPVOID __cdecl luabind_allocator(
-    luabind::memory_allocation_function_parameter const,
+    void*,
     void const* const pointer,
     size_t const      size)
 {
@@ -170,7 +170,7 @@ static LPVOID __cdecl luabind_allocator(
 void setup_luabind_allocator()
 {
     luabind::allocator           = &luabind_allocator;
-    luabind::allocator_parameter = 0;
+    luabind::allocator_context = nullptr;
 }
 
 /* ---- start of LuaJIT extensions */

@@ -11,7 +11,7 @@
 
 using namespace luabind;
 
-template<typename T> T& set(T* self, const typename T::TYPE mask, bool value)
+template<typename T> T& bitset(T* self, const typename T::TYPE mask, bool value)
 {
     return (self->set(mask, value));
 }
@@ -85,7 +85,7 @@ void CScriptFlags::script_register(lua_State* L)
             .def("or", (Flags16 & (Flags16::*)(const Flags16&, const Flags16::TYPE))(&Flags16:: or))
             .def("and", (Flags16 & (Flags16::*)(const Flags16::TYPE))(&Flags16::and))
             .def("and", (Flags16 & (Flags16::*)(const Flags16&, const Flags16::TYPE))(&Flags16::and))
-            .def("set", &set<Flags16>)
+            .def("set", &bitset<Flags16>)
             .def("is", &is<Flags16>)
             .def("is_any", &is_any<Flags16>)
             .def("test", &test<Flags16>)
@@ -106,7 +106,7 @@ void CScriptFlags::script_register(lua_State* L)
             .def("or", (Flags32 & (Flags32::*)(const Flags32&, const Flags32::TYPE))(&Flags32:: or))
             .def("and", (Flags32 & (Flags32::*)(const Flags32::TYPE))(&Flags32::and))
             .def("and", (Flags32 & (Flags32::*)(const Flags32&, const Flags32::TYPE))(&Flags32::and))
-            .def("set", &set<Flags32>)
+            .def("set", &bitset<Flags32>)
             .def("is", &is<Flags32>)
             .def("is_any", &is_any<Flags32>)
             .def("test", &test<Flags32>)

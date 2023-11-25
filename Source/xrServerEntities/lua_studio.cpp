@@ -278,7 +278,7 @@ char* engine::class_name(char* const buffer, unsigned int const size, luabind::d
 
 void engine::type_convert_class(char* const buffer, unsigned int const size, lua_State* state, int index)
 {
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, index);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, index);
     VERIFY2(object, "invalid object userdata");
 
     sz_cpy(buffer, size, "");
@@ -319,7 +319,7 @@ bool engine::type_convert_instance(char* buffer, unsigned int const size, lua_St
 
 void engine::type_convert_userdata(char* buffer, unsigned int const size, lua_State* state, int index)
 {
-    if (luabind::detail::is_class_object(state, index))
+    if (luabind::detail::get_instance(state, index))
     {
         type_convert_class(buffer, size, state, index);
         return;
@@ -444,7 +444,7 @@ void engine::value_convert_class(
         return;
     }
 
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, index);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, index);
     if (!object)
     {
         sz_cpy(buffer, size, "{...}");
@@ -518,7 +518,7 @@ bool engine::value_convert_instance(
     cs::lua_studio::icon_type& icon_type,
     bool                       full_description)
 {
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, index);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, index);
     if (!object)
         return (false);
 
@@ -554,7 +554,7 @@ bool engine::value_to_string(
         case engine::lua_type_light_user_data:
         case engine::lua_type_user_data:
         {
-            if (!luabind::detail::is_class_object(state, index))
+            if (!luabind::detail::get_instance(state, index))
             {
                 if (!is_luabind_class(state, index))
                 {
@@ -590,7 +590,7 @@ bool engine::value_to_string(
 
 void engine::push_class(lua_State* const state, char const* const id)
 {
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, -1);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, -1);
     VERIFY(object);
 
     luabind::detail::class_rep* class_rep = object->crep();
@@ -626,11 +626,11 @@ void engine::push_class_base(lua_State* const state, char const* const id)
 
 void engine::push_class_instance(lua_State* const state, char const* const id)
 {
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, -1);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, -1);
     if (!object)
     {
         lua_pop_value(state, 1);
-        object = luabind::detail::is_class_object(state, -1);
+        object = luabind::detail::get_instance(state, -1);
         VERIFY(object);
     }
 
@@ -755,7 +755,7 @@ void engine::expand_class(
 
     fill_class_data(backend, value, state);
 
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, -2);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, -2);
     if (!object)
         lua_pushnil(state);
 
@@ -771,7 +771,7 @@ void engine::expand_class_instance(
     lua_State* const                 state)
 {
     typedef luabind::detail::object_rep object_rep;
-    object_rep*                         object = luabind::detail::is_class_object(state, -1);
+    object_rep*                         object = luabind::detail::get_instance(state, -1);
     VERIFY2(object, "invalid object userdata");
 
     if (object->crep())
@@ -819,7 +819,7 @@ void engine::expand_user_data(
     cs::lua_studio::value_to_expand& value,
     lua_State* const                 state)
 {
-    luabind::detail::object_rep* object = luabind::detail::is_class_object(state, -1);
+    luabind::detail::object_rep* object = luabind::detail::get_instance(state, -1);
     if (object)
     {
         expand_class_instance(backend, value, state);

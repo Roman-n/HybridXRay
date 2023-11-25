@@ -37,9 +37,11 @@ void GlobalFeelTouch::feel_touch_update(Fvector& P, float R)
 
 bool GlobalFeelTouch::is_object_denied(CObject const* O)
 {
+    using namespace  std::placeholders;
+
     /*Fvector temp_vector;
     feel_touch_update(temp_vector, 0.f);*/
-    if (std::find_if(feel_touch_disable.begin(), feel_touch_disable.end(), std::bind2nd(objects_ptrs_equal(), O)) ==
+    if (std::find_if(feel_touch_disable.begin(), feel_touch_disable.end(), std::bind(objects_ptrs_equal(), _1, O)) ==
         feel_touch_disable.end())
     {
         return false;

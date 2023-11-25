@@ -181,7 +181,7 @@ void print_stack(lua_State *L)
 		Msg("%2d : %s",-i-1,lua_typename(L, lua_type(L, -i-1)));
 }
 
-int CDbgLuaHelper::hookLuaBind (lua_State *l)
+void CDbgLuaHelper::hookLuaBind(lua_State* l)
 {
 	if(!m_pThis) return 0;
 	L =l;

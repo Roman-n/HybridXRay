@@ -13,6 +13,7 @@
 #include "../xrEngine/associative_vector.h"
 #include "../xrEngine/graph_abstract.h"
 #include "smart_cover_action.h"
+#include <luabind/object.hpp>
 
 namespace smart_cover
 {

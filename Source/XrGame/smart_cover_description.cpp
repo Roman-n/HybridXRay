@@ -109,14 +109,12 @@ void description::load_loopholes(shared_str const& table_id)
     bool            result = ai().script_engine().function_object(temp, loopholes, LUA_TTABLE);
     VERIFY2(result, make_string("bad or missing loopholes table in smart_cover [%s]", table_id.c_str()));
 
-    luabind::object::iterator I = loopholes.begin();
-    luabind::object::iterator E = loopholes.end();
-    for (; I != E; ++I)
+    for (luabind::iterator I(loopholes), E; I != E; ++I)
     {
         luabind::object table = *I;
-        if (table.type() != LUA_TTABLE)
+        if (luabind::type(table) != LUA_TTABLE)
         {
-            VERIFY(table.type() != LUA_TNIL);
+            VERIFY(luabind::type(table) != LUA_TNIL);
             continue;
         }
 
@@ -163,14 +161,12 @@ void description::load_transitions(shared_str const& table_id)
     bool            result = ai().script_engine().function_object(temp, transitions, LUA_TTABLE);
     VERIFY(result);
 
-    luabind::object::iterator I = transitions.begin();
-    luabind::object::iterator E = transitions.end();
-    for (; I != E; ++I)
+    for (luabind::iterator I(transitions), E; I != E; ++I)
     {
         luabind::object table = *I;
-        if (table.type() != LUA_TTABLE)
+        if (luabind::type(table) != LUA_TTABLE)
         {
-            VERIFY(table.type() != LUA_TNIL);
+            VERIFY(luabind::type(table) != LUA_TNIL);
             continue;
         }
 
@@ -194,9 +190,7 @@ void description::load_actions(luabind::object const& table, description::Action
 {
     luabind::object actions;
     parse_table(table, "actions", actions);
-    luabind::object::iterator I = actions.begin();
-    luabind::object::iterator E = actions.end();
-    for (; I != E; ++I)
+    for (luabind::iterator I(actions), E; I != E; ++I)
     {
         luabind::object      tmp    = *I;
         transitions::action* action = xr_new<transitions::action>(tmp);

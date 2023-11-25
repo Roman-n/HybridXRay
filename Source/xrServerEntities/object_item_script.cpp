@@ -8,6 +8,8 @@
 
 #include "pch_script.h"
 #include "object_item_script.h"
+
+#include <utility>
 #include "object_factory.h"
 
 #ifndef NO_XR_GAME
@@ -19,14 +21,14 @@ ObjectFactory::CLIENT_BASE_CLASS* CObjectItemScript::client_object() const
     try
     {
         object = luabind::object_cast<ObjectFactory::CLIENT_SCRIPT_BASE_CLASS*>(
-            m_client_creator(), luabind::adopt(luabind::result));
+            m_client_creator(), luabind::policy::adopt<0 /*return*/>());
     }
     catch (...)
     {
-        return (0);
+        return nullptr;
     }
     R_ASSERT(object);
-    return (object->_construct());
+    return object->_construct();
 }
 
 #endif
@@ -55,7 +57,7 @@ ObjectFactory::SERVER_BASE_CLASS* CObjectItemScript::server_object(LPCSTR sectio
             return (0);
         }
         object =
-            luabind::object_cast<ObjectFactory::SERVER_SCRIPT_BASE_CLASS*>(*instance, luabind::adopt(luabind::result));
+            luabind::object_cast<ObjectFactory::SERVER_SCRIPT_BASE_CLASS*>(*instance, luabind::policy::adopt<0 /*return*/>());
         xr_delete(instance);
     }
     catch (std::exception e)
@@ -86,9 +88,9 @@ CObjectItemScript::CObjectItemScript(
     inherited(clsid, script_clsid)
 {
 #ifndef NO_XR_GAME
-    m_client_creator = client_creator;
+    m_client_creator = std::move(client_creator);
 #endif
-    m_server_creator = server_creator;
+    m_server_creator = std::move(server_creator);
 }
 
 #ifndef NO_XR_GAME
@@ -96,7 +98,7 @@ CObjectItemScript::CObjectItemScript(
 CObjectItemScript::CObjectItemScript(luabind::object unknown_creator, const CLASS_ID& clsid, LPCSTR script_clsid):
     inherited(clsid, script_clsid)
 {
-    m_client_creator = m_server_creator = unknown_creator;
+    m_client_creator = m_server_creator = std::move(unknown_creator);
 }
 
 #endif

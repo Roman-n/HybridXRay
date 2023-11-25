@@ -13,6 +13,7 @@
 #include "../../XrEngine/associative_vector.h"
 
 #include <luabind/luabind.hpp>
+#include <luabind/functor.hpp>
 
 extern "C"
 {

@@ -13,6 +13,7 @@
 #include "ai_monster_space.h"
 #include "../xrEngine/associative_vector.h"
 #include "debug_make_final.hpp"
+#include <luabind/object.hpp>
 
 namespace smart_cover
 {

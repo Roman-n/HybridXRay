@@ -76,7 +76,7 @@ void CScriptEngine::lua_error			(lua_State *L)
 #endif
 }
 
-int  CScriptEngine::lua_pcall_failed	(lua_State *L)
+void CScriptEngine::lua_pcall_failed(lua_State* L)
 {
 	print_output			(L,"",LUA_ERRRUN);
 #if !XRAY_EXCEPTIONS

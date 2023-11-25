@@ -9,6 +9,7 @@
 #define SMART_COVER_DETAIL_H_INCLUDED
 
 #include "restriction_space.h"
+#include <luabind/object.hpp>
 
 namespace smart_cover
 {

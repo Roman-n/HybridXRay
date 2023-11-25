@@ -66,7 +66,7 @@ void CGameGraph::script_register(lua_State* L)
              .def("valid_vertex_id", &IGameGraph::valid_vertex_id)
              .def("vertex", &IGameGraph::vertex)
              .def("vertex_id", &IGameGraph::vertex_id)
-             .def("levels", &get_levels, return_stl_iterator),
+             .def("levels", &get_levels, policy::return_stl_iterator()),
 
          class_<CVertex>("GameGraph__CVertex")
              .def("level_point", &CVertex__level_point)

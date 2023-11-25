@@ -81,9 +81,11 @@ extern "C"
     gsi_i8* gsXxteaEncrypt(const gsi_i8* iStr, gsi_i32 iLength, gsi_i8 key[XXTEA_KEY_SIZE], gsi_i32* oLength);
     gsi_i8* gsXxteaDecrypt(const gsi_i8* iStr, gsi_i32 iLength, gsi_i8 key[XXTEA_KEY_SIZE], gsi_i32* oLength);
 
+#ifndef __cplusplus
 #ifndef max
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
+#endif
 #endif
 
 #if defined(_DEBUG)

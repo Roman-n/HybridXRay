@@ -39,7 +39,7 @@ public:
 
 loophole::loophole(luabind::object const& description): m_fov(0.f), m_range(0.f)
 {
-    VERIFY2(description.type() == LUA_TTABLE, "invalid loophole description passed");
+    VERIFY2(luabind::type(description) == LUA_TTABLE, "invalid loophole description passed");
 
     m_id = parse_string(description, "id");
 
@@ -78,17 +78,14 @@ loophole::loophole(luabind::object const& description): m_fov(0.f), m_range(0.f)
     luabind::object actions;
     parse_table(description, "actions", actions);
 
-    typedef luabind::object::iterator iterator;
-    iterator                          I = actions.begin();
-    iterator                          E = actions.end();
-    for (; I != E; ++I)
+    for (luabind::iterator I(actions), E; I != E; ++I)
     {
-        VERIFY(I.key().type() == LUA_TSTRING);
+        VERIFY(luabind::type(I.key()) == LUA_TSTRING);
         LPCSTR          action_type = luabind::object_cast<LPCSTR>(I.key());
         luabind::object table       = *I;
-        if (table.type() != LUA_TTABLE)
+        if (luabind::type(table) != LUA_TTABLE)
         {
-            VERIFY(table.type() != LUA_TNIL);
+            VERIFY(luabind::type(table) != LUA_TNIL);
             continue;
         }
         add_action(action_type, *I);
@@ -111,7 +108,7 @@ loophole::loophole(luabind::object const& description): m_fov(0.f), m_range(0.f)
 
 void loophole::add_action(LPCSTR type, luabind::object const& table)
 {
-    VERIFY(table.type() == LUA_TTABLE);
+    VERIFY(luabind::type(table) == LUA_TTABLE);
     smart_cover::action* action = xr_new<smart_cover::action>(table);
     VERIFY(std::find_if(m_actions.begin(), m_actions.end(), id_predicate(type)) == m_actions.end());
     m_actions.insert(std::make_pair(type, action));
@@ -125,26 +122,22 @@ loophole::~loophole()
 
 void loophole::fill_transitions(luabind::object const& transitions_table)
 {
-    VERIFY2(transitions_table.type() == LUA_TTABLE, "invalid loophole description passed");
-    luabind::object::iterator I = transitions_table.begin();
-    luabind::object::iterator E = transitions_table.end();
-    for (; I != E; ++I)
+    VERIFY2(luabind::type(transitions_table) == LUA_TTABLE, "invalid loophole description passed");
+    for (luabind::iterator I(transitions_table), E; I != E; ++I)
     {
         luabind::object table = *I;
-        VERIFY2(table.type() == LUA_TTABLE, "invalid loophole description passed");
+        VERIFY2(luabind::type(table) == LUA_TTABLE, "invalid loophole description passed");
         shared_str      action_from = parse_vertex(table, "action_from", true);
         shared_str      action_to   = parse_vertex(table, "action_to", false);
         luabind::object result;
         parse_table(table, "animations", result);
         TransitionData            tmp;
-        luabind::object::iterator i = result.begin();
-        luabind::object::iterator e = result.end();
-        for (; i != e; ++i)
+        for (luabind::iterator i(result), e; i != e; ++i)
         {
             luabind::object string = *i;
-            if (string.type() != LUA_TSTRING)
+            if (luabind::type(string) != LUA_TSTRING)
             {
-                VERIFY(string.type() != LUA_TNIL);
+                VERIFY(luabind::type(string) != LUA_TNIL);
                 continue;
             }
 

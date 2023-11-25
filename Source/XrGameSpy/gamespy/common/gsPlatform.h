@@ -49,13 +49,22 @@
 // __MWERKS__, set by compiler
 // _NITRO, set by OS headers
 
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 // Include common OS headers
 #include <string.h>
 #include <stdlib.h>
+#ifdef min 
+#undef min
+#undef max
+#endif
 #include <stdio.h>
 #include <wchar.h>
+
+#ifdef max
+#error Macro 'max' is defined
+#endif
 
 // XBOX/X360
 #if defined(_XBOX)
@@ -63,6 +72,7 @@
 
 // WIN32
 #elif defined(_WIN32)
+#define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <limits.h>
@@ -470,6 +480,8 @@ static char _mempool[MEMPOOL_SIZE]	POST_ALIGN(16);
 #ifdef __cplusplus
 }
 #endif
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

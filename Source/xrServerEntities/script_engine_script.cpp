@@ -223,7 +223,8 @@ static bool is_enough_address_space_available_impl()
 #pragma optimize("s", on)
 void CScriptEngine::script_register(lua_State* L)
 {
-    module(L)[class_<profile_timer_script>("profile_timer")
+    module(L)[
+        class_<profile_timer_script>("profile_timer")
                   .def(constructor<>())
                   .def(constructor<profile_timer_script&>())
                   .def(const_self + profile_timer_script())
@@ -231,23 +232,27 @@ void CScriptEngine::script_register(lua_State* L)
                   .def(tostring(self))
                   .def("start", &profile_timer_script::start)
                   .def("stop", &profile_timer_script::stop)
-                  .def("time", &profile_timer_script::time)];
+                  .def("time", &profile_timer_script::time),
 
-    function(L, "log", LuaLog);
-    function(L, "error_log", ErrorLog);
-    function(L, "flush", FlushLogs);
-    function(L, "prefetch", prefetch_module);
-    function(L, "verify_if_thread_is_running", verify_if_thread_is_running);
-    function(L, "editor", is_editor);
-    function(L, "bit_and", bit_and);
-    function(L, "bit_or", bit_or);
-    function(L, "bit_xor", bit_xor);
-    function(L, "bit_not", bit_not);
-    function(L, "user_name", user_name);
-    function(L, "time_global", script_time_global);
-    function(L, "time_global_async", script_time_global_async);
+        def("log", LuaLog),
+        def("error_log", ErrorLog),
+        def("flush", FlushLogs),
+        def("prefetch", prefetch_module),
+        def("verify_if_thread_is_running", verify_if_thread_is_running),
+        def("editor", is_editor),
+        def("bit_and", bit_and),
+        def("bit_or", bit_or),
+        def("bit_xor", bit_xor),
+        def("bit_not", bit_not),
+        def("user_name", user_name),
+        def("time_global", script_time_global),
+        def("time_global_async", script_time_global_async)
 #ifdef XRGAME_EXPORTS
-    function(L, "device", get_device);
-    function(L, "is_enough_address_space_available", is_enough_address_space_available_impl);
+        ,
+        def("device", get_device),
+        def("is_enough_address_space_available", is_enough_address_space_available_impl)
 #endif   // #ifdef XRGAME_EXPORTS
+    ];
+
+
 }

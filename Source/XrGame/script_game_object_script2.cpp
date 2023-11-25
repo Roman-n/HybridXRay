@@ -113,7 +113,7 @@ class_<CScriptGameObject>& script_register_game_object1(class_<CScriptGameObject
 
         .def("rank", &CScriptGameObject::GetRank)
         .def("command", &CScriptGameObject::AddAction)
-        .def("action", &CScriptGameObject::GetCurrentAction, adopt(result))
+        .def("action", &CScriptGameObject::GetCurrentAction, policy::adopt<0 /*return*/>())
         .def("object_count", &CScriptGameObject::GetInventoryObjectCount)
         .def("object", (CScriptGameObject * (CScriptGameObject::*)(LPCSTR))(&CScriptGameObject::GetObjectByName))
         .def("object", (CScriptGameObject * (CScriptGameObject::*)(int))(&CScriptGameObject::GetObjectByIndex))
@@ -179,7 +179,7 @@ class_<CScriptGameObject>& script_register_game_object1(class_<CScriptGameObject
         .def("get_enemy_strength", &CScriptGameObject::GetEnemyStrength)
         .def("get_sound_info", &CScriptGameObject::GetSoundInfo)
         .def("get_monster_hit_info", &CScriptGameObject::GetMonsterHitInfo)
-        .def("bind_object", &CScriptGameObject::bind_object, adopt(_2))
+        .def("bind_object", &CScriptGameObject::bind_object, policy::adopt<2>())
         .def("motivation_action_manager", &script_action_planner)
 
         // basemonster

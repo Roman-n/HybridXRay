@@ -37,7 +37,7 @@ void CUIListBox::script_register(lua_State* L)
             .def("GetItem", &CUIListBox::GetItem)
             .def("RemoveItem", &CUIListBox::RemoveWindow)
             .def("AddTextItem", &CUIListBox::AddTextItem)
-            .def("AddExistingItem", &CUIListBox::AddExistingItem, adopt(_2)),
+            .def("AddExistingItem", &CUIListBox::AddExistingItem, policy::adopt<2>()),
 
         class_<CUIListBoxItem, CUIFrameLineWnd, CUIListBoxItemWrapper>("CUIListBoxItem")
             .def(constructor<float>())
@@ -61,7 +61,7 @@ void CUIListBox::script_register(lua_State* L)
         class_<connect_error_cb>("connect_error_cb")
             .def(constructor<>())
             .def(constructor<connect_error_cb::lua_object_type, connect_error_cb::lua_function_type>())
-            .def("bind", &connect_error_cb::bind)
+            .def("bind", static_cast<void (connect_error_cb::*)(connect_error_cb::lua_object_type ptr_this, connect_error_cb::lua_function_type func_ptr)>(&connect_error_cb::bind))
             .def("clear", &connect_error_cb::clear),
 
         class_<CServerList, CUIWindow>("CServerList")

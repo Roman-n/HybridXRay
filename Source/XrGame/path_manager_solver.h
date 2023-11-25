@@ -50,6 +50,7 @@ protected:
     using _Graph = CProblemSolver<T1, T2, T3, T4, T5, T6, T7, T8>;
     using _edge_type = typename _Graph::_edge_type;
 
+public:
     using const_iterator = typename inherited::const_iterator;
 
 protected:
