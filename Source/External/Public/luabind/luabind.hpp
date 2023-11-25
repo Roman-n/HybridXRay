@@ -23,18 +23,12 @@
 
 #ifndef LUABIND_BIND_HPP_INCLUDED
 #define LUABIND_BIND_HPP_INCLUDED
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable:4458)
-#endif
-#define _HAS_AUTO_PTR_ETC 1
-# include <memory>
-#include "config.hpp"
-#include "class.hpp"
-#include "function.hpp"
-#include "functor.hpp"
-#include "open.hpp"
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
+
+#include <luabind/config.hpp>
+#include <luabind/class.hpp>
+#include <luabind/function.hpp>
+#include <luabind/open.hpp>
+#include <luabind/detail/conversion_policies/conversion_policies.hpp>
+
 #endif // LUABIND_BIND_HPP_INCLUDED
+

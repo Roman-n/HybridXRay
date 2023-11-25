@@ -24,7 +24,9 @@
 #ifndef LUABIND_OPEN_HPP_INCLUDED
 #define LUABIND_OPEN_HPP_INCLUDED
 
-#include "config.hpp"
+#include <luabind/config.hpp>
+
+#include <luabind/lua_state_fwd.hpp>
 
 namespace luabind {
 
