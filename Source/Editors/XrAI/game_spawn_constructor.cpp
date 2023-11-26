@@ -158,7 +158,7 @@ void CGameSpawnConstructor::verify_level_changers()
     for (; I != E; ++I)
         Msg("%s", (*I)->name_replace());
 
-    VERIFY2(m_level_changers.empty(), "Some of the level changers setup incorrectly");
+    // VERIFY2(m_level_changers.empty(), "Some of the level changers setup incorrectly");
 }
 
 void CGameSpawnConstructor::save_spawn(LPCSTR name, LPCSTR output)

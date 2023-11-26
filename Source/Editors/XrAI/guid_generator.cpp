@@ -16,7 +16,7 @@
 #pragma comment(lib, "rpcrt4.lib")
 #endif
 
-xrGUID generate_guid()
+ECORE_API xrGUID generate_guid()
 {
     xrGUID result;
 #ifdef WINVER
