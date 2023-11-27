@@ -104,6 +104,7 @@ private:
     void         type_convert_userdata(char* buffer, unsigned int size, lua_State* state, int index);
     static char* class_name(char* buffer, unsigned int size, luabind::detail::class_rep& class_rep);
 private:
+#if 0   // Required stuff removed in Luabind commit 01200f9382e00390195943af2c9de2c6eeedfd91 
     void fill_class_info(
         cs::lua_studio::backend&     backend,
         char*                        buffer,
@@ -111,6 +112,7 @@ private:
         luabind::detail::object_rep* object,
         luabind::detail::class_rep*  class_rep,
         lua_State*                   state);
+#endif
     void value_convert_class(
         cs::lua_studio::backend&    backend,
         char*                       buffer,
@@ -120,12 +122,14 @@ private:
         int                         index,
         cs::lua_studio::icon_type&  icon_type,
         bool                        full_description);
+#if 0 // Required stuff removed in Luabind commit a98c1480614944812bfe00a2fb66b20e12ba01d9
     bool value_convert_instance(
         cs::lua_studio::backend&     backend,
         char*                        buffer,
         unsigned int                 size,
         luabind::detail::object_rep* object,
         lua_State*                   state);
+#endif
     bool value_convert_instance(
         cs::lua_studio::backend&   backend,
         char*                      buffer,

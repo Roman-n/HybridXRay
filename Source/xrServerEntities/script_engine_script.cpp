@@ -186,11 +186,11 @@ IC profile_timer_script operator+(const profile_timer_script& portion0, const pr
     return (result);
 }
 
-// IC	std::ostream& operator<<(std::ostream &stream, profile_timer_script &timer)
-// {
-// 	stream					<< timer.time();
-// 	return					(stream);
-// }
+IC	std::ostream& operator<<(std::ostream & stream, const profile_timer_script &timer)
+{
+stream					<< timer.time();
+return					(stream);
+}
 
 #ifdef XRGAME_EXPORTS
 ICF u32 script_time_global()
