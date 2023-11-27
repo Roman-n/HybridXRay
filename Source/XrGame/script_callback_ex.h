@@ -44,7 +44,9 @@ public:
     IC CScriptCallbackEx& operator=(const CScriptCallbackEx& callback);
     IC bool                operator==(const CScriptCallbackEx& callback) const
     {
-        return compare_safe(m_object, (callback.m_object)) && m_functor == (callback.m_functor);
+        using luabind_obj_cr = luabind::adl::object const&;
+
+        return compare_safe(m_object, (callback.m_object)) && (luabind_obj_cr)m_functor == (luabind_obj_cr)(callback.m_functor);
     }
     IC bool operator==(const object_type& object) const
     {

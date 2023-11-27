@@ -26,7 +26,9 @@ public:
     }
     virtual bool compare(const CPHScriptCondition* v) const
     {
-        return v->m_lua_function == m_lua_function;
+        const auto& lhs = static_cast<const luabind::adl::object&>(*m_lua_function);
+        const auto& rhs = static_cast<const luabind::adl::object&>(*v->m_lua_function);
+        return lhs == rhs;
     }
     /// virtual bool			is_equal						(CPHReqBase* v)							;
     // virtual bool			is_relative						(CPHReqBase* v)							;
@@ -49,7 +51,9 @@ public:
     }
     virtual bool compare(const CPHScriptAction* v) const
     {
-        return *m_lua_function == *(v->m_lua_function);
+        const auto& lhs = static_cast<const luabind::adl::object&>(*m_lua_function);
+        const auto& rhs = static_cast<const luabind::adl::object&>(*v->m_lua_function);
+        return lhs == rhs;
     }
 };
 

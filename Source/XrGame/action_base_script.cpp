@@ -18,7 +18,7 @@ void CActionBase<CScriptGameObject>::script_register(lua_State* L)
     module(L)[class_<CScriptActionBase, CScriptActionWrapper>("action_base")
                   .def_readonly("object", &CScriptActionBase::m_object)
                   .def_readonly("storage", &CScriptActionBase::m_storage)
-                  .def(constructor<>())
+                  //TODO .def(constructor<>())
                   .def(constructor<CScriptGameObject*>())
                   .def(constructor<CScriptGameObject*, LPCSTR>())
                   .def(

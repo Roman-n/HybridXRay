@@ -8,7 +8,15 @@
 
 #include "pch_script.h"
 
-#ifdef DEBUG
+#include "luabind/detail/debug.hpp"
+
+#if 1
+void print_help(lua_State* L)
+{
+    // TODO: fix that mess of hacks that extracts internal luabind data
+    Msg("! Lua-help is broken");
+}
+#elif defined(DEBUG)
 
 #ifndef BOOST_NO_STRINGSTREAM
 // #	include <sstream>
@@ -19,19 +27,19 @@
 xr_string to_string(luabind::object const& o)
 {
     using namespace luabind;
-    if (o.type() == LUA_TSTRING)
+    if (luabind::type(o) == LUA_TSTRING)
         return object_cast<luabind::internal_string>(o).c_str();
     lua_State* L = o.lua_state();
     LUABIND_CHECK_STACK(L);
 
-    if (o.type() == LUA_TNUMBER)
+    if (luabind::type(o) == LUA_TNUMBER)
     {
         char buffer[_CVTBUFSIZE];
         _gcvt_s(buffer, object_cast<float>(o), 16);
         return buffer;
     }
 
-    return xr_string("<") + lua_typename(L, o.type()) + ">";
+    return xr_string("<") + lua_typename(L, luabind::type(o)) + ">";
 }
 
 void strreplaceall(xr_string& str, LPCSTR S, LPCSTR N)
@@ -56,10 +64,10 @@ xr_string member_to_string(luabind::object const& e, LPCSTR function_signature)
 {
 #if 1 || !defined(LUABIND_NO_ERROR_CHECKING)
     using namespace luabind;
-    lua_State* L = e.lua_state();
+    lua_State* L = e.interpreter();
     LUABIND_CHECK_STACK(L);
 
-    if (e.type() == LUA_TFUNCTION)
+    if (luabind::type(e) == LUA_TFUNCTION)
     {
         e.pushvalue();
         detail::stack_pop p(L, 1);
@@ -118,7 +126,7 @@ void print_class(lua_State* L, luabind::detail::class_rep* crep)
     xr_string S;
     // print class and bases
     {
-        S = (crep->get_class_type() != luabind::detail::class_rep::cpp_class) ? "LUA class " : "C++ class ";
+        S = xr_string(crep->get_class_type() != luabind::detail::class_rep::cpp_class ? "LUA class " : "C++ class ");
         S.append(crep->name());
         typedef luabind::internal_vector<luabind::detail::class_rep::base_info> BASES;
         const BASES&                                                            bases = crep->bases();
@@ -220,11 +228,9 @@ void print_class(lua_State* L, luabind::detail::class_rep* crep)
 void print_free_functions(lua_State* L, const luabind::object& object, LPCSTR header, const xr_string& indent)
 {
     u32                       count = 0;
-    luabind::object::iterator I     = object.begin();
-    luabind::object::iterator E     = object.end();
-    for (; I != E; ++I)
+    for (luabind::iterator I(object), E ; I != E; ++I)
     {
-        if ((*I).type() != LUA_TFUNCTION)
+        if (luabind::type((*I)) != LUA_TFUNCTION)
             continue;
         (*I).pushvalue();
         luabind::detail::free_functions::function_rep* rep = 0;
@@ -298,7 +304,8 @@ void print_free_functions(lua_State* L, const luabind::object& object, LPCSTR he
 void print_help(lua_State* L)
 {
     Msg("\nList of the classes exported to LUA\n");
-    luabind::detail::class_registry::get_registry(L)->iterate_classes(L, &print_class);
+    for (auto [_, class_rep]: luabind::detail::class_registry::get_registry(L)->get_classes())
+        print_class(L, class_rep);
     Msg("End of list of the classes exported to LUA\n");
     Msg("\nList of the namespaces exported to LUA\n");
     print_free_functions(L, luabind::globals(L), "", "");

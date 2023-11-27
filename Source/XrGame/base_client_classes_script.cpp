@@ -94,7 +94,7 @@ void CObjectScript::script_register(lua_State* L)
         //			.def("renderable_ShadowReceive",&CObject::renderable_ShadowReceive,&CObjectWrapper::renderable_ShadowReceive_static)
         //			.def("Visual",					&CObject::Visual)
 
-        class_<CGameObject, bases<DLL_Pure, ISheduled, ICollidable, IRenderable>, CGameObjectWrapper>("CGameObject")
+        class_<CGameObject, bases<DLL_Pure, ISheduled, ICollidable, IRenderable>, default_holder, CGameObjectWrapper>("CGameObject")
             .def(constructor<>())
             .def("_construct", &CGameObject::_construct, &CGameObjectWrapper::_construct_static)
             .def("Visual", &CGameObject::Visual)

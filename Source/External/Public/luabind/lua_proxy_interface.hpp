@@ -70,6 +70,9 @@ namespace luabind {
 		}
 
 		template<class T, class U>
+        int binary_interpreter(lua_State*& L, T const&, U const& x, std::false_type, std::false_type) = delete;
+
+		template<class T, class U>
 		int binary_interpreter(lua_State*& L, T const& x, U const& y)
 		{
 			return binary_interpreter(L, x, y, is_lua_proxy_type<T>(), is_lua_proxy_type<U>());
@@ -79,10 +82,16 @@ namespace luabind {
 		typename enable_binary<bool, LHS, RHS>::type
 			operator==(LHS&& lhs, RHS&& rhs)
 		{
+			using LHS_Fixed = std::remove_cv_t<std::remove_reference_t<LHS>>;
+			using RHS_Fixed = std::remove_cv_t<std::remove_reference_t<RHS>>;
+
+            static_assert(is_lua_proxy_type<LHS_Fixed>().value || is_lua_proxy_type<RHS_Fixed>().value, 
+				"Neither left or right compared object is a Lua proxy type");
+
 			lua_State* L = 0;
 			switch(binary_interpreter(L, lhs, rhs)) {
-			case  1: return true;
-			case-1: return false;
+		        case  1: return true;
+		        case -1: return false;
 			}
 			assert(L);
 			detail::stack_pop pop1(L, 1);

@@ -30,7 +30,6 @@ protected:
     using _Graph = ILevelGraph;
     using _Parameters = SBaseParameters<_dist_type, _index_type, _iteration_type>;
     using inherited = typename CPathManagerGeneric<_Graph, _DataStorage, _Parameters, _dist_type, _index_type, _iteration_type>;
-    using const_iterator = typename inherited::const_iterator;
 
 protected:
     int x1;
@@ -49,6 +48,8 @@ protected:
     _Graph::CVertex* best_node;
 
 public:
+    using const_iterator = typename inherited::const_iterator;
+
     virtual ~CPathManager();
     IC void setup(
         const _Graph*           graph,
