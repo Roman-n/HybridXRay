@@ -15,7 +15,7 @@ using namespace luabind;
 #pragma optimize("s", on)
 void CActionBase<CScriptGameObject>::script_register(lua_State* L)
 {
-    module(L)[class_<CScriptActionBase, CScriptActionWrapper>("action_base")
+    module(L)[class_<CScriptActionBase, no_bases, default_holder, CScriptActionWrapper>("action_base")
                   .def_readonly("object", &CScriptActionBase::m_object)
                   .def_readonly("storage", &CScriptActionBase::m_storage)
                   //TODO .def(constructor<>())

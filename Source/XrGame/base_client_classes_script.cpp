@@ -20,7 +20,7 @@ using namespace luabind;
 #pragma optimize("s", on)
 void DLL_PureScript::script_register(lua_State* L)
 {
-    module(L)[class_<DLL_Pure, CDLL_PureWrapper>("DLL_Pure")
+    module(L)[class_<DLL_Pure, no_bases, default_holder, CDLL_PureWrapper>("DLL_Pure")
                   .def(constructor<>())
                   .def("_construct", &DLL_Pure::_construct, &CDLL_PureWrapper::_construct_static)];
 }
@@ -30,7 +30,7 @@ void ISpatialScript::script_register	(lua_State *L)
 {
     module(L)
     [
-        class_<ISpatial,CISpatialWrapper>("ISpatial")
+        class_<ISpatial,no_bases, default_holder, CISpatialWrapper>("ISpatial")
             .def(constructor<>())
             .def("spatial_register",	&ISpatial::spatial_register,	&CISpatialWrapper::spatial_register_static)
             .def("spatial_unregister",	&ISpatial::spatial_unregister,	&CISpatialWrapper::spatial_unregister_static)
@@ -46,7 +46,7 @@ void ISpatialScript::script_register	(lua_State *L)
 
 void ISheduledScript::script_register(lua_State* L)
 {
-    module(L)[class_<ISheduled, CISheduledWrapper>("ISheduled")
+    module(L)[class_<ISheduled, no_bases, default_holder, CISheduledWrapper>("ISheduled")
               //			.def(constructor<>())
               //			.def("shedule_Scale",		&ISheduled::shedule_Scale,
               //&CISheduledWrapper::shedule_Scale_static) 			.def("shedule_Update",		&ISheduled::shedule_Update,
@@ -57,7 +57,7 @@ void ISheduledScript::script_register(lua_State* L)
 void IRenderableScript::script_register(lua_State* L)
 {
     module(L)
-        [class_<IRenderable, CIRenderableWrapper>("IRenderable")
+        [class_<IRenderable, no_bases, default_holder, CIRenderableWrapper>("IRenderable")
          //			.def(constructor<>())
          //			.def("renderable_Render",&IRenderable::renderable_Render,&CIRenderableWrapper::renderable_Render_static)
          //			.def("renderable_ShadowGenerate",&IRenderable::renderable_ShadowGenerate,&CIRenderableWrapper::renderable_ShadowGenerate_static)
@@ -131,7 +131,7 @@ void CObjectScript::script_register(lua_State* L)
         //		,class_<CPhysicsShellHolder,CGameObject>("CPhysicsShellHolder")
         //			.def(constructor<>())
 
-        //		,class_<CEntity,CPhysicsShellHolder,CEntityWrapper>("CEntity")
+        //		,class_<CEntity,CPhysicsShellHolder, default_holder, CEntityWrapper>("CEntity") // NOTE: if you will uncomment this, you'll need to fix class_ template arguments.
         //			.def(constructor<>())
         //			.def("HitSignal",&CEntity::HitSignal,&CEntityWrapper::HitSignal_static)
         //			.def("HitImpulse",&CEntity::HitImpulse,&CEntityWrapper::HitImpulse_static)

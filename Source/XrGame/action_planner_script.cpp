@@ -32,7 +32,7 @@ CScriptActionPlanner* cast_planner(CScriptActionBase* action)
 void CScriptActionPlanner::script_register(lua_State* L)
 {
     module(L)
-        [class_<CScriptActionPlanner, CScriptActionPlannerWrapper>("action_planner")
+        [class_<CScriptActionPlanner, no_bases, default_holder, CScriptActionPlannerWrapper>("action_planner")
              .def_readonly("object", &CScriptActionPlanner::m_object)
              .def_readonly("storage", &CScriptActionPlanner::m_storage)
              .def(constructor<>())
