@@ -12,9 +12,9 @@ jobs:
     name: Build SDK [${{ matrix.Configuration }}]
     runs-on: windows-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        Configuration: [Release, Debug]
+        Configuration: [Release]
         Platform: [x64]
     steps:
     - uses: actions/checkout@main
@@ -42,12 +42,6 @@ jobs:
       uses: kittaakos/upload-artifact-as-is@v0
       with:
         path: HybridXRay.*.7z
-
-    - name: Upload Symbols
-      uses: kittaakos/upload-artifact-as-is@v0
-      if: matrix.Configuration == 'Release'
-      with:
-        path: Symbols.*.7z
 
     - name: Update latest-nightly tag
       uses: EndBug/latest-tag@latest
