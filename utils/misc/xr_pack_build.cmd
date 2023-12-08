@@ -20,7 +20,7 @@ set PLATFORM=%~2
 set BUILD_NAME=%~3
 
 if %PLATFORM%==x64 (
-    set EDITION_NAME=%BUILD_NAME% rem %CONFIGURATION%
+    set EDITION_NAME=%BUILD_NAME%
 ) else (
 	echo Expected x64 only
 	EXIT /B
@@ -38,6 +38,3 @@ if %CONFIGURATION%==Release (
 if %CONFIGURATION%==Debug (
 7z a "HybridXRay.%EDITION_NAME%.7z" "Bin\%PLATFORM%\%CONFIGURATION%\*" -i!Debug_ActorEditor.cmd -i!Debug_LevelEditor.cmd -i!Debug_ParticleEditor.cmd -i!Debug_ShaderEditor.cmd -i!License.txt -xr!.*
 )
-rem if %CONFIGURATION%==Release (
-rem 7z a "Symbols.%EDITION_NAME%.7z" Bin\%PLATFORM%\%CONFIGURATION%\*.pdb -i!License.txt -xr!.*
-rem )
