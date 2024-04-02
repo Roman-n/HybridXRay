@@ -46,4 +46,14 @@ rt_object_props.ltx
 *.lnk
 *.ini
 *.bak
-*.log
+*.logSource/External/RedImage/ispc_texcomp/kernel_ispc_avx.h
+Source/External/RedImage/ispc_texcomp/kernel_astc_ispc_avx2.h
+Source/External/RedImage/ispc_texcomp/kernel_ispc_avx.h
+Source/External/RedImage/ispc_texcomp/kernel_ispc_avx2.h
+Source/External/RedImage/ispc_texcomp/kernel_astc_ispc_sse2.h
+Source/External/RedImage/ispc_texcomp/kernel_ispc_sse4.h
+Source/External/RedImage/ispc_texcomp/kernel_ispc.h
+Source/External/RedImage/ispc_texcomp/kernel_astc_ispc_avx.h
+Source/External/RedImage/ispc_texcomp/kernel_astc_ispc.h
+Source/External/RedImage/ispc_texcomp/kernel_ispc_sse2.h
+Source/External/RedImage/ispc_texcomp/kernel_astc_ispc_sse4.h
