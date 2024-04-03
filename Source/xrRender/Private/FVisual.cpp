@@ -102,6 +102,7 @@ void Fvisual::Load(const char* N, IReader* data, u32 dwFlags)
             m_fast->p_rm_Indices->AddRef();
 
             // geom
+            /*
             if (D3DXGetDeclLength(fmt) == 2)
             {
                 DebugBreak();
@@ -111,6 +112,7 @@ void Fvisual::Load(const char* N, IReader* data, u32 dwFlags)
                 DebugBreak();
                 VERIFY(D3DXGetDeclLength(fmt) == 2);
             }
+            */
             m_fast->rm_geom.create(fmt, m_fast->p_rm_Vertices, m_fast->p_rm_Indices);
         }
 #endif   // (RENDER==R_R2) || (RENDER==R_R3) || (RENDER==R_R4)
