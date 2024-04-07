@@ -45,18 +45,25 @@ void ELocatorAPI::_initialize(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
 
     if (m_Flags.is(flScanAppRoot))
     {
-        xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
-        if (xr_strlen(tmpAppPath))
+        if (!!strstr(Core.Params, "-wp"))
         {
-            tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
-            if (strrchr(tmpAppPath, '\\'))
-                *(strrchr(tmpAppPath, '\\') + 1) = 0;
-            tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
-            if (strrchr(tmpAppPath, '\\'))
-                *(strrchr(tmpAppPath, '\\') + 1) = 0;
-            tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
-            if (strrchr(tmpAppPath, '\\'))
-                *(strrchr(tmpAppPath, '\\') + 1) = 0;
+            xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.WorkingPath);
+        }
+        else
+        {
+            xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
+            if (xr_strlen(tmpAppPath))
+            {
+                tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
+                if (strrchr(tmpAppPath, '\\'))
+                    *(strrchr(tmpAppPath, '\\') + 1) = 0;
+                tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
+                if (strrchr(tmpAppPath, '\\'))
+                    *(strrchr(tmpAppPath, '\\') + 1) = 0;
+                tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
+                if (strrchr(tmpAppPath, '\\'))
+                    *(strrchr(tmpAppPath, '\\') + 1) = 0;
+            }
         }
         append_path("$app_root$", tmpAppPath, 0, FALSE);
         append_path("$fs_root$", tmpAppPath, 0, FALSE);
