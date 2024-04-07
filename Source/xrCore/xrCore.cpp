@@ -91,9 +91,9 @@ const xr_string xrCore::buildName = []
 //#define NEW_RELEASE_VERSION "v.0.8.1b"
 #if defined NEW_RELEASE_VERSION
     Result += NEW_RELEASE_VERSION;
-#elif defined NIGHT_BUILD_NUMBER
+#elif defined DNIGHT_BUILD_NUMBER
     Result += "GitHub Build: ";
-    Result += NIGHT_BUILD_NUMBER;
+    Result += DNIGHT_BUILD_NUMBER;
 #else
     Result += "Local Build: ";
     Result += xr_string(buildIDLocal);
