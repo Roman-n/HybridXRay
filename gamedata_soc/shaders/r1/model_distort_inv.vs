@@ -25,18 +25,5 @@ vf 	_main (v_model v)
 }
 
 /////////////////////////////////////////////////////////////////////////
-#ifdef 	SKIN_NONE
-vf	main(v_model v) 		{ return _main(v); 		}
-#endif
-
-#ifdef 	SKIN_0
-vf	main(v_model_skinned_0 v) 	{ return _main(skinning_0(v)); }
-#endif
-
-#ifdef	SKIN_1
-vf	main(v_model_skinned_1 v) 	{ return _main(skinning_1(v)); }
-#endif
-
-#ifdef	SKIN_2
-vf	main(v_model_skinned_2 v) 	{ return _main(skinning_2(v)); }
-#endif
+#define SKIN_VF vf
+#include "skin_main.h"

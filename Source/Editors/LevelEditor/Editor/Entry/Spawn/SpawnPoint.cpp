@@ -232,6 +232,12 @@ void CSpawnPoint::CLE_Motion::PlayMotion()
 //------------------------------------------------------------------------------
 void CSpawnPoint::SSpawnData::Create(LPCSTR _entity_ref)
 {
+    if (!pSettings->section_exist(_entity_ref))
+    {
+        ELog.Msg(mtError, "! Section doesn't exist: %s", _entity_ref);
+        return;
+    }
+
     m_Data = g_SEFactoryManager->create_entity(_entity_ref);
     if (m_Data)
     {
@@ -442,34 +448,53 @@ void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModi
 {
     ButtonValue* B = dynamic_cast<ButtonValue*>(value);
     R_ASSERT(B);
-    switch (B->btn_num)
+    if (m_Visual)
     {
-            //		"First,Play,Pause,Stop,Last",
-        case 0:   // first
+        switch (B->btn_num)
         {
-            m_Visual->PlayAnimationFirstFrame();
+            // "First,Play,Pause,Stop,Last",
+            case 0:   // first
+                m_Visual->PlayAnimationFirstFrame();
+            break;
+            case 1:   // play
+                m_Visual->PlayAnimation();
+            break;
+            case 2:   // pause
+                m_Visual->PauseAnimation();
+            break;
+            case 3:   // stop
+                m_Visual->StopAllAnimations();
+            break;
+            case 4:   // last
+                m_Visual->PlayAnimationLastFrame();
+            break;
         }
-        break;
-        case 1:   // play
+    }
+    else
+    {
+        xr_vector<CLE_Visual*>::iterator v_it, v_end;
+        for (v_it = m_VisualHelpers.begin(), v_end = m_VisualHelpers.end(); v_it != v_end; v_it++)
         {
-            m_Visual->PlayAnimation();
+            CLE_Visual* V = *v_it;
+            switch (B->btn_num)
+            {
+                case 0:
+                    V->PlayAnimationFirstFrame();
+                break;   // first
+                case 1:
+                    V->PlayAnimation();
+                break;   // play
+                case 2:
+                    V->PauseAnimation();
+                break;   // pause
+                case 3:
+                    V->StopAllAnimations();
+                break;   // stop
+                case 4:
+                    V->PlayAnimationLastFrame();
+                break;   // last
+            }
         }
-        break;
-        case 2:   // pause
-        {
-            m_Visual->PauseAnimation();
-        }
-        break;
-        case 3:   // stop
-        {
-            m_Visual->StopAllAnimations();
-        }
-        break;
-        case 4:   // last
-        {
-            m_Visual->PlayAnimationLastFrame();
-        }
-        break;
     }
 }
 
@@ -480,7 +505,7 @@ void CSpawnPoint::SSpawnData::FillProp(LPCSTR pref, PropItemVec& items)
     if (Scene->m_LevelOp.m_mapUsage.MatchType(eGameIDDeathmatch | eGameIDTeamDeathmatch | eGameIDArtefactHunt | eGameIDCaptureTheArtefact))
         PHelper().CreateFlag8(items, PrepareKey(pref, "MP respawn"), &m_flags, eSDTypeRespawn);
 
-    if (m_Visual)
+    if (m_Visual || m_VisualHelpers.size())
     {
         ButtonValue* BV = PHelper().CreateButton(items, PrepareKey(pref, m_Data->name(), "Model\\AnimationControl"), "|<<,Play,Pause,Stop,>>|", 0);
         BV->OnBtnClickEvent.bind(this, &CSpawnPoint::SSpawnData::OnAnimControlClick);
@@ -697,10 +722,10 @@ bool CSpawnPoint::AttachObject(CCustomObject* obj)
         {
             case OBJCLASS_SHAPE:
                 bAllowed = !!m_SpawnData.m_Data->shape();
-                break;
-                //        case OBJCLASS_SCENEOBJECT:
-                //	    	bAllowed = !!dynamic_cast<xrSE_Visualed*>(m_SpawnData.m_Data);
-                //        break;
+            break;
+            // case OBJCLASS_SCENEOBJECT:
+            //     bAllowed = !!dynamic_cast<xrSE_Visualed*>(m_SpawnData.m_Data);
+            // break;
         }
     }
     //
@@ -763,7 +788,7 @@ bool CSpawnPoint::GetBox(Fbox& box)
         case ptEnvMod:
             box.set(GetPosition(), GetPosition());
             box.grow(Selected() ? m_EM_Radius : ENVMOD_SIZE);
-            break;
+        break;
         case ptSpawnPoint:
             if (m_SpawnData.Valid())
             {
@@ -831,7 +856,7 @@ bool CSpawnPoint::GetBox(Fbox& box)
                 box.max.y += RPOINT_SIZE * 2.f;
                 box.max.z += RPOINT_SIZE;
             }
-            break;
+        break;
         default:
             NODEFAULT;
     }
@@ -873,7 +898,7 @@ void CSpawnPoint::RenderSimBox()
     m.scale(Fvector().mul(s, 2));
     m.c.set(c);
 
-    //     B.mulA_43			(_Transform());
+    // B.mulA_43(_Transform());
     RCache.set_xform_world(m);
     u32 clr = 0x06005000;
     DU_impl.DrawIdentBox(true, false, clr, clr);

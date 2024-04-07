@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "UIEditLibrary.h"
-#include "..\..\XrECore\Editor\Library.h"
+#include "../../xrECore/Editor/Library.h"
 
 UIEditLibrary* UIEditLibrary::Form = nullptr;
 

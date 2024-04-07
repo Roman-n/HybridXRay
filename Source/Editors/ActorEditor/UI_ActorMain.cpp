@@ -123,9 +123,9 @@ CCommandVar CActorTools::CommandExportDM(CCommandVar p1, CCommandVar p2)
     if (p1.IsString() || EFS.GetSaveName("$game_dm$", fn))
     {
         if (0 != (res = ExportDM(fn.c_str())))
-            ELog.Msg(mtInformation, "+ Export complete.");
+            ELog.Msg(mtInformation, "+ Export complete."), ELog.Msg(mtInformation, "+        %s", fn.c_str());
         else
-            ELog.Msg(mtError, "! Export failed.");
+            ELog.Msg(mtError, "! Export failed."), ELog.Msg(mtError, "!        %s", fn.c_str());
     }
     return res;
 }
@@ -137,9 +137,9 @@ CCommandVar CActorTools::CommandExportOBJ(CCommandVar p1, CCommandVar p2)
     if (p1.IsString() || EFS.GetSaveName("$import$", fn, 0, 5))
     {
         if (0 != (res = ExportOBJ(fn.c_str())))
-            ELog.Msg(mtInformation, "+ Export complete.");
+            ELog.Msg(mtInformation, "+ Export complete."), ELog.Msg(mtInformation, "+        %s", fn.c_str());
         else
-            ELog.Msg(mtError, "! Export failed.");
+            ELog.Msg(mtError, "! Export failed."), ELog.Msg(mtError, "!        %s", fn.c_str());
     }
     return res;
 }
@@ -150,9 +150,9 @@ CCommandVar CActorTools::CommandExportOGF(CCommandVar p1, CCommandVar p2)
     if (p1.IsString() || EFS.GetSaveName("$game_meshes$", fn, 0, 0))
     {
         if (0 != (res = ATools->ExportOGF(fn.c_str())))
-            ELog.Msg(mtInformation, "+ Export complete.");
+            ELog.Msg(mtInformation, "+ Export complete."), ELog.Msg(mtInformation, "+        %s", fn.c_str());
         else
-            ELog.Msg(mtError, "! Export failed.");
+            ELog.Msg(mtError, "! Export failed."), ELog.Msg(mtError, "!        %s", fn.c_str());
     }
     return res;
 }
@@ -164,9 +164,9 @@ CCommandVar CActorTools::CommandExportOMF(CCommandVar p1, CCommandVar p2)
     if (p1.IsString() || EFS.GetSaveName("$game_meshes$", fn, 0, 1))
     {
         if (0 != (res = ExportOMF(fn.c_str())))
-            ELog.Msg(mtInformation, "+ Export complete.");
+            ELog.Msg(mtInformation, "+ Export complete."), ELog.Msg(mtInformation, "+        %s", fn.c_str());
         else
-            ELog.Msg(mtError, "! Export failed.");
+            ELog.Msg(mtError, "! Export failed."), ELog.Msg(mtError, "!        %s", fn.c_str());
     }
     return res;
 }
@@ -177,9 +177,9 @@ CCommandVar CActorTools::CommandExportCPP(CCommandVar p1, CCommandVar p2)
     if (p1.IsString() || EFS.GetSaveName(_import_, fn, 0, 7))
     {
         if (0 != (res = ExportCPP(fn.c_str())))
-            ELog.Msg(mtInformation, "+ Export complete.");
+            ELog.Msg(mtInformation, "+ Export complete."), ELog.Msg(mtInformation, "+        %s", fn.c_str());
         else
-            ELog.Msg(mtError, "! Export failed.");
+            ELog.Msg(mtError, "! Export failed."), ELog.Msg(mtError, "!        %s", fn.c_str());
     }
     return res;
 }

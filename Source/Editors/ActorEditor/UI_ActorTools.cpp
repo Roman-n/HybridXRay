@@ -4,8 +4,8 @@
 #pragma hdrstop
 #define dSINGLE
 #include "animation_blend.h"
-#include "..\..\XrPhysics\Physics.h"
-#include "..\XrECore\Editor\EditMesh.h"
+#include "..\..\xrPhysics\Physics.h"
+#include "..\xrECore\Editor\EditMesh.h"
 #include "KinematicAnimatedDefs.h"
 #include "SkeletonAnimated.h"
 #if !defined(_DEBUG) && defined(_WIN64)
@@ -999,7 +999,7 @@ bool CActorTools::ExportDM(LPCSTR name)
     if (m_pEditObject)
     {
         Msg("# ..Export [%s]", name);
-        EDetail DM;
+        EDetail DM = EDetail(false);
         if (!DM.Update(m_pEditObject->GetName()))
             return false;
         DM.Export(name);

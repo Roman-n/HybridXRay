@@ -4,7 +4,7 @@
 #include "GroupObject.h"
 #include "../../Scene/scene.h"
 #include "../../Tools/Base/ESceneCustomOTools.h"
-#include "../XrECore/Editor/ui_main.h"
+#include "../xrECore/Editor/ui_main.h"
 #include "../../UI_LevelMain.h"
 
 //----------------------------------------------------
@@ -405,6 +405,25 @@ bool CGroupObject::UpdateReference(bool bForceReload)
         }
 
         ClearInternal(ObjectsInGroupBk);
+
+        // append level prefox to spawn elements
+        if (Scene->LevelPrefix().size())
+        {
+            string256 prefix;
+            strconcat(sizeof(prefix), prefix, Scene->LevelPrefix().c_str(), "_");
+
+            ObjectsInGroup::iterator it, end;
+            it = m_ObjectsInGroup.begin();
+            end = m_ObjectsInGroup.end();
+            for (; it != end; it++)
+                if ((*it).pObject->FClassID == OBJCLASS_SPAWNPOINT && strncmp((*it).pObject->GetName(), prefix, strlen(prefix)) != 0)
+                {
+                    string256 prefixed_name, new_name;
+                    strconcat(sizeof prefixed_name, prefixed_name, prefix, (*it).pObject->GetName());
+                    Scene->GenObjectName(OBJCLASS_SPAWNPOINT, new_name, prefixed_name);
+                    (*it).pObject->FName = new_name;
+                }
+        }
     }
     else
     {

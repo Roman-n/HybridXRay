@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class UIEditLibrary: public XrUI
+class UIEditLibrary: public xrUI
 {
 public:
     UIEditLibrary();

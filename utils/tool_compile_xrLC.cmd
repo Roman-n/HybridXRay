@@ -1,1 +1,1 @@
-start Bin\x64\Debug\XrLC.exe -f map_test -nolmap
+..\Bin\x64\Release\XrLC.exe -f map_test -nolmap

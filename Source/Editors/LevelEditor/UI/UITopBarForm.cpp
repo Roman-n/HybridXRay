@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "UITopBarForm.h"
+#include "../Editor/Scene/LEPhysics.h"
 
 UITopBarForm::UITopBarForm()
 {
@@ -22,6 +23,7 @@ UITopBarForm::UITopBarForm()
     m_tReloadConfigs         = EDevice->Resources->_CreateTexture("ed\\bar\\reload_configs");
     m_tOpenGameData          = EDevice->Resources->_CreateTexture("ed\\bar\\open_gamedata");
     m_VerifySpaceRestrictors = false;
+    m_Simulate = false;
 }
 
 UITopBarForm::~UITopBarForm() {}
@@ -241,6 +243,26 @@ void UITopBarForm::Draw()
         {
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
             ImGui::SetTooltip("Open folder 'GameData'"_RU >> u8"Открыть папку 'GameData'");
+        }
+        ImGui::SameLine(0, 50);
+        if (ImGui::Checkbox("Physics simulation"_RU >> u8"Симуляция физики", &m_Simulate))
+        {
+            ExecCommand(COMMAND_SIMULATE, TRUE);
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+            ImGui::SetTooltip("Activates the physics simulation of the selected object(s)."_RU >> u8"Активирует симуляцию физики выделенного объекта(ов).");
+        }
+        ImGui::SameLine(0, 15);
+        if (ImGui::Button("Use position"_RU >> u8"Использовать позицию"))
+        {
+            ExecCommand(COMMAND_USE_SIMULATE_POSITIONS, TRUE);
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+            ImGui::SetTooltip("Use the position of the selected object when physics simulation is active. The position of the object will be applied when simulating physics."_RU >> u8"Использовать позицию выделенного объекта, при активной симуляции физики. Применится положение объекта при симуляции физики.");
         }
     }
     ImGui::SameLine(0, 1);

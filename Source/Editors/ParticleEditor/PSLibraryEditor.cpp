@@ -1,9 +1,9 @@
 ﻿#include "stdafx.h"
 #pragma hdrstop
 
-#include "..\..\XrRender\Private\PSLibrary.h"
-#include "..\..\XrRender\Private\ParticleEffect.h"
-#include "..\..\XrRender\Private\ParticleGroup.h"
+#include "../../xrRender/Private/PSLibrary.h"
+#include "../../xrRender/Private/ParticleEffect.h"
+#include "../../xrRender/Private/ParticleGroup.h"
 //------------------------------------------------------------------------------
 
 PS::CPEDef* CPSLibrary::AppendPED(PS::CPEDef* src)

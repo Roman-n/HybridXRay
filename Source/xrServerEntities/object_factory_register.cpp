@@ -20,7 +20,7 @@
 #ifndef NO_XR_GAME
 #include "../xrEngine/std_classes.h"
 #include "level.h"
-#include "XrLevelEditor.h"
+#include "xrLevelEditor.h"
 #include "gamepersistent.h"
 #include "hudmanager.h"
 #include "actor.h"

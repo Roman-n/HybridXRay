@@ -1,1 +1,1 @@
-start Bin\x64\Debug\XrAI.exe -no_separator_check -s map_test
+..\Bin\x64\Release\XrAI.exe -no_separator_check -s map_test

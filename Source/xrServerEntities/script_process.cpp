@@ -11,7 +11,7 @@
 #include "script_process.h"
 #include "script_thread.h"
 #include "ai_space.h"
-#include "..\XrEngine\object_broker.h"
+#include "..\xrEngine\object_broker.h"
 
 string4096 g_ca_stdout;
 

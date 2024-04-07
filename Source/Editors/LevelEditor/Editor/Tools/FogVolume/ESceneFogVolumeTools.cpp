@@ -255,7 +255,7 @@ void EFogVolume::OnChangeEnvs(PropValue* prop)
     LTools->UpdateProperties(FALSE);
 }
 
-void EFogVolume::FillPropObjects(LPCSTR pref, PropItemVec& values)
+void EFogVolume::FillProp(LPCSTR pref, PropItemVec& values)
 {
     inherited::FillProp(pref, values);
 
@@ -264,7 +264,23 @@ void EFogVolume::FillPropObjects(LPCSTR pref, PropItemVec& values)
     P->OnChangeEvent.bind(this, &EFogVolume::OnChangeEnvs);
 
     if (m_volumeType == fvEmitter)
-        P = PHelper().CreateRText(values, PrepareKey(pref, "profile (ltx)"), &m_volume_profile);
+    {
+        string_path path;
+        FS.update_path(path, "$game_config$", "environment\\fog\\");
+
+        FS_FileSet files;
+        FS.file_list(files, path, FS_ListFiles);
+
+        static RStringVec profiles; // sadly, container for CreateRList cannot be allocated in stack
+        profiles.clear();
+        for (FS_FileSetIt it = files.begin(), end = files.end(); it != end; it++)
+        {
+            xr_string fn = xr_string("environment\\fog\\") + (*it).name;
+            profiles.push_back(fn.c_str());
+        }
+
+        PHelper().CreateRList(values, PrepareKey(pref, "profile (ltx)"), &m_volume_profile, &*profiles.begin(), profiles.size());
+    }
 }
 
 bool EFogVolume::GetSummaryInfo(SSceneSummary* inf)

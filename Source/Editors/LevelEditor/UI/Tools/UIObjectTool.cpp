@@ -346,6 +346,7 @@ void UIObjectTool::OnItemFocused(ListItem* item)
             m_Props->AssignItems(Info);
         }
     }
+    ExecCommand(COMMAND_RENDER_FOCUS);
 }
 
 void UIObjectTool::SelByRefObject(bool flag)

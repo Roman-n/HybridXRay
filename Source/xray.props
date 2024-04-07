@@ -25,7 +25,7 @@
 	  </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
 	    $(SolutionDir)..\SDK\Include;
-		$(SolutionDir)XrRender\Public;
+		$(SolutionDir)xrRender\Public;
 		$(SolutionDir)External\Public;
 		$(SolutionDir)External\RedImage;
 		%(AdditionalIncludeDirectories)

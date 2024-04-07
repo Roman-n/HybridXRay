@@ -1,12 +1,13 @@
 ﻿#pragma once
 
-class UIMainForm: public XrUI
+class UIMainForm: public xrUI
 {
 public:
     UIMainForm();
     virtual ~UIMainForm();
     virtual void      Draw();
     bool              Frame();
+
     IC UILeftBarForm* GetLeftBarForm()
     {
         return m_LeftBar;

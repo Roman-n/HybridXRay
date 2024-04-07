@@ -1,5 +1,5 @@
 ﻿#pragma once
-class UILPropertiesFrom: public XrUI
+class UILPropertiesFrom: public xrUI
 {
 public:
     UILPropertiesFrom();

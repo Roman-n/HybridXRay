@@ -1,5 +1,5 @@
 ﻿#pragma once
-class UIKeyForm: public XrUI
+class UIKeyForm: public xrUI
 {
 public:
     UIKeyForm();

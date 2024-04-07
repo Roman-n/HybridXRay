@@ -275,7 +275,7 @@ BOOL SceneBuilder::MakeSOM()
     return error_text.empty();
 }
 
-#include "../XrECore/Editor/EditObject.h"
+#include "../xrECore/Editor/EditObject.h"
 void SceneBuilder::OnRender()
 {
     if (object_for_render)

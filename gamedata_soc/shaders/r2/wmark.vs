@@ -24,7 +24,7 @@ vf main (v_static v)
 	//float3 	L_final	= L_rgb + L_hemi + L_sun + L_ambient		;
 
 	o.c0		= 0;	//L_final;
-	o.fog 		= calc_fogging 		(v.P);				// fog, input in world coords
+	o.fog 		= saturate(calc_fogging 		(v.P));				// fog, input in world coords
 
 	return o;
 }

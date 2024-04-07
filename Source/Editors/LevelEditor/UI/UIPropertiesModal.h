@@ -1,5 +1,5 @@
 ﻿#pragma once
-class UIPropertiesModal: public XrUI
+class UIPropertiesModal: public xrUI
 {
 public:
     UIPropertiesModal();

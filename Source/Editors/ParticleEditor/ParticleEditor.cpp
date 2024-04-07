@@ -5,11 +5,15 @@
 
 XREPROPS_API extern bool bIsActorEditor;
 ECORE_API extern bool    bIsLevelEditor;
+ECORE_API extern bool    bIsParticleEditor;
+ECORE_API extern bool    bIsShaderEditor;
 
 int WINAPI               wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    bIsActorEditor = false;
-    bIsLevelEditor = false;
+    bIsActorEditor    = false;
+    bIsLevelEditor    = false;
+    bIsParticleEditor = true;
+    bIsShaderEditor   = false;
 
     if (strstr(GetCommandLine(), "-nosplash") == nullptr)
     {

@@ -279,4 +279,6 @@ public:
     void SmoothNodes();
     void ResetNodes();
     void SelectNodesByLink(int link);
+
+    void OnPatchSizeChanged(PropValue*);
 };

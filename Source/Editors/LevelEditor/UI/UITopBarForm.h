@@ -1,5 +1,5 @@
 ﻿#pragma once
-class UITopBarForm: public XrUI
+class UITopBarForm: public xrUI
 {
 public:
     UITopBarForm();
@@ -47,4 +47,5 @@ private:
     void        ClickPlayCleanGame();
     ref_texture m_tPlayCleanGame;
     bool        m_VerifySpaceRestrictors;
+    bool        m_Simulate;
 };

@@ -1,0 +1,1 @@
+..\Bin\compilers_sky_x64\xrCompiler.exe -details -f map_test

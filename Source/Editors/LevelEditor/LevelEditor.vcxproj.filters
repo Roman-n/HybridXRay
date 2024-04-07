@@ -215,22 +215,22 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="LevelEditor.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\DetailManager.cpp">
+    <ClCompile Include="..\..\xrRender\Private\DetailManager.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_VS.cpp">
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_VS.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_Decompress.cpp">
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_Decompress.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_soft.cpp">
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_soft.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_CACHE.cpp">
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_CACHE.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp">
+    <ClCompile Include="..\..\xrRender\Private\stats_manager.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="UI\Tools\UILightTool.cpp">
@@ -281,7 +281,7 @@
     <ClCompile Include="UI\UIDOOneColor.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\XrGameManager.cpp">
+    <ClCompile Include="Engine\xrGameManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\XRayEditor.cpp">
@@ -632,7 +632,7 @@
     <ClCompile Include="Editor\Utils\Cursor3D.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Utils\XrSEFactoryManager.cpp">
+    <ClCompile Include="Editor\Utils\xrSEFactoryManager.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
     <ClCompile Include="UI\UIWorldPropertiesFrom.cpp">
@@ -664,7 +664,7 @@
     <ClInclude Include="UI\UIMainForm.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\DetailManager.h">
+    <ClInclude Include="..\..\xrRender\Private\DetailManager.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="UI\Tools\UILightTool.h">
@@ -721,7 +721,7 @@
     <ClInclude Include="Engine\XRayEditor.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\XrGameManager.h">
+    <ClInclude Include="Engine\xrGameManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="AI\xrThread.h">
@@ -1048,7 +1048,7 @@
     <ClInclude Include="Editor\Utils\Cursor3D.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Utils\XrSEFactoryManager.h">
+    <ClInclude Include="Editor\Utils\xrSEFactoryManager.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
     <ClInclude Include="UI\UIWorldPropertiesFrom.h">

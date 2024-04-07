@@ -122,6 +122,7 @@ struct st_LevelOptions
 
     u8              m_LightHemiQuality;
     u8              m_LightSunQuality;
+    float           m_LightSunDispersion;
 
     b_params        m_BuildParams;
 
@@ -140,7 +141,7 @@ struct st_LevelOptions
     void Reset();
 };
 
-class EScene: public XrEditorSceneInterface
+class EScene: public xrEditorSceneInterface
 {
     CMemoryWriter m_SaveCache;
 
@@ -459,6 +460,9 @@ public:
     bool                 BuildForPCPlay();
 
     virtual bool         RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt = 0, Fvector* n = 0);
+    virtual IC float     ZFar();
+    // camera
+    virtual const Fvector& GetCameraPosition() const;
 
 protected:
     typedef std::pair<xr_string, xr_string> TSubstPair;

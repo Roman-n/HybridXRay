@@ -1,5 +1,5 @@
 ﻿#pragma once
-class UIWorldPropertiesFrom: public XrUI
+class UIWorldPropertiesFrom: public xrUI
 {
 public:
     UIWorldPropertiesFrom();

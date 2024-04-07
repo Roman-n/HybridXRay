@@ -285,19 +285,25 @@ void CShaderTool::UnregisterTools()
 bool CShaderTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
 {
     /*
-        if (m_EditObject)
+    if (m_EditObject)
+    {
+        SRayPickInfo pinf;
+        if (m_EditObject->RayPick(dist, start, dir, Fidentity, &pinf))
         {
-            SRayPickInfo pinf;
-            if (m_EditObject->RayPick(dist,start,dir,Fidentity,&pinf)){
-                if (pt) pt->set(pinf.pt);
-                if (n){
-                    const Fvector* PT[3];
-                    pinf.e_mesh->GetFacePT(pinf.inf.id, PT);
-                    n->mknormal(*PT[0],*PT[1],*PT[2]);
-                }
-                return true;
-            }else return false;
-        }else
+            if (pt)
+                pt->set(pinf.pt);
+            if (n)
+            {
+                const Fvector* PT[3];
+                pinf.e_mesh->GetFacePT(pinf.inf.id, PT);
+                n->mknormal(*PT[0], *PT[1], *PT[2]);
+            }
+            return true;
+        }
+        else
+            return false;
+    }
+    else
     */
     {
         Fvector np;

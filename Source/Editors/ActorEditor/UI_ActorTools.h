@@ -342,6 +342,7 @@ public:
     bool RemoveMotion(LPCSTR name);
     void WorldMotionRotate(const Fvector& R);
     void MakePreview();
+    bool VerifyMotionRefs();
 
     bool OnBoneNameAfterEdit(PropValue* sender, shared_str& edit_val);
     void OnBoneNameChangeEvent(PropValue* sender);

@@ -8,7 +8,7 @@
 #pragma once
 #include "xrServer_Space.h"
 #include "../xrCDB/xrCDB.h"
-#include "../../XrEngine/xrISEAbstract.h"
+#include "../../xrEngine/xrISEAbstract.h"
 
 class NET_Packet;
 class CDUInterface;

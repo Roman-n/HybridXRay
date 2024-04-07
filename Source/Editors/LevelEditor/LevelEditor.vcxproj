@@ -4,12 +4,12 @@
     <Import Project="..\..\xray_ProjectConfigurations.props" />
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\XrRender\Private\DetailManager.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_CACHE.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_Decompress.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_soft.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\DetailManager_VS.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\DetailManager.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_CACHE.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_Decompress.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_soft.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\DetailManager_VS.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\stats_manager.cpp" />
     <ClCompile Include="AI\game_graph_editor.cpp" />
     <ClCompile Include="AI\game_graph_builder.cpp" />
     <ClCompile Include="AI\game_spawn_constructor.cpp" />
@@ -126,9 +126,9 @@
     <ClCompile Include="Editor\Utils\LevelPreferences.cpp" />
     <ClCompile Include="Editor\Utils\portalutils.cpp" />
     <ClCompile Include="Editor\Utils\SoundManager_LE.cpp" />
-    <ClCompile Include="Editor\Utils\XrSEFactoryManager.cpp" />
+    <ClCompile Include="Editor\Utils\xrSEFactoryManager.cpp" />
     <ClCompile Include="Engine\XRayEditor.cpp" />
-    <ClCompile Include="Engine\XrGameManager.cpp" />
+    <ClCompile Include="Engine\xrGameManager.cpp" />
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -161,7 +161,7 @@
     <ClCompile Include="resources\splash.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
+    <ClInclude Include="..\..\xrRender\Private\DetailManager.h" />
     <ClInclude Include="AI\cover_point.h" />
     <ClInclude Include="AI\cover_point_inline.h" />
     <ClInclude Include="AI\game_graph_editor.h" />
@@ -273,9 +273,9 @@
     <ClInclude Include="Editor\Utils\lwchunks.h" />
     <ClInclude Include="Editor\Utils\portalutils.h" />
     <ClInclude Include="Editor\Utils\SoundManager_LE.h" />
-    <ClInclude Include="Editor\Utils\XrSEFactoryManager.h" />
+    <ClInclude Include="Editor\Utils\xrSEFactoryManager.h" />
     <ClInclude Include="Engine\XRayEditor.h" />
-    <ClInclude Include="Engine\XrGameManager.h" />
+    <ClInclude Include="Engine\xrGameManager.h" />
     <ClInclude Include="resources\resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\ObjectList\UIObjectList.h" />
@@ -306,37 +306,37 @@
     <ClInclude Include="resources\splash.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
+    <ProjectReference Include="..\..\xrAPI\xrAPI.vcxproj">
       <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\XrCDB\XrCDB.vcxproj">
+    <ProjectReference Include="..\..\xrCDB\xrCDB.vcxproj">
       <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\XrCore\XrCore.vcxproj">
+    <ProjectReference Include="..\..\xrCore\xrCore.vcxproj">
       <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\XrEngine\XrEngine.vcxproj">
+    <ProjectReference Include="..\..\xrEngine\xrEngine.vcxproj">
       <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\XrPhysics\XrPhysics.vcxproj">
+    <ProjectReference Include="..\..\xrPhysics\xrPhysics.vcxproj">
       <Project>{3d3cc439-aabc-4565-99c8-9c53f425380c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\XrSound\XrSound.vcxproj">
+    <ProjectReference Include="..\..\xrSound\xrSound.vcxproj">
       <Project>{57601b62-902a-4ec8-bcc7-b6a2e30b0676}</Project>
     </ProjectReference>
     <ProjectReference Include="..\FreeMagic\FreeMagic.vcxproj">
       <Project>{dcc5b76d-be13-4d1f-be14-75d0fa678340}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrECore\XrECore.vcxproj">
+    <ProjectReference Include="..\xrECore\xrECore.vcxproj">
       <Project>{9187be98-531a-4276-b78e-dba3c8ab8447}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrEProps\XrEProps.vcxproj">
+    <ProjectReference Include="..\xrEProps\xrEProps.vcxproj">
       <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrETools\XrETools.vcxproj">
+    <ProjectReference Include="..\xrETools\xrETools.vcxproj">
       <Project>{fb040f9f-8344-43da-a4d6-1c8a9d5dbc59}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
+    <ProjectReference Include="..\xrEUI\xrEUI.vcxproj">
       <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
     </ProjectReference>
   </ItemGroup>
@@ -395,14 +395,14 @@
       <DisableSpecificWarnings>4995</DisableSpecificWarnings>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>_EDITOR;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\xrEngine\;..\..\xrRender\Public;..\..\xrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
@@ -414,7 +414,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_EDITOR;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\xrEngine\;..\..\xrRender\Public;..\..\xrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>Full</Optimization>
@@ -430,7 +430,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

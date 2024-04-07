@@ -234,7 +234,7 @@ void CScenePhyscs::CreateWorld()
 {
     VERIFY(!physics_world());
 
-    XrDeviceInterface* rd = EDevice;
+    xrDeviceInterface* rd = EDevice;
     VERIFY(m_object_space);
     create_physics_world(false, m_object_space, 0, rd);
 }

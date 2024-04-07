@@ -8,13 +8,13 @@
 
 #include "stdafx.h"
 #include "game_spawn_constructor.h"
-#include "../../XrEngine/object_broker.h"
+#include "../../xrEngine/object_broker.h"
 #include "level_spawn_constructor.h"
 #include "../../xrServerEntities/xrServer_Objects_ALife_All.h"
 #include "server_entity_wrapper.h"
 #include "graph_engine_editor.h"
 #include "patrol_path_storage.h"
-#include "..\XrAPI\xrGameManager.h"
+#include "..\xrAPI\xrGameManager.h"
 
 extern LPCSTR GAME_CONFIG;
 extern LPCSTR generate_temp_file_name(LPCSTR header0, LPCSTR header1, string_path& buffer);

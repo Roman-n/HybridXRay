@@ -1,1 +1,1 @@
-start Bin\x64\Debug\XrAI.exe -verify map_test
+..\Bin\x64\Release\XrAI.exe -verify map_test

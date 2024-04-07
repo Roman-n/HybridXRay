@@ -73,7 +73,7 @@ bool is_editor()
 }
 
 #ifdef XRGAME_EXPORTS
-XrDeviceInterface* get_device()
+xrDeviceInterface* get_device()
 {
     return (Device);
 }

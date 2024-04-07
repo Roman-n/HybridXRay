@@ -2,9 +2,9 @@
 #ifndef PropertiesListTypesH
 #define PropertiesListTypesH
 
-#include "..\..\XrEngine\gametype_chooser.h"
-#include "..\XrEUI\localization_types.h"
-#include "..\..\xrcore/ChooseTypes.H"
+#include "../../xrEngine/gametype_chooser.h"
+#include "../xrEUI/localization_types.h"
+#include "../../xrcore/ChooseTypes.H"
 #include "WaveForm.H"
 
 #pragma pack(push, 1)
@@ -441,10 +441,9 @@ class ShortcutValue: public CustomValue<xr_shortcut>
 {
 public:
     typedef fastdelegate::FastDelegate3<ShortcutValue*, const xr_shortcut&, bool&> TOnValidateResult;
-    TOnValidateResult                                                              OnValidateResultEvent;
+    TOnValidateResult OnValidateResultEvent;
 public:
-    ShortcutValue(TYPE* val):
-        CustomValue<xr_shortcut>(val) {}
+    ShortcutValue(TYPE* val): CustomValue<xr_shortcut>(val) {}
     virtual xr_string GetDrawText(TOnDrawTextEvent OnDrawText);
     bool              ApplyValue(const xr_shortcut& val)
     {
@@ -465,8 +464,7 @@ public:
 class RTextValue: public CustomValue<shared_str>
 {
 public:
-    RTextValue(TYPE* val):
-        CustomValue<shared_str>(val){};
+    RTextValue(TYPE* val): CustomValue<shared_str>(val){};
     virtual xr_string GetDrawText(TOnDrawTextEvent OnDrawText)
     {
         xr_string txt = GetValue().c_str() ? GetValue().c_str() : "";
@@ -558,22 +556,20 @@ public:
         m_Items->push_back(SChooseItem(name, hint));
     }
 public:
-    ChooseValue(shared_str* val, u32 cid, LPCSTR path, void* param, u32 sub_item_count, u32 choose_flags):
-        RTextValue(val), m_ChooseID(cid), m_StartPath(path), subitem(sub_item_count), m_Items(0), m_FillParam(param), OnChooseFillEvent(0), /*OnDrawThumbnailEvent(0),*/ m_ChooseFlags(choose_flags) {}
+    ChooseValue(shared_str* val, u32 cid, LPCSTR path, void* param, u32 sub_item_count, u32 choose_flags): RTextValue(val), m_ChooseID(cid), m_StartPath(path), subitem(sub_item_count), m_Items(0), m_FillParam(param), OnChooseFillEvent(0), /*OnDrawThumbnailEvent(0),*/ m_ChooseFlags(choose_flags) {}
 };
 
 typedef CustomValue<BOOL> BOOLValue;
 //------------------------------------------------------------------------------
 
-IC bool                   operator==(const WaveForm& A, const WaveForm& B)
+IC bool operator==(const WaveForm& A, const WaveForm& B)
 {
     return !!A.Similar(B);
 }
 class WaveValue: public CustomValue<WaveForm>
 {
 public:
-    WaveValue(TYPE* val):
-        CustomValue<WaveForm>(val){};
+    WaveValue(TYPE* val): CustomValue<WaveForm>(val){};
     virtual xr_string GetDrawText(TOnDrawTextEvent)
     {
         return "[Wave]";
@@ -587,8 +583,7 @@ IC bool operator==(const GameTypeChooser& A, const GameTypeChooser& B)
 class GameTypeValue: public CustomValue<GameTypeChooser>
 {
 public:
-    GameTypeValue(TYPE* val):
-        CustomValue<GameTypeChooser>(val){};
+    GameTypeValue(TYPE* val): CustomValue<GameTypeChooser>(val){};
     virtual xr_string GetDrawText(TOnDrawTextEvent);
 };
 
@@ -663,7 +658,7 @@ IC xr_string draw_sprintf(xr_string& s, const float& V, int dec)
 //------------------------------------------------------------------------------
 IC bool operator==(const Fvector& A, const Fvector& B)
 {
-    return !!A.similar(B);
+    return !!A.similar(B, EPS);
 }
 IC void clamp(Fvector& V, const Fvector& mn, const Fvector& mx)
 {

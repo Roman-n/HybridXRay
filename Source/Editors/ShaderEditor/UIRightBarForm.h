@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class UIRightBarForm: public XrUI
+class UIRightBarForm: public xrUI
 {
 public:
     UIRightBarForm();

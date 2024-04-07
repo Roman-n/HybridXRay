@@ -4,8 +4,8 @@
 
 #ifdef _PARTICLE_EDITOR
 
-#include "..\..\xrRender\Private\ParticleEffect.h"
-#include "..\XrEcore\Editor\ParticleEffectActions.h"
+#include "../../xrRender/Private/ParticleEffect.h"
+#include "../xrEcore/Editor/ParticleEffectActions.h"
 #include "../Public/PropertiesListHelper.h"
 #include "ui_particletools.h"
 #include "../xrEProps/FolderLib.h"

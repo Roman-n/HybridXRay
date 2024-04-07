@@ -14,7 +14,7 @@
 #include "../../xrServerEntities/xrServer_Object_Base.h"
 #include "spawn_constructor_space.h"
 #include "server_entity_wrapper.h"
-#include "../../XrECore/Engine/guid_generator.h"
+#include "../../xrECore/Engine/guid_generator.h"
 class ISE_Abstract;
 class CLevelSpawnConstructor;
 class ISE_ALifeCreatureAbstract;

@@ -974,7 +974,7 @@ void SceneBuilder::BuildHemiLights(u8 quality, LPCSTR lcontrol)
         sl.data.direction.set(0.f, -1.f, 0.f);
     }
 }
-BOOL SceneBuilder::BuildSun(u8 quality, Fvector2 dir)
+BOOL SceneBuilder::BuildSun(u8 quality, float dispersion, Fvector2 dir)
 {
     int controller_ID = BuildLightControl(LCONTROL_SUN);
     // static
@@ -994,6 +994,12 @@ BOOL SceneBuilder::BuildSun(u8 quality, Fvector2 dir)
         case 3:
             samples = 7;
             break;
+        case 4:
+            samples = 14;
+            break;
+        case 5:
+            samples = 22;
+            break;
         default:
             THROW2("Invalid case.");
     }
@@ -1003,25 +1009,40 @@ BOOL SceneBuilder::BuildSun(u8 quality, Fvector2 dir)
     float sample_energy = 1.f / float(samples * samples);
     color.mul_rgb(sample_energy);
 
-    float disp = deg2rad(3.f);   // dispersion of sun
-    float da   = disp / float(samples);
-    float mn_x = dir.x - disp / 2;
-    float mn_y = dir.y - disp / 2;
-    for (int x = 0; x < samples; x++)
+    if (samples > 1)
     {
-        float fx = mn_x + x * da;
-        for (int y = 0; y < samples; y++)
+        float disp = deg2rad(dispersion);   // dispersion of sun
+        float da   = disp / float(samples - 1);
+        float mn_x = dir.x - disp / 2;
+        float mn_y = dir.y - disp / 2;
+        for (int x = 0; x < samples; x++)
         {
-            float fy = mn_y + y * da;
-            l_light_static.push_back(b_light_static());
-            b_light_static& sl = l_light_static.back();
-            sl.controller_ID   = controller_ID;
-            sl.data.type       = D3DLIGHT_DIRECTIONAL;
-            sl.data.position.set(0, 0, 0);
-            sl.data.diffuse.set(color);
-            sl.data.direction.setHP(fy, fx);
+            float _x = mn_x + x * da;
+            float fx = mn_x + x * da;
+            for (int y = 0; y < samples; y++)
+            {
+                float fy = mn_y + y * da;
+                l_light_static.push_back(b_light_static());
+                b_light_static& sl = l_light_static.back();
+                sl.controller_ID   = controller_ID;
+                sl.data.type       = D3DLIGHT_DIRECTIONAL;
+                sl.data.position.set(0, 0, 0);
+                sl.data.diffuse.set(color);
+                sl.data.direction.setHP(fy, fx);
+            }
         }
     }
+    else
+    {
+        l_light_static.push_back(b_light_static());
+        b_light_static& sl = l_light_static.back();
+        sl.controller_ID = controller_ID;
+        sl.data.type = D3DLIGHT_DIRECTIONAL;
+        sl.data.position.set(0, 0, 0);
+        sl.data.diffuse.set(color);
+        sl.data.direction.setHP(dir.y, dir.x);
+    }
+
     // dynamic
     {
         l_light_dynamic.push_back(b_light_dynamic());
@@ -1474,7 +1495,7 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
     if (0 != strcmp(LCONTROL_HEMI, h_control))
         BuildHemiLights(Scene->m_LevelOp.m_LightHemiQuality, LCONTROL_HEMI);
     // make sun
-    BuildSun(Scene->m_LevelOp.m_LightSunQuality, lt->m_SunShadowDir);
+    BuildSun(Scene->m_LevelOp.m_LightSunQuality, Scene->m_LevelOp.m_LightSunDispersion, lt->m_SunShadowDir);
     // parse scene
     SPBItem* pb = UI->ProgressStart(Scene->ObjCount(), "Parse scene objects...");
 

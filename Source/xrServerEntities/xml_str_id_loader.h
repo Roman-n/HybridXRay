@@ -4,7 +4,7 @@
 #include "ui/xrUIXmlParser.h"
 #else   // XRGAME_EXPORTS
 #include "xrUIXmlParser.h"
-#include "../XrEngine/object_broker.h"
+#include "../xrEngine/object_broker.h"
 #endif   // XRGAME_EXPORTS
 
 // T_ID    - уникальный текстовый идентификатор (аттрибут id в XML файле)

@@ -10,8 +10,10 @@ end
 
 function l_spot    (shader, t_base, t_second, t_detail)
   r1_lspot	(shader, t_base, "wmark_spot")
+	shader		: sorting	(2, false)	
 end
 
 function l_point  (shader, t_base, t_second, t_detail)
   r1_lpoint	(shader, t_base, "wmark_point")
+	shader		: sorting	(2, false)
 end

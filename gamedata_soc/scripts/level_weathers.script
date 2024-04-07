@@ -8,8 +8,8 @@ end
 
 function WeatherManager:reset()
 	--printf					("WeatherManager:WeatherManager():Reset()")
-	-- ��������� �������� � �������.
-	local ini = ini_file("game.ltx")
+	-- Загрузить кондлист с погодой.
+	local ini = game_ini() --KRodin: так быстрее же, чем через ini_file().
 	local weather = utils.cfg_get_string(ini, level.name(), "weathers", db.actor, false, "", "default")
 	local postprocess = utils.cfg_get_string(ini, level.name(), "postprocess", db.actor, false, "")
 	if postprocess ~= nil then
@@ -21,7 +21,7 @@ function WeatherManager:reset()
 	end	
 
 	if weather == "default" then
-		-- ����� ���������� ������
+		-- сетим дефолтовую погоду
 		self.weather_list = xr_logic.parse_condlist(db.actor, level.name(), "weather", "default")
 	else		
 		self.weather_list = xr_logic.parse_condlist(db.actor, level.name(), "weather", weather)
@@ -34,7 +34,12 @@ function WeatherManager:select_weather(now)
 	self.update_level = level.name()
 	local weather = xr_logic.pick_section_from_condlist(db.actor, db.actor, self.weather_list)
 	printf("WEATHER: '%s' now '%s'", weather, tostring(now))
-	level.set_weather(weather,now);
+
+	--KRodin: из-за фикса солнца в движке, погоду нужно устанавливать не ранее, чем на первом апдейте!
+	level.add_call(
+		function() return true end,
+		function() level.set_weather(weather, now) end
+	)
 end
 
 function WeatherManager:load(F)

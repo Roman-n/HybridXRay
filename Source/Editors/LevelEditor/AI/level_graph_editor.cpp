@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "level_graph_editor.h"
 
-#include "..\XrAPI\xrGameManager.h"
+#include "../xrAPI/xrGameManager.h"
 
 const u32        UnkonnectedNode   = 0xfffffff0;
 const WORD       InvalidSector     = 0xff;

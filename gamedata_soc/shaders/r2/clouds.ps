@@ -23,8 +23,8 @@ half4 	main	( v2p I )	: COLOR
 #else
 	half 	scale 	= tex2D		(s_tonemap,half2(.5h,.5h)).x;
 	half4 	rgb , hi;
-	tonemap	(rgb, hi, mix, scale );	
+	tonemap	(rgb, hi, mix, scale );
 #endif
 
-	return  half4	(rgb.rgb, I.color.a);
+	return  half4	(rgb.rgb, rgb.a);
 }

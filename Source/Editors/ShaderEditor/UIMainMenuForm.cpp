@@ -26,7 +26,10 @@ void UIMainMenuForm::Draw()
         }
         if (ImGui::IsItemHovered())
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+        ImGui::SameLine();
         ImGui::Separator();
+        ImGui::Separator();
+        ImGui::SameLine();
         if (ImGui::BeginMenu("Editors"_RU >> u8"Эдиторы"))
         {
             if (ImGui::BeginMenu("Image"_RU >> u8"Текстуры"))
@@ -89,7 +92,10 @@ void UIMainMenuForm::Draw()
         }
         if (ImGui::IsItemHovered())
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+        ImGui::SameLine();
         ImGui::Separator();
+        ImGui::Separator();
+        ImGui::SameLine();
         if (ImGui::BeginMenu("Options"_RU >> u8"Опции"))
         {
             if (ImGui::BeginMenu("Render"_RU >> u8"Экран"))
@@ -312,9 +318,13 @@ void UIMainMenuForm::Draw()
         }
         if (ImGui::IsItemHovered())
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+        ImGui::SameLine();
         ImGui::Separator();
+        ImGui::Separator();
+        ImGui::SameLine();
         if (ImGui::BeginMenu("Windows"_RU >> u8"Окна"))
         {
+            // Лог
             {
                 bool selected = AllowLogCommands();
 
@@ -325,6 +335,7 @@ void UIMainMenuForm::Draw()
                 if (ImGui::IsItemHovered())
                     ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
             }
+            // Окно "Demo ImGui Helper"
             {
                 if (ImGui::MenuItem("Demo ImGui Helper"_RU >> u8"Демонстрационный помощник ImGui", "", bDemoImGui))
                     bDemoImGui = !bDemoImGui;
@@ -334,13 +345,28 @@ void UIMainMenuForm::Draw()
                     ImGui::SetTooltip("Opens the ImGui Demo Helper, where you can get acquainted with ImGui functionality, visually see demo examples, etc. and so on.."_RU >> u8"Открывает Демонстрационный Хелпер по ImGui, где можно ознакомиться с функционалом ImGui, наглядно посмотреть демонстрационные примеры и т.д. и т.п..");
                 }
             }
+            ImGui::SameLine();
+            ImGui::Separator();
+            ImGui::Separator();
+            ImGui::SameLine();
+            // About
+            {
+                if (ImGui::MenuItem("About Editor"_RU >> u8"О Редакторе", ""))
+                {
+                    ExecCommand(COMMAND_ABOUT_EDITOR);
+                }
+                if (ImGui::IsItemHovered())
+                    ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+            }
             ImGui::EndMenu();
         }
         if (ImGui::IsItemHovered())
             ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
         ImGui::SameLine();
         ImGui::Separator();
+        ImGui::SameLine(0, 5);
         ImGui::Separator();
+        ImGui::SameLine(0, 5);
         ImGui::Separator();
         ImGui::SameLine();
         if (ImGui::BeginMenu("Language: EN/RU"_RU >> u8"Язык: EN/RU"))

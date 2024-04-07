@@ -14,6 +14,7 @@ void st_LevelOptions::Reset()
     m_LevelPrefix      = "level_prefix";
     m_LightHemiQuality = 3;
     m_LightSunQuality  = 3;
+    m_LightSunDispersion = 3.f;
     m_BOPText          = "";
     m_map_version      = "1.0";
     m_BuildParams.Init();
@@ -58,10 +59,10 @@ EScene::EScene()
     g_SpatialSpacePhysic = xr_new<ISpatial_DB>();
     // first init scene graph for objects
     // mapRenderObjects.init(MAX_VISUALS);
-    // 	Build options
+    // Build options
     m_SummaryInfo        = 0;
-    // ClearSnapList	(false);
-    //   g_frmConflictLoadObject 		= xr_new<TfrmAppendObjectInfo>((TComponent*)NULL);
+    // ClearSnapList(false);
+    // g_frmConflictLoadObject = xr_new<TfrmAppendObjectInfo>((TComponent*)NULL);
 }
 
 EScene::~EScene()
@@ -684,10 +685,11 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
     B->OnBtnClickEvent.bind(this, &EScene::OnBuildControlClick);
 
     BOOL enabled = (m_LevelOp.m_BuildParams.m_quality == ebqCustom);
-    V            = PHelper().CreateU8(items, PrepareKey(pref, "Scene\\Build options\\Lighting\\Hemisphere quality [0-3]"), &m_LevelOp.m_LightHemiQuality, 0, 3);
+    V = PHelper().CreateU8(items, PrepareKey(pref, "Scene\\Build options\\Lighting\\Hemisphere quality [0-4]"), &m_LevelOp.m_LightHemiQuality, 0, 4);
     V->Owner()->Enable(enabled);
-    V = PHelper().CreateU8(items, PrepareKey(pref, "Scene\\Build options\\Lighting\\Sun shadow quality [0-3]"), &m_LevelOp.m_LightSunQuality, 0, 3);
+    V = PHelper().CreateU8(items, PrepareKey(pref, "Scene\\Build options\\Lighting\\Sun shadow quality [0-5]"), &m_LevelOp.m_LightSunQuality, 0, 5);
     V->Owner()->Enable(enabled);
+    PHelper().CreateFloat(items, PrepareKey(pref, "Scene\\Build options\\Lighting\\Sun dispersion"), &m_LevelOp.m_LightSunDispersion, 0.1f, 180.f);
 
     // Build Options
     // Normals & optimization
@@ -853,6 +855,16 @@ bool EScene::BuildCForm()
 bool EScene::RayPick(const Fvector& start, const Fvector& dir, float& dis, Fvector* pt, Fvector* n)
 {
     return Tools->RayPick(start, dir, dis, pt, n);
+}
+
+IC float EScene::ZFar()
+{
+    return UI->ZFar();
+}
+
+const Fvector& EScene::GetCameraPosition() const
+{
+    return CUICamera->GetPosition();
 }
 
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)

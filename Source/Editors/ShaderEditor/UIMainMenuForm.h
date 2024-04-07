@@ -1,5 +1,5 @@
 ﻿#pragma once
-class UIMainMenuForm: public XrUI
+class UIMainMenuForm: public xrUI
 {
 public:
     UIMainMenuForm();

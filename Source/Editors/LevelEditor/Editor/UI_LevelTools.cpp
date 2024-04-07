@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Utils/Cursor3D.h"
 #include "UI/UIEditLibrary.h"
+#include "Scene/LEPhysics.h"
 
 #define DETACH_FRAME(a) \
     if (a)              \
@@ -271,14 +272,14 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
         MainForm->GetPropertiesFrom()->Open();
 
     /*
-    if(focus_to_item)
-        m_Props->SelectFolder	(focus_to_item);
+    if (focus_to_item)
+        m_Props->FindItem(focus_to_item);
     else
     {
-        if(pCurTool && pCurTool->ClassID!=OBJCLASS_DUMMY)
+        if (pCurTool && pCurTool->FClassID != OBJCLASS_DUMMY)
         {
             LPCSTR cn = pCurTool->ClassDesc();
-            m_Props->SelectFolder	(cn);
+            m_Props->FindItem(cn);
         }
     }
     */
@@ -366,8 +367,9 @@ void CLevelTool::GetCurrentFog(u32& fog_color, float& s_fog, float& e_fog)
     }
     else
     {
-        s_fog = psDeviceFlags.is(rsFog) ? (1.0f - fFogness) * 0.85f * UI->ZFar() : 0.99f * UI->ZFar();
-        e_fog = psDeviceFlags.is(rsFog) ? 0.91f * UI->ZFar() : UI->ZFar();
+        s_fog     = psDeviceFlags.is(rsFog) ? (1.0f - fFogness) * 0.85f * UI->ZFar() : 0.99f * UI->ZFar();
+        e_fog     = psDeviceFlags.is(rsFog) ? 0.91f * UI->ZFar() : UI->ZFar();
+        fog_color = dwFogColor;
     }
 }
 
@@ -475,7 +477,10 @@ void CLevelTool::Render()
         case esEditScene:
             Scene->Render(EDevice->m_Camera.GetTransform());
             if (psDeviceFlags.is(rsEnvironment) || UI->IsPlayInEditor())
+            {
+                g_pGamePersistent->Environment().RenderFlares();
                 g_pGamePersistent->Environment().RenderLast();
+            }
             break;
         case esBuildLevel:
             Builder.OnRender();
@@ -503,7 +508,7 @@ bool CLevelTool::IsModified()
     return Scene->IsUnsaved();
 }
 
-#include "../XrECore/Editor/EditMesh.h"
+#include "../xrECore/Editor/EditMesh.h"
 bool CLevelTool::RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt, Fvector* n)
 {
     if (Scene->ObjCount() && (UI->GetEState() == esEditScene))
@@ -588,16 +593,16 @@ bool CLevelTool::GetSelectionPosition(Fmatrix& result)
 }
 void CLevelTool::Simulate()
 {
-    /*	if (!g_scene_physics.Simulating())
+    if (!g_scene_physics.Simulating())
             g_scene_physics.CreateShellsSelected();
         else
             g_scene_physics.DestroyAll();
         UI->RedrawScene();
-        ExecCommand(COMMAND_REFRESH_UI_BAR);*/
+        ExecCommand(COMMAND_REFRESH_UI_BAR);
 }
 void CLevelTool::UseSimulatePositions()
 {
-    /*g_scene_physics.UseSimulatePoses();*/
+    g_scene_physics.UseSimulatePoses();
 }
 
 void CLevelTool::RunGame(const char* Params)
@@ -614,7 +619,7 @@ void CLevelTool::RunGame(const char* Params)
     ZeroMemory(&m_GameProcess, sizeof(m_GameProcess));
 
     string_path CommandLine;
-    xr_sprintf(CommandLine, "Xr3DA.exe %s", Params);
+    xr_sprintf(CommandLine, "HybridXRay.exe %s", Params);
     Msg("~ Run Game %s.\n", CommandLine);
     // Start the child process.
     if (!CreateProcess(NULL,   // No module name (use command line)
@@ -649,7 +654,7 @@ void CLevelTool::RunXrLC()
     ZeroMemory(&m_CompilerProcess, sizeof(m_CompilerProcess));
 
     string_path CommandLine;
-    xr_sprintf(CommandLine, "XrLC.exe -f %s", Scene->m_LevelOp.m_FNLevelPath.c_str());
+    xr_sprintf(CommandLine, "xrLC.exe -f %s", Scene->m_LevelOp.m_FNLevelPath.c_str());
     Msg("~ Run %s.\n", CommandLine);
     // Start the child process.
     if (!CreateProcess(NULL,      // No module name (use command line)
@@ -664,7 +669,7 @@ void CLevelTool::RunXrLC()
             &m_CompilerProcess)   // Pointer to PROCESS_INFORMATION structure
     )
     {
-        Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+        Msg("! xrLC:CreateProcess failed (%d).\n", GetLastError());
         return;
     }
 }

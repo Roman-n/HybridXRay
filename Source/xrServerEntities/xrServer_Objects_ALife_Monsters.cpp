@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "xrServer_Objects_ALife_Items.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "..\XrEngine\object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "alife_human_brain.h"
 
 #ifndef AI_COMPILER

@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\..\xray_ProjectConfigurations.props" />
+  </ImportGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\xrCPU_Pipe\xrSkin2W.cpp" />
+    <ClCompile Include="..\..\xrEngine\ai_script_lua_debug.cpp" />
+    <ClCompile Include="..\..\xrEngine\ai_script_lua_extension.cpp" />
+    <ClCompile Include="..\..\xrRender\DX9\dx9r_constants_cache.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Animation.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\blenders\Blender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\blenders\Blender_Palette.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\blenders\Blender_Recorder.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_BmmD.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_detail_still.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Editor_Selection.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Editor_Wire.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Lm(EbB).cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Model_EbB.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Particle.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Recorder_R2.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Recorder_StandartBinding.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_Screen_SET.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Blender_tree.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\DetailModel.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxApplicationRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxConsoleRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxDebugRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxEnvironmentRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxFontRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxLensFlareRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxObjectSpaceRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxParticleCustom.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxRainRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxRenderDeviceRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxRenderFactory.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxStatGraphRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxStatsRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxThunderboltDescRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxThunderboltRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxUIRender.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxUISequenceVideoItem.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxUIShader.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\dxWallMarkArray.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ETextureParams.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\FBasicVisual.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\FHierrarhyVisual.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\FProgressive.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\FSkinned.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\FVisual.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\HW.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\HWCaps.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ModelPool.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ParticleEffect.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ParticleEffectDef.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ParticleGroup.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\PSLibrary.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ResourceManager.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ResourceManager_Loader.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ResourceManager_Reset.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ResourceManager_Resources.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\ResourceManager_Scripting.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_Backend.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_Backend_DBG.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_Backend_hemi.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_Backend_Runtime.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_Backend_tree.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_Backend_xform.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\r_constants.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\R_DStreams.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Shader.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SH_Atomic.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SH_Constant.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SH_Matrix.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SH_RT.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SH_Texture.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SkeletonAnimated.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SkeletonCustom.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SkeletonRigid.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\SkeletonX.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\stats_manager.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\Texture.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\TextureDescrManager.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\tga.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\tss_def.cpp" />
+    <ClCompile Include="..\..\xrRender\Private\xrRender_console.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\BlenderDefault.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_Blur.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_default_aref.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_LaEmB.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_Model.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_Screen_GRAY.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_Shadow_World.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_Vertex.cpp" />
+    <ClCompile Include="..\..\xrRender\R1_PC\Blender_Vertex_aref.cpp" />
+    <ClCompile Include="..\Public\NVMeshMenderTwo.cpp" />
+    <ClCompile Include="Editor\ColorPicker.cpp" />
+    <ClCompile Include="Editor\c_dinput.cpp" />
+    <ClCompile Include="Editor\D3DUtils.cpp" />
+    <ClCompile Include="Editor\device.cpp" />
+    <ClCompile Include="Editor\DeviceScreenshot.cpp" />
+    <ClCompile Include="Editor\du_box.cpp" />
+    <ClCompile Include="Editor\du_cone.cpp" />
+    <ClCompile Include="Editor\du_cylinder.cpp" />
+    <ClCompile Include="Editor\du_sphere.cpp" />
+    <ClCompile Include="Editor\du_sphere_part.cpp" />
+    <ClCompile Include="Editor\EDetailModel.cpp" />
+    <ClCompile Include="Editor\EditMesh.cpp" />
+    <ClCompile Include="Editor\EditMeshIO.cpp" />
+    <ClCompile Include="Editor\EditMeshModify.cpp" />
+    <ClCompile Include="Editor\EditMeshPick.cpp" />
+    <ClCompile Include="Editor\EditMeshRender.cpp" />
+    <ClCompile Include="Editor\EditObject.cpp" />
+    <ClCompile Include="Editor\EditObjectEditor.cpp" />
+    <ClCompile Include="Editor\EditObjectImport.cpp" />
+    <ClCompile Include="Editor\EditObjectIO.cpp" />
+    <ClCompile Include="Editor\EditObjectMotions.cpp" />
+    <ClCompile Include="Editor\EditObjectProps.cpp" />
+    <ClCompile Include="Editor\EditObjectSkin.cpp" />
+    <ClCompile Include="Editor\EditorPreferences.cpp" />
+    <ClCompile Include="Editor\ELog.cpp" />
+    <ClCompile Include="Editor\EStats.cpp" />
+    <ClCompile Include="Editor\EThumbnail.cpp" />
+    <ClCompile Include="Editor\EThumbnailGroup.cpp" />
+    <ClCompile Include="Editor\EThumbnailObject.cpp" />
+    <ClCompile Include="Editor\EThumbnailSound.cpp" />
+    <ClCompile Include="Editor\EThumbnailTexture.cpp" />
+    <ClCompile Include="Editor\ExportObjectOGF.cpp" />
+    <ClCompile Include="Editor\ExportObjectOGFCalculateTB.cpp" />
+    <ClCompile Include="Editor\ExportSkeleton.cpp" />
+    <ClCompile Include="Editor\ExportSkeletonCalculateTB.cpp" />
+    <ClCompile Include="Editor\GeometryCollector.cpp" />
+    <ClCompile Include="Editor\UIEditLightAnim.cpp" />
+    <ClCompile Include="Editor\UIImageEditorForm.cpp" />
+    <ClCompile Include="Editor\ImageManager.cpp" />
+    <ClCompile Include="Editor\ImageManagerDO.cpp" />
+    <ClCompile Include="Editor\ImageManagerLOD.cpp" />
+    <ClCompile Include="Editor\Library.cpp" />
+    <ClCompile Include="Editor\UILogForm.cpp" />
+    <ClCompile Include="Editor\UIMinimapEditorForm.cpp" />
+    <ClCompile Include="Editor\UIAboutForm.cpp" />
+    <ClCompile Include="Editor\ParticleEffectActions.cpp" />
+    <ClCompile Include="Editor\pDomain.cpp" />
+    <ClCompile Include="Editor\PhysicsShellHolderEditorBase.cpp" />
+    <ClCompile Include="Editor\render.cpp" />
+    <ClCompile Include="Editor\UIMoveToForm.cpp" />
+    <ClCompile Include="Editor\UISoundEditorForm.cpp" />
+    <ClCompile Include="Editor\SoundManager.cpp" />
+    <ClCompile Include="Editor\TLSPRITE.CPP" />
+    <ClCompile Include="Editor\UIRenderForm.cpp" />
+    <ClCompile Include="Editor\UIWeatherPropForm.cpp" />
+    <ClCompile Include="Editor\UI_Camera.cpp" />
+    <ClCompile Include="Editor\ui_main.cpp" />
+    <ClCompile Include="Editor\UI_MainCommand.cpp" />
+    <ClCompile Include="Editor\UI_MainMail.cpp" />
+    <ClCompile Include="Editor\UI_ToolsCustom.cpp" />
+    <ClCompile Include="Editor\xrLoadSurface.cpp" />
+    <ClCompile Include="Engine\ai_sounds.cpp" />
+    <ClCompile Include="Engine\bone.cpp" />
+    <ClCompile Include="Engine\guid_generator.cpp" />
+    <ClCompile Include="Engine\Image.cpp" />
+    <ClCompile Include="Engine\NVMeshMender.cpp" />
+    <ClCompile Include="Engine\nv_algebra.cpp" />
+    <ClCompile Include="Engine\xrGameMaterialLibraryEditors.cpp" />
+    <ClCompile Include="Engine\xrGamePersistentEditors.cpp" />
+    <ClCompile Include="guid.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="LuaMemoryController.cpp" />
+    <ClCompile Include="StbImage.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WildMagic\RAPIDMinBox.cpp" />
+    <ClCompile Include="WildMagic\WmlApprGaussPointsFit3.cpp" />
+    <ClCompile Include="WildMagic\WmlBox3.cpp" />
+    <ClCompile Include="WildMagic\WmlContBox3.cpp" />
+    <ClCompile Include="WildMagic\WmlContMinBox3.cpp" />
+    <ClCompile Include="WildMagic\WmlEigen.cpp" />
+    <ClCompile Include="WildMagic\WmlMath.cpp" />
+    <ClCompile Include="WildMagic\WmlMatrix2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WildMagic\WmlMatrix3.cpp" />
+    <ClCompile Include="WildMagic\WmlMatrix4.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WildMagic\WmlMinimize1.cpp" />
+    <ClCompile Include="WildMagic\WmlMinimizeN.cpp" />
+    <ClCompile Include="WildMagic\WmlQuaternion.cpp" />
+    <ClCompile Include="WildMagic\WmlSystem.cpp" />
+    <ClCompile Include="WildMagic\WmlVector2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WildMagic\WmlVector3.cpp" />
+    <ClCompile Include="WildMagic\WmlVector4.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WildMagic\WmlWinSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\xrRender\Private\dxApplicationRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxConsoleRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxDebugRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxEnvironmentRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxFontRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxLensFlareRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxObjectSpaceRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxParticleCustom.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxRainRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxRenderDeviceRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxRenderFactory.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxStatGraphRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxStatsRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxThunderboltDescRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxThunderboltRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxUIRender.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxUISequenceVideoItem.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxUIShader.h" />
+    <ClInclude Include="..\..\xrRender\Private\dxWallMarkArray.h" />
+    <ClInclude Include="Editor\ArbitraryList.h" />
+    <ClInclude Include="Editor\ColorPicker.h" />
+    <ClInclude Include="Editor\D3DUtils.h" />
+    <ClInclude Include="Editor\D3DX_Wrapper.h" />
+    <ClInclude Include="Editor\device.h" />
+    <ClInclude Include="Editor\du_box.h" />
+    <ClInclude Include="Editor\du_cone.h" />
+    <ClInclude Include="Editor\du_cylinder.h" />
+    <ClInclude Include="Editor\du_sphere.h" />
+    <ClInclude Include="Editor\du_sphere_part.h" />
+    <ClInclude Include="Editor\EDetailModel.h" />
+    <ClInclude Include="Editor\EditMesh.h" />
+    <ClInclude Include="Editor\EditObject.h" />
+    <ClInclude Include="Editor\EditorChooseEvents.h" />
+    <ClInclude Include="Editor\EditorPreferences.h" />
+    <ClInclude Include="Editor\ELog.h" />
+    <ClInclude Include="Editor\EStats.h" />
+    <ClInclude Include="Editor\EThumbnail.h" />
+    <ClInclude Include="Editor\ExportObjectOGF.h" />
+    <ClInclude Include="Editor\ExportSkeleton.h" />
+    <ClInclude Include="Editor\GeometryCollector.h" />
+    <ClInclude Include="Editor\UIEditLightAnim.h" />
+    <ClInclude Include="Editor\UIImageEditorForm.h" />
+    <ClInclude Include="Editor\UIMinimapEditorForm.h" />
+    <ClInclude Include="Editor\UIAboutForm.h" />
+    <ClInclude Include="Editor\ImageManager.h" />
+    <ClInclude Include="Editor\itterate_adjacents.h" />
+    <ClInclude Include="Editor\itterate_adjacents_dynamic.h" />
+    <ClInclude Include="Editor\Library.h" />
+    <ClInclude Include="Editor\UILogForm.h" />
+    <ClInclude Include="Editor\lwo2.h" />
+    <ClInclude Include="Editor\LW_ShaderDef.h" />
+    <ClInclude Include="Editor\ParticleEffectActions.h" />
+    <ClInclude Include="Editor\PhysicsShellHolderEditorBase.h" />
+    <ClInclude Include="Editor\pick_defs.h" />
+    <ClInclude Include="Editor\render.h" />
+    <ClInclude Include="Editor\SkeletonFace.h" />
+    <ClInclude Include="Editor\SkeletonVert.h" />
+    <ClInclude Include="Editor\UIMoveToForm.h" />
+    <ClInclude Include="Editor\UISoundEditorForm.h" />
+    <ClInclude Include="Editor\SoundManager.h" />
+    <ClInclude Include="Editor\TLSPRITE.h" />
+    <ClInclude Include="Editor\UIRenderForm.h" />
+    <ClInclude Include="Editor\UIWeatherPropForm.h" />
+    <ClInclude Include="Editor\UI_Camera.h" />
+    <ClInclude Include="Editor\ui_main.h" />
+    <ClInclude Include="Editor\UI_MainCommand.h" />
+    <ClInclude Include="Editor\UI_ToolsCustom.h" />
+    <ClInclude Include="Engine\ai_sounds.h" />
+    <ClInclude Include="Engine\cl_intersect.h" />
+    <ClInclude Include="Engine\guid_generator.h" />
+    <ClInclude Include="Engine\NVMeshMender.h" />
+    <ClInclude Include="Engine\nv_algebra.h" />
+    <ClInclude Include="Engine\nv_math.h" />
+    <ClInclude Include="Engine\nv_mathdecl.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\xrGameMaterialLibraryEditors.h" />
+    <ClInclude Include="Engine\xrGamePersistentEditors.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="WildMagic\WmlApprGaussPointsFit3.h" />
+    <ClInclude Include="WildMagic\WmlBox3.h" />
+    <ClInclude Include="WildMagic\WmlContBox3.h" />
+    <ClInclude Include="WildMagic\WmlContMinBox3.h" />
+    <ClInclude Include="WildMagic\WmlEigen.h" />
+    <ClInclude Include="WildMagic\WmlGMatrix.h" />
+    <ClInclude Include="WildMagic\WmlGVector.h" />
+    <ClInclude Include="WildMagic\WmlMath.h" />
+    <ClInclude Include="WildMagic\WmlMatrix.h" />
+    <ClInclude Include="WildMagic\WmlMatrix2.h" />
+    <ClInclude Include="WildMagic\WmlMatrix3.h" />
+    <ClInclude Include="WildMagic\WmlMatrix4.h" />
+    <ClInclude Include="WildMagic\WmlMinimize1.h" />
+    <ClInclude Include="WildMagic\WmlMinimizeN.h" />
+    <ClInclude Include="WildMagic\WmlQuaternion.h" />
+    <ClInclude Include="WildMagic\WmlSystem.h" />
+    <ClInclude Include="WildMagic\WmlVector.h" />
+    <ClInclude Include="WildMagic\WmlVector2.h" />
+    <ClInclude Include="WildMagic\WmlVector3.h" />
+    <ClInclude Include="WildMagic\WmlVector4.h" />
+    <ClInclude Include="WildMagic\WmlWinSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Editor\ImageEditor.ddp" />
+    <None Include="Editor\ImageEditor.dfm" />
+    <None Include="Editor\LogForm.dfm" />
+    <None Include="Editor\MinimapEditor.ddp" />
+    <None Include="Editor\MinimapEditor.dfm" />
+    <None Include="WildMagic\WmlGMatrix.inl" />
+    <None Include="WildMagic\WmlGVector.inl" />
+    <None Include="WildMagic\WmlMath.inl" />
+    <None Include="WildMagic\WmlMatrix.inl" />
+    <None Include="WildMagic\WmlMatrix2.inl" />
+    <None Include="WildMagic\WmlMatrix3.inl" />
+    <None Include="WildMagic\WmlMatrix4.inl" />
+    <None Include="WildMagic\WmlQuaternion.inl" />
+    <None Include="WildMagic\WmlSystem.inl" />
+    <None Include="WildMagic\WmlSystem.mcr" />
+    <None Include="WildMagic\WmlVector.inl" />
+    <None Include="WildMagic\WmlVector2.inl" />
+    <None Include="WildMagic\WmlVector3.inl" />
+    <None Include="WildMagic\WmlVector4.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\External\Luabind\Luabind.vcxproj">
+      <Project>{18c37994-f2f2-46c0-bd55-bc738e8b9d89}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\Ogg\Ogg.vcxproj">
+      <Project>{490c4173-e321-4e03-8e09-0475d7b91307}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\RedImage\RedImageTool\RedImageTool.vcxproj">
+      <Project>{416e323e-3a4b-41a7-b0f5-7a8ec8517b11}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\Theora\Theora.vcxproj">
+      <Project>{0cbe8406-ae28-414b-b353-cb2d3c4003c8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\Vorbis\Vorbis.vcxproj">
+      <Project>{ac3d4f35-0e39-47f7-aeb7-552811a90a07}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrAPI\xrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrCDB\xrCDB.vcxproj">
+      <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrCore\xrCore.vcxproj">
+      <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrEngine\xrEngine.vcxproj">
+      <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrParticles\xrParticles.vcxproj">
+      <Project>{c50a948d-9175-4388-ae07-0cdab7fb69c8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrPhysics\xrPhysics.vcxproj">
+      <Project>{3d3cc439-aabc-4565-99c8-9c53f425380c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xrSound\xrSound.vcxproj">
+      <Project>{57601b62-902a-4ec8-bcc7-b6a2e30b0676}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FreeMagic\FreeMagic.vcxproj">
+      <Project>{dcc5b76d-be13-4d1f-be14-75d0fa678340}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrDXT\xrDXT.vcxproj">
+      <Project>{7c119635-1963-4547-b345-cb7ed7eb2ee4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrEProps\xrEProps.vcxproj">
+      <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrETools\xrETools.vcxproj">
+      <Project>{fb040f9f-8344-43da-a4d6-1c8a9d5dbc59}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\xrEUI\xrEUI.vcxproj">
+      <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9187BE98-531A-4276-B78E-DBA3C8AB8447}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>xrECore</RootNamespace>
+    <ProjectName>xrECore</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\..\xray_PlatformToolset.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\xray.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\xray.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <DisableSpecificWarnings>4995</DisableSpecificWarnings>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>_DEBUG;XRECORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\..\xrEngine\;..\..\xrRender\Private;..\..\xrRender\Public;..\FreeMagic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <DisableSpecificWarnings>4995</DisableSpecificWarnings>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;XRECORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\..\xrEngine\;..\..\xrRender\Private;..\..\xrRender\Public;..\FreeMagic;$(SolutionDir)..\SDK\tbb\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>Full</Optimization>
+      <StringPooling>true</StringPooling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\SDK\tbb\Lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

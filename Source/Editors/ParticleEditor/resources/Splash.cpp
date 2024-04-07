@@ -34,7 +34,7 @@ static INT_PTR CALLBACK LogoWndProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp)
             FillRect(hdc, &rect, brush);
             DeleteObject(brush);
 
-            rect.top = 290;
+            rect.top = 295;
             // Текст и роценты процесса стадий загрузки.
             if (nCounter <= 1)
                 sprintf_s(buffer, "Start Load...  %d %%", nCounter);

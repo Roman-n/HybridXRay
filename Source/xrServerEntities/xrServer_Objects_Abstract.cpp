@@ -11,7 +11,7 @@
 
 #include "xrServer_Objects_Abstract.h"
 #include "xrMessages.h"
-#include "../../XrEngine/xrISEAbstract.h"
+#include "../../xrEngine/xrISEAbstract.h"
 
 ////////////////////////////////////////////////////////////////////////////
 // CSE_Visual

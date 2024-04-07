@@ -385,6 +385,12 @@ bool CActorTools::SaveMotions(LPCSTR name, bool bSelOnly)
 
 void CActorTools::MakePreview()
 {
+    if (!VerifyMotionRefs())
+    {
+        MainForm->GetLeftBarForm()->SetRenderMode(false);
+        return;
+    }
+
     if (m_pEditObject)
     {
         CMemoryWriter F;
@@ -510,4 +516,30 @@ void CActorTools::RemoveMarksChannel(bool b12)
 
         ExecCommand(COMMAND_UPDATE_PROPERTIES);
     }
+}
+
+bool CActorTools::VerifyMotionRefs()
+{
+    bool result = true;
+
+    if (m_pEditObject)
+    {
+        if (m_pEditObject->IsSkeleton() && m_pEditObject->m_SMotionRefs.size())
+        {
+            xr_vector<shared_str>::iterator it, end;
+            it = m_pEditObject->m_SMotionRefs.begin();
+            end = m_pEditObject->m_SMotionRefs.end();
+
+            for (; it != end; it++)
+            {
+                string_path fn;
+                if (!FS.exist(fn, _game_meshes_, (*it).c_str(), ".omf"))
+                {
+                    ELog.Msg(mtError, "! Can't find motion file '%s'.", (*it).c_str());
+                    result = false;
+                }
+            }
+        }
+    }
+    return result;
 }

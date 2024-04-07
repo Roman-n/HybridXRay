@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
-#include "..\XrECore\Editor\EditorChooseEvents.h"
-#include "resources\splash.h"
+#include "../xrECore/Editor/EditorChooseEvents.h"
+#include "resources/splash.h"
 UIMainForm* MainForm = nullptr;
 UIMainForm::UIMainForm()
 {

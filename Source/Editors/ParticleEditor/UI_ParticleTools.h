@@ -3,8 +3,8 @@
 #define UI_ParticleToolsH
 
 //. ?#include "ParticleSystem.h"
-#include "..\..\XrRender\Private\ParticleEffect.h"
-#include "..\..\XrRender\Private\ParticleGroup.h"
+#include "../../xrRender/Private/ParticleEffect.h"
+#include "../../xrRender/Private/ParticleGroup.h"
 #include "pure.h"
 
 // refs

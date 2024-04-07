@@ -18,5 +18,5 @@ half4 	main_ps_1_1	( v2p I )	: COLOR
 	half4 	s1	= tex2D		(s_clouds1,I.tc1);
 	half4 	mix 	= I.color * (s0 + s1)	;
 
-	return  half4	(mix.rgb, I.color.a)	;
+	return  half4	(mix.rgb, mix.a)	;
 }

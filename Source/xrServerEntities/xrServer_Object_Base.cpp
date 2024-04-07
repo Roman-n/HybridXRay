@@ -12,7 +12,7 @@
 #include "game_base_space.h"
 #include "script_value_container_impl.h"
 #include "clsid_game.h"
-#include "../../XrEngine/xrISEAbstract.h"
+#include "../../xrEngine/xrISEAbstract.h"
 
 #pragma warning(push)
 #pragma warning(disable:4995)

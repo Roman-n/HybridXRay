@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "..\..\XrRender\Private\ParticleGroup.h"
+#include "../../xrRender/Private/ParticleGroup.h"
 #include "../Public/PropertiesListHelper.h"
 #include "ui_particletools.h"
 

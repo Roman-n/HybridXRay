@@ -4,8 +4,8 @@
 #include "stdafx.h"
 
 #include "IM_Manipulator.h"
-#include "../XrEUI/imgui.h"
-#include "../XrEUI/ImGuizmo.h"
+#include "../xrEUI/imgui.h"
+#include "../xrEUI/ImGuizmo.h"
 #include "../../scene/scene.h"
 #include "../../UI_LevelTools.h"
 #include "../../Entry/CustomObject.h"

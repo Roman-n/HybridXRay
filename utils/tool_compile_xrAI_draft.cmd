@@ -1,1 +1,1 @@
-start Bin\x64\Debug\XrAI.exe -f map_test -draft -keep_temp_files
+..\Bin\x64\Release\XrAI.exe -f map_test -draft -keep_temp_files

@@ -1,9 +1,9 @@
 ﻿#include "stdafx.h"
-#include "..\..\XrAPI\xrGameManager.h"
-#include "Utils\Cursor3D.h"
-#include "..\xrengine\GameFont.h"
-#include "UI\UIEditLibrary.h"
-#include "..\resources\resource.h"
+#include "../../xrAPI/xrGameManager.h"
+#include "Utils/Cursor3D.h"
+#include "../xrengine/GameFont.h"
+#include "UI/UIEditLibrary.h"
+#include "../resources/resource.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -203,6 +203,12 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
 
             UI->SetStatus("# Level loading...");
             ExecCommand(COMMAND_CLEAR);
+
+            if (!FS.exist(temp_fn.c_str()))
+            {
+                ELog.DlgMsg(mtError, "! Can't find map file '%s'", temp_fn.c_str());
+                return FALSE;
+            }
 
             IReader* R = FS.r_open(temp_fn.c_str());
             if (!R)
@@ -952,14 +958,12 @@ CCommandVar CommandRefreshSnapObjects(CCommandVar p1, CCommandVar p2)
     return TRUE;
 }
 
-/*
 CCommandVar CommandRefreshSoundEnvs(CCommandVar p1, CCommandVar p2)
 {
     ::Sound->refresh_env_library();
-    return 						TRUE;
-//		::Sound->_restart();
+    return TRUE;
+//  ::Sound->_restart();
 }
-*/
 
 CCommandVar CommandRefreshSoundEnvGeometry(CCommandVar p1, CCommandVar p2)
 {
@@ -1109,7 +1113,7 @@ void CLevelMain::RegisterCommands()
     REGISTER_CMD_S(COMMAND_CLEAR_SNAP_OBJECTS, CommandClearSnapObjects);
     REGISTER_CMD_S(COMMAND_SELECT_SNAP_OBJECTS, CommandSelectSnapObjects);
     REGISTER_CMD_S(COMMAND_REFRESH_SNAP_OBJECTS, CommandRefreshSnapObjects);
-    //	REGISTER_CMD_S	    (COMMAND_REFRESH_SOUND_ENVS,        CommandRefreshSoundEnvs);
+    REGISTER_CMD_S(COMMAND_REFRESH_SOUND_ENVS, CommandRefreshSoundEnvs);
     REGISTER_CMD_S(COMMAND_REFRESH_SOUND_ENV_GEOMETRY, CommandRefreshSoundEnvGeometry);
     REGISTER_CMD_S(COMMAND_SHOWCONTEXTMENU, CommandShowContextMenu);
     REGISTER_CMD_S(COMMAND_REFRESH_UI_BAR, CommandRefreshUIBar);
@@ -1185,7 +1189,7 @@ void RetrieveSceneObjPointAndNormal(Fvector& hitpoint, Fvector* hitnormal, const
 bool EditLibPickObjectGeometry(Fvector& hitpoint, const Fvector& start, const Fvector& direction, int bSnap, Fvector* hitnormal)
 {
     SRayPickInfo pinf;
-    /*if( TfrmEditLibrary::RayPick( start, direction, &pinf ) )
+    /*if (UIEditLibrary::RayPick(start, direction, &pinf))
     {
         RetrieveSceneObjPointAndNormal( hitpoint,  hitnormal, pinf, bSnap );
         return true;
@@ -1468,7 +1472,7 @@ void CLevelMain::OnStats(CGameFont* font)
 {
     float Height = font->GetHeight();
     font->SetColor(color_rgba(255, 0, 0, 255));
-    font->SetHeight(14);
+    font->SetHeight(11);
     if (!Scene->m_RTFlags.is(EScene::flIsBuildedCForm))
     {
         font->OutNext("NEED REBUILD CFORM");

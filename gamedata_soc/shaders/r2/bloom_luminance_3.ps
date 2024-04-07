@@ -72,7 +72,9 @@ half4 	main		( v2p I )	: COLOR
 	float  	scale_prev	= tex2D	(s_tonemap,I.tc0).x;
 	float 	rvalue		= lerp	(scale_prev,scale,MiddleGray.w);
 
-			clamp		(rvalue, 1.f/8.f, 2.0f);
+//			clamp		(rvalue, 1.f/8.f, 2.0f);
+
+			clamp		(rvalue, 1.f/128.f, 20.0f);
 
 	return 	rvalue		;
 

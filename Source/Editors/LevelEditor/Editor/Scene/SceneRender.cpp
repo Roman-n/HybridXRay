@@ -36,6 +36,7 @@ void object_Normal_3(EScene::mapObject_Node* N)
 {
     RENDER_OBJECT(3, false);
 }
+//------------------------------------------------------------------------------
 void object_StrictB2F_0(EScene::mapObject_Node* N)
 {
     RENDER_OBJECT(0, true);

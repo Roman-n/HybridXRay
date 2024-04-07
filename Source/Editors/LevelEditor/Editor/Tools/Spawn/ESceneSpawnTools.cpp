@@ -12,12 +12,12 @@ CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, co
     if (m_draw_RP_visuals.empty())
     {
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_ah"));          // 0
-        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_cta_blue"));    // 1
-        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_cta_green"));   // 2
-        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_ah_cta_blue"));     // 3
-        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_ah_cta_green"));    // 4
-        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_dm"));              // 5
-        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_tdm_blue"));        // 6
+        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_cta_blue"));    //1
+        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\artefakt_cta_green"));   //2
+        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_ah_cta_blue"));     //3
+        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_ah_cta_green"));    //4
+        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_dm"));              //5
+        m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_tdm_blue"));        //6
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\telo_tdm_green"));       // 7
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\spectator"));            // 8
         m_draw_RP_visuals.push_back(Lib.CreateEditObject("editor\\item_spawn"));           // 9
@@ -119,7 +119,8 @@ ESceneSpawnTool::ESceneSpawnTool(): ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
         {
             CLASS_ID   cls_id = pSettings->r_clsid((*it)->Name, "class");
             shared_str v      = pSettings->r_string_wb((*it)->Name, "$spawn");
-            m_Classes[cls_id].push_back(SChooseItem(*v, *(*it)->Name));
+            if (!v.equal(""))
+                m_Classes[cls_id].push_back(SChooseItem(*v, *(*it)->Name));
         }
     }
 }

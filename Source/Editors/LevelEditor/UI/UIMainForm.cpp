@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
-#include "..\XrECore\Editor\EditorChooseEvents.h"
-#include "..\resources\splash.h"
-#include "..\XrEUI\ImGuizmo.h"
-#include "Editor\Utils\Gizmo\IM_Manipulator.h"
+#include "../xrECore/Editor/EditorChooseEvents.h"
+#include "../resources/splash.h"
+#include "../xrEUI/ImGuizmo.h"
+#include "Editor/Utils/Gizmo/IM_Manipulator.h"
 
 UIMainForm* MainForm = nullptr;
 UIMainForm::UIMainForm()
@@ -300,10 +300,23 @@ void UIMainForm::DrawRenderToolBar(ImVec2 Pos, ImVec2 Size)
                 {
                     if (ImGui::BeginMenu("Environment"_RU >> u8"Погода"))
                     {
+                        // --------------------------------------------------------------------------------------------
+                        {
+                            if (ImGui::Button("Weather properties"_RU >> u8"Свойства погоды"))
+                            {
+                                ExecCommand(COMMAND_WEATHER_PROPERTIES);
+                            }
+                            if (ImGui::IsItemHovered())
+                                ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+                        }
+                        // --------------------------------------------------------------------------------------------
+                        ImGui::Separator();
+                        // --------------------------------------------------------------------------------------------
                         bool selected = !psDeviceFlags.test(rsEnvironment);
                         if (ImGui::MenuItem("None", "", &selected))
                         {
                             psDeviceFlags.set(rsEnvironment, false);
+                            g_pGamePersistent->Environment().Invalidate();
                             UI->RedrawScene();
                         }
                         if (ImGui::IsItemHovered())
@@ -311,16 +324,30 @@ void UIMainForm::DrawRenderToolBar(ImVec2 Pos, ImVec2 Size)
                         ImGui::Separator();
                         for (auto& i: g_pGamePersistent->Environment().WeatherCycles)
                         {
-                            selected = psDeviceFlags.test(rsEnvironment) && i.first == g_pGamePersistent->Environment().CurrentCycleName;
+                            #pragma TODO("Romann: Если в UI_MainCommand.cpp исправится применение погодного цикла из ini файла - то тут надо заменить 'EPrefs->sWeather' на 'g_pGamePersistent->Environment().CurrentCycleName'")
+                            selected = psDeviceFlags.test(rsEnvironment) && i.first == EPrefs->sWeather;
                             if (ImGui::MenuItem(i.first.c_str(), "", &selected))
                             {
                                 psDeviceFlags.set(rsEnvironment, true);
                                 g_pGamePersistent->Environment().SetWeather(i.first.c_str(), true);
+                                EPrefs->sWeather = g_pGamePersistent->Environment().CurrentCycleName;
                                 UI->RedrawScene();
                             }
                             if (ImGui::IsItemHovered())
                                 ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
                         }
+                        // --------------------------------------------------------------------------------------------
+                        ImGui::Separator();
+                        // --------------------------------------------------------------------------------------------
+                        if (ImGui::Button("Reload"_RU >> u8"Перезагрузить"))
+                        {
+                            Engine.ReloadSettings();
+                            g_pGamePersistent->Environment().ED_Reload();
+                            UI->RedrawScene();
+                        }
+                        if (ImGui::IsItemHovered())
+                            ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+                        // --------------------------------------------------------------------------------------------
                         ImGui::EndMenu();
                     }
                     if (ImGui::IsItemHovered())

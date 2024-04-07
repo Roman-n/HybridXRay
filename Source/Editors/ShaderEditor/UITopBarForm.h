@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class UITopBarForm: public XrUI
+class UITopBarForm: public xrUI
 {
 public:
     UITopBarForm();
