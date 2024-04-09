@@ -73,8 +73,8 @@ BOOL        ESceneAIMapTool::CreateNode(Fvector& vAt, SAINode& N, bool bIC)
         if (R->e_obj && R->e_mesh)
         {
             CSurface*    surf = R->e_mesh->GetSurfaceByFaceID(R->tag);
-            //.			SGameMtl* mtl 		=  GameMaterialLibrary->GetMaterialByID(surf->_GameMtl());
-            //.			if (mtl->Flags.is(SGameMtl::flPassable))continue;
+            // SGameMtl* mtl =  GameMaterialLibrary->GetMaterialByID(surf->_GameMtl());
+            // if (mtl->Flags.is(SGameMtl::flPassable))continue;
 
             Shader_xrLC* c_sh = EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
             if (!c_sh->flags.bCollision)
@@ -86,7 +86,7 @@ BOOL        ESceneAIMapTool::CreateNode(Fvector& vAt, SAINode& N, bool bIC)
                   u16 mtl_id = R->material;
                   if(std::find(m_ignored_materials.begin(), m_ignored_materials.end(), mtl_id) != m_ignored_materials.end() )
                   {
-      //              Msg("--ignore");
+                   // Msg("--ignore");
                       continue;
                   }
               }
@@ -104,7 +104,7 @@ BOOL        ESceneAIMapTool::CreateNode(Fvector& vAt, SAINode& N, bool bIC)
     }
     if (tris.size() == 0)
     {
-        //		Log("chasm2");
+        // Log("chasm2");
         return FALSE;   // chasm?
     }
 
@@ -743,11 +743,17 @@ bool ESceneAIMapTool::GenerateMap(bool bFromSelectedOnly)
                     {
                         CSurface*    surf = sp_it->first;
                         // test passable
-                        //.			        SGameMtl* mtl 		=
-                        //GameMaterialLibrary->GetMaterialByID(surf->_GameMtl()); .					if
-                        //(mtl->Flags.is(SGameMtl::flPassable))continue;
+                        // SGameMtl* mtl = GameMaterialLibrary->GetMaterialByID(surf->_GameMtl());
+                        // if (mtl->Flags.is(SGameMtl::flPassable))
+                        //       continue;
+
+                        xr_vector<u16>::iterator start = m_ignored_materials.begin();
+                        xr_vector<u16>::iterator end   = m_ignored_materials.end();
+                        if (std::find(start, end, surf->_GameMtl()) != end)
+                            continue;
 
                         Shader_xrLC* c_sh = EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
+                        R_ASSERT2(c_sh, surf->_ShaderXRLCName());
                         if (!c_sh->flags.bCollision)
                             continue;
                         // collect tris
