@@ -114,14 +114,19 @@ bool CFileDialog::ShowModal(HWND owner)
     }
 
     int ret;
-    if ((GetVersion() & 0xFF) >= 6)   // if NT6 or greater
+    if (!strstr(GetCommandLine(), "-old_load_window"))
     {
-        ret = ShowVista(owner);
-        if (ret < 0)
+        if ((GetVersion() & 0xFF) >= 6)   // if NT6 or greater
         {
-            Log("Vista dialog failed :-(");
-            ret = ShowOld(owner);
+            ret = ShowVista(owner);
+            if (ret < 0)
+            {
+                Log("Vista dialog failed :-(");
+                ret = ShowOld(owner);
+            }
         }
+        else
+            ret = ShowOld(owner);
     }
     else
         ret = ShowOld(owner);
