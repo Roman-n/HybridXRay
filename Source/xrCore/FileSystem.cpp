@@ -150,7 +150,7 @@ bool EFS_Utils::GetOpenNameInternal(HWND hWnd, LPCSTR initial, LPSTR buffer, int
     CFileDialog fd(CFileDialog::fdOpen);
     fd.Caption = "Open a File";
 
-    if (strstr(Core.Params, "-dont_remember_last_folder"))
+    if (!strstr(Core.Params, "-remember_last_folder"))
     {
         string512 path;
         xr_strcpy(path, (offset && offset[0]) ? offset : P.m_Path);
@@ -252,7 +252,7 @@ bool EFS_Utils::GetSaveName(LPCSTR initial, string_path& buffer, LPCSTR offset, 
         _GetItem(P.m_DefExt, 0, defext, ';');
         fd.DefaultExt = defext;
     }
-    if (strstr(Core.Params, "-dont_remember_last_folder"))
+    if (!strstr(Core.Params, "-remember_last_folder"))
     {
         string512 path;
         xr_strcpy(path, (offset && offset[0]) ? offset : P.m_Path);
