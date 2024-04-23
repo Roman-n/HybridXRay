@@ -44,7 +44,7 @@ void CWayPoint::Render(LPCSTR parent_name, bool bParentSelect)
 
     if (bParentSelect)
     {
-        u32       c    = (m_bSelected) ? 0xFFFFFFFF : 0xFFA0A0A0;
+        u32       c    = (m_bSelected) ? 0xFF80FF70 : 0xFFFFFFFF;
         u32       s    = 0xFF000000;
 
         xr_string hint = xr_string(" ") + parent_name;
