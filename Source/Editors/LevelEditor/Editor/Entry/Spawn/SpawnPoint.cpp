@@ -72,15 +72,20 @@ void CLE_Visual::OnChangeVisual()
 
         if (NULL == visual && !g_tmp_lock)
         {
-            xr_string _msg     = "Model [" + xr_string(source->visual_name.c_str()) + "] not found. Do you want to select it from library?";
-            int       mr       = ELog.DlgMsg(mtConfirmation, mbYes | mbNo, _msg.c_str());
-            LPCSTR    _new_val = 0;
+            static bool NoToAll = false;
+            if (NoToAll)
+                return;
+
+            xr_string _msg     = "& Model [" + xr_string(source->visual_name.c_str()) + "] not found. Do you want to select it from library?";
+            int       mr       = ELog.DlgMsg(mtConfirmation, mbYes | mbNo | mbCancel, _msg.c_str());
             g_tmp_lock         = true;
             if (mr == mrYes)
             {
                 UIChooseForm::SelectItem(smVisual, 1);
                 EDevice->seqDrawUI.Add(this);
             }
+            if (mr == mrCancel)
+                NoToAll = true;
 
             g_tmp_lock = false;
         }

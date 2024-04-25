@@ -21,7 +21,7 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
         if (!SetReference(ref_name.c_str()))
         {
-            ELog.Msg(mtError, "! CSceneObject: '%s' not found in library", ref_name.c_str());
+            ELog.Msg(mtError, "~ CSceneObject: '%s' not found in library", ref_name.c_str());
             bRes         = false;
             int       mr = mrNone;
 
@@ -39,12 +39,15 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
             }
             if (!bRes)
             {
-                /* if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
+                 /*
+                 LPCSTR new_val = 0;
+                 if ((mr == mrNone || mr == mrYes) && UIChooseForm::SelectItem(smObject, 1, new_val))
                  {
                      bRes = SetReference(new_val);
-                     if(bRes)
+                     if (bRes)
                          Scene->RegisterSubstObjectName(ref_name.c_str(), new_val);
-                 }*/
+                 }
+                 */
             }
 
             Scene->Modified();
@@ -174,7 +177,7 @@ bool CSceneObject::LoadStream(IReader& F)
 
         if (!SetReference(buf))
         {
-            ELog.Msg(mtError, "! CSceneObject: '%s' not found in library", buf);
+            ELog.Msg(mtError, "~ CSceneObject: '%s' not found in library", buf);
             bRes         = false;
             int       mr = mrNone;
 

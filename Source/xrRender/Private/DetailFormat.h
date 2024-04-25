@@ -148,9 +148,9 @@ public:
             default:
                 NODEFAULT;
         }
-#ifdef DEBUG
+// #ifdef DEBUG
         return 0;
-#endif
+// #endif
     }
     void w_id(u32 idx, u8 val)
     {
