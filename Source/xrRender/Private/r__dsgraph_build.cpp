@@ -70,7 +70,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
     ShaderElement* sh = RImplementation.rimp_select_sh_dynamic(pVisual, distSQ);
     if (0 == sh)
         return;
-    if (!pmask[sh->flags.iPriority / 2])
+    if (!pmask[sh->flags.iPriority / 2] && !RI.val_bUI)
         return;
 
     // Create common node
@@ -109,6 +109,42 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
                 N->val.se         = &*pVisual->shader->E[4];   // 4=L_special
             }
 #endif   //	RENDER!=R_R1
+            return;
+        }
+    }
+
+    // UI rendering
+    if (RI.val_bUI)
+    {
+        if (sh->flags.bStrictB2F)
+        {
+            mapSorted_Node* N = mapUISorted.insertInAnyWay(distSQ);
+            N->val.ssa = SSA;
+            N->val.pObject = RI.val_pObject;
+            N->val.pVisual = pVisual;
+            N->val.Matrix = *RI.val_pTransform;
+            N->val.se = sh;
+            return;
+        }
+        else
+        {
+            mapHUD_Node* N = mapUI.insertInAnyWay(distSQ);
+            N->val.ssa = SSA;
+            N->val.pObject = RI.val_pObject;
+            N->val.pVisual = pVisual;
+            N->val.Matrix = *RI.val_pTransform;
+            N->val.se = sh;
+#if RENDER!=R_R1
+            if (sh->flags.bEmissive)
+            {
+                mapSorted_Node* N_ = mapUIEmissive.insertInAnyWay(distSQ);
+                N_->val.ssa = SSA;
+                N_->val.pObject = RI.val_pObject;
+                N_->val.pVisual = pVisual;
+                N_->val.Matrix = *RI.val_pTransform;
+                N_->val.se = &*pVisual->shader->E[4];   // 4 = L_special
+            }
+#endif   // RENDER != R_R1
             return;
         }
     }

@@ -1945,6 +1945,7 @@
     <ClCompile Include="tri-colliderknoopc\dTriSphere.cpp">
     </ClCompile>
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UI3dStatic.cpp" />
     <ClCompile Include="UICursor.cpp" />
     <ClCompile Include="UICustomItem.cpp">
     </ClCompile>
@@ -2596,6 +2597,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="UI3dStatic.h" />
     <ClInclude Include="xrLevelEditor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

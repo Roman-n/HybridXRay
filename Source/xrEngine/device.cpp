@@ -411,16 +411,15 @@ void CRenderDevice::Run()
     Timer_MM_Delta = 0;
     {
         u32 time_mm = timeGetTime();
-        while (timeGetTime() == time_mm)
-            ;   // wait for next tick
+        while (timeGetTime() == time_mm);   // wait for next tick
         u32 time_system = timeGetTime();
         u32 time_local  = TimerAsync();
         Timer_MM_Delta  = time_system - time_local;
     }
 
     // Start all threads
-    //	InitializeCriticalSection	(&mt_csEnter);
-    //	InitializeCriticalSection	(&mt_csLeave);
+    // InitializeCriticalSection(&mt_csEnter);
+    // InitializeCriticalSection(&mt_csLeave);
     mt_csEnter.Enter();
     mt_bMustExit = FALSE;
     thread_spawn(mt_Thread, "X-RAY Secondary thread", 0, 0);
@@ -440,8 +439,8 @@ void CRenderDevice::Run()
     mt_csEnter.Leave();
     while (mt_bMustExit)
         Sleep(0);
-    //	DeleteCriticalSection	(&mt_csEnter);
-    //	DeleteCriticalSection	(&mt_csLeave);
+    // DeleteCriticalSection(&mt_csEnter);
+    // DeleteCriticalSection(&mt_csLeave);
 }
 
 u32  app_inactive_time       = 0;

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "UIStatic.h"
+// #include "UI3dStatic.h"   // Для 3d иконок
 #include "UIDialogWnd.h"
 
 class CUIDragItem;
@@ -22,9 +23,11 @@ public:
     virtual void OnDraw(CUIDragItem* drag_item) = 0;
 };
 
+// class CUICellItem: public CUI3dStatic   // Для 3d иконок
 class CUICellItem: public CUIStatic
 {
 private:
+    // typedef CUI3dStatic inherited;      // Для 3d иконок
     typedef CUIStatic inherited;
 
 protected:

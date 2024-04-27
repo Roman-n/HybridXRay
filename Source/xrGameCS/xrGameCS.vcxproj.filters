@@ -7455,6 +7455,9 @@
     <ClInclude Include="ui\UIGameTutorial.h">
       <Filter>UI\Tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="UI3dStatic.h">
+      <Filter>UI\UIWindows\Static</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11095,6 +11098,9 @@
     </ClCompile>
     <ClCompile Include="game_graph.cpp" />
     <ClCompile Include="game_level_cross_table.cpp" />
+    <ClCompile Include="UI3dStatic.cpp">
+      <Filter>UI\UIWindows\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="graph_abstract.h">

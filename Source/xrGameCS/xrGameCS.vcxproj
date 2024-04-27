@@ -1468,6 +1468,7 @@
     <ClInclude Include="tri-colliderknoopc\TriPrimitiveCollideClassDef.h" />
     <ClInclude Include="tri-colliderKNoOPC\__aabb_tri.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UI3dStatic.h" />
     <ClInclude Include="UICursor.h" />
     <ClInclude Include="UICustomItem.h" />
     <ClInclude Include="UIDialogHolder.h" />
@@ -4064,6 +4065,7 @@
     <ClCompile Include="tri-colliderknoopc\dTriSphere.cpp">
     </ClCompile>
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UI3dStatic.cpp" />
     <ClCompile Include="UICursor.cpp" />
     <ClCompile Include="UICustomItem.cpp" />
     <ClCompile Include="UIDialogHolder.cpp" />

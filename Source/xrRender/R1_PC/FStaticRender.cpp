@@ -27,6 +27,7 @@ ShaderElement* CRender::rimp_select_sh_dynamic(dxRender_Visual* pVisual, float c
     switch (phase)
     {
         case PHASE_NORMAL:
+            // return (((_sqrt(cdist_sq) - pVisual->vis.sphere.R) < 44) ? pVisual->shader->E[SE_R1_NORMAL_HQ] : pVisual->shader->E[SE_R1_NORMAL_LQ])._get();
             return (RImplementation.L_Projector->shadowing() ? pVisual->shader->E[SE_R1_NORMAL_HQ] : pVisual->shader->E[SE_R1_NORMAL_LQ])._get();
         case PHASE_POINT:
             return pVisual->shader->E[SE_R1_LPOINT]._get();
@@ -314,7 +315,7 @@ BOOL CRender::occ_visible(Fbox& P)
     return HOM.visible(P);
 }
 ENGINE_API extern BOOL g_bRendering;
-void                   CRender::add_Visual(IRenderVisual* V)
+void CRender::add_Visual(IRenderVisual* V)
 {
     VERIFY(g_bRendering);
     add_leafs_Dynamic((dxRender_Visual*)V);
@@ -677,7 +678,24 @@ void CRender::rmNormal()
 }
 
 extern u32 g_r;
-void       CRender::Render()
+void CRender::RenderUI()
+{
+    // HW.pDevice->ClearDepthStencilView(HW.pBaseZB, D3D_CLEAR_DEPTH | D3D_CLEAR_STENCIL, 1.0f, 0);
+    HW.pDevice->Clear(0L, nullptr, D3DCLEAR_STENCIL, 1.0f, 0, 0L);
+
+    // rmNormal();
+    // Target->u_setrt(Device->dwWidth, Device->dwHeight, Target->rt_Position->pRT, HW.pBaseRT, NULL, HW.pBaseZB);
+    CHK_DX(Device->dwWidth, Device->dwHeight, Target->RT->pRT, HW.pBaseRT, NULL, HW.pBaseZB);
+    r_dsgraph_render_ui();
+
+    // Target->u_setrt(Device->dwWidth, Device->dwHeight, HW.pBaseRT, 0, 0, HW.pBaseZB);
+    CHK_DX(Device->dwWidth, Device->dwHeight, HW.pBaseRT, 0, 0, HW.pBaseZB);
+    r_dsgraph_render_sorted_ui();
+
+    marker++;
+}
+
+void CRender::Render()
 {
     if (m_bFirstFrameAfterReset)
     {

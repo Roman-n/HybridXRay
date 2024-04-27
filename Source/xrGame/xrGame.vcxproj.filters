@@ -7342,6 +7342,9 @@
     <ClInclude Include="PersonalBox.h">
       <Filter>Core\Client\Objects\inventory_box</Filter>
     </ClInclude>
+    <ClInclude Include="UI3dStatic.h">
+      <Filter>UI\UIWindows\Static</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -10997,6 +11000,9 @@
     </ClCompile>
     <ClCompile Include="PersonalBox.cpp">
       <Filter>Core\Client\Objects\inventory_box</Filter>
+    </ClCompile>
+    <ClCompile Include="UI3dStatic.cpp">
+      <Filter>UI\UIWindows\Static</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,7 @@ public:
     IRenderable*                           val_pObject;
     Fmatrix*                               val_pTransform;
     BOOL                                   val_bHUD;
+    BOOL                                   val_bUI;
     BOOL                                   val_bInvisible;
     BOOL                                   val_bRecordMP;         // record nearest for multi-pass
     R_feedback*                            val_feedback;          // feedback for geometry being rendered
@@ -35,16 +36,20 @@ public:
 
 public:
     // Dynamic scene graph
-    // R_dsgraph::mapNormal_T										mapNormal	[2]		;	// 2==(priority/2)
-    R_dsgraph::mapNormalPasses_T mapNormalPasses[2];   // 2==(priority/2)
-    // R_dsgraph::mapMatrix_T										mapMatrix	[2]		;
+    // R_dsgraph::mapNormal_T mapNormal[2];            // 2 == (priority / 2)
+    R_dsgraph::mapNormalPasses_T mapNormalPasses[2];   // 2 == (priority / 2)
+    // R_dsgraph::mapMatrix_T mapMatrix[2];
     R_dsgraph::mapMatrixPasses_T mapMatrixPasses[2];
     R_dsgraph::mapSorted_T       mapSorted;
     R_dsgraph::mapHUD_T          mapHUD;
     R_dsgraph::mapLOD_T          mapLOD;
     R_dsgraph::mapSorted_T       mapDistort;
+    R_dsgraph::mapHUD_T          mapUI;
+    R_dsgraph::mapHUD_T          mapUISorted;
 
 #if RENDER != R_R1
+    R_dsgraph::mapSorted_T mapUIEmissive;
+
     R_dsgraph::mapSorted_T mapWmark;   // sorted
     R_dsgraph::mapSorted_T mapEmissive;
     R_dsgraph::mapSorted_T mapHUDEmissive;
@@ -89,6 +94,10 @@ public:
         VERIFY(M);
         val_pTransform = M;
     }
+    virtual void set_UI(BOOL V)
+    {
+        val_bUI = V;
+    }
     virtual void set_HUD(BOOL V)
     {
         val_bHUD = V;
@@ -128,6 +137,7 @@ public:
         val_pObject         = NULL;
         val_pTransform      = NULL;
         val_bHUD            = FALSE;
+        val_bUI             = FALSE;
         val_bInvisible      = FALSE;
         val_bRecordMP       = FALSE;
         val_feedback        = 0;
@@ -175,12 +185,15 @@ public:
         }
         mapSorted.destroy();
         mapHUD.destroy();
+        mapUI.destroy();
+        mapUISorted.destroy();
         mapLOD.destroy();
         mapDistort.destroy();
 
 #if RENDER != R_R1
         mapWmark.destroy();
         mapEmissive.destroy();
+        mapUIEmissive.destroy();
 #endif
     }
 
@@ -195,6 +208,8 @@ public:
     void r_dsgraph_insert_static(dxRender_Visual* pVisual);
 
     void r_dsgraph_render_graph(u32 _priority, bool _clear = true);
+    void r_dsgraph_render_ui();
+    void r_dsgraph_render_sorted_ui();
     void r_dsgraph_render_hud();
     void r_dsgraph_render_hud_ui();
     void r_dsgraph_render_lods(bool _setup_zb, bool _clear);

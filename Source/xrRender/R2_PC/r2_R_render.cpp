@@ -197,7 +197,24 @@ void CRender::render_menu()
 }
 
 extern u32 g_r;
-void       CRender::Render()
+void CRender::RenderUI()
+{
+    // HW.pDevice->ClearDepthStencilView(HW.pBaseZB, D3D_CLEAR_DEPTH | D3D_CLEAR_STENCIL, 1.0f, 0);
+    HW.pDevice->Clear(0L, nullptr, D3DCLEAR_STENCIL, 1.0f, 0, 0L);
+
+    // rmNormal();
+    Target->u_setrt(Target->rt_Generic_0, Target->rt_Generic_1, 0, HW.pBaseZB);
+    Target->u_setrt(Device->dwWidth, Device->dwHeight, Target->rt_Position->pRT, HW.pBaseRT, NULL, HW.pBaseZB);
+    r_dsgraph_render_ui();
+
+    Target->u_setrt(Target->rt_Generic_0, Target->rt_Generic_1, 0, HW.pBaseZB);
+    Target->u_setrt(Device->dwWidth, Device->dwHeight, HW.pBaseRT, 0, 0, HW.pBaseZB);
+    r_dsgraph_render_sorted_ui();
+
+    marker++;
+}
+
+void CRender::Render()
 {
     g_r = 1;
     VERIFY(0 == mapDistort.size());

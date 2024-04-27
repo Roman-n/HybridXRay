@@ -79,6 +79,7 @@ public:
 
     virtual void           Calculate();
     virtual void           Render();
+    virtual void           RenderUI();
 
     virtual void           set_Transform(Fmatrix* M);
     virtual void           add_Visual(IRenderVisual* visual);
@@ -168,6 +169,7 @@ public:
         VERIFY(O);
         View = O;
     }
+    virtual void                    set_UI(BOOL V);
     virtual void                    set_HUD(BOOL V);
     virtual BOOL                    get_HUD();
     virtual void                    set_Invisible(BOOL V);

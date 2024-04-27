@@ -120,7 +120,9 @@ void CRender::Calculate()
 }
 
 #include "igame_persistent.h"
-void                 CRender::Render() {}
+void CRender::Render() {}
+void CRender::RenderUI() {}
+void CRender::set_UI(BOOL V) {}
 
 IRender_DetailModel* CRender::model_CreateDM(IReader* F)
 {
