@@ -3,16 +3,20 @@
 #include "ui_base.h"
 #include "UIStaticItem.h"
 
+constexpr auto UI3dCURSOR_SECT = "ui_3dcursor";
 class CUIStatic;
+class CUI3dStatic;
 
 class CUICursor: public pureRender
 {
-    bool       bVisible;
-    Fvector2   vPos;
-    Fvector2   vPrevPos;
+    bool           bVisible;
+    Fvector2       vPos;
+    Fvector2       vPrevPos;
 
-    CUIStatic* m_static;
-    void       InitInternal();
+    CUIStatic*     m_static;
+    CUI3dStatic*   m_3dstatic;
+    IRenderVisual* rVisual_3dstatic;
+    void           InitInternal();
 
 public:
     CUICursor();

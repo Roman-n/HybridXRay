@@ -18,7 +18,7 @@ CUIInventoryCellItem::CUIInventoryCellItem(CInventoryItem* itm)
 
     rect.rb.set(rect.lt.x + INV_GRID_WIDTHF * m_grid_size.x, rect.lt.y + INV_GRID_HEIGHTF * m_grid_size.y);
 
-    SetVisual(itm->object().Visual());   // Для 3d иконок
+    // SetVisual(itm->object().Visual());   // Для 3d иконок
 
     inherited::SetOriginalRect(rect);
     inherited::SetStretchTexture(true);

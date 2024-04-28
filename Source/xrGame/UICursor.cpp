@@ -2,11 +2,13 @@
 #include "uicursor.h"
 
 #include "ui/UIStatic.h"
+#include "UI3dStatic.h"
 #include "ui/UIBtnHint.h"
+#include "../xrRender/Public/KinematicsAnimated.h"
 
 #define C_DEFAULT color_xrgb(0xff, 0xff, 0xff)
 
-CUICursor::CUICursor(): m_static(NULL), m_b_use_win_cursor(false)
+CUICursor::CUICursor(): m_static(NULL), m_3dstatic(NULL), m_b_use_win_cursor(false)
 {
     bVisible = false;
     vPrevPos.set(0.0f, 0.0f);
@@ -14,11 +16,13 @@ CUICursor::CUICursor(): m_static(NULL), m_b_use_win_cursor(false)
     InitInternal();
     Device->seqRender.Add(this, -3 /*2*/);
     Device->seqResolutionChanged.Add(this);
+    m_3dstatic->SetVisual(rVisual_3dstatic);
 }
 //--------------------------------------------------------------------
 CUICursor::~CUICursor()
 {
     xr_delete(m_static);
+    xr_delete(m_3dstatic);
     Device->seqRender.Remove(this);
     Device->seqResolutionChanged.Remove(this);
 }
@@ -26,26 +30,37 @@ CUICursor::~CUICursor()
 void CUICursor::OnScreenResolutionChanged()
 {
     xr_delete(m_static);
+    xr_delete(m_3dstatic);
     InitInternal();
 }
 
 void CUICursor::InitInternal()
 {
     m_static = xr_new<CUIStatic>();
+    m_3dstatic = xr_new<CUI3dStatic>();
     m_static->InitTextureEx("ui\\ui_ani_cursor", "hud\\cursor");
+    const shared_str& visual_3dcursor = pSettings->r_string(UI3dCURSOR_SECT, "visual_3d");
+    rVisual_3dstatic = smart_cast<IRenderVisual*>(Render->model_Create(visual_3dcursor.c_str()));
     Frect rect;
     rect.set(0.0f, 0.0f, 40.0f, 40.0f);
     m_static->SetTextureRect(rect);
+    m_3dstatic->SetTextureRect(rect);
     Fvector2 sz;
     sz.set(rect.rb);
     sz.x *= UI().get_current_kx();
 
     m_static->SetWndSize(sz);
     m_static->SetStretchTexture(true);
+    m_3dstatic->SetWndSize(sz);
+    m_3dstatic->SetStretchTexture(true);
 
     u32 screen_size_x  = GetSystemMetrics(SM_CXSCREEN);
     u32 screen_size_y  = GetSystemMetrics(SM_CYSCREEN);
     m_b_use_win_cursor = (screen_size_y >= Device->dwHeight && screen_size_x >= Device->dwWidth);
+
+    IKinematicsAnimated* V = smart_cast<IKinematicsAnimated*>(m_3dstatic->m_pCurrentItem = rVisual_3dstatic);
+    if (V)
+        V->PlayCycle("idle");
 }
 
 //--------------------------------------------------------------------
@@ -73,9 +88,18 @@ void CUICursor::OnRender()
     }
 #endif
 
-    m_static->SetWndPos(vPos);
-    m_static->Update();
-    m_static->Draw();
+        //if (!g_pGameLevel)
+        {
+            m_static->SetWndPos(vPos);
+            m_static->Update();
+            m_static->Draw();
+        }
+        //else
+        {
+            m_3dstatic->SetWndPos(vPos);
+            m_3dstatic->Update();
+            m_3dstatic->Draw();
+        }
 }
 
 Fvector2 CUICursor::GetCursorPosition()

@@ -27,11 +27,11 @@ public:
     // прорисовка окна
     virtual void    Draw();
 
+    IRenderVisual* m_pCurrentItem;
+
 protected:
     float          m_x_angle, m_y_angle, m_z_angle;
     float          dist, viewport_near;
     // перевод из координат экрана в координаты той плоскости, где находиться объект
     void           FromScreenToItem(int x_screen, int y_screen, float& x_item, float& y_item);
-
-    IRenderVisual* m_pCurrentItem;
 };
