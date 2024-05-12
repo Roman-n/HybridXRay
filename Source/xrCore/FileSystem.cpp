@@ -72,45 +72,29 @@ xr_string EFS_Utils::ChangeFileExt(const xr_string& src, LPCSTR ext)
 //----------------------------------------------------
 int MakeFilter(string1024& dest, LPCSTR info, LPCSTR ext)
 {
-    std::string res;
-
-    if (ext)
+  ZeroMemory(dest, sizeof(dest));
+  if (ext) {
+    int icnt = _GetItemCount(ext, ';');
+    LPSTR dst = dest;
+    if (icnt > 1)
     {
-        res += info;
-        res += "(";
-        res += ext;
-        res += ")|";
-        res += ext;
-        res += "|";
-        int icnt = _GetItemCount(ext, ';');
-        if (icnt > 1)
-        {
-            for (int idx = 0; idx < icnt; ++idx)
-            {
-                string64 buf;
-                _GetItem(ext, idx, buf, ';');
-
-                res += info;
-                res += "(";
-                res += buf;
-                res += ")|";
-                res += buf;
-                res += "|";
-            }
-        }
-        res += "|";
+      strconcat(sizeof(dest), dst, info, " (", ext, ")");
+      dst += (xr_strlen(dst) + 1);
+      strcpy_s(dst, sizeof(dest), ext);
+      dst += (xr_strlen(ext) + 1);
     }
-    else
+    for (int i = 0; i < icnt; i++)
     {
-        res = "All files(*.*)|*.*||";
+      string64		buf;
+      _GetItem(ext, i, buf, ';');
+      strconcat(sizeof(dest), dst, info, " (", buf, ")");
+      dst += (xr_strlen(dst) + 1);
+      strcpy_s(dst, sizeof(dest) - (dst - dest), buf);
+      dst += (xr_strlen(buf) + 1);
     }
-    xr_strcpy(dest, res.c_str());
-
-    for (u32 i = 0; i < res.size(); ++i)
-    {
-        if (res[i] == '|')
-            dest[i] = '\0';
-    }
+    return icnt;
+  }
+  return 0;
 }
 
 //------------------------------------------------------------------------------
