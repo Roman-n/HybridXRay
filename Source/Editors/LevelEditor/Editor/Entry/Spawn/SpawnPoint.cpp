@@ -40,8 +40,6 @@ CLE_Visual::CLE_Visual(ISE_Visual* src)
     visual = 0;
 }
 
-bool CLE_Visual::g_tmp_lock = false;
-
 CLE_Visual::~CLE_Visual()
 {
     ::Render->model_Delete(visual, TRUE);
@@ -70,24 +68,10 @@ void CLE_Visual::OnChangeVisual()
     {
         visual = ::Render->model_Create(source->visual_name.c_str());
 
-        if (NULL == visual && !g_tmp_lock)
+        if (NULL == visual)
         {
-            static bool NoToAll = false;
-            if (NoToAll)
-                return;
-
-            xr_string _msg     = "& Model [" + xr_string(source->visual_name.c_str()) + "] not found. Do you want to select it from library?";
-            int       mr       = ELog.DlgMsg(mtConfirmation, mbYes | mbNo | mbCancel, _msg.c_str());
-            g_tmp_lock         = true;
-            if (mr == mrYes)
-            {
-                UIChooseForm::SelectItem(smVisual, 1);
-                EDevice->seqDrawUI.Add(this);
-            }
-            if (mr == mrCancel)
-                NoToAll = true;
-
-            g_tmp_lock = false;
+            const xr_string & msg = "Model [" + xr_string(source->visual_name.c_str()) + "] not found!";
+            ELog.DlgMsg(mtError, msg.c_str());
         }
         PlayAnimationFirstFrame();
     }
@@ -96,8 +80,6 @@ void CLE_Visual::OnChangeVisual()
 
 void CLE_Visual::PlayAnimation()
 {
-    if (g_tmp_lock)
-        return;
     // play motion if skeleton
     StopAllAnimations();
 
@@ -115,8 +97,6 @@ void CLE_Visual::PlayAnimation()
 
 void CLE_Visual::StopAllAnimations()
 {
-    if (g_tmp_lock)
-        return;
     // play motion if skeleton
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     if (KA)
@@ -128,8 +108,6 @@ void CLE_Visual::StopAllAnimations()
 
 void CLE_Visual::PlayAnimationFirstFrame()
 {
-    if (g_tmp_lock)
-        return;
     // play motion if skeleton
 
     StopAllAnimations();
@@ -162,8 +140,6 @@ struct SetBlendLastFrameCB: public IterateBlendsCallback
 
 void CLE_Visual::PlayAnimationLastFrame()
 {
-    if (g_tmp_lock)
-        return;
     // play motion if skeleton
 
     StopAllAnimations();
@@ -193,9 +169,6 @@ struct TogglelendCB: public IterateBlendsCallback
 
 void CLE_Visual::PauseAnimation()
 {
-    if (g_tmp_lock)
-        return;
-
     CKinematicsAnimated* KA = PKinematicsAnimated(visual);
     IKinematics*         K  = PKinematics(visual);
 

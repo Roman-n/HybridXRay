@@ -12,7 +12,6 @@ class CLE_Visual: private pureDrawUI
     virtual void OnDrawUI();
 
 public:
-    static bool    g_tmp_lock;
     ISE_Visual*    source;
     IRenderVisual* visual;
     void           OnChangeVisual();
