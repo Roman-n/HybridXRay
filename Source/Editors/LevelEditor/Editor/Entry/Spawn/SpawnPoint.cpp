@@ -64,14 +64,23 @@ void CLE_Visual::OnDrawUI()
 void CLE_Visual::OnChangeVisual()
 {
     ::Render->model_Delete(visual, TRUE);
+    static bool NoVisual = false;
     if (source->visual_name.size())
     {
         visual = ::Render->model_Create(source->visual_name.c_str());
 
         if (NULL == visual)
         {
-            const xr_string & msg = "Model [" + xr_string(source->visual_name.c_str()) + "] not found!";
-            ELog.DlgMsg(mtError, msg.c_str());
+            const xr_string& msg = "! Model [" + xr_string(source->visual_name.c_str()) + "] not found!";
+            ELog.Msg(mtError, msg.c_str());
+        }
+        if (NoVisual)
+            return;
+        if (NULL == visual)
+        {
+            const xr_string & msgWindow = "There are missing dynamic ogf models, please pay attention to the log!\n\n   All missing models will be indicated in the log file!";
+            ELog.DlgMsg(mtError, msgWindow.c_str());
+            NoVisual = true;
         }
         PlayAnimationFirstFrame();
     }
