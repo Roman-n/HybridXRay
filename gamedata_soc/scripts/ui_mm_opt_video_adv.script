@@ -76,6 +76,11 @@ function opt_video_adv:InitControls(x, y, xml, handler)
     handler.m_preconditions[ctl] = only_12_mode
 
     _st = xml:InitStatic                           ("video_adv:templ_item",               self.scroll_v)
+    xml:InitStatic                                 ("video_adv:cap_dof",                  _st)
+    xml:InitCheck                                  ("video_adv:check_dof",                _st)
+    handler.m_preconditions[ctl] = only_2_mode
+
+    _st = xml:InitStatic                           ("video_adv:templ_item",               self.scroll_v)
     xml:InitStatic                                 ("video_adv:cap_vsync",                _st)
     xml:InitCheck                                  ("video_adv:check_vsync",              _st)
 

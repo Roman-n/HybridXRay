@@ -75,9 +75,9 @@ CGamePersistent::CGamePersistent(void)
     m_last_stats_frame = u32(-2);
 #endif
     //
-    // dSetAllocHandler			(ode_alloc		);
-    // dSetReallocHandler			(ode_realloc	);
-    // dSetFreeHandler				(ode_free		);
+    // dSetAllocHandler(ode_alloc);
+    // dSetReallocHandler(ode_realloc);
+    // dSetFreeHandler(ode_free);
 
     //
     BOOL bDemoMode = (0 != strstr(Core.Params, "-demomode "));
@@ -546,7 +546,7 @@ void CGamePersistent::update_game_intro()
 extern CUISequencer* g_tutorial;
 extern CUISequencer* g_tutorial2;
 
-void                 CGamePersistent::OnFrame()
+void CGamePersistent::OnFrame()
 {
     if (Device->dwPrecacheFrame == 5 && m_intro_event.empty())
     {

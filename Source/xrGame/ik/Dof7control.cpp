@@ -315,8 +315,7 @@ int SRS::SetGoal(const Matrix GG, float& rangle)
         set_translation(G, ee);
 
     EvaluateCircle(ee);
-    // radius = get_circle_equation(ee, proj_axis, pos_axis,
-    //			 upper_len, lower_len, c, u, v, n);
+    // radius = get_circle_equation(ee, proj_axis, pos_axis, upper_len, lower_len, c, u, v, n);
 
     //
     // Build rotation matrix about the R joint

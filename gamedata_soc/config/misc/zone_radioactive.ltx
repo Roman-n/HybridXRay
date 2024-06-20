@@ -1,5 +1,5 @@
 
-[zone_radioactive]
+[zone_radioactive]:zone_base
 GroupControlSection	= spawn_group_zone
 $spawn 			= "zones\radioactive"
 ;$prefetch 		= 16
@@ -59,8 +59,6 @@ accamulate_time		= 100
 min_start_power		= 0.01
 max_start_power		= 0.011
 
-
-
 [zone_radioactive_average]:zone_radioactive
 $spawn 			= "zones\radioactive_average"
 awaking_time		= 100
@@ -70,8 +68,6 @@ accamulate_time		= 100
 ;----------- Anomaly settings -----------------------
 min_start_power		= 0.03
 max_start_power		= 0.031
-
-
 
 [zone_radioactive_strong]:zone_radioactive
 $spawn 			= "zones\radioactive_strong"
@@ -83,8 +79,6 @@ accamulate_time		= 100
 ;----------- Anomaly settings -----------------------
 min_start_power		= 0.06
 max_start_power		= 0.061
-
-
 
 [zone_radioactive_killing]:zone_radioactive_strong
 $spawn 			= "zones\radioactive_killing"

@@ -60,6 +60,7 @@ static void ode_free(void* ptr, size_t size)
 
 CGamePersistent::CGamePersistent(void)
 {
+    m_bPickableDOF                      = false;
     m_game_params.m_e_game_type_for_soc = GAME_ANY;
     ambient_effect_next_time            = 0;
     ambient_effect_stop_time            = 0;
@@ -110,6 +111,9 @@ CGamePersistent::CGamePersistent(void)
     CWeaponHUD::CreateSharedContainer();
 
     eQuickLoad = Engine.Event.Handler_Attach("Game:QuickLoad", this);
+    Fvector3* DofValue = Console->GetFVectorPtr("r2_dof");
+    if (DofValue)
+        SetBaseDof(*DofValue);
 }
 
 CGamePersistent::~CGamePersistent(void)
@@ -482,7 +486,7 @@ void CGamePersistent::update_game_intro()
 extern CUISequencer* g_tutorial;
 extern CUISequencer* g_tutorial2;
 
-void                 CGamePersistent::OnFrame()
+void CGamePersistent::OnFrame()
 {
     if (g_tutorial2)
     {
@@ -594,6 +598,7 @@ void                 CGamePersistent::OnFrame()
     if ((m_last_stats_frame + 1) < m_frame_counter)
         profiler().clear();
 #endif
+    UpdateDof();
 }
 
 #include "game_sv_single.h"
@@ -708,5 +713,64 @@ void CGamePersistent::LoadTitle(LPCSTR str)
 
 bool CGamePersistent::CanBePaused()
 {
-    return IsGameTypeSingle();
+    return IsGameTypeSingle() || (g_pGameLevel && Level().IsDemoPlay());
+}
+
+void CGamePersistent::SetPickableEffectorDOF(bool bSet)
+{
+    m_bPickableDOF = bSet;
+    if (!bSet)
+        RestoreEffectorDOF();
+}
+
+void CGamePersistent::GetCurrentDof(Fvector3& dof)
+{
+    dof = m_dof[1];
+}
+
+void CGamePersistent::SetBaseDof(const Fvector3& dof)
+{
+    m_dof[0] = m_dof[1] = m_dof[2] = m_dof[3] = dof;
+}
+
+void CGamePersistent::SetEffectorDOF(const Fvector& needed_dof)
+{
+    if (m_bPickableDOF)
+        return;
+    m_dof[0] = needed_dof;
+    m_dof[2] = m_dof[1];   // current
+}
+
+void CGamePersistent::RestoreEffectorDOF()
+{
+    SetEffectorDOF(m_dof[3]);
+}
+#include "hudmanager.h"
+
+//	m_dof [4];   // 0-dest 1-current 2-from 3-original
+void CGamePersistent::UpdateDof()
+{
+    static float diff_far = pSettings->r_float("zone_pick_dof", "far");     // 70.0f;
+    static float diff_near = pSettings->r_float("zone_pick_dof", "near");   //-70.0f;
+
+    if (m_bPickableDOF)
+    {
+        Fvector pick_dof;
+        pick_dof.y = HUD().GetCurrentRayQuery().range;
+        pick_dof.x = pick_dof.y + diff_near;
+        pick_dof.z = pick_dof.y + diff_far;
+        m_dof[0] = pick_dof;
+        m_dof[2] = m_dof[1];   // current
+    }
+    if (m_dof[1].similar(m_dof[0]))
+        return;
+
+    float   td = Device->fTimeDelta;
+    Fvector diff;
+    diff.sub(m_dof[0], m_dof[2]);
+    diff.mul(td / 0.2f);   // 0.2 sec
+    m_dof[1].add(diff);
+    (m_dof[0].x < m_dof[2].x) ? clamp(m_dof[1].x, m_dof[0].x, m_dof[2].x) : clamp(m_dof[1].x, m_dof[2].x, m_dof[0].x);
+    (m_dof[0].y < m_dof[2].y) ? clamp(m_dof[1].y, m_dof[0].y, m_dof[2].y) : clamp(m_dof[1].y, m_dof[2].y, m_dof[0].y);
+    (m_dof[0].z < m_dof[2].z) ? clamp(m_dof[1].z, m_dof[0].z, m_dof[2].z) : clamp(m_dof[1].z, m_dof[2].z, m_dof[0].z);
 }

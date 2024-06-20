@@ -28,3 +28,4 @@
 #define eCEVampire          ((ECamEffectorType)(cefNext + 13))
 #define eCEPseudoGigantStep ((ECamEffectorType)(cefNext + 14))
 #define eCEMonsterHit       ((ECamEffectorType)(cefNext + 15))
+#define eCEDOF              ((ECamEffectorType)(cefNext + 16))

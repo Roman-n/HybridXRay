@@ -28,6 +28,9 @@
 #include "../xrEngine/object_broker.h"
 #include "../xrEngine/igame_persistent.h"
 
+#include "gamepersistent.h"
+#include "effectorFall.h"
+
 #define WEAPON_REMOVE_TIME 60000
 #define ROTATION_TIME      0.25f
 
@@ -406,6 +409,13 @@ void CWeapon::Load(LPCSTR section)
         m_bHideCrosshairInZoom = !!pSettings->r_bool(hud_sect, "zoom_hide_crosshair");
 
     //////////////////////////////////////////////////////////
+
+    Fvector def_dof;
+    def_dof.set(-1, -1, -1);
+    // m_zoom_params.m_ZoomDof = READ_IF_EXISTS(pSettings, r_fvector3, section, "zoom_dof", Fvector().set(-1, -1, -1));
+    // m_zoom_params.m_bZoomDofEnabled = !def_dof.similar(m_zoom_params.m_ZoomDof);
+
+    // m_zoom_params.m_ReloadDof = READ_IF_EXISTS(pSettings, r_fvector4, section, "reload_dof", Fvector4().set(-1, -1, -1, -1));
 
     m_bHasTracers     = READ_IF_EXISTS(pSettings, r_bool, section, "tracers", true);
     m_u8TracerColorID = READ_IF_EXISTS(pSettings, r_u8, section, "tracers_color_ID", u8(-1));
@@ -1210,6 +1220,13 @@ void CWeapon::OnZoomIn()
     m_bZoomMode   = true;
     m_fZoomFactor = CurrentZoomFactor();
     StopHudInertion();
+
+    // if(m_bZoomDofEnabled && !IsScopeAttached())
+    //     GamePersistent().SetEffectorDOF(m_ZoomDof);
+
+    if (GetHUDmode())
+        GamePersistent().SetPickableEffectorDOF(true);
+
 }
 
 void CWeapon::OnZoomOut()
@@ -1218,6 +1235,11 @@ void CWeapon::OnZoomOut()
     m_fZoomFactor = g_fov;
 
     StartHudInertion();
+
+    // GamePersistent().RestoreEffectorDOF();
+
+    if (GetHUDmode())
+        GamePersistent().SetPickableEffectorDOF(false);
 }
 
 CUIStaticItem* CWeapon::ZoomTexture()
@@ -1593,4 +1615,19 @@ const float& CWeapon::hit_probability() const
 {
     VERIFY((g_SingleGameDifficulty >= egdNovice) && (g_SingleGameDifficulty <= egdMaster));
     return (m_hit_probability[egdNovice]);
+}
+
+void CWeapon::OnStateSwitch(u32 S)
+{
+    inherited::OnStateSwitch(S);
+
+    // if (GetState() == eReload)
+    // {
+    //     if (H_Parent() == Level().CurrentEntity() && !fsimilar(m_ReloadDof.w, -1.0f))
+    //     {
+    //         CActor* current_actor = smart_cast<CActor*>(H_Parent());
+    //         if (current_actor)
+    //             current_actor->Cameras().AddCamEffector(xr_new<CEffectorDOF>(m_ReloadDof));
+    //     }
+    // }
 }

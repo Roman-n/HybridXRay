@@ -82,7 +82,7 @@ Frect CUIXmlInit::GetFRect(CUIXml& xml_doc, const char* path, int index)
 
 bool CUIXmlInit::InitWindow(CUIXml& xml_doc, LPCSTR path, int index, CUIWindow* pWnd)
 {
-    R_ASSERT3(xml_doc.NavigateToNode(path, index), "XML node not found", path);
+    R_ASSERT4(xml_doc.NavigateToNode(path, index), "XML node not found", path, xml_doc.m_xml_file_name);
 
     float x = xml_doc.ReadAttribFlt(path, index, "x");
     float y = xml_doc.ReadAttribFlt(path, index, "y");

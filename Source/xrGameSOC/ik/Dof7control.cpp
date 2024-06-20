@@ -231,8 +231,8 @@ int scale_goal(const float l1[3], const float l2[3], float g[3])
     /*
     if (g_len < min_len)
     {
-	vecscalarmult(g,g,(1.01 * min_len)/g_len);
-	return 1;
+    vecscalarmult(g,g,(1.01 * min_len)/g_len);
+    return 1;
     }
     */
 
@@ -315,8 +315,7 @@ int SRS::SetGoal(const Matrix GG, float& rangle)
         set_translation(G, ee);
 
     EvaluateCircle(ee);
-    //radius = get_circle_equation(ee, proj_axis, pos_axis,
-    //			 upper_len, lower_len, c, u, v, n);
+    // radius = get_circle_equation(ee, proj_axis, pos_axis, upper_len, lower_len, c, u, v, n);
 
     //
     // Build rotation matrix about the R joint

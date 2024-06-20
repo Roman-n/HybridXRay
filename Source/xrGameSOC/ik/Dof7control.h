@@ -216,8 +216,8 @@ public:
     // axis is the pointing axis in the hand frame
     // flex_angle is the amount of flexion in the elbow
     /*
-    void SRS::SetAimGoal(const float goal[3],
-*/
+        void SRS::SetAimGoal(const float goal[3],
+    */
     void SetAimGoal(const float goal[3], const float axis[3], float flex_angle);
 
     //
@@ -225,8 +225,8 @@ public:
     // (Must call SetAimGoal first)
     //
     /*
-    void SRS::SolveAim(float psi_angle, Matrix  R1);
-*/
+        void SRS::SolveAim(float psi_angle, Matrix  R1);
+    */
     void SolveAim(float psi_angle, Matrix R1);
 };
 

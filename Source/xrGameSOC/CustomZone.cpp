@@ -18,10 +18,12 @@
 #include "zone_effector.h"
 #include "breakableobject.h"
 #include "../xrEngine/xr_collide_form.h"
+#include "GamePersistent.h"
+
 //////////////////////////////////////////////////////////////////////////
-#define PREFETCHED_ARTEFACTS_NUM 1                //���������� �������������� ������������ ����������
-#define WIND_RADIUS              (4 * Radius())   //���������� �� ������, ����� ���������� �����
-#define FASTMODE_DISTANCE        (50.f)           //distance to camera from sphere, when zone switches to fast update sequence
+#define PREFETCHED_ARTEFACTS_NUM 1                // количество предварительно проспавненых артефактов
+#define WIND_RADIUS              (4 * Radius())   // расстояние до актера, когда появляется ветер
+#define FASTMODE_DISTANCE        (50.f)           // distance to camera from sphere, when zone switches to fast update sequence
 
 CCustomZone::CCustomZone(void)
 {
@@ -86,7 +88,7 @@ void CCustomZone::Load(LPCSTR section)
     m_zone_flags.set(eIgnoreArtefact, pSettings->r_bool(section, "ignore_artefacts"));
     m_zone_flags.set(eVisibleByDetector, pSettings->r_bool(section, "visible_by_detector"));
 
-    //��������� ������� ��� ����
+    // загрузить времена для зоны
     m_StateTime[eZoneStateIdle]       = -1;
     m_StateTime[eZoneStateAwaking]    = pSettings->r_s32(section, "awaking_time");
     m_StateTime[eZoneStateBlowout]    = pSettings->r_s32(section, "blowout_time");
@@ -235,7 +237,7 @@ void CCustomZone::Load(LPCSTR section)
         m_fBlowoutWindPowerMax = pSettings->r_float(section, "blowout_wind_power");
     }
 
-    //��������� ��������� �������� ������� �� ������
+    // загрузить параметры световой вспышки от взрыва
     m_zone_flags.set(eBlowoutLight, pSettings->r_bool(section, "blowout_light"));
 
     if (m_zone_flags.test(eBlowoutLight))
@@ -248,7 +250,7 @@ void CCustomZone::Load(LPCSTR section)
         m_fLightHeight   = pSettings->r_float(section, "light_height");
     }
 
-    //��������� ��������� idle ���������
+    // загрузить параметры idle подсветки
     m_zone_flags.set(eIdleLight, pSettings->r_bool(section, "idle_light"));
     if (m_zone_flags.test(eIdleLight))
     {
@@ -259,7 +261,7 @@ void CCustomZone::Load(LPCSTR section)
         m_fIdleLightHeight     = pSettings->r_float(section, "idle_light_height");
     }
 
-    //��������� ��������� ��� ������������� ����������
+    // загрузить параметры для разбрасывания артефактов
     m_zone_flags.set(eSpawnBlowoutArtefacts, pSettings->r_bool(section, "spawn_blowout_artefacts"));
     if (m_zone_flags.test(eSpawnBlowoutArtefacts))
     {
@@ -298,7 +300,7 @@ void CCustomZone::Load(LPCSTR section)
         }
 
         R_ASSERT3(!fis_zero(total_probability), "The probability of artefact spawn is zero!", *cName());
-        //��������������� �����������
+        // нормализировать вероятности
         for (u32 i = 0; i < m_ArtefactSpawn.size(); ++i)
         {
             m_ArtefactSpawn[i].probability = m_ArtefactSpawn[i].probability / total_probability;
@@ -307,6 +309,8 @@ void CCustomZone::Load(LPCSTR section)
 
     m_ef_anomaly_type = pSettings->r_u32(section, "ef_anomaly_type");
     m_ef_weapon_type  = pSettings->r_u32(section, "ef_weapon_type");
+
+    m_zone_flags.set(eAffectPickDOF, pSettings->r_bool(section, "pick_dof_effector"));
 }
 
 BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
@@ -336,7 +340,7 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
     m_StartTime     = Device->dwTimeGlobal;
     m_zone_flags.set(eUseOnOffTime, (m_TimeToDisable != 0) && (m_TimeToEnable != 0));
 
-    //�������� ��������� �����
+    // добавить источники света
     if (m_zone_flags.test(eIdleLight))
     {
         m_pIdleLight = ::Render->light_create();
@@ -402,13 +406,13 @@ void CCustomZone::net_Destroy()
 void CCustomZone::net_Import(NET_Packet& P)
 {
     inherited::net_Import(P);
-    //	P.r_u32				(m_owner_id);
+    // P.r_u32(m_owner_id);
 }
 
 void CCustomZone::net_Export(NET_Packet& P)
 {
     inherited::net_Export(P);
-    //	P.w_u32				(m_owner_id);
+    // P.w_u32(m_owner_id);
 }
 
 bool CCustomZone::IdleState()
@@ -485,7 +489,7 @@ void CCustomZone::UpdateWorkload(u32 dt)
             NODEFAULT;
     }
 
-    //��������� ����� ������������ ����
+    // вычислить время срабатывания зоны
     if (m_bZoneActive)
         m_dwDeltaTime += dt;
     else
@@ -530,8 +534,8 @@ void CCustomZone::shedule_Update(u32 dt)
         // update
         feel_touch_update(P, s.R);
 
-        //�������� �� ���� �������� � ����
-        //� ��������� �� ���������
+        // пройтись по всем объектам в зоне
+        // и проверить их состояние
         for (OBJECT_INFO_VEC_IT it = m_ObjectInfoMap.begin(); m_ObjectInfoMap.end() != it; ++it)
         {
             CObject* pObject = (*it).object;
@@ -553,8 +557,8 @@ void CCustomZone::shedule_Update(u32 dt)
                     StopObjectIdleParticles(smart_cast<CPhysicsShellHolder*>(pObject));
             }
 
-            //���� ���� ���� �� ���� �� ���������� ������, ��
-            //���� ��������� ��������
+            // если есть хотя бы один не дисабленый объект, то
+            // зона считается активной
             if (info.zone_ignore == false)
                 m_bZoneActive = true;
         }
@@ -829,7 +833,7 @@ void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
     else
         vel.set(0, 0, 0);
 
-    //������� ��������� �������� �� �������
+    // выбрать случайную косточку на объекте
     CParticlesPlayer* PP = smart_cast<CParticlesPlayer*>(pObject);
     if (PP)
     {
@@ -885,7 +889,7 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
 
     shared_str particle_str = NULL;
 
-    //������ �������� ��� �������� ������� �������
+    // разные партиклы для объектов разного размера
     if (pObject->Radius() < SMALL_OBJECT_RADIUS)
     {
         if (!m_sIdleObjectParticlesSmall)
@@ -899,7 +903,7 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
         particle_str = m_sIdleObjectParticlesBig;
     }
 
-    //��������� �������� �� �������
+    // запустить партиклы на объекте
     //. new
     PP->StopParticles(particle_str, BI_NONE, true);
 
@@ -923,7 +927,7 @@ void CCustomZone::StopObjectIdleParticles(CGameObject* pObject)
         return;
 
     shared_str particle_str = NULL;
-    //������ �������� ��� �������� ������� �������
+    // разные партиклы для объектов разного размера
     if (pObject->Radius() < SMALL_OBJECT_RADIUS)
     {
         if (!m_sIdleObjectParticlesSmall)
@@ -1201,8 +1205,8 @@ void CCustomZone::ZoneDisable()
 
 void CCustomZone::SpawnArtefact()
 {
-    //��������� �������� ������������� ������������
-    //����� �������� �� ������ �������
+    // вычислить согласно распределению вероятностей
+    // какой артефакт из списка ставить
     float       rnd            = ::Random.randF(.0f, 1.f - EPS_L);
     float       prob_threshold = 0.f;
 
@@ -1363,9 +1367,24 @@ void CCustomZone::net_Relcase(CObject* O)
     inherited::net_Relcase(O);
 }
 
+void CCustomZone::enter_Zone(SZoneObjectInfo& io)
+{
+    if (m_zone_flags.test(eAffectPickDOF) && Level().CurrentEntity())
+    {
+        if (io.object->ID() == Level().CurrentEntity()->ID())
+            GamePersistent().SetPickableEffectorDOF(true);
+    }
+}
+
 void CCustomZone::exit_Zone(SZoneObjectInfo& io)
 {
     StopObjectIdleParticles(io.object);
+
+    if (m_zone_flags.test(eAffectPickDOF) && Level().CurrentEntity())
+    {
+        if (io.object->ID() == Level().CurrentEntity()->ID())
+            GamePersistent().SetPickableEffectorDOF(false);
+    }
 }
 
 void CCustomZone::PlayAccumParticles()
@@ -1425,7 +1444,7 @@ void CCustomZone::UpdateOnOffState()
 
 void CCustomZone::GoDisabledState()
 {
-    //switch to disable
+    // switch to disable
     NET_Packet P;
     u_EventGen(P, GE_ZONE_STATE_CHANGE, ID());
     P.w_u8(u8(eZoneStateDisabled));
@@ -1443,7 +1462,7 @@ void CCustomZone::GoDisabledState()
 
 void CCustomZone::GoEnabledState()
 {
-    //switch to idle
+    // switch to idle
     NET_Packet P;
     u_EventGen(P, GE_ZONE_STATE_CHANGE, ID());
     P.w_u8(u8(eZoneStateIdle));
