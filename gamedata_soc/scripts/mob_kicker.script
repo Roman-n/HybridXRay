@@ -3,7 +3,7 @@ local max_corpse_dist = 10
 local state_move_to_corpse  =   0
 local state_move_to_start   =   1
 local state_rest            =   2
-local state_kick            =   3  
+local state_kick            =   3
 local state_turn            =   4
 local state_wait            =   5
 --------------------------------------------------------------------------------
@@ -26,52 +26,50 @@ function mob_kicker:__init (npc, storage)
     self.set = false
 end
 ------------------
-function mob_kicker:reset_scheme ()    
+function mob_kicker:reset_scheme ()
     xr_logic.mob_capture (self.object, true)
     self.state = state_wait
     self.initialized = false
 end
 ------------------
 function mob_kicker:common ()
-	if not db.actor then
-		return false
-	end
+    if not db.actor then
+        return false
+    end
 
-	if not xr_logic.is_active(self.object, self.st) then
-		return false
-	end
+    if not xr_logic.is_active(self.object, self.st) then
+        return false
+    end
 
-	if mob_alife_mgr.alife_control(self.object, db.actor, self.st.alife_mode) then
-		return false
-	end
-	
-	-- Ìîíñòð ïîñëå âûõîäà èç alife ìîæåò óæå áûòü íå ïîä ñêðèïòîì, ïîýòîìó âçÿòü îïÿòü ïîä ñêðèïò
-	if not xr_logic.mob_captured(self.object) then
-		self:reset_scheme ()
-		return false
-	end
+    if mob_alife_mgr.alife_control(self.object, db.actor, self.st.alife_mode) then
+        return false
+    end
 
-	if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
-		return false
-	end
-    return true	    
+    -- ÐœÐ¾Ð½ÑÑ‚Ñ€ Ð¿Ð¾ÑÐ»Ðµ Ð²Ñ‹Ñ…Ð¾Ð´Ð° Ð¸Ð· alife Ð¼Ð¾Ð¶ÐµÑ‚ ÑƒÐ¶Ðµ Ð±Ñ‹Ñ‚ÑŒ Ð½Ðµ Ð¿Ð¾Ð´ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð¾Ð¼, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð²Ð·ÑÑ‚ÑŒ Ð¾Ð¿ÑÑ‚ÑŒ Ð¿Ð¾Ð´ ÑÐºÑ€Ð¸Ð¿Ñ‚
+    if not xr_logic.mob_captured(self.object) then
+        self:reset_scheme ()
+        return false
+    end
+
+    if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
+        return false
+    end
+    return true
 end
 ------------------
 function mob_kicker:update (delta)
     if self:common () == false then return end
-    
+
     if self.initialized == false then
        self:initialize ()
        if self.initialized == false then return end
-    end    
-    
+    end
+
     if self.state == state_move_to_corpse then
-       self:move_and_kick () 
+       self:move_and_kick ()
     elseif self.state == state_move_to_start then
-       self:move_to_start () 
-    end    
-           
-    
+       self:move_to_start ()
+    end
 end
 ------------------
 function mob_kicker:move_and_kick   ()
@@ -97,31 +95,31 @@ function mob_kicker:move_and_kick   ()
           self.start_point = self:select_point ()
           self.set = false
           return
-       end   
+       end
     else
-       if self.rnd > 50 then 
+       if self.rnd > 50 then
           action (self.object, move (move.run_fwd, self.corpse), sound (sound.attack), cond(cond.move_end))
        else
           action (self.object, move (move.run_fwd, self.corpse:position (), 0.5), sound (sound.attack), cond (cond.move_end))
-       end           
+       end
        self.rnd = math.random (1, 100)
-    end          
+    end
 end
 ------------------
-function mob_kicker:move_to_start () 
+function mob_kicker:move_to_start ()
 --    if self.time ~= 0 then
        --if self.object:action() ~= nil then return end
        --self.time = 0
-    --end 
+    --end
     if self.start_point:distance_to (self.object:position ()) < 2 then
        xr_logic.mob_capture (self.object, false)
        xr_logic.mob_capture (self.object, true)
        self.state = state_move_to_corpse
        self:move_and_kick ()
        return
-    end   
-        
-    if self.set == false then        
+    end
+
+    if self.set == false then
        xr_logic.mob_capture (self.object, false)
        xr_logic.mob_capture (self.object, true)
        self.set = true
@@ -142,7 +140,7 @@ function mob_kicker:select_point ()
        dir:normalize ()
        dir = vector_rotate_y (dir, math.random (30, 120))
        dist = math.random (4, 8)
-    end   
+    end
     self.start_point_id = level.vertex_in_direction (self.corpse:level_vertex_id (), dir, dist)
     return level.vertex_position (self.start_point_id)
 end
@@ -165,15 +163,15 @@ end
 
 --------------------------------------------------------------------------------
 function add_to_binder(npc, ini, scheme, section, storage)
-	printf ("DEBUG: add_to_binder: npc:name()='%s', scheme='%s', section='%s'", npc:name(), scheme, section)
+    printf ("DEBUG: add_to_binder: npc:name()='%s', scheme='%s', section='%s'", npc:name(), scheme, section)
 
-	local new_action = mob_kicker (npc, storage)
-	xr_logic.subscribe_action_for_events(npc, storage, new_action)
+    local new_action = mob_kicker (npc, storage)
+    xr_logic.subscribe_action_for_events(npc, storage, new_action)
 end
 --------------------------------------------------------------------------------
 function set_scheme(npc, ini, scheme, section, gulag_name)
-	local st = xr_logic.assign_storage_and_bind (npc, ini, scheme, section)
-	st.logic = xr_logic.cfg_get_switch_conditions (ini, section, npc)
-	st.alife_mode   = mob_alife_mgr.cfg_get_mode (ini, section, npc)
+    local st = xr_logic.assign_storage_and_bind (npc, ini, scheme, section)
+    st.logic = xr_logic.cfg_get_switch_conditions (ini, section, npc)
+    st.alife_mode   = mob_alife_mgr.cfg_get_mode (ini, section, npc)
 end
 

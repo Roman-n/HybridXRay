@@ -11,8 +11,6 @@ local bandits_kamp_count = 6
 --------------------------------------------------------------------------
 -- States
 --------------------------------------------------------------------------
-
-
 --------------------------------------------------------------------------
 -- General
 --------------------------------------------------------------------------
@@ -40,18 +38,16 @@ function load_states(gname, type)
     if g then
         return g.state or check_state_stub
     end
-
-	return nil
+    return nil
 end
-	    
+
 -- Dynamic ltx -----------------------------------------------------------
 function load_ltx(gname, type)
     local g = gulags[type]
     if g then
         return g.ltx
     end
-
-	return nil
+    return nil
 end
 
 -- Check communities -----------------------------------------------------
@@ -78,17 +74,16 @@ local function checkCommon(npc_community, gulag_type, npc_rank, se_obj, stalker)
         end
         return true
     end
-	return false
+    return false
 end
 
 function checkStalker(npc_community, gulag_type, npc_rank, se_obj)
-	return checkCommon(npc_community, gulag_type, npc_rank, se_obj, true)
+    return checkCommon(npc_community, gulag_type, npc_rank, se_obj, true)
 end
 
 function checkMonster(npc_community, gulag_type, npc_rank, se_obj)
-	return checkCommon(npc_community, gulag_type, npc_rank, se_obj, false)
+    return checkCommon(npc_community, gulag_type, npc_rank, se_obj, false)
 end
-
 
 --------------------------------------------------------------------------
 -- Gulags
@@ -101,23 +96,23 @@ local combat_ignore2 = "combat_ignore_cond  = {=cit_combat_ignore(cit_actor_out_
 --------------------------------------------------------------------------
 -- Predicates ------------------------------------------------------------
 function k_predicate_l(data)
-	return data.profile_name == "cit_killer_leader"
+    return data.profile_name == "cit_killer_leader"
 end
 
 function k_predicate_e(data)
-	return data.profile_name == "cit_killer_exo"
+    return data.profile_name == "cit_killer_exo"
 end
 
 function k_predicate_es(data)
-	return data.profile_name == "cit_killer_exo_sniper"
+    return data.profile_name == "cit_killer_exo_sniper"
 end
 
 function k_predicate_v(data)
-	return data.profile_name == "cit_killer_veteran"
+    return data.profile_name == "cit_killer_veteran"
 end
 
 function k_predicate_g(data)
-	return data.profile_name == "cit_killer_general"
+    return data.profile_name == "cit_killer_general"
 end
 
 -- Jobs ------------------------------------------------------------------
@@ -132,16 +127,16 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
                "danger_expiration_time = 40000\n"
 
     -- leader
-	t = { section = "logic@" .. gname .. "_leader",
-		idle = 0,
-		prior = 16, state = {0},
-		squad = squad, group = groups[6],
-		in_rest = "cit_jail_restr", out_rest = "",
-		predicate = k_predicate_l
-	}
-	table.insert(sj, t)
+    t = { section = "logic@" .. gname .. "_leader",
+        idle = 0,
+        prior = 16, state = {0},
+        squad = squad, group = groups[6],
+        in_rest = "cit_jail_restr", out_rest = "",
+        predicate = k_predicate_l
+    }
+    table.insert(sj, t)
 
-	ltx = ltx.."[logic@" .. gname .. "_leader]\n" ..
+    ltx = ltx.."[logic@" .. gname .. "_leader]\n" ..
                "active          = patrol@" .. gname .. "_leader_attack\n" ..
                "combat_ignore   = combat_ignore\n" ..
 
@@ -169,16 +164,16 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
 
     -- leader guards
     for i = 1, 2 do
-	    t = { section = "logic@" .. gname .. "_leader_guard" .. i,
-		    idle = 0,
-		    prior = 15, state = {0},
-		    squad = squad, group = groups[6],
-		    in_rest = "cit_jail_restr", out_rest = "",
-		    predicate = k_predicate_e
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_leader_guard" .. i,
+            idle = 0,
+            prior = 15, state = {0},
+            squad = squad, group = groups[6],
+            in_rest = "cit_jail_restr", out_rest = "",
+            predicate = k_predicate_e
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_leader_guard" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_leader_guard" .. i .. "]\n" ..
                    "active          = patrol@" .. gname .. "_base_patrol" .. i .. "_attack\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 
@@ -205,40 +200,40 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     end
 
     -- jail guard
-	t = { section = "logic@" .. gname .. "_jail_guard",
-		idle = 0,
-		prior = 2, state = {0}, -- 13
-		squad = squad, group = groups[5],
-		in_rest = "cit_jail_restr", out_rest = "",
-		predicate = k_predicate_v
-	}
-	table.insert(sj, t)
+    t = { section = "logic@" .. gname .. "_jail_guard",
+        idle = 0,
+        prior = 2, state = {0}, -- 13
+        squad = squad, group = groups[5],
+        in_rest = "cit_jail_restr", out_rest = "",
+        predicate = k_predicate_v
+    }
+    table.insert(sj, t)
 
-	ltx = ltx.."#include \"scripts\\cit\\cit_jail_guard1.ltx\"\n"
+    ltx = ltx.."#include \"scripts\\cit\\cit_jail_guard1.ltx\"\n"
 
     -- base guard
-	t = { section = "logic@" .. gname .. "_base_guard",
-		idle = 0,
-		prior = 12, state = {0}, -- 12
-		squad = squad, group = groups[6],
-		in_rest = "cit_jail_restr", out_rest = "",
-		predicate = k_predicate_v
-	}
-	table.insert(sj, t)
+    t = { section = "logic@" .. gname .. "_base_guard",
+        idle = 0,
+        prior = 12, state = {0}, -- 12
+        squad = squad, group = groups[6],
+        in_rest = "cit_jail_restr", out_rest = "",
+        predicate = k_predicate_v
+    }
+    table.insert(sj, t)
 
-	ltx = ltx.."#include \"scripts\\cit\\cit_jail_guard2.ltx\"\n"
+    ltx = ltx.."#include \"scripts\\cit\\cit_jail_guard2.ltx\"\n"
 
     -- base patrol
-	t = { section = "logic@" .. gname .. "_base_patrol",
-		idle = 0,
-		prior = 11, state = {0},
-		squad = squad, group = groups[6],
-		in_rest = "cit_selmag_up_floor_restr", out_rest = "",
-		predicate = k_predicate_v
-	}
-	table.insert(sj, t)
+    t = { section = "logic@" .. gname .. "_base_patrol",
+        idle = 0,
+        prior = 11, state = {0},
+        squad = squad, group = groups[6],
+        in_rest = "cit_selmag_up_floor_restr", out_rest = "",
+        predicate = k_predicate_v
+    }
+    table.insert(sj, t)
 
-	ltx = ltx.."[logic@" .. gname .. "_base_patrol]\n" ..
+    ltx = ltx.."[logic@" .. gname .. "_base_patrol]\n" ..
                 "active          = camper@" .. gname .. "_base_patrol\n" ..
                 "combat_ignore   = combat_ignore\n" ..
 
@@ -255,17 +250,17 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
 
     -- snipers
     for i = 1, 4 do
-	    t = { section = "logic@" .. gname .. "_sniper" .. i,
-		    idle = 0,
-		    prior = 11, state = {0},
-		    squad = squad, group = groups[8],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-    		online = true,
-		    predicate = k_predicate_es
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_sniper" .. i,
+            idle = 0,
+            prior = 11, state = {0},
+            squad = squad, group = groups[8],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            online = true,
+            predicate = k_predicate_es
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_sniper" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_sniper" .. i .. "]\n" ..
                    "active              = camper@" .. gname .. "_sniper" .. i .. "\n" ..
                    "combat_ignore       = combat_ignore\n" ..
 
@@ -287,14 +282,14 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     local d, kc = 0, 0
 
     for i = 1, 2 do
-	    t = { section = "logic@" .. gname .. "_free" .. i .. "_in_kamp",
-		    idle = 0,
-		    prior = 100 + i, state = {0}, -- 9
-		    squad = squad, group = groups[9],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = k_predicate_e
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_free" .. i .. "_in_kamp",
+            idle = 0,
+            prior = 100 + i, state = {0}, -- 9
+            squad = squad, group = groups[9],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = k_predicate_e
+        }
+        table.insert(sj, t)
 
         d = delays[i]
         kc = kamp_change[i]
@@ -331,17 +326,17 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     for i, v in pairs({2, 1, 1}) do
         k = kamps[i]
         for j = 1, v do
-	        t = { section = "logic@" .. gname .. "_kamp" .. k .. "_patrol",
-		        idle = 0,
-		        prior = prior[i], state = {0},
-		        squad = squad, group = groups[k],
-		        in_rest = "cit_selmag_restr", out_rest = "",
-		        predicate = k_predicate_g
-	        }
-	        table.insert(sj, t)
-	    end
+            t = { section = "logic@" .. gname .. "_kamp" .. k .. "_patrol",
+                idle = 0,
+                prior = prior[i], state = {0},
+                squad = squad, group = groups[k],
+                in_rest = "cit_selmag_restr", out_rest = "",
+                predicate = k_predicate_g
+            }
+            table.insert(sj, t)
+        end
 
-	    ltx = ltx.."[logic@" .. gname .. "_kamp" .. k .. "_patrol]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_kamp" .. k .. "_patrol]\n" ..
                    "active          = patrol@" .. gname .. "_kamp" .. k .. "_patrol\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 
@@ -366,14 +361,14 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     -- free stalkers
     delays = {{90, 120}, {120, 100}, {75, 90}}
     for i = 1, 3 do
-	    t = { section = "logic@" .. gname .. "_free_stalker" .. i,
-		    idle = 0,
-		    prior = 1, state = {0}, --14
-		    squad = squad, group = groups[5],
-		    in_rest = "cit_jail_restr", out_rest = "",
-		    predicate = k_predicate_v
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_free_stalker" .. i,
+            idle = 0,
+            prior = 1, state = {0}, --14
+            squad = squad, group = groups[5],
+            in_rest = "cit_jail_restr", out_rest = "",
+            predicate = k_predicate_v
+        }
+        table.insert(sj, t)
 
         d = delays[i]
         ltx = ltx.."[logic@" .. gname .. "_free_stalker" .. i .. "]\n" ..
@@ -425,14 +420,14 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     pred = {k_predicate_v, k_predicate_v, k_predicate_g, k_predicate_v}
     for i, v in pairs({2, 2, 2, 1}) do
         for j = 1, v do
-	        t = { section = "logic@" .. gname .. "_kamp" .. i,
-		        idle = 0,
-		        prior = prior[i], state = {0},
-		        squad = squad, group = groups[i],
-		        in_rest = "cit_selmag_restr", out_rest = "",
-		        predicate = pred[i]
-	        }
-	        table.insert(sj, t)
+            t = { section = "logic@" .. gname .. "_kamp" .. i,
+                idle = 0,
+                prior = prior[i], state = {0},
+                squad = squad, group = groups[i],
+                in_rest = "cit_selmag_restr", out_rest = "",
+                predicate = pred[i]
+            }
+            table.insert(sj, t)
         end
 
         ltx = ltx.."[logic@" .. gname .. "_kamp" .. i .. "]\n" ..
@@ -452,16 +447,16 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     -- gate guards
     pred = {k_predicate_e, k_predicate_v}
     for i = 1, 2 do
-	    t = { section = "logic@" .. gname .. "_gate2_guard" .. i,
-		    idle = 0,
-		    prior = 8, state = {0},
-		    squad = squad, group = groups[9 + i],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = pred[i]
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_gate2_guard" .. i,
+            idle = 0,
+            prior = 8, state = {0},
+            squad = squad, group = groups[9 + i],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = pred[i]
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_gate2_guard" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_gate2_guard" .. i .. "]\n" ..
                    "active          = walker@" .. gname .. "_gate2_guard" .. i .. "\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 
@@ -476,16 +471,16 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
 
     -- road patrols
     for i = 1, 3 do
-	    t = { section = "logic@" .. gname .. "_road_patrol" .. i,
-		    idle = 0,
-		    prior = 10, state = {0},
-		    squad = squad, group = groups[7],
-		    in_rest = "cit_selmag_up_floor_restr", out_rest = "",
-		    predicate = k_predicate_v
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_road_patrol" .. i,
+            idle = 0,
+            prior = 10, state = {0},
+            squad = squad, group = groups[7],
+            in_rest = "cit_selmag_up_floor_restr", out_rest = "",
+            predicate = k_predicate_v
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_road_patrol" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_road_patrol" .. i .. "]\n" ..
                    "active          = walker@" .. gname .. "_road_patrol" .. i .. "\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 --[[
@@ -511,25 +506,24 @@ gulags.cit_killers.job = function(sj, gname, type, squad, groups)
     gulags.cit_killers.ltx = ltx
 end
 
-
 --------------------------------------------------------------------------
 -- Bandits
 --------------------------------------------------------------------------
 -- Predicates ------------------------------------------------------------
 function b_predicate_vb(data)
-	return data.profile_name == "cit_bandit_veteran_best"
+    return data.profile_name == "cit_bandit_veteran_best"
 end
 
 function b_predicate_v(data)
-	return data.profile_name == "cit_bandit_veteran"
+    return data.profile_name == "cit_bandit_veteran"
 end
 
 function b_predicate_g(data)
-	return data.profile_name == "cit_bandit_general"
+    return data.profile_name == "cit_bandit_general"
 end
 
 function b_predicate_d(data)
-	return data.profile_name == "cit_bandit_drunk"
+    return data.profile_name == "cit_bandit_drunk"
 end
 
 -- Jobs ------------------------------------------------------------------
@@ -542,16 +536,16 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
                "ignore_distance = 30\n"
 
     -- leader
-	t = { section = "logic@" .. gname .. "_leader",
-		idle = 0,
-		prior = 17, state = {0},
-		squad = squad, group = groups[6],
-		in_rest = "cit_selmag_restr", out_rest = "",
-		predicate = b_predicate_vb
-	}
-	table.insert(sj, t)
+    t = { section = "logic@" .. gname .. "_leader",
+        idle = 0,
+        prior = 17, state = {0},
+        squad = squad, group = groups[6],
+        in_rest = "cit_selmag_restr", out_rest = "",
+        predicate = b_predicate_vb
+    }
+    table.insert(sj, t)
 
-	ltx = ltx.."[logic@" .. gname .. "_leader]\n" ..
+    ltx = ltx.."[logic@" .. gname .. "_leader]\n" ..
                "active              = walker@" .. gname .. "_leader\n" ..
                "combat_ignore       = combat_ignore\n" ..
 
@@ -565,16 +559,16 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
 
     -- leader guards
     for i, v in pairs({16, 15}) do
-	    t = { section = "logic@" .. gname .. "_leader_guard" .. i,
-		    idle = 0,
-		    prior = v, state = {0},
-		    squad = squad, group = groups[6],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = b_predicate_vb
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_leader_guard" .. i,
+            idle = 0,
+            prior = v, state = {0},
+            squad = squad, group = groups[6],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = b_predicate_vb
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_leader_guard" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_leader_guard" .. i .. "]\n" ..
                    "active              = walker@" .. gname .. "_leader_guard" .. i .. "\n" ..
                    "combat_ignore       = combat_ignore\n" ..
 
@@ -594,14 +588,14 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
     local d, kc = 0, 0
 
     for i = 1, 3 do
-	    t = { section = "logic@" .. gname .. "_free" .. i .. "_in_kamp",
-		    idle = 0,
-		    prior = 9, state = {0},
-		    squad = squad, group = groups[11],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = b_predicate_v
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_free" .. i .. "_in_kamp",
+            idle = 0,
+            prior = 9, state = {0},
+            squad = squad, group = groups[11],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = b_predicate_v
+        }
+        table.insert(sj, t)
 
         d = delays[i]
         kc = kamp_change[i]
@@ -640,17 +634,17 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
     for i, v in pairs({2, 1, 1}) do
         k = kamps[i]
         for j = 1, v do
-	        t = { section = "logic@" .. gname .. "_kamp" .. k .. "_patrol",
-		        idle = 0,
-		        prior = prior[i], state = {0},
-		        squad = squad, group = groups[k],
-		        in_rest = "cit_selmag_restr", out_rest = "",
-		        predicate = b_predicate_v
-	        }
-	        table.insert(sj, t)
-	    end
+            t = { section = "logic@" .. gname .. "_kamp" .. k .. "_patrol",
+                idle = 0,
+                prior = prior[i], state = {0},
+                squad = squad, group = groups[k],
+                in_rest = "cit_selmag_restr", out_rest = "",
+                predicate = b_predicate_v
+            }
+            table.insert(sj, t)
+        end
 
-	    ltx = ltx.."[logic@" .. gname .. "_kamp" .. k .. "_patrol]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_kamp" .. k .. "_patrol]\n" ..
                    "active      = patrol@" .. gname .. "_kamp" .. k .. "_patrol\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 
@@ -678,14 +672,14 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
     prior = {8, 2, 4, 5}
     for i, v in pairs({2, 1, 1, 2}) do
         for j = 1, v do
-	        t = { section = "logic@" .. gname .. "_kamp" .. i,
-		        idle = 0,
-		        prior = prior[i], state = {0},
-		        squad = squad, group = groups[i],
-		        in_rest = "cit_selmag_restr", out_rest = "",
-		        predicate = b_predicate_g
-	        }
-	        table.insert(sj, t)
+            t = { section = "logic@" .. gname .. "_kamp" .. i,
+                idle = 0,
+                prior = prior[i], state = {0},
+                squad = squad, group = groups[i],
+                in_rest = "cit_selmag_restr", out_rest = "",
+                predicate = b_predicate_g
+            }
+            table.insert(sj, t)
         end
 
         ltx = ltx.."[logic@" .. gname .. "_kamp" .. i .. "]\n" ..
@@ -705,16 +699,16 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
     -- base guards
     pred = {b_predicate_vb, b_predicate_v}
     for i, v in pairs({13, 14}) do
-	    t = { section = "logic@" .. gname .. "_base_guard" .. i,
-		    idle = 0,
-		    prior = v, state = {0},
-		    squad = squad, group = groups[7],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = pred[i]
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_base_guard" .. i,
+            idle = 0,
+            prior = v, state = {0},
+            squad = squad, group = groups[7],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = pred[i]
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_base_guard" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_base_guard" .. i .. "]\n" ..
                    "active          = walker@" .. gname .. "_base_guard" .. i .. "\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 
@@ -729,17 +723,17 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
 
     -- patrol in center
     for i = 1, 2 do
-	    t = { section = "logic@" .. gname .. "_center_patrol",
-		    idle = 0,
-		    prior = 10, state = {0},
-		    squad = squad, group = groups[8],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = b_predicate_v
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_center_patrol",
+            idle = 0,
+            prior = 10, state = {0},
+            squad = squad, group = groups[8],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = b_predicate_v
+        }
+        table.insert(sj, t)
     end
 
-	ltx = ltx.."[logic@" .. gname .. "_center_patrol]\n" ..
+    ltx = ltx.."[logic@" .. gname .. "_center_patrol]\n" ..
                "active      = patrol@" .. gname .. "_center_patrol\n" ..
                "combat_ignore   = combat_ignore\n" ..
 
@@ -759,16 +753,16 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
     gr = {10, 9}
     for i, v in pairs({3, 2}) do
         for j = 1, v do
-	        t = { section = "logic@" .. gname .. "_gate" .. i .. "_guard" .. j,
-		        idle = 0,
-		        prior = prior[i], state = {0},
-		        squad = squad, group = groups[gr[i]],
-		        in_rest = "cit_selmag_restr", out_rest = "",
-		        predicate = pred[i]
-	        }
-	        table.insert(sj, t)
+            t = { section = "logic@" .. gname .. "_gate" .. i .. "_guard" .. j,
+                idle = 0,
+                prior = prior[i], state = {0},
+                squad = squad, group = groups[gr[i]],
+                in_rest = "cit_selmag_restr", out_rest = "",
+                predicate = pred[i]
+            }
+            table.insert(sj, t)
 
-	        ltx = ltx.."[logic@" .. gname .. "_gate" .. i .. "_guard" .. j .. "]\n" ..
+            ltx = ltx.."[logic@" .. gname .. "_gate" .. i .. "_guard" .. j .. "]\n" ..
                        "active      = walker@" .. gname .. "_gate" .. i .. "_guard" .. j .. "\n" ..
                        "combat_ignore   = combat_ignore\n" ..
 
@@ -784,16 +778,16 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
 
     -- drunken
     for i = 1, 2 do
-	    t = { section = "logic@" .. gname .. "_drunken" .. i,
-		    idle = 0,
-		    prior = 1, state = {0},
-		    squad = squad, group = groups[12],
-		    in_rest = "cit_selmag_restr", out_rest = "",
-		    predicate = b_predicate_d
-	    }
-	    table.insert(sj, t)
+        t = { section = "logic@" .. gname .. "_drunken" .. i,
+            idle = 0,
+            prior = 1, state = {0},
+            squad = squad, group = groups[12],
+            in_rest = "cit_selmag_restr", out_rest = "",
+            predicate = b_predicate_d
+        }
+        table.insert(sj, t)
 
-	    ltx = ltx.."[logic@" .. gname .. "_drunken" .. i .. "]\n" ..
+        ltx = ltx.."[logic@" .. gname .. "_drunken" .. i .. "]\n" ..
                    "active          = walker@" .. gname .. "_drunken" .. i .. "\n" ..
                    "combat_ignore   = combat_ignore\n" ..
 
@@ -809,7 +803,6 @@ gulags.cit_bandits.job = function(sj, gname, type, squad, groups)
     gulags.cit_bandits.ltx = ltx
 end
 
-
 --------------------------------------------------------------------------
 -- Beasts
 --------------------------------------------------------------------------
@@ -819,39 +812,39 @@ end
 gulags.cit_beasts.job = function(sj, gname, type, squad, groups)
     local ltx = ""
 
-	-- Проверяем наличие моб_хом.
-	local i = 1
-	while level.patrol_path_exists(gname .. "_home_" .. i) do
-		-- Необходимо вычитать количество работ из названия точки пути.
-		local way_name = gname .. "_home_" .. i
-		local ptr = patrol(way_name)
-		local wp_prop = utils.parse_waypoint_data(way_name, ptr:flags(0), ptr:name(0))
-		local job_count = 10
-		if wp_prop.count ~= nil then
-			job_count = wp_prop.count
-		end
+    -- РџСЂРѕРІРµСЂСЏРµРј РЅР°Р»РёС‡РёРµ РјРѕР±_С…РѕРј.
+    local i = 1
+    while level.patrol_path_exists(gname .. "_home_" .. i) do
+        -- РќРµРѕР±С…РѕРґРёРјРѕ РІС‹С‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р±РѕС‚ РёР· РЅР°Р·РІР°РЅРёСЏ С‚РѕС‡РєРё РїСѓС‚Рё.
+        local way_name = gname .. "_home_" .. i
+        local ptr = patrol(way_name)
+        local wp_prop = utils.parse_waypoint_data(way_name, ptr:flags(0), ptr:name(0))
+        local job_count = 10
+        if wp_prop.count ~= nil then
+            job_count = wp_prop.count
+        end
 
-		for i = 1, job_count do
-			-- добавляем должность
-			t = { section = "logic@" .. way_name,
-				idle = 0,
-				prior = 1, state = {0}, squad = squad, group = groups[1],
-				position_threshold = 20,
-				in_rest = "", out_rest = gname .. "_restr"
-			}
-			table.insert(sj, t)
-		end
+        for i = 1, job_count do
+            -- РґРѕР±Р°РІР»СЏРµРј РґРѕР»Р¶РЅРѕСЃС‚СЊ
+            t = { section = "logic@" .. way_name,
+                idle = 0,
+                prior = 1, state = {0}, squad = squad, group = groups[1],
+                position_threshold = 20,
+                in_rest = "", out_rest = gname .. "_restr"
+            }
+            table.insert(sj, t)
+        end
 
-		-- добавляем описание должности в лтх.
-		local job_ltx = "[logic@" .. way_name .. "]\n" ..
-						"active = mob_home@" .. way_name .. "\n" ..
+        -- РґРѕР±Р°РІР»СЏРµРј РѕРїРёСЃР°РЅРёРµ РґРѕР»Р¶РЅРѕСЃС‚Рё РІ Р»С‚С….
+        local job_ltx = "[logic@" .. way_name .. "]\n" ..
+                        "active = mob_home@" .. way_name .. "\n" ..
 
-						"[mob_home@" .. way_name .. "]\n" ..
-						"path_home = home_" .. i .. "\n"
+                        "[mob_home@" .. way_name .. "]\n" ..
+                        "path_home = home_" .. i .. "\n"
 
-		ltx = ltx..job_ltx
-		i = i + 1
-	end
+        ltx = ltx..job_ltx
+        i = i + 1
+    end
 
     gulags.cit_beasts.ltx = ltx
 end

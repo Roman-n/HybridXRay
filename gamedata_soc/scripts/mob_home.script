@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------------------------
 -- Mob Home
 ----------------------------------------------------------------------------------------------------
--- Ðàçðàáîò÷èê: Jim
+-- Ð Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸Ðº: Jim
 ----------------------------------------------------------------------------------------------------
 
 local def_min_radius = 20
@@ -13,8 +13,8 @@ class "mob_home"
 -- CONSTRUCTION SCHEME
 ----------------------------------------------------------------------------------------------------
 function mob_home:__init(obj, storage)
-	self.object = obj
-	self.st		= storage
+    self.object = obj
+    self.st     = storage
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -22,16 +22,16 @@ end
 ----------------------------------------------------------------------------------------------------
 function mob_home:reset_scheme()
 --[[
-Äîáàâëåíî: Haron
-Îïèñàíèå: Òåïåðü ìîæíî çàäàâàòü ðàäèóñû home_min_radius è home_max_radius âî ôëàãàõ
-          ïóòè path_home. Äëÿ ýòîãî ââåäåíû ôëàãè minr, maxr. Îíè äîëæíû áûòü
-          ïðîïèñàíû â ïåðâîé òî÷êå ïóòè. Ó ðàäèóñîâ çàäàíûõ â ñåêöèè ïðèîðèòåò
-          áîëüøèé ÷åì äëÿ òåõ ÷òî çàäàíû âî ôëàãàõ, ò.å. åñëè çàäàíî è òàì è òàì, òî
-          áåðóòñÿ çíà÷åíèÿ èç ñåêöèè (ñäåëàíî äëÿ îáðàòíîé ñîâìåñòèìîñòè).
+Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¾: Haron
+ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ: Ð¢ÐµÐ¿ÐµÑ€ÑŒ Ð¼Ð¾Ð¶Ð½Ð¾ Ð·Ð°Ð´Ð°Ð²Ð°Ñ‚ÑŒ Ñ€Ð°Ð´Ð¸ÑƒÑÑ‹ home_min_radius Ð¸ home_max_radius Ð²Ð¾ Ñ„Ð»Ð°Ð³Ð°Ñ…
+          Ð¿ÑƒÑ‚Ð¸ path_home. Ð”Ð»Ñ ÑÑ‚Ð¾Ð³Ð¾ Ð²Ð²ÐµÐ´ÐµÐ½Ñ‹ Ñ„Ð»Ð°Ð³Ð¸ minr, maxr. ÐžÐ½Ð¸ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ
+          Ð¿Ñ€Ð¾Ð¿Ð¸ÑÐ°Ð½Ñ‹ Ð² Ð¿ÐµÑ€Ð²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐµ Ð¿ÑƒÑ‚Ð¸. Ð£ Ñ€Ð°Ð´Ð¸ÑƒÑÐ¾Ð² Ð·Ð°Ð´Ð°Ð½Ñ‹Ñ… Ð² ÑÐµÐºÑ†Ð¸Ð¸ Ð¿Ñ€Ð¸Ð¾Ñ€Ð¸Ñ‚ÐµÑ‚
+          Ð±Ð¾Ð»ÑŒÑˆÐ¸Ð¹ Ñ‡ÐµÐ¼ Ð´Ð»Ñ Ñ‚ÐµÑ… Ñ‡Ñ‚Ð¾ Ð·Ð°Ð´Ð°Ð½Ñ‹ Ð²Ð¾ Ñ„Ð»Ð°Ð³Ð°Ñ…, Ñ‚.Ðµ. ÐµÑÐ»Ð¸ Ð·Ð°Ð´Ð°Ð½Ð¾ Ð¸ Ñ‚Ð°Ð¼ Ð¸ Ñ‚Ð°Ð¼, Ñ‚Ð¾
+          Ð±ÐµÑ€ÑƒÑ‚ÑÑ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð¸Ð· ÑÐµÐºÑ†Ð¸Ð¸ (ÑÐ´ÐµÐ»Ð°Ð½Ð¾ Ð´Ð»Ñ Ð¾Ð±Ñ€Ð°Ñ‚Ð½Ð¾Ð¹ ÑÐ¾Ð²Ð¼ÐµÑÑ‚Ð¸Ð¼Ð¾ÑÑ‚Ð¸).
 --]]
     local minr, maxr = def_min_radius, def_max_radius
-	local ptr = patrol(self.st.home)
-	local path_info = utils.parse_waypoint_data(self.st.home, ptr:flags(0), ptr:name(0))				
+    local ptr = patrol(self.st.home)
+    local path_info = utils.parse_waypoint_data(self.st.home, ptr:flags(0), ptr:name(0))
     local r = 0
 
     if self.st.home_min_radius then
@@ -45,7 +45,7 @@ function mob_home:reset_scheme()
             end
         end
     end
-    
+
     if self.st.home_max_radius then
         maxr = self.st.home_max_radius
     else
@@ -58,12 +58,12 @@ function mob_home:reset_scheme()
         end
     end
 
-	-- check min and max radius
-	if	minr > maxr then
-		_G.abort("Mob_Home : Home Min Radius MUST be < Max Radius. Got: min radius = %d, max radius = %d.", minr, maxr)
-	end 
+    -- check min and max radius
+    if  minr > maxr then
+        _G.abort("Mob_Home : Home Min Radius MUST be < Max Radius. Got: min radius = %d, max radius = %d.", minr, maxr)
+    end
 
-	self.object:set_home(self.st.home, minr, maxr, self.st.aggressive)
+    self.object:set_home(self.st.home, minr, maxr, self.st.aggressive)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -71,39 +71,39 @@ end
 ----------------------------------------------------------------------------------------------------
 
 function mob_home:update(delta)
-	if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
-		return
-	end
+    if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
+        return
+    end
 end
 
 function mob_home:deactivate()
-	self.object:remove_home()
+    self.object:remove_home()
 end
 
 ----------------------------------------------------------------------------------------------------
 -- ADD_TO_BINDER
 ----------------------------------------------------------------------------------------------------
 function add_to_binder(npc, ini, scheme, section, storage)
-	printf("DEBUG: add_to_binder: npc:name()='%s', scheme='%s', section='%s'", npc:name(), scheme, section)
+    printf("DEBUG: add_to_binder: npc:name()='%s', scheme='%s', section='%s'", npc:name(), scheme, section)
 
-	local new_action = mob_home(npc, storage)
+    local new_action = mob_home(npc, storage)
 
-	-- Çàðåãèñòðèðîâàòü âñå actions, â êîòîðûõ äîëæåí áûòü âûçâàí ìåòîä reset_scheme ïðè èçìåíåíèè íàñòðîåê ñõåìû:
-	xr_logic.subscribe_action_for_events(npc, storage, new_action)
+    -- Ð—Ð°Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð²ÑÐµ actions, Ð² ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ð²Ñ‹Ð·Ð²Ð°Ð½ Ð¼ÐµÑ‚Ð¾Ð´ reset_scheme Ð¿Ñ€Ð¸ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐº ÑÑ…ÐµÐ¼Ñ‹:
+    xr_logic.subscribe_action_for_events(npc, storage, new_action)
 end
 
 ----------------------------------------------------------------------------------------------------
 -- SET_SCHEME
 ----------------------------------------------------------------------------------------------------
 function set_scheme(npc, ini, scheme, section, gulag_name)
-	local storage				= xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+    local storage               = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
 
-	storage.logic				= xr_logic.cfg_get_switch_conditions(ini, section, npc)
-	
-	storage.home				= utils.cfg_get_string(ini, section, "path_home",			npc, true, gulag_name)
-	storage.home_min_radius		= utils.cfg_get_number(ini, section, "home_min_radius",		npc, false) --, 20)
-	storage.home_max_radius		= utils.cfg_get_number(ini, section, "home_max_radius",		npc, false) --, 40)
-	
-	storage.aggressive			= ini:line_exist( section, "aggressive_home")
+    storage.logic               = xr_logic.cfg_get_switch_conditions(ini, section, npc)
+
+    storage.home                = utils.cfg_get_string(ini, section, "path_home",           npc, true, gulag_name)
+    storage.home_min_radius     = utils.cfg_get_number(ini, section, "home_min_radius",     npc, false) --, 20)
+    storage.home_max_radius     = utils.cfg_get_number(ini, section, "home_max_radius",     npc, false) --, 40)
+
+    storage.aggressive          = ini:line_exist( section, "aggressive_home")
 end
 

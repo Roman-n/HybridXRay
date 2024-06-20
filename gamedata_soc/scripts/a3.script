@@ -1,5 +1,5 @@
 function main()
-	local dog = get_level_object("dog")
+    local dog = get_level_object("dog")
 
     dog:script(true, this.script_name())
     action(dog, move(move.walk_fwd, patrol("way1", patrol.start, patrol.continue):point(0)), cond(cond.move_end) )

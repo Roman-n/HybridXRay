@@ -1,62 +1,60 @@
 --[[------------------------------------------------------------------------------------------------------------------
-Проигровка звуков в голове актера
+РџСЂРѕРёРіСЂРѕРІРєР° Р·РІСѓРєРѕРІ РІ РіРѕР»РѕРІРµ Р°РєС‚РµСЂР°
 Tunduk Vladimir aka Sidorovich
 
 --------------------------------------------------------------------------------------------------------------------]]
 
-
 class "action_sound2d"
 ----------------------
 function action_sound2d:__init (obj, storage)
-	self.object = obj
-	self.st = storage
-	self.snd_obj_l = nil
-	self.snd_obj_r = nil
-	self.time = 0
-	self.playing = false
-	self.current = 0
+    self.object = obj
+    self.st = storage
+    self.snd_obj_l = nil
+    self.snd_obj_r = nil
+    self.time = 0
+    self.playing = false
+    self.current = 0
 end
 ----------------------
 function action_sound2d:reset_scheme()
-
     self:recreate_sounds ()
-    
-	self.st.signals = {}
-	self.time = time_global ()
-	self.playing = false
+
+    self.st.signals = {}
+    self.time = time_global ()
+    self.playing = false
 end
 ----------------------
 function action_sound2d:recreate_sounds ()
     self.snd_obj_l = nil
     self.snd_obj_r = nil
     local name_left, name_right = self:get_sound_name ()
-    
+
     if name_left ~= nil then
        printf ("RECREATE_SOUNDS. LEFT CHANNEL = %s", name_left)
-    end    
+    end
 
     if name_right ~= nil then
        printf ("RECREATE_SOUNDS. RIGHT CHANNEL = %s", name_right)
-    end    
+    end
 
     self.snd_obj_l = xr_sound.get_safe_sound_object (name_left)
     if name_right ~= nil then
        self.snd_obj_r = xr_sound.get_safe_sound_object (name_right)
-    else   
+    else
        self.snd_obj_r = nil
-    end   
+    end
 end
 ----------------------
 function action_sound2d:get_next_sound_index ()
     local idx = self.current
     local tsize = table.getn (sound_theme.ph_snd_themes[self.st.snd_theme])
-    if tsize == 1 then 
+    if tsize == 1 then
        idx = 1
-    else    
+    else
        while idx == self.current do
              idx = math.random (1, tsize)
        end
-    end   
+    end
     self.current = idx
     return idx
 end
@@ -65,13 +63,13 @@ function action_sound2d:get_sound_name ()
     local name
     if self.st.snd_name ~= nil then
        name = self.st.snd_name
-    else   
+    else
        name = sound_theme.ph_snd_themes[self.st.snd_theme][self:get_next_sound_index ()]
-		if type(name) == "table" then
-			name = name[1]
-		end
+        if type(name) == "table" then
+            name = name[1]
+        end
     end
-        
+
     if self.st.stereo == false then
        return name, nil
     end
@@ -79,67 +77,66 @@ function action_sound2d:get_sound_name ()
 end
 ----------------------
 function action_sound2d:update (delta)
-    if self.snd_obj_l == nil then 
-       return 
+    if self.snd_obj_l == nil then
+       return
     end
-    
+
     local actor = db.actor
-    
+
     if self.playing == false then
        self:play_sounds ()
        self.playing = true
        return
     end
-    
+
     if self.st.stereo == true then
        local pos_l, pos_r = self:get_source_positions ()
        if self.snd_obj_l ~= nil and self.snd_obj_l:playing () == true then
           self.snd_obj_l:set_position (pos_l)
-       end   
+       end
        if self.snd_obj_r ~= nil and self.snd_obj_r:playing () == true then
           self.snd_obj_r:set_position (pos_r)
-       end   
-    end   
-    
-        
+       end
+    end
+
     if self.snd_obj_l:playing () == false then
        self.st.signals["sound_end"] = true
        if self.st.snd_theme ~= nil then
-          self:recreate_sounds ()  
+          self:recreate_sounds ()
           self.time = time_global ()
-	      self.playing = false
-       end       
-    end   
-    
+          self.playing = false
+       end
+    end
+
     xr_logic.try_switch_to_another_section (self.object, self.st, actor)
 end
 ----------------------
 function action_sound2d:play_sounds ()
 
-    --рассчет задержки
+    -- СЂР°СЃСЃС‡РµС‚ Р·Р°РґРµСЂР¶РєРё
     local d
     if self.st.delay == self.st.delay_max then
        d = self.st.delay
     else
        d = math.random (self.st.delay, self.st.delay_max)
-    end       
+    end
 
     local actor = db.actor
-    -- если звук моно, то играем только с левого канала и только в жбане актера
+    -- РµСЃР»Рё Р·РІСѓРє РјРѕРЅРѕ, С‚Рѕ РёРіСЂР°РµРј С‚РѕР»СЊРєРѕ СЃ Р»РµРІРѕРіРѕ РєР°РЅР°Р»Р° Рё С‚РѕР»СЊРєРѕ РІ Р¶Р±Р°РЅРµ Р°РєС‚РµСЂР°
     if self.st.stereo == false then
        if self.snd_obj_l ~= nil then
           self.snd_obj_l:play_at_pos (actor, vector ():set (0, 0, 0), d / 1000.0, sound_object.s2d)
        end
     else
-       --если один из каналов отсутсвует, то пинать жестоко звуковика 
+       -- РµСЃР»Рё РѕРґРёРЅ РёР· РєР°РЅР°Р»РѕРІ РѕС‚СЃСѓС‚СЃРІСѓРµС‚, С‚Рѕ РїРёРЅР°С‚СЊ Р¶РµСЃС‚РѕРєРѕ Р·РІСѓРєРѕРІРёРєР°
        if self.snd_obj_l == nil or self.snd_obj_r == nil then
-          abort ("Can't play stereo sound because sound file for left or right channel not loaded")  
+          abort ("Can't play stereo sound because sound file for left or right channel not loaded")
        end
-       --рассчитаем направления на источники звука для левого и правого лопуха
+       -- СЂР°СЃСЃС‡РёС‚Р°РµРј РЅР°РїСЂР°РІР»РµРЅРёСЏ РЅР° РёСЃС‚РѕС‡РЅРёРєРё Р·РІСѓРєР° РґР»СЏ Р»РµРІРѕРіРѕ Рё РїСЂР°РІРѕРіРѕ Р»РѕРїСѓС…Р°
        local pos_l, pos_r = self:get_source_positions ()
        self.snd_obj_l:play_at_pos (actor, pos_l, d / 1000.0, sound_object.s3d)
        self.snd_obj_r:play_at_pos (actor, pos_r, d / 1000.0, sound_object.s3d)
-    end      
+    end
 end
 ----------------------
 function action_sound2d:get_source_positions ()
@@ -150,10 +147,10 @@ function action_sound2d:get_source_positions ()
     local dir_right = vector_rotate_y (dir, -45)
     dir_left:normalize ()
     dir_right:normalize ()
-       --рассчитаем высоту 
+       -- СЂР°СЃСЃС‡РёС‚Р°РµРј РІС‹СЃРѕС‚Сѓ
     local pos = actor:position ()
-    pos.y = pos.y + 1.5   --ну низкорослый у нас актер...
-    local pos_l = pos;
+    pos.y = pos.y + 1.5   -- РЅСѓ РЅРёР·РєРѕСЂРѕСЃР»С‹Р№ Сѓ РЅР°СЃ Р°РєС‚РµСЂ...
+    local pos_l = pos
     return pos_l:add (dir_left:mul (1.5)), pos:add (dir_right:mul (1.5))
 end
 ----------------------
@@ -163,59 +160,55 @@ function action_sound2d:deactivate ()
           self.snd_obj_l:stop ()
        end
        self.snd_obj_l = nil
-    end         
-    
+    end
+
     if self.snd_obj_r ~= nil then
        if self.snd_obj_r:playing () == true then
           self.snd_obj_r:stop ()
        end
        self.snd_obj_r = nil
-    end         
+    end
 end
-
-
 
 ----------------------
 function add_to_binder( npc, ini, scheme, section, storage )
 
---	local new_action = 
+--  local new_action =
 
-	-- Зарегистрировать все actions, в которых должен быть вызван метод reset_scheme при изменении настроек схемы:
-	xr_logic.subscribe_action_for_events (npc, storage, action_sound2d (npc, storage))
+    -- Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ РІСЃРµ actions, РІ РєРѕС‚РѕСЂС‹С… РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІС‹Р·РІР°РЅ РјРµС‚РѕРґ reset_scheme РїСЂРё РёР·РјРµРЅРµРЅРёРё РЅР°СЃС‚СЂРѕРµРє СЃС…РµРјС‹:
+    xr_logic.subscribe_action_for_events (npc, storage, action_sound2d (npc, storage))
 end
 ----------------------
 function set_scheme (obj, ini, scheme, section, gulag_name)
 
-	local st = xr_logic.assign_storage_and_bind (obj, ini, scheme, section)
-	st.logic = xr_logic.cfg_get_switch_conditions (ini, section, obj)
-	st.snd_name = utils.cfg_get_string (ini, section, "snd", obj, false, "", nil)
-	st.snd_theme = utils.cfg_get_string (ini, section, "theme", obj, false, "", nil)
-	
-	if st.snd_theme ~= nil and st.snd_name then
-	   abort ("SR_SOUND2D : can't definition sound file name and sound theme at the one time");
-	end    
-	
-	st.delay = utils.cfg_get_number (ini, section, "delay", obj, false, 0)
-	st.delay_max = utils.cfg_get_number (ini, section, "delay_max", obj, false, 0)
-	st.stereo = utils.cfg_get_bool (ini, section, "stereo", obj, false, false)
-	
-	if st.delay_max < st.delay then
-	    st.delay_max = st.delay
-	end
-	
-	if st.snd_name ~= nil then
+    local st = xr_logic.assign_storage_and_bind (obj, ini, scheme, section)
+    st.logic = xr_logic.cfg_get_switch_conditions (ini, section, obj)
+    st.snd_name = utils.cfg_get_string (ini, section, "snd", obj, false, "", nil)
+    st.snd_theme = utils.cfg_get_string (ini, section, "theme", obj, false, "", nil)
+
+    if st.snd_theme ~= nil and st.snd_name then
+       abort ("SR_SOUND2D : can't definition sound file name and sound theme at the one time")
+    end
+
+    st.delay = utils.cfg_get_number (ini, section, "delay", obj, false, 0)
+    st.delay_max = utils.cfg_get_number (ini, section, "delay_max", obj, false, 0)
+    st.stereo = utils.cfg_get_bool (ini, section, "stereo", obj, false, false)
+
+    if st.delay_max < st.delay then
+        st.delay_max = st.delay
+    end
+
+    if st.snd_name ~= nil then
        if st.snd_name == "" then
-	      abort ("SR_SOUND2D : invalid sound name")
-	   end   
-	else   
-	   if st.snd_theme == nil or st.snd_theme == "" then
-	      abort ("SR_SOUND2D : invalid sound theme")  
-	   end
-	end   
-	
+          abort ("SR_SOUND2D : invalid sound name")
+       end
+    else
+       if st.snd_theme == nil or st.snd_theme == "" then
+          abort ("SR_SOUND2D : invalid sound theme")
+       end
+    end
 end
 ----------------------
 ----------------------
 ----------------------
 ----------------------
-

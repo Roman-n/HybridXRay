@@ -148,9 +148,9 @@ function main_menu:OnButton_disconnect_clicked()
 	self.message_box:InitMessageBox("message_box_quit_game")
 
 	if (level.game_id() ~= 1) then
-		self.message_box:SetText("ui_mm_disconnect_message")	-- MultiPlayer
+		self.message_box:SetText("ui_mm_disconnect_message")   -- MultiPlayer
 	else
-		self.message_box:SetText("ui_mm_quit_game_message")		-- SinglePlayer
+		self.message_box:SetText("ui_mm_quit_game_message")    -- SinglePlayer
 	end
 	self.message_box:ShowDialog(true)
 end
@@ -168,7 +168,7 @@ end
 function main_menu:OnButton_return_game()
 	local console = get_console()
 	console:execute("main_menu off")
-	xr_s.on_main_menu_off()      						--' Distemper 03.2008 --
+	xr_s.on_main_menu_off()              --' Distemper 03.2008 --
 end
 
 function main_menu:OnButton_new_novice_game()

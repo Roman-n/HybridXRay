@@ -1899,8 +1899,8 @@ C++ class CALifeMonsterDetailPathManager {
     function target(const number&);
     function target(const CALifeSmartTerrainTask*);
     function failed() const;
-    function speed	(const number&);
-    function speed	() const;
+    function speed  (const number&);
+    function speed  () const;
     function actual() const;
 };
 

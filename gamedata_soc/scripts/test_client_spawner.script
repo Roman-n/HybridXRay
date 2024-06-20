@@ -1,18 +1,18 @@
 local x
 
 function spawn_callback( id, obj )
-	x = obj
+    x = obj
 end
 
 function main()
-	local y = get_level_object( "af_ameba_mica" )
+    local y = get_level_object( "af_ameba_mica" )
 
-	printf( "spawn request" )
-	level.client_spawn_manager():add( y:id(), get_actor():id(), spawn_callback )
-	printf( "spawn request OK" )
+    printf( "spawn request" )
+    level.client_spawn_manager():add( y:id(), get_actor():id(), spawn_callback )
+    printf( "spawn request OK" )
 
-	while not x do
-	end
+    while not x do
+    end
 
-	printf( "%s spawned!!!", x:name() )
+    printf( "%s spawned!!!", x:name() )
 end

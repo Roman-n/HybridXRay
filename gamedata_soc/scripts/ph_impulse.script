@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------------------------
 -- Apply directional force to the object
 ----------------------------------------------------------------------------------------------------
--- Èñõîäíûé ñêðèïò: Oleg Hryptul (Haron) haronk@ukr.net
+-- Ð˜ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¹ ÑÐºÑ€Ð¸Ð¿Ñ‚: Oleg Hryptul (Haron) haronk@ukr.net
 ----------------------------------------------------------------------------------------------------
 function printf() end
 
@@ -13,7 +13,6 @@ local def_interval = 300
 
 local state_push, state_interval = 0, 1
 
-
 ----------------------------------------------------------------------------------------------------
 -- Class declaration
 ----------------------------------------------------------------------------------------------------
@@ -23,76 +22,76 @@ class "action_impulse"
 -- Constructor
 ----------------------------------------------------------------------------------------------------
 function action_impulse:__init(obj, storage)
-	self.object     = obj
-	self.st         = storage
+    self.object     = obj
+    self.st         = storage
 end
 
 function action_impulse:reset_scheme()
-	printf("_hr: action_impulse:reset_scheme: self.object:name()='%s'", self.object:name())
-	
-    self.joint	= self.object:get_physics_shell():get_joint_by_bone_name(self.st.bone)
+    printf("_hr: action_impulse:reset_scheme: self.object:name()='%s'", self.object:name())
 
-	self.duration = self.st.duration
-	self.interval = self.st.interval
-	
-	if self.st.force then
-	    self.force = self.st.force
-	else
-	    self.force = nil
-	    self.force_min = self.st.force_min
-	    self.force_max = self.st.force_max
-	end
-	
-	self.velocity = self.st.velocity
+    self.joint  = self.object:get_physics_shell():get_joint_by_bone_name(self.st.bone)
 
-	if self.velocity.x == 0 then
-		self.joint:set_max_force_and_velocity(0, 0, 0)
-	end
-	
-	if self.velocity.y == 0 then
-		self.joint:set_max_force_and_velocity(0, 0, 1)
-	end
-	
-	if self.velocity.z == 0 then
-		self.joint:set_max_force_and_velocity(0, 0, 2)
-	end
+    self.duration = self.st.duration
+    self.interval = self.st.interval
+
+    if self.st.force then
+        self.force = self.st.force
+    else
+        self.force = nil
+        self.force_min = self.st.force_min
+        self.force_max = self.st.force_max
+    end
+
+    self.velocity = self.st.velocity
+
+    if self.velocity.x == 0 then
+        self.joint:set_max_force_and_velocity(0, 0, 0)
+    end
+
+    if self.velocity.y == 0 then
+        self.joint:set_max_force_and_velocity(0, 0, 1)
+    end
+
+    if self.velocity.z == 0 then
+        self.joint:set_max_force_and_velocity(0, 0, 2)
+    end
 
     self.state = state_push
-	self.direction = 1
+    self.direction = 1
     self:perform_impulse(self.direction)
     self.state_start_time = time_global()
 end
 
 function action_impulse:update(delta)
-	printf("_hr: action_impulse:update()")
+    printf("_hr: action_impulse:update()")
 
-	if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
-		return
-	end
+    if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
+        return
+    end
 
     local tg = time_global()
-	if self.state == state_push then
-	    if tg > self.state_start_time + self.duration then
-		    self.joint:set_max_force_and_velocity(0, 0, 0)
-		    self.joint:set_max_force_and_velocity(0, 0, 1)
-		    self.joint:set_max_force_and_velocity(0, 0, 2)
+    if self.state == state_push then
+        if tg > self.state_start_time + self.duration then
+            self.joint:set_max_force_and_velocity(0, 0, 0)
+            self.joint:set_max_force_and_velocity(0, 0, 1)
+            self.joint:set_max_force_and_velocity(0, 0, 2)
 
-		    self.state = state_interval
+            self.state = state_interval
             self.state_start_time = tg
         end
-	elseif tg >= self.state_start_time + self.interval then
-	    self.direction = -self.direction
-		self:perform_impulse(self.direction)
+    elseif tg >= self.state_start_time + self.interval then
+        self.direction = -self.direction
+        self:perform_impulse(self.direction)
 
-		self.state = state_push
+        self.state = state_push
         self.state_start_time = tg
-	end
+    end
 end
 
 function action_impulse:perform_impulse(dir)
-	printf("self:perform_impulse: %d", time_global())
-	
-	local force_x, force_y, force_z = 0, 0, 0
+    printf("self:perform_impulse: %d", time_global())
+
+    local force_x, force_y, force_z = 0, 0, 0
 
     if self.force then
         force_x = self.force
@@ -104,53 +103,52 @@ function action_impulse:perform_impulse(dir)
         force_z = math.random(self.force_min, self.force_max)
     end
 
-	if self.velocity.x ~= 0 then
-		self.joint:set_max_force_and_velocity(force_x, dir * self.velocity.x, 0)
-	end
-	
-	if self.velocity.y ~= 0 then
-		self.joint:set_max_force_and_velocity(force_y, dir * self.velocity.y, 1)
-	end
-	
-	if self.velocity.z ~= 0 then
-		self.joint:set_max_force_and_velocity(force_z, dir * self.velocity.z, 2)
-	end
+    if self.velocity.x ~= 0 then
+        self.joint:set_max_force_and_velocity(force_x, dir * self.velocity.x, 0)
+    end
+
+    if self.velocity.y ~= 0 then
+        self.joint:set_max_force_and_velocity(force_y, dir * self.velocity.y, 1)
+    end
+
+    if self.velocity.z ~= 0 then
+        self.joint:set_max_force_and_velocity(force_z, dir * self.velocity.z, 2)
+    end
 end
 
 ---------------------------------------------------------------------------------------------------------------------
 function add_to_binder(npc, ini, scheme, section, storage)
-	printf("DEBUG: add_to_binder: scheme='%s', section='%s'", scheme, section)
+    printf("DEBUG: add_to_binder: scheme='%s', section='%s'", scheme, section)
 
-	local new_action = action_impulse(npc, storage)
+    local new_action = action_impulse(npc, storage)
 
-	xr_logic.subscribe_action_for_events(npc, storage, new_action)
+    xr_logic.subscribe_action_for_events(npc, storage, new_action)
 end
 
 function set_scheme(npc, ini, scheme, section, gulag_name)
-	local st = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+    local st = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
 
-	st.logic = xr_logic.cfg_get_switch_conditions(ini, section, npc)
-	
-	st.force = utils.cfg_get_number(ini, section, "force", npc, false)
-	if not st.force then
-	    st.force_min   = utils.cfg_get_number(ini, section, "force_min", npc, false, def_force_min)
-	    st.force_max   = utils.cfg_get_number(ini, section, "force_max", npc, false, def_force_max)
-	end
+    st.logic = xr_logic.cfg_get_switch_conditions(ini, section, npc)
 
-	local velocity  = utils.cfg_get_number(ini, section, "velocity", npc, false)
+    st.force = utils.cfg_get_number(ini, section, "force", npc, false)
+    if not st.force then
+        st.force_min   = utils.cfg_get_number(ini, section, "force_min", npc, false, def_force_min)
+        st.force_max   = utils.cfg_get_number(ini, section, "force_max", npc, false, def_force_max)
+    end
+
+    local velocity  = utils.cfg_get_number(ini, section, "velocity", npc, false)
     st.velocity = {}
-	if velocity then
-		st.velocity.x = velocity
-		st.velocity.y = velocity
-		st.velocity.z = velocity
-	else
-		st.velocity.x  = utils.cfg_get_number(ini, section, "velocity_x", npc, false, def_vel_x)
-		st.velocity.y  = utils.cfg_get_number(ini, section, "velocity_y", npc, false, def_vel_y)
-		st.velocity.z  = utils.cfg_get_number(ini, section, "velocity_z", npc, false, def_vel_z)
-	end
+    if velocity then
+        st.velocity.x = velocity
+        st.velocity.y = velocity
+        st.velocity.z = velocity
+    else
+        st.velocity.x  = utils.cfg_get_number(ini, section, "velocity_x", npc, false, def_vel_x)
+        st.velocity.y  = utils.cfg_get_number(ini, section, "velocity_y", npc, false, def_vel_y)
+        st.velocity.z  = utils.cfg_get_number(ini, section, "velocity_z", npc, false, def_vel_z)
+    end
 
-	st.bone      = utils.cfg_get_string(ini, section, "bone",       npc, false, "", def_bone)
-	st.duration  = utils.cfg_get_number(ini, section, "duration",   npc, false,     def_duration)
-	st.interval  = utils.cfg_get_number(ini, section, "interval",   npc, false,     def_interval)
+    st.bone      = utils.cfg_get_string(ini, section, "bone",       npc, false, "", def_bone)
+    st.duration  = utils.cfg_get_number(ini, section, "duration",   npc, false,     def_duration)
+    st.interval  = utils.cfg_get_number(ini, section, "interval",   npc, false,     def_interval)
 end
-

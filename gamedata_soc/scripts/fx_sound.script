@@ -1,98 +1,98 @@
 ----------------------------------------------------------------------------------------------------
 -- FX Sound
 ----------------------------------------------------------------------------------------------------
--- Ðàçðàáîò÷èê: Jim
+-- Ð Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸Ðº: Jim
 ----------------------------------------------------------------------------------------------------
 
 class "fx_snd"
 
 function fx_snd:__init(obj, storage)
-	self.object = obj
-	self.st		= storage
-	
-	self.played	= true
+    self.object = obj
+    self.st     = storage
+
+    self.played = true
 end
 
 function fx_snd:reset_scheme()
-	printf("Fx Sound :: Reset Scheme")
-	self.cur_point	= 0
-	self.snd_obj	= xr_sound.get_safe_sound_object(self.st.snd)
-	
-	self:set_positions()
-	
-	self.st.signals = {}
-	
-	self.complete	= false
+    printf("Fx Sound :: Reset Scheme")
+    self.cur_point  = 0
+    self.snd_obj    = xr_sound.get_safe_sound_object(self.st.snd)
+
+    self:set_positions()
+
+    self.st.signals = {}
+
+    self.complete   = false
 end
 
 function fx_snd:update(delta)
-	
-	if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
-		return
-	end
-	
-	if self.complete then return end
-	
-	-- play sound
-	if not self.snd_obj:playing() then 
-		self.snd_obj:play_at_pos(self.object, self.current)
-	else 
-		self.snd_obj:set_position(self.current)	
-	end
-	
-	-- update current position
-	local target_pos = vector():set(self.current)
-	target_pos:mad(self.dir, self.st.velocity * delta / 1000)
-	
-	if target_pos:distance_to(self.current) > self.current:distance_to(self.target) then
-		self.cur_point	= self:next_point()
-		self:set_positions()
-	else
-		self.current	= vector():set(target_pos)
-	end
-	
+
+    if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
+        return
+    end
+
+    if self.complete then return end
+
+    -- play sound
+    if not self.snd_obj:playing() then
+        self.snd_obj:play_at_pos(self.object, self.current)
+    else
+        self.snd_obj:set_position(self.current)
+    end
+
+    -- update current position
+    local target_pos = vector():set(self.current)
+    target_pos:mad(self.dir, self.st.velocity * delta / 1000)
+
+    if target_pos:distance_to(self.current) > self.current:distance_to(self.target) then
+        self.cur_point  = self:next_point()
+        self:set_positions()
+    else
+        self.current    = vector():set(target_pos)
+    end
+
 end
 
 function fx_snd:next_point()
-	if self.cur_point+1 < patrol(self.st.path):count() then
-		return self.cur_point+1
-	else
-		return 0
-	end
-	
+    if self.cur_point+1 < patrol(self.st.path):count() then
+        return self.cur_point+1
+    else
+        return 0
+    end
+
 end
 
 function fx_snd:set_positions()
-	
-	if (self:next_point() == 0) then
-		self.complete = true
-		self.st.signals["completed"] = true
-		return
-	end
 
-	self.current	= patrol(self.st.path):point(self.cur_point)
-	self.target		= patrol(self.st.path):point(self:next_point())
-	self.dir		= vector():sub(self.target, self.current):normalize()
+    if (self:next_point() == 0) then
+        self.complete = true
+        self.st.signals["completed"] = true
+        return
+    end
+
+    self.current    = patrol(self.st.path):point(self.cur_point)
+    self.target     = patrol(self.st.path):point(self:next_point())
+    self.dir        = vector():sub(self.target, self.current):normalize()
 end
 
 ---------------------------------------------------------------------------------------------------------------------
 function add_to_binder(npc, ini, scheme, section, storage)
-	
-	local new_action = fx_snd(npc, storage)
 
-	-- Çàðåãèñòðèðîâàòü âñå actions, â êîòîðûõ äîëæåí áûòü âûçâàí ìåòîä reset_scheme ïðè èçìåíåíèè íàñòðîåê ñõåìû:
-	xr_logic.subscribe_action_for_events(npc, storage, new_action)
-	
+    local new_action = fx_snd(npc, storage)
+
+    -- Ð—Ð°Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð²ÑÐµ actions, Ð² ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ð²Ñ‹Ð·Ð²Ð°Ð½ Ð¼ÐµÑ‚Ð¾Ð´ reset_scheme Ð¿Ñ€Ð¸ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐº ÑÑ…ÐµÐ¼Ñ‹:
+    xr_logic.subscribe_action_for_events(npc, storage, new_action)
+
 end
 
 function set_scheme(npc, ini, scheme, section, gulag_name)
-	local st = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+    local st = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
 
-	st.logic    = xr_logic.cfg_get_switch_conditions(ini, section, npc)
-	
-	st.path		= utils.cfg_get_string(ini, section, "path",		npc, false, "")
-	st.snd		= utils.cfg_get_string(ini, section, "sound",		npc, false, "")
-	st.velocity = utils.cfg_get_number(ini, section, "velocity",	npc, false, 3)
-		
+    st.logic    = xr_logic.cfg_get_switch_conditions(ini, section, npc)
+
+    st.path     = utils.cfg_get_string(ini, section, "path",        npc, false, "")
+    st.snd      = utils.cfg_get_string(ini, section, "sound",       npc, false, "")
+    st.velocity = utils.cfg_get_number(ini, section, "velocity",    npc, false, 3)
+
 end
 

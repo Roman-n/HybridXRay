@@ -1,4 +1,3 @@
-
 -- забирает все документы
 function explorer_take_away_docs(first_speaker, second_speaker)
 end

@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------------------------------
 -- Mob Alife Control
 ----------------------------------------------------------------------------------------------------
--- Разработчик: Jim
+-- Р Р°Р·СЂР°Р±РѕС‚С‡РёРє: Jim
 ----------------------------------------------------------------------------------------------------
 
 class "mob_alife_control"
@@ -10,8 +10,8 @@ class "mob_alife_control"
 -- CONSTRUCTION SCHEME
 ----------------------------------------------------------------------------------------------------
 function mob_alife_control:__init(obj, storage)
-	self.object = obj
-	self.st		= storage
+    self.object = obj
+    self.st     = storage
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ end
 function mob_alife_control:reset_scheme()
     printf("Mob Alife Control: reset_scheme: %s", self.object:name())
 
-	self.st.signals				= {}
-	
-	self.current_state			= self.object:get_fsm_state()
-	self.prev_state				= self.current_state
+    self.st.signals             = {}
+
+    self.current_state          = self.object:get_fsm_state()
+    self.prev_state             = self.current_state
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -31,38 +31,36 @@ end
 ----------------------------------------------------------------------------------------------------
 
 function mob_alife_control:update(delta)
-	
-	if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
-		return
-	end
-	
-	-- State controlling
-	self.current_state = self.object:get_fsm_state()
 
-	if self.prev_state ~= self.current_state then
-		self.st.signals["on_attack"]
-		self.st.signals["on_panic"]
-		self.st.signals["on_idle"]
-	end
-		
-	self.prev_state				= self.current_state	
+    if xr_logic.try_switch_to_another_section(self.object, self.st, db.actor) then
+        return
+    end
+
+    -- State controlling
+    self.current_state = self.object:get_fsm_state()
+
+    if self.prev_state ~= self.current_state then
+        self.st.signals["on_attack"]
+        self.st.signals["on_panic"]
+        self.st.signals["on_idle"]
+    end
+
+    self.prev_state             = self.current_state
 end
 
 ----------------------------------------------------------------------------------------------------
 -- SERVICE FUNCTIONS
 ----------------------------------------------------------------------------------------------------
-
-
 ----------------------------------------------------------------------------------------------------
 -- ADD_TO_BINDER
 ----------------------------------------------------------------------------------------------------
 function add_to_binder(npc, ini, scheme, section, storage)
-	printf("DEBUG: add_to_binder: npc:name()='%s', scheme='%s', section='%s'", npc:name(), scheme, section)
+    printf("DEBUG: add_to_binder: npc:name()='%s', scheme='%s', section='%s'", npc:name(), scheme, section)
 
-	local new_action = mob_alife_control(npc, storage)
+    local new_action = mob_alife_control(npc, storage)
 
-	-- Зарегистрировать все actions, в которых должен быть вызван метод reset_scheme при изменении настроек схемы:
-	xr_logic.subscribe_action_for_events(npc, storage, new_action)
+    -- Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ РІСЃРµ actions, РІ РєРѕС‚РѕСЂС‹С… РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІС‹Р·РІР°РЅ РјРµС‚РѕРґ reset_scheme РїСЂРё РёР·РјРµРЅРµРЅРёРё РЅР°СЃС‚СЂРѕРµРє СЃС…РµРјС‹:
+    xr_logic.subscribe_action_for_events(npc, storage, new_action)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -70,7 +68,6 @@ end
 ----------------------------------------------------------------------------------------------------
 
 function set_scheme(npc, ini, scheme, section, gulag_name)
-	local storage				= xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
-	storage.logic				= xr_logic.cfg_get_switch_conditions(ini, section, npc)
+    local storage               = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+    storage.logic               = xr_logic.cfg_get_switch_conditions(ini, section, npc)
 end
-

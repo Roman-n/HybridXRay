@@ -1,84 +1,84 @@
 --[[------------------------------------------------------------------------------------------------------------------
-Класс "actor_proxy". Обеспечивает поддержку актёра, даже если он в офлайне.
-Чугай Алексадр
+РљР»Р°СЃСЃ "actor_proxy". РћР±РµСЃРїРµС‡РёРІР°РµС‚ РїРѕРґРґРµСЂР¶РєСѓ Р°РєС‚С‘СЂР°, РґР°Р¶Рµ РµСЃР»Рё РѕРЅ РІ РѕС„Р»Р°Р№РЅРµ.
+Р§СѓРіР°Р№ РђР»РµРєСЃР°РґСЂ
 --------------------------------------------------------------------------------------------------------------------]]
 class "actor_proxy"
 
--- конструктор
+-- РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 function actor_proxy:__init()
-	self.initialized = false
+    self.initialized = false
 end
 
--- инициализация.
--- происходит только в момент первого после старта симулятора обращения.
+-- РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+-- РїСЂРѕРёСЃС…РѕРґРёС‚ С‚РѕР»СЊРєРѕ РІ РјРѕРјРµРЅС‚ РїРµСЂРІРѕРіРѕ РїРѕСЃР»Рµ СЃС‚Р°СЂС‚Р° СЃРёРјСѓР»СЏС‚РѕСЂР° РѕР±СЂР°С‰РµРЅРёСЏ.
 function actor_proxy:init()
-	if not self.initialized then
---		printf( "actor_proxy: init" )
+    if not self.initialized then
+--      printf( "actor_proxy: init" )
 
-		self.online      = false
-		self.alife       = alife()
+        self.online      = false
+        self.alife       = alife()
 
-		if self.alife then
-			self.actor_id    = self.alife:actor().id
-		end
+        if self.alife then
+            self.actor_id = self.alife:actor().id
+        end
 
-		self.actor       = nil
+        self.actor       = nil
 
-		self.initialized = true
-	end
+        self.initialized = true
+    end
 end
 
--- деинициализация.
--- происходит в момент дерегистрации серверных объектов.
--- вызывается из se_smart_terrain:on_unregister() TODO remove this hack
+-- РґРµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+-- РїСЂРѕРёСЃС…РѕРґРёС‚ РІ РјРѕРјРµРЅС‚ РґРµСЂРµРіРёСЃС‚СЂР°С†РёРё СЃРµСЂРІРµСЂРЅС‹С… РѕР±СЉРµРєС‚РѕРІ.
+-- РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· se_smart_terrain:on_unregister() TODO remove this hack
 function actor_proxy:deinit()
-	if self.initialized then
---		printf( "actor_proxy: deinit" )
+    if self.initialized then
+--      printf( "actor_proxy: deinit" )
 
-		self.alife = nil
-		self.actor = nil
+        self.alife = nil
+        self.actor = nil
 
-		self.initialized = false
-	end
+        self.initialized = false
+    end
 end
 
--- Получение ID игрока
+-- РџРѕР»СѓС‡РµРЅРёРµ ID РёРіСЂРѕРєР°
 function actor_proxy:id()
-	self:init()
+    self:init()
 
-	return self.actor_id
+    return self.actor_id
 end
 
 function actor_proxy:has_info( name )
-	self:init()
+    self:init()
 
-	has_alife_info(name)
+    has_alife_info(name)
 end
 
 function actor_proxy:dont_has_info( name )
-	self:init()
+    self:init()
 
-	if self.online then
---		printf( "actor_proxy: dont_has_info online: info=%s", name )
-		return not has_alife_info( name )
-	else
---		printf( "actor_proxy: dont_has_info offline: info=%s", name )
-		return not has_alife_info( self.actor_id, name )
-	end
+    if self.online then
+--      printf( "actor_proxy: dont_has_info online: info=%s", name )
+        return not has_alife_info( name )
+    else
+--      printf( "actor_proxy: dont_has_info offline: info=%s", name )
+        return not has_alife_info( self.actor_id, name )
+    end
 end
 
--- рождение актёра в онлайн
+-- СЂРѕР¶РґРµРЅРёРµ Р°РєС‚С‘СЂР° РІ РѕРЅР»Р°Р№РЅ
 function actor_proxy:net_spawn( obj )
-	self:init()
+    self:init()
 
-	self.online = true
-	self.actor  = obj
+    self.online = true
+    self.actor  = obj
 end
 
--- уход актёра из онлайна
+-- СѓС…РѕРґ Р°РєС‚С‘СЂР° РёР· РѕРЅР»Р°Р№РЅР°
 function actor_proxy:net_destroy()
-	self:init()
+    self:init()
 
-	self.online = false
-	self.actor  = nil
+    self.online = false
+    self.actor  = nil
 end

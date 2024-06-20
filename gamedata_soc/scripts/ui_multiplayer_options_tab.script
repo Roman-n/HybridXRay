@@ -15,7 +15,7 @@ function options_tab:__finalize()
 end
 
 function options_tab:InitContols(x_pos, y_pos, width, height)
-	ui_multiplayer_base_tab.multiplayer_base_tab.InitControls(self, "Options", x_pos, y_pos, width, height)
+    ui_multiplayer_base_tab.multiplayer_base_tab.InitControls(self, "Options", x_pos, y_pos, width, height)
 end
 
 function options_tab:InitCallbacks()

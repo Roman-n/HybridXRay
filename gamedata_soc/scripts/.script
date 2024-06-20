@@ -1,18 +1,18 @@
-schemes = {} -- соответствие схем модулям
-stypes = {} -- типы схем
+schemes = {} -- СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЃС…РµРј РјРѕРґСѓР»СЏРј
+stypes = {}  -- С‚РёРїС‹ СЃС…РµРј
 
--- Загружает схему из файла на диске и активирует в мотиваторе.
--- Здесь:
--- 	filename - имя файла, в котором реализована схема, без расширения
--- 	scheme - имя схемы
+-- Р—Р°РіСЂСѓР¶Р°РµС‚ СЃС…РµРјСѓ РёР· С„Р°Р№Р»Р° РЅР° РґРёСЃРєРµ Рё Р°РєС‚РёРІРёСЂСѓРµС‚ РІ РјРѕС‚РёРІР°С‚РѕСЂРµ
+-- Р—РґРµСЃСЊ:
+-- filename - РёРјСЏ С„Р°Р№Р»Р°, РІ РєРѕС‚РѕСЂРѕРј СЂРµР°Р»РёР·РѕРІР°РЅР° СЃС…РµРјР°, Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ
+-- scheme - РёРјСЏ СЃС…РµРјС‹
 function load_scheme(filename, scheme, stype)
-	module(filename)
-	schemes[scheme] = filename
-	stypes[scheme] = stype
+    module(filename)
+    schemes[scheme] = filename
+    stypes[scheme] = stype
 end
 
 ----------------------------------------------------------------------
--- Загрузка модулей:
+-- Р—Р°РіСЂСѓР·РєР° РјРѕРґСѓР»РµР№:
 ----------------------------------------------------------------------
 
 module("modules")
@@ -127,41 +127,41 @@ function pp_effector:process(pp)
     local gray      = color()
     local add       = color()
 
-    dual.h          = self.max_power.dual.h         * d
-    dual.v          = self.max_power.dual.v         * d
+    dual.h          = self.max_power.dual.h          * d
+    dual.v          = self.max_power.dual.v          * d
 
-    noise.grain     = self.max_power.noise.grain        * d
-    noise.intensity     = self.max_power.noise.intensity    * d
-    noise.fps       = self.max_power.noise.fps      * d
+    noise.grain     = self.max_power.noise.grain     * d
+    noise.intensity = self.max_power.noise.intensity * d
+    noise.fps       = self.max_power.noise.fps       * d
 
-    base.r          = self.max_power.color_base.r       * d
-    base.g          = self.max_power.color_base.g       * d
-    base.b          = self.max_power.color_base.b       * d
+    base.r          = self.max_power.color_base.r    * d
+    base.g          = self.max_power.color_base.g    * d
+    base.b          = self.max_power.color_base.b    * d
 
-    gray.r          = self.max_power.color_gray.r       * d
-    gray.g          = self.max_power.color_gray.g       * d
-    gray.b          = self.max_power.color_gray.b       * d
+    gray.r          = self.max_power.color_gray.r    * d
+    gray.g          = self.max_power.color_gray.g    * d
+    gray.b          = self.max_power.color_gray.b    * d
 
-    add.r           = self.max_power.color_add.r        * d
-    add.g           = self.max_power.color_add.g        * d
-    add.b           = self.max_power.color_add.b        * d
+    add.r           = self.max_power.color_add.r     * d
+    add.g           = self.max_power.color_add.g     * d
+    add.b           = self.max_power.color_add.b     * d
 
-    pp.gray         = self.max_power.gray           * d
-    pp.blur         = self.max_power.blur           * d
+    pp.gray         = self.max_power.gray            * d
+    pp.blur         = self.max_power.blur            * d
 
     pp.dual         = dual
     pp.noise        = noise
-    pp.color_base       = base
-    pp.color_gray       = gray
-    pp.color_add        = add
+    pp.color_base   = base
+    pp.color_gray   = gray
+    pp.color_add    = add
 
     self.info       = pp
 
-    return              true
+    return true
 end
 
 function pp_effector:finished()
-    return          self.stop_time < device():time_global()
+    return self.stop_time < device():time_global()
 end
 
 --
@@ -169,7 +169,7 @@ end
 --
 class "pp_linear_lerp" (effector)
 
-function pp_linear_lerp:__init(effector_type,start_time,life_time,start_power,dest_power) super(effector_type,start_time)
+function pp_linear_lerp:__init(effector_type,start_time,life_time start_power,dest_power) super(effector_type,start_time)
     self.start_time = start_time
     self.stop_time  = start_time + life_time
     self.min_power  = start_power
@@ -186,10 +186,10 @@ function pp_linear_lerp:process(pp)
         d           = 0.0
     else
         if curr_time < self.stop_time then
-            d           = (curr_time - self.start_time) / (self.stop_time - self.start_time)
+            d       = (curr_time - self.start_time) / (self.stop_time - self.start_time)
         else
-            self.info   = self.max_power
-            return      true
+            self.info = self.max_power
+            return true
         end
     end
 
@@ -199,41 +199,41 @@ function pp_linear_lerp:process(pp)
     local gray      = color()
     local add       = color()
 
-    dual.h          = self.min_power.dual.h         + (self.max_power.dual.h        - self.min_power.dual.h     )   * d
-    dual.v          = self.min_power.dual.v         + (self.max_power.dual.v        - self.min_power.dual.v     )   * d
+    dual.h          = self.min_power.dual.h          + (self.max_power.dual.h          - self.min_power.dual.h         )   * d
+    dual.v          = self.min_power.dual.v          + (self.max_power.dual.v          - self.min_power.dual.v         )   * d
 
-    noise.grain     = self.min_power.noise.grain        + (self.max_power.noise.grain       - self.min_power.noise.grain    )   * d
-    noise.intensity     = self.min_power.noise.intensity    + (self.max_power.noise.intensity   - self.min_power.noise.intensity)   * d
-    noise.fps       = self.min_power.noise.fps      + (self.max_power.noise.fps         - self.min_power.noise.fps  )   * d
+    noise.grain     = self.min_power.noise.grain     + (self.max_power.noise.grain     - self.min_power.noise.grain    )   * d
+    noise.intensity = self.min_power.noise.intensity + (self.max_power.noise.intensity - self.min_power.noise.intensity)   * d
+    noise.fps       = self.min_power.noise.fps       + (self.max_power.noise.fps       - self.min_power.noise.fps      )   * d
 
-    base.r          = self.min_power.color_base.r       + (self.max_power.color_base.r      - self.min_power.color_base.r   )   * d
-    base.g          = self.min_power.color_base.g       + (self.max_power.color_base.g      - self.min_power.color_base.g   )   * d
-    base.b          = self.min_power.color_base.b       + (self.max_power.color_base.b      - self.min_power.color_base.b   )   * d
+    base.r          = self.min_power.color_base.r    + (self.max_power.color_base.r    - self.min_power.color_base.r   )   * d
+    base.g          = self.min_power.color_base.g    + (self.max_power.color_base.g    - self.min_power.color_base.g   )   * d
+    base.b          = self.min_power.color_base.b    + (self.max_power.color_base.b    - self.min_power.color_base.b   )   * d
 
-    gray.r          = self.min_power.color_gray.r       + (self.max_power.color_gray.r      - self.min_power.color_gray.r   )   * d
-    gray.g          = self.min_power.color_gray.g       + (self.max_power.color_gray.g      - self.min_power.color_gray.g   )   * d
-    gray.b          = self.min_power.color_gray.b       + (self.max_power.color_gray.b      - self.min_power.color_gray.b   )   * d
+    gray.r          = self.min_power.color_gray.r    + (self.max_power.color_gray.r    - self.min_power.color_gray.r   )   * d
+    gray.g          = self.min_power.color_gray.g    + (self.max_power.color_gray.g    - self.min_power.color_gray.g   )   * d
+    gray.b          = self.min_power.color_gray.b    + (self.max_power.color_gray.b    - self.min_power.color_gray.b   )   * d
 
-    add.r           = self.min_power.color_add.r        + (self.max_power.color_add.r       - self.min_power.color_add.r    )   * d
-    add.g           = self.min_power.color_add.g        + (self.max_power.color_add.g       - self.min_power.color_add.g    )   * d
-    add.b           = self.min_power.color_add.b        + (self.max_power.color_add.b       - self.min_power.color_add.b    )   * d
+    add.r           = self.min_power.color_add.r     + (self.max_power.color_add.r     - self.min_power.color_add.r    )   * d
+    add.g           = self.min_power.color_add.g     + (self.max_power.color_add.g     - self.min_power.color_add.g    )   * d
+    add.b           = self.min_power.color_add.b     + (self.max_power.color_add.b     - self.min_power.color_add.b    )   * d
 
-    pp.gray         = self.min_power.gray           + (self.max_power.gray          - self.min_power.gray       )   * d
-    pp.blur         = self.min_power.blur           + (self.max_power.blur          - self.min_power.blur       )   * d
+    pp.gray         = self.min_power.gray            + (self.max_power.gray            - self.min_power.gray           )   * d
+    pp.blur         = self.min_power.blur            + (self.max_power.blur            - self.min_power.blur           )   * d
 
     pp.dual         = dual
     pp.noise        = noise
-    pp.color_base       = base
-    pp.color_gray       = gray
-    pp.color_add        = add
+    pp.color_base   = base
+    pp.color_gray   = gray
+    pp.color_add    = add
 
     self.info       = pp
 
-    return          true
+    return true
 end
 
 function pp_linear_lerp:finished()
-    return          self.stop_time < device():time_global()
+    return self.stop_time < device():time_global()
 end
 --
 -- end of postprocess for rainbow
@@ -243,55 +243,55 @@ function get_level_object(obj_name)
     local res = level.object(obj_name)
     while res == nil do
 
-    	-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    	-- !!!!! НЕ ЗАКОММЕНТАРИВАЙТЕ, ИНАЧЕ НЕ БУДЕТ ВИДНО ОШИБОК ПРИ РАССТАНОВКЕ ОБЪЕКТОВ !!!!!
-	-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    -- !!!!! РќР• Р—РђРљРћРњРњР•РќРўРђР РР’РђР™РўР•, РРќРђР§Р• РќР• Р‘РЈР”Р•Рў Р’РР”РќРћ РћРЁРР‘РћРљ РџР Р Р РђРЎРЎРўРђРќРћР’РљР• РћР‘РЄР•РљРўРћР’ !!!!!
+    -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         printf("get_level_object() is waiting for object \"%s\"", obj_name)
 
-        res         = level.object(obj_name)
-        wait        ()
+        res = level.object(obj_name)
+        wait()
     end
-    return          res
+    return res
 end
 
 function get_actor()
-    local res       = level.actor()
+    local res = level.actor()
     while res == nil do
-        res         = level.actor()
-        wait        ()
+        res = level.actor()
+        wait()
     end
-    return          res
+    return res
 end
 
 function distance_between(obj1, obj2)
     return obj1:position():distance_to(obj2:position())
 end
 
-// Если один объект nil, например нет актера, то считаем, что он далеко
+-- Р•СЃР»Рё РѕРґРёРЅ РѕР±СЉРµРєС‚ nil, РЅР°РїСЂРёРјРµСЂ РЅРµС‚ Р°РєС‚РµСЂР°, С‚Рѕ СЃС‡РёС‚Р°РµРј, С‡С‚Рѕ РѕРЅ РґР°Р»РµРєРѕ
 function distance_between_safe(obj1, obj2)
     if(obj1 == nil or obj2 == nil) then return 100000 end
-	return obj1:position():distance_to(obj2:position())
+    return obj1:position():distance_to(obj2:position())
 end
 
 --------------------------------------------------
--- іласс LUA реализуі   ий Finite State Machine
--- для управления персонажами
+-- РєР»Р°СЃСЃ LUA СЂРµР°Р»РёР·СѓРµС‚ Finite State Machine
+-- РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°РјРё
 --------------------------------------------------
 class 'FSM'
 
---  инициализация путем задания объекта Non-Player Character
+--  РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїСѓС‚РµРј Р·Р°РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° Non-Player Character
 function FSM:__init(script_name, npc_obj)
-    -- указатель на подконтрольнvй NPC
+    -- СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРѕРґРєРѕРЅС‚СЂРѕР»СЊРЅС‹Р№ NPC
     self.npc = npc_obj
-    -- строка - имя скрипта, которvй запускает игру
+    -- СЃС‚СЂРѕРєР° - РёРјСЏ СЃРєСЂРёРїС‚Р°, РєРѕС‚РѕСЂС‹Р№ Р·Р°РїСѓСЃРєР°РµС‚ РёРіСЂСѓ
     self.script_name = script_name
-    -- матрица, задаі   ая граф переходов состояний
-    -- реализуется как двумерная таблица
+    -- РјР°С‚СЂРёС†Р°, Р·Р°РґР°РЅРЅР°СЏ РіСЂР°С„ РїРµСЂРµС…РѕРґРѕРІ СЃРѕСЃС‚РѕСЏРЅРёР№
+    -- СЂРµР°Р»РёР·СѓРµС‚СЃСЏ РєР°Рє РґРІСѓРјРµСЂРЅР°СЏ С‚Р°Р±Р»РёС†Р°
     self.transition_matrix = {[0] = {}}
-    -- номер теку   его состояния
+    -- РЅРѕРјРµСЂСѓ РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ
     self.current_state = 0
 
-    -- флаг того, что машина вклічена
+    -- С„Р»Р°Рі С‚РѕРіРѕ, С‡С‚Рѕ РјР°С€РёРЅР° РІРєР»СЋС‡РµРЅР°
     self.machine_running = true
 
     printf("inialization FSM for NPC %s", self.npc:name())
@@ -313,8 +313,8 @@ function FSM:stop()
 end
 
 
---  добавление указателя на булеву
---  функциі условия перехода
+--  РґРѕР±Р°РІР»РµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° Р±СѓР»РµРІСѓ
+--  С„СѓРЅРєС†РёСЋ СѓСЃР»РѕРІРёСЏ РїРµСЂРµС…РѕРґР°
 function FSM:set_transition(from_state_num, to_state_num, cond_func)
     printf("in setting transition %d, %d ", from_state_num, to_state_num)
 
@@ -325,69 +325,61 @@ function FSM:set_transition(from_state_num, to_state_num, cond_func)
     end
 end
 
--- единичная проверка FSM
+-- РµРґРёРЅРёС‡РЅР°СЏ РїСЂРѕРІРµСЂРєР° FSM
 function FSM:run()
-    local transition_vector = self.transition_matrix[self.current_state]
-    table.foreach(transition_vector,
-                  function(to_state_num, cond_func)
-                        if cond_func(self.npc, self) == true then
-                            printf("transition from %d to %d", self.current_state, to_state_num)
-
-                            if to_state_num == 0 then
-                                self:reset_script_control()
-                            end
-
-                            --if  self.current_state == 0 then
-                            --  self:set_script_control()
-                            --end
-
-                            self.current_state = to_state_num
-                            return true
-                        end
-                        return nil
-                  end)
+    local transition_vector = self.transition_matrix[self.current_state] table.foreach(transition_vector,
+        function(to_state_num, cond_func)
+            if cond_func(self.npc, self) == true then
+                printf("transition from %d to %d", self.current_state, to_state_num)
+                    if to_state_num == 0 then
+                        self:reset_script_control()
+                    end
+                    -- if self.current_state == 0 then
+                    --     self:set_script_control()
+                    -- end
+                    self.current_state = to_state_num
+                return true
+            end
+        return nil
+    end)
 end
 
 
--- запуск бесконечного цикла FSM
+-- Р·Р°РїСѓСЃРє Р±РµСЃРєРѕРЅРµС‡РЅРѕРіРѕ С†РёРєР»Р° FSM
 function FSM:run_loop()
     printf("running FSM loop for NPC %s", self.npc:name())
 
     while self:is_running() do
-        local transition_vector = self.transition_matrix[self.current_state]
-        table.foreach(transition_vector,
-                      function(to_state_num, cond_func)
-                            if cond_func(self.npc, self) == true then
-                                printf("transition from %d to %d", self.current_state, to_state_num)
-
-                                if to_state_num == 0 then
-                                    self:reset_script_control()
-                                end
-
-                                --if  self.current_state == 0 then
-                                --  self:set_script_control()
-                                --end
-
-                                self.current_state = to_state_num
-                                return true
-                            end
-                            return nil
-                      end)
+        local transition_vector = self.transition_matrix[self.current_state] table.foreach(transition_vector,
+            function(to_state_num, cond_func)
+                if cond_func(self.npc, self) == true then
+                    printf("transition from %d to %d", self.current_state, to_state_num)
+                    if to_state_num == 0 then
+                        self:reset_script_control()
+                    end
+                    -- if self.current_state == 0 then
+                    --     self:set_script_control()
+                    -- end
+                    self.current_state = to_state_num
+                    return true
+                end
+            return nil
+        end)
         if self.npc:alive () == false then
-           self.npc:script (false, self.script_name)
-           return
-           end
+            self.npc:script (false, self.script_name)
+            return
+        end
         wait()
     end
 end
 
--- взятие под контроль скрипта NPC (переход из нулевого состояния)
+-- РІР·СЏС‚РёРµ РїРѕРґ РєРѕРЅС‚СЂРѕР»СЊ СЃРєСЂРёРїС‚Р° NPC (РїРµСЂРµС…РѕРґ РёР· РЅСѓР»РµРІРѕРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ)
 function FSM:set_script_control()
     printf("set script control for FSM of NPC %s", self.npc:name())
     self.npc:script(true, self.script_name)
 end
 
--- отпускание из под контроля скрипта NPC (переход в нулевое состояние)
+-- РѕС‚РїСѓСЃРєР°РЅРёРµ РёР· РїРѕРґ РєРѕРЅС‚СЂРѕР»СЏ СЃРєСЂРёРїС‚Р° NPC (РїРµСЂРµС…РѕРґ РІ РЅСѓР»РµРІРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ)
 function FSM:reset_script_control()
     printf("reset script control for FSM of NPC %s", self.npc:name())
     self.npc:script(false, self.script_name)
@@ -414,8 +406,8 @@ function script_object:__init(name,script,...)
 end
 
 function script_object:update()
-    local                   obj = self.object
-    self.object             = level.object(self.object_name)
+    local   obj = self.object
+    self.object = level.object(self.object_name)
     if ((obj == nil) and (self.object ~= nil)) then
         self.object:script  (true,self.script_name)
         self.object:command (self.action,false)
@@ -423,7 +415,7 @@ function script_object:update()
 end
 
 --
--- іередача персонажу информации
+-- РїРµСЂРµРґР°С‡Р° РїРµСЂСЃРѕРЅР°Р¶Сѓ РёРЅС„РѕСЂРјР°С†РёРё
 --
 function GiveInfo(obj, info_number)
 
@@ -443,53 +435,53 @@ end
 -- Functions and variables added by Zmey
 --------------------------------------------------
 
--- іонстанта, которуі использовать в местах, где нужно задать неограниченное время действия
+-- РєРѕРЅСЃС‚Р°РЅС‚Р°, РєРѕС‚РѕСЂСѓСЋ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РІ РјРµСЃС‚Р°С…, РіРґРµ РЅСѓР¶РЅРѕ Р·Р°РґР°С‚СЊ РЅРµРѕРіСЂР°РЅРёС‡РµРЅРЅРѕРµ РІСЂРµРјСЏ РґРµР№СЃС‚РІРёСЏ
 time_infinite = 100000000
 
--- =азвание скрипта, которvй в даннvй момент находится в отладке
--- (в этом скрипте будут срабатvвать вvзовv функции debug_log)
+-- РЅР°Р·РІР°РЅРёРµ СЃРєСЂРёРїС‚Р°, РєРѕС‚РѕСЂС‹Р№ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚ РЅР°С…РѕРґРёС‚СЃСЏ РІ РѕС‚Р»Р°РґРєРµ
+-- (РІ СЌС‚РѕРј СЃРєСЂРёРїС‚Рµ Р±СѓРґСѓС‚ СЃСЂР°Р±Р°С‚vРІР°С‚СЊ РІС‹Р·РѕРІС‹ С„СѓРЅРєС†РёРё debug_log)
 debug_script_name = ""
 
--- Tvводит в лог строчку, если script_name == debug_script_name
--- Lспользуется для отрадки сценариев
+-- Р’С‹РІРѕРґРёС‚ РІ Р»РѕРі СЃС‚СЂРѕС‡РєСѓ, РµСЃР»Рё script_name == debug_script_name
+-- РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕС‚СЂР°РґРєРё СЃС†РµРЅР°СЂРёРµРІ
 function debug_log(script_name, fmt, ...)
-  if debug_script_name == script_name then
-    log(string.format(fmt, unpack(arg)))
---    flush()
-  end
+    if debug_script_name == script_name then
+        log(string.format(fmt, unpack(arg)))
+--      flush()
+    end
 end
 
--- +сли в даннvй момент вvполняется какое-то действие, прерvвает его и отклічает скриптовvй режим
+-- Р•СЃР»Рё РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РєР°РєРѕРµ-С‚Рѕ РґРµР№СЃС‚РІРёРµ, РїСЂРµСЂС‹РІР°РµС‚ РµРіРѕ Рё РѕС‚РєР»СЋС‡Р°РµС‚ СЃРєСЂРёРїС‚РѕРІС‹Р№ СЂРµР¶РёРј
 function interrupt_action(who, script_name)
-  if who:get_script() then
-    who:script(false, script_name)
-  end
+    if who:get_script() then
+        who:script(false, script_name)
+    end
 end
 
 function random_choice(...)
-  local r = math.random(1, arg.n)
-  return arg[r]
+    local r = math.random(1, arg.n)
+    return arg[r]
 end
 
 function new_action(...)
-  local act = entity_action()
-  for i = 1, arg.n do
-    act:set_action(arg[i])
-  end
-  return act;
+    local act = entity_action()
+    for i = 1, arg.n do
+        act:set_action(arg[i])
+    end
+    return act
 end
 
-obj_last_actions = {};
+obj_last_actions = {}
 
 function perform_action(obj, action_name, action)
-  if (obj ~= nil) then
-    obj_last_actions[obj] = action_name
-    obj:command(act, false)
-  end
+    if (obj ~= nil) then
+        obj_last_actions[obj] = action_name
+        obj:command(act, false)
+    end
 end
 
 function last_action(obj)
-  return obj_last_actions[obj]
+      return obj_last_actions[obj]
 end
 
 function if_then_else(cond, if_true, if_false)
@@ -514,7 +506,6 @@ function update_action (npc, script, ...)
 
 end
 
-
 function set_current_time (hour, min, sec)
     local current_time_factor = level.get_time_factor ()
 
@@ -534,15 +525,12 @@ function set_current_time (hour, min, sec)
     level.set_time_factor (current_time_factor)
 end
 
-
-
-
 ----------------------------------------------------------------------------------------------------------------------
 -- Evaluators
 ----------------------------------------------------------------------------------------------------------------------
--- зарезервированv id с номерами от 0 до 256 для создания стандартнvх эвалуаторов.
+-- Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅС‹ id СЃ РЅРѕРјРµСЂР°РјРё РѕС‚ 0 РґРѕ 256 РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹С… СЌРІР°Р»СѓР°С‚РѕСЂРѕРІ.
 
---Constant evaluator
+-- Constant evaluator
 class "const_evaluator" (property_evaluator)
 
 function const_evaluator:__init (value) super ()
@@ -550,10 +538,10 @@ function const_evaluator:__init (value) super ()
 end
 
 function const_evaluator:evaluate()
-    return          self.value
+    return self.value
 end
 
---Wait evaluator
+-- Wait evaluator
 class "wait_evaluator" (property_evaluator)
 
 function wait_evaluator:__init (wait_time) super ()
@@ -564,12 +552,12 @@ end
 
 function wait_evaluator:evaluate ()
     if self.first_call == true then
-       self.first_call = false
-       self.current_time = device ():time_global ()
-       return false
+        self.first_call = false
+        self.current_time = device ():time_global ()
+        return false
     end
 
-    local t = device():time_global () - self.current_time;
+    local t = device():time_global () - self.current_time
     if t > self.wait_time then return true end
     return false
 end
@@ -584,7 +572,6 @@ function enabled_evaluator:evaluate()
     return  self.a.enabled
 end
 
-
 function str_split (str)
 
     local strlen = string.len (str)
@@ -595,10 +582,10 @@ function str_split (str)
     for a = 1, strlen, 1 do
         local char = string.byte (str, a)
         if char ~= 95 then
-           table.insert (parts[cpart], char)
+            table.insert (parts[cpart], char)
         else
-           cpart = cpart + 1
-           if cpart > 4 then break end
+            cpart = cpart + 1
+            if cpart > 4 then break end
         end
     end
 
@@ -636,14 +623,14 @@ end
 function random_number (min_value, max_value)
     math.randomseed (device ():time_global ())
     if min_value == nil and max_value == nil then
-      return math.random ()
+        return math.random ()
     else
-      return math.random (min_value, max_value)
+        return math.random (min_value, max_value)
     end
 end
 
--- ‚аҐ¬п бгв®Є ў ¬б
--- —гЈ ©
+-- Р’СЂРµРјСЏ СЃСѓС‚РѕРє РІ РјСЃ
+-- Р§СѓРіР°Р№
 local ms_per_day = 24 * 60 * 60 * 1000
 function day_time()
     return math.mod( game.time(), ms_per_day )
@@ -654,8 +641,8 @@ function local_hours()
     return math.floor( math.mod( game.time()/1000, 86400 )/ 3600 )
 end
 
--- Ї абЁв бва®Єг ўЁ¤  "   , ЎЎЎ, ўўў..." ў в Ў«Ёжг { "   ", "ЎЎЎ", "ўўў", ... }
--- —гЈ ©
+-- РїР°СЂСЃРёС‚ СЃС‚СЂРѕРєСѓ РІРёРґР° "Р°Р°Р°, Р±Р±Р±, РІРІРІ..." РІ С‚Р°Р±Р»РёС†Сѓ { "Р°Р°Р°", "Р±Р±Р±", "РІРІРІ", ... }
+-- Р§СѓРіР°Р№
 function parse_names( s )
     local t = {}
 
@@ -666,8 +653,8 @@ function parse_names( s )
     return t
 end
 
--- Ї абЁв бва®Єг ўЁ¤  "n1, n2, n3..." ў в Ў«Ёжг { n1, n2, n3, ... } Ј¤Ґ n1, n2, n3... - жҐ«лҐ зЁб« 
--- —гЈ ©
+-- РїР°СЂСЃРёС‚ СЃС‚СЂРѕРєСѓ РІРёРґР° "n1, n2, n3..." РІ С‚Р°Р±Р»РёС†Сѓ { n1, n2, n3, ... } РіРґРµ n1, n2, n3... - С†РµР»С‹Рµ С‡РёСЃР»Р°
+-- Р§СѓРіР°Р№
 function parse_nums( s )
     local t = {}
 
@@ -678,9 +665,9 @@ function parse_nums( s )
     return t
 end
 
--- ў§ўҐиҐ­­ п б«гз ©­ п ўлЎ®аЄ  Ё§ в Ў«Ёжл ўЁ¤  { obj1 = weight1, obj2 = weight2, ... }
--- ‚®§ўа й Ґв ®¤Ё­ Ё§ obj. ‚Ґб  >= 0
--- —гЈ ©
+-- РІР·РІРµС€РµРЅРЅР°СЏ СЃР»СѓС‡Р°Р№РЅР°СЏ РІС‹Р±РѕСЂРєР° РёР· С‚Р°Р±Р»РёС†С‹ РІРёРґР° { obj1 = weight1, obj2 = weight2, ... }
+-- Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕРґРёРЅ РёР· obj. Р’РµСЃР° >= 0
+-- Р§СѓРіР°Р№
 function random_choice_weighted( a )
     local sum = 0
 
@@ -704,7 +691,7 @@ function random_choice_weighted( a )
     end
 end
 
--- Їа®ўҐапҐв, Ґбвм «Ё ®ЎкҐЄв ў ®­« ©­Ґ
+-- РїСЂРѕРІРµСЂСЏРµС‚, РµСЃС‚СЊ Р»Рё РѕР±СЉРµРєС‚ РІ РѕРЅР»Р°Р№РЅРµ
 function is_object_online (object_id)
     local sim = alife ()
     if sim == nil then return true end
@@ -722,7 +709,7 @@ function get_clsid(npc)
     end
 end
 
--- Їа®ўҐапҐв ®аг¦ЁҐ «Ё нв® (ЇҐаҐ¤ ў вм game_object)
+-- РїСЂРѕРІРµСЂСЏРµС‚ РѕСЂСѓР¶РёРµ Р»Рё СЌС‚Рѕ (РїРµСЂРµРґР°РІР°С‚СЊ game_object)
 function isWeapon(object)
     local id = get_clsid(object)
     if id == nil then return false end
@@ -751,7 +738,7 @@ function isWeapon(object)
     else return false end
 end
 
---Tvчисляет yaw в радианах
+--Р’С‹С‡РёСЃР»СЏРµС‚ yaw РІ СЂР°РґРёР°РЅР°С…
 function yaw( v1, v2 )
     return  math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / ( math.sqrt(v1.x*v1.x + v1.z*v1.z ) * math.sqrt(v2.x*v2.x + v2.z*v2.z ) ) )
 end
@@ -760,7 +747,7 @@ function yaw_degree( v1, v2 )
     return  (math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / ( math.sqrt(v1.x*v1.x + v1.z*v1.z ) * math.sqrt(v2.x*v2.x + v2.z*v2.z ) ) ) * 57.2957)
 end
 
-//Вращает вектор вокруг оси y против часовой стрелки
+-- Р’СЂР°С‰Р°РµС‚ РІРµРєС‚РѕСЂ РІРѕРєСЂСѓРі РѕСЃРё y РїСЂРѕС‚РёРІ С‡Р°СЃРѕРІРѕР№ СЃС‚СЂРµР»РєРё
 
 function vector_rotate_y (v, angle)
     angle = angle * 0.017453292519943295769236907684886
@@ -769,16 +756,16 @@ function vector_rotate_y (v, angle)
     return vector ():set (v.x * c - v.z * s, v.y, v.x * s + v.z * c)
 end
 
--- очистка таблицы
+-- РѕС‡РёСЃС‚РєР° С‚Р°Р±Р»РёС†С‹
 function clear_table (t)
     while table.getn (t) > 0 do
           table.remove (t, table.getn (t))
     end
 end
 
---€бЇ®«м§гҐв ¤«п ¬®­бва®ў. ‚лЎ®а в®зЄЁ, Єг¤  Ё¤вЁ ў ­ҐЄ®в®а®¬ а ¤ЁгбҐ Ё зв®Ў в®зЄ  Ўл«  ¤ «миҐ ­  а ббв®п­ЁЁ
--- min_radius ®в вҐЄгйҐ© Ї®§ЁжЁЁ(Ґб«Ё нв® Ї®«гзЁвбп). center_id - жҐ­ва Ї®§ЁжЁЁ, ў®ЄагЈ Є®в®а®© ¦ЁўҐ¬,
--- position_id - вгЄгй п Ї®§ЁжЁп, radius - ў Є Є®¬ а ¤ЁгбҐ ўлЎЁа вм в®зЄг, min_radius - ¬Ё­Ё¬ «м­®Ґ а ббв®п­ЁҐ, ®в вҐЄгйҐ© Ї®§ЁжЁЁ ¤® ­®ў®© в®зЄЁ.
+-- РСЃРїРѕР»СЊР·СѓРµС‚ РґР»СЏ РјРѕРЅСЃС‚СЂРѕРІ. Р’С‹Р±РѕСЂ С‚РѕС‡РєРё, РєСѓРґР° РёРґС‚Рё РІ РЅРµРєРѕС‚РѕСЂРѕРј СЂР°РґРёСѓСЃРµ Рё С‡С‚РѕР± С‚РѕС‡РєР° Р±С‹Р»Р° РґР°Р»СЊС€Рµ РЅР° СЂР°СЃСЃС‚РѕСЏРЅРёРё
+-- min_radius РѕС‚ С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё(РµСЃР»Рё СЌС‚Рѕ РїРѕР»СѓС‡РёС‚СЃСЏ). center_id - С†РµРЅС‚СЂ РїРѕР·РёС†РёРё, РІРѕРєСЂСѓРі РєРѕС‚РѕСЂРѕР№ Р¶РёРІРµРј,
+-- position_id - С‚СѓРєСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ, radius - РІ РєР°РєРѕРј СЂР°РґРёСѓСЃРµ РІС‹Р±РёСЂР°С‚СЊ С‚РѕС‡РєСѓ, min_radius - РјРёРЅРёРјР°Р»СЊРЅРѕРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ, РѕС‚ С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё РґРѕ РЅРѕРІРѕР№ С‚РѕС‡РєРё.
 function new_point(center_id, position_id,radius, min_radius)
     local dir = vector():set(math.random(-1000, 1000)/1000.0, 0.0001, math.random(-1000, 1000)/1000.0)
     local pos = level.vertex_in_direction(center_id, dir, radius)
@@ -794,10 +781,10 @@ function new_point(center_id, position_id,radius, min_radius)
 end
 
 function stop_play_sound(obj)
-	if obj:alive() == true then
-		obj:set_sound_mask (-1)
-		obj:set_sound_mask (0)
-	end
+    if obj:alive() == true then
+        obj:set_sound_mask (-1)
+        obj:set_sound_mask (0)
+    end
 end
 
 function object_type(obj)
@@ -877,7 +864,7 @@ function object_type(obj)
         type = "none"
     end
 
-    -- Їа®ўҐапҐ¬ ­Ґ вагЇ «Ё нв®
+    -- РїСЂРѕРІРµСЂСЏРµРј РЅРµ С‚СЂСѓРї Р»Рё СЌС‚Рѕ
     if type == "stalker" or
        type == "monstr" then
         if obj:alive() == false then
@@ -889,36 +876,36 @@ function object_type(obj)
 end
 
 
-// Является ли оbj монстром
+-- РЇРІР»СЏРµС‚СЃСЏ Р»Рё Рѕbj РјРѕРЅСЃС‚СЂРѕРј
 function is_object_monster(obj)
-	local otype = get_clsid(obj)
-	if(otype == clsid.crow			or
-		otype == clsid.zombie		or
-		otype == clsid.flesh		or
-		otype == clsid.controller	or
-		otype == clsid.bloodsucker	or
-		otype == clsid.burer		or
-		otype == clsid.chimera		or	
-		otype == clsid.boar			or
-		otype == clsid.dog_red		or		
-		otype == clsid.dog_black	or
-		otype == clsid.poltergeist	or
-		otype == clsid.pseudo_gigant  )
-	then
-		return true
-	end
-	
-	return false
+    local otype = get_clsid(obj)
+    if(otype == clsid.crow          or
+        otype == clsid.zombie       or
+        otype == clsid.flesh        or
+        otype == clsid.controller   or
+        otype == clsid.bloodsucker  or
+        otype == clsid.burer        or
+        otype == clsid.chimera      or
+        otype == clsid.boar         or
+        otype == clsid.dog_red      or
+        otype == clsid.dog_black    or
+        otype == clsid.poltergeist  or
+        otype == clsid.pseudo_gigant  )
+    then
+        return true
+    end
+
+    return false
 end
 
---ў®§ўа й Ґв Їа®Ё§ў®«м­го в®зЄг ЇгвЁ г Є®в®а®© гбв ­®ў«Ґ­ ЎЁв
-function point_with_bit(patrol_path, bit, old_point)      -- old_point - Ё­¤ҐЄб в®зЄЁ, Є®в®аго ­Ґ ­ ¤® ўлЎЁа вм,
-  local points = {}                                       -- Ї а ¬Ґва ­Ґ ®Ўп§ вҐ«м­л©( ­ ЇаЁ¬Ґа вҐЄгйҐ© в®зЄЁ )
+-- РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРѕРёР·РІРѕР»СЊРЅСѓСЋ С‚РѕС‡РєСѓ РїСѓС‚Рё Сѓ РєРѕС‚РѕСЂРѕР№ СѓСЃС‚Р°РЅРѕРІР»РµРЅ Р±РёС‚
+function point_with_bit(patrol_path, bit, old_point)      -- old_point - РёРЅРґРµРєСЃ С‚РѕС‡РєРё, РєРѕС‚РѕСЂСѓСЋ РЅРµ РЅР°РґРѕ РІС‹Р±РёСЂР°С‚СЊ,
+    local points = {}                                     -- РїР°СЂР°РјРµС‚СЂ РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Р№( РЅР°РїСЂРёРјРµСЂ С‚РµРєСѓС‰РµР№ С‚РѕС‡РєРё )
 
     for i = 0, patrol_path:count()-1 do
-      --„®Ў®ў«пҐ¬ ў в Ў«Ёжг в®зЄЁ б ­г¦­л¬ ЎЁв®¬
+      --Р”РѕР±РѕРІР»СЏРµРј РІ С‚Р°Р±Р»РёС†Сѓ С‚РѕС‡РєРё СЃ РЅСѓР¶РЅС‹Рј Р±РёС‚РѕРј
       if( patrol_path:flag(i, bit)) then
-            --„®Ў ў«пҐ¬ в®зЄг Ґб«Ё old_point == nil Ё«Ё ­®ў п в®зЄ  ­Ґ б®ўЇ ¤ Ґв б old_point
+            --Р”РѕР±Р°РІР»СЏРµРј С‚РѕС‡РєСѓ РµСЃР»Рё old_point == nil РёР»Рё РЅРѕРІР°СЏ С‚РѕС‡РєР° РЅРµ СЃРѕРІРїР°РґР°РµС‚ СЃ old_point
             if(old_point == nil) then
                 table.insert(points, patrol_path:point(i))
             elseif(old_point ~= i) then
@@ -938,14 +925,14 @@ function point_with_bit(patrol_path, bit, old_point)      -- old_point - Ё­¤ҐЄб 
     end
 end
 
---ў®§ўа й Ґв Їа®Ё§ў®«м­го в®зЄг ЇгвЁ г Є®в®а®© гбв ­®ў«Ґ­ ЎЁв
-function point_with_bit_id(patrol_path, bit, old_point)        -- old_point - Ё­¤ҐЄб в®зЄЁ, Є®в®аго ­Ґ ­ ¤® ўлЎЁа вм,
-    local points = {}                                          -- Ї а ¬Ґва ­Ґ ®Ўп§ вҐ«м­л©( ­ ЇаЁ¬Ґа вҐЄгйҐ© в®зЄЁ )
+--РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРѕРёР·РІРѕР»СЊРЅСѓСЋ С‚РѕС‡РєСѓ РїСѓС‚Рё Сѓ РєРѕС‚РѕСЂРѕР№ СѓСЃС‚Р°РЅРѕРІР»РµРЅ Р±РёС‚
+function point_with_bit_id(patrol_path, bit, old_point)        -- old_point - РёРЅРґРµРєСЃ С‚РѕС‡РєРё, РєРѕС‚РѕСЂСѓСЋ РЅРµ РЅР°РґРѕ РІС‹Р±РёСЂР°С‚СЊ,
+    local points = {}                                          -- РїР°СЂР°РјРµС‚СЂ РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Р№( РЅР°РїСЂРёРјРµСЂ С‚РµРєСѓС‰РµР№ С‚РѕС‡РєРё )
 
     for i = 0, patrol_path:count()-1 do
-      --„®Ў®ў«пҐ¬ ў в Ў«Ёжг в®зЄЁ б ­г¦­л¬ ЎЁв®¬
+      --Р”РѕР±РѕРІР»СЏРµРј РІ С‚Р°Р±Р»РёС†Сѓ С‚РѕС‡РєРё СЃ РЅСѓР¶РЅС‹Рј Р±РёС‚РѕРј
       if( patrol_path:flag(i, bit)) then
-            --„®Ў ў«пҐ¬ в®зЄг Ґб«Ё old_point == nil Ё«Ё ­®ў п в®зЄ  ­Ґ б®ўЇ ¤ Ґв б old_point
+            --Р”РѕР±Р°РІР»СЏРµРј С‚РѕС‡РєСѓ РµСЃР»Рё old_point == nil РёР»Рё РЅРѕРІР°СЏ С‚РѕС‡РєР° РЅРµ СЃРѕРІРїР°РґР°РµС‚ СЃ old_point
             if(old_point == nil) then
                 table.insert(points, i)
             elseif(old_point ~= i) then
@@ -965,7 +952,7 @@ function point_with_bit_id(patrol_path, bit, old_point)        -- old_point - Ё­
     end
 end
 
---‚®§ўа й Ґв Ё­¤ҐЄб б ¬®© Ў«Ё¦­Ґ© в®зЄЁ ЇгвЁ б § ¤ ­л¬ ЎЁв®¬, ®в вҐЄгйҐ© в®зЄЁ
+--Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅРґРµРєСЃ СЃР°РјРѕР№ Р±Р»РёР¶РЅРµР№ С‚РѕС‡РєРё РїСѓС‚Рё СЃ Р·Р°РґР°РЅС‹Рј Р±РёС‚РѕРј, РѕС‚ С‚РµРєСѓС‰РµР№ С‚РѕС‡РєРё
 function near_point_with_bit(point, patrol_path, bit)
     local new_point = nil
     local index     = nil
@@ -974,7 +961,7 @@ function near_point_with_bit(point, patrol_path, bit)
     for i = 0, patrol_path:count()-1 do
         if( patrol_path:flag(i, bit) ) then
             if(new_point == nil or patrol_path:point(i):distance_to(point) < dist) then
-                --…б«Ё нв  в®зЄ  ЇҐаў п Ё§ ­ иҐ¤иЁебп, «ЁЎ® ®в ­ҐҐ Їгвм Ў«Ё¦Ґ, в® § Ї®¬Ё­ Ґ¬ ҐҐ
+                --Р•СЃР»Рё СЌС‚Р° С‚РѕС‡РєР° РїРµСЂРІР°СЏ РёР· РЅР°С€РµРґС€РёС…СЃСЏ, Р»РёР±Рѕ РѕС‚ РЅРµРµ РїСѓС‚СЊ Р±Р»РёР¶Рµ, С‚Рѕ Р·Р°РїРѕРјРёРЅР°РµРј РµРµ
                 new_point   = patrol_path:point(i)
                 index       = i
                 dist        = new_point:distance_to(point)
@@ -985,36 +972,36 @@ function near_point_with_bit(point, patrol_path, bit)
     return index
 end
 
--- ђҐЄгабЁў­ п а бЇҐз вЄ  в Ў«Ёжл
+-- Р РµРєСѓСЂСЃРёРІРЅР°СЏ СЂР°СЃРїРµС‡Р°С‚РєР° С‚Р°Р±Р»РёС†С‹
 function print_table(table, subs)
-  local sub
-  if subs ~= nil then
-    sub = subs
-  else
-    sub = ""
-  end
-  for k,v in table do
-    if type(v) == "table" then
-      printf(sub.."%s:", k)
-      print_table(v, sub.."    ")
-    elseif type(v) == "function" then
-      printf(sub.."%s:function", k)
-    elseif type(v) == "userdata" then
-      printf(sub.."%s:userdata", k)
-    elseif type(v) == "boolean" then
-	if v == true then 
-		printf(sub.."%s:true", k)
-	else
-		printf(sub.."%s:false", k)
-	end
+    local sub
+    if subs ~= nil then
+        sub = subs
     else
-      if v ~= nil then
-        printf(sub.."%s:%s", k,v)
-      else
-        printf(sub.."%s:nil", k,v)
-      end
+        sub = ""
     end
-  end
+    for k,v in table do
+        if type(v) == "table" then
+            printf(sub.."%s:", k)
+            print_table(v, sub.."    ")
+        elseif type(v) == "function" then
+            printf(sub.."%s:function", k)
+        elseif type(v) == "userdata" then
+            printf(sub.."%s:userdata", k)
+        elseif type(v) == "boolean" then
+            if v == true then
+                printf(sub.."%s:true", k)
+            else
+                printf(sub.."%s:false", k)
+            end
+        else
+           if v ~= nil then
+                printf(sub.."%s:%s", k,v)
+            else
+                printf(sub.."%s:nil", k,v)
+            end
+        end
+    end
 end
 
 -------------------------------------------------------------------------------------------
@@ -1022,21 +1009,21 @@ function switch_online (id)
     if id == -1 then return end
     local sim = alife ()
     if sim ~= nil then
-       sim:set_switch_online  (id, true) 
-       sim:set_switch_offline (id, false)
-    end   
+        sim:set_switch_online  (id, true)
+        sim:set_switch_offline (id, false)
+    end
 end
 -------------------------------------------------------------------------------------------
 function switch_offline (npc)
     if npc == nil or npc:alive () == false then return end
     local sim = alife ()
     if sim ~= nil then
-       sim:set_switch_online  (npc:id (), false) 
-       sim:set_switch_offline (npc:id (), true)
-    end   
+        sim:set_switch_online  (npc:id (), false)
+        sim:set_switch_offline (npc:id (), true)
+    end
 end
 -------------------------------------------------------------------------------------------
 function get_actor_id()
-	if(level.actor() == nil) then return -1 end
-	return level.actor():id()
-end 
+    if(level.actor() == nil) then return -1 end
+    return level.actor():id()
+end

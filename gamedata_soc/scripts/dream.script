@@ -19,7 +19,7 @@ class "dream_mgr"
 function dream_mgr:__init()
     printf("dream <init>: START INITIALIZATION")
 
-	local ini = ini_file("misc\\dream.ltx")
+    local ini = ini_file("misc\\dream.ltx")
     self.regular = nil
     self.scenario = {}
 
@@ -138,15 +138,15 @@ function dream_mgr:get_dream()
     local dream = nil
 
     for k, v in pairs(self.scenario) do
-	    local c = xr_logic.pick_section_from_condlist(db.actor, self, v[2].condlist)
-	    --printf("dream <sleep>: dream(%s) cond(%s)", k, tostring(c))
-	    if c == "true" or c == "" then
-	        dream = k
-	        --printf("dream <sleep>: take")
-	        break
-	    end
+        local c = xr_logic.pick_section_from_condlist(db.actor, self, v[2].condlist)
+        -- printf("dream <sleep>: dream(%s) cond(%s)", k, tostring(c))
+        if c == "true" or c == "" then
+            dream = k
+            -- printf("dream <sleep>: take")
+            break
+        end
     end
-    
+
     if not dream then -- check regular dream
         local rval = math.random(100)
         local rp = self.regular_probability
@@ -163,7 +163,7 @@ function dream_mgr:get_dream()
                     prob_power = prob_power + v[2]
                 end
             end
-            
+
             if prob_power > 0 then
                 local cur_prob = 0
 
@@ -207,9 +207,9 @@ function can_sleep_callback()
         printf("dream <can_sleep_callback>: cant_sleep_not_on_solid_ground")
         return "cant_sleep_not_on_solid_ground"
     end
-end	
+end
 
 function sleep_video_name_callback()
-	-- function returns video file name or empty string
+    -- function returns video file name or empty string
     return dream_manager:get_dream()
 end

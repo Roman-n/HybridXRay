@@ -1,70 +1,70 @@
 ----------------------------------------------------------------------------------------------------------------------
---  Ïðîâåðêà óñëîâèé ðàçðåøåíèÿ èëè çàïðåùåíèÿ ñïàâíà
---  àâòîð: Äèäåíêî Ðóñëàí (Stohe)
+--  ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑƒÑÐ»Ð¾Ð²Ð¸Ð¹ Ñ€Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ð¸Ñ Ð¸Ð»Ð¸ Ð·Ð°Ð¿Ñ€ÐµÑ‰ÐµÐ½Ð¸Ñ ÑÐ¿Ð°Ð²Ð½Ð°
+--  Ð°Ð²Ñ‚Ð¾Ñ€: Ð”Ð¸Ð´ÐµÐ½ÐºÐ¾ Ð ÑƒÑÐ»Ð°Ð½ (Stohe)
 --  TODO:
 ----------------------------------------------------------------------------------------------------------------------
 --[[
 spawner = nil
 
 function spawn(npc)
-	local char_ini = npc:spawn_ini()
-		
-	xr_spawner.create_spawner()
-	xr_spawner.spawner:addList(npc)
-	xr_spawner.spawner:check_spawn(npc.id)
-	
-	--'!! Ïîäóìàòü è óáðàòü íàõðåí, there could be only one!!!
-	if char_ini:section_exist ("zone_spawner") then
-	   zone_spawner.add_member (npc)
-	end    
-	if char_ini:section_exist ("escape_raid") then
-	   escape_raid.add_member (npc)
-	end    
-	return true
+    local char_ini = npc:spawn_ini()
+
+    xr_spawner.create_spawner()
+    xr_spawner.spawner:addList(npc)
+    xr_spawner.spawner:check_spawn(npc.id)
+
+    --'!! ÐŸÐ¾Ð´ÑƒÐ¼Ð°Ñ‚ÑŒ Ð¸ ÑƒÐ±Ñ€Ð°Ñ‚ÑŒ Ð½Ð°Ñ…Ñ€ÐµÐ½, there could be only one!!!
+    if char_ini:section_exist ("zone_spawner") then
+       zone_spawner.add_member (npc)
+    end
+    if char_ini:section_exist ("escape_raid") then
+       escape_raid.add_member (npc)
+    end
+    return true
 end
 
 function spawn_client(npc)
-	local char_ini = npc:spawn_ini()
+    local char_ini = npc:spawn_ini()
 
-	xr_spawner.create_spawner()
-	local sim = alife()
-	if sim == nil then return true end
-	sobject = sim:object(npc:id())
-	xr_spawner.spawner:addList(sobject)
-	xr_spawner.spawner:check_spawn(npc:id())
-	return true
+    xr_spawner.create_spawner()
+    local sim = alife()
+    if sim == nil then return true end
+    sobject = sim:object(npc:id())
+    xr_spawner.spawner:addList(sobject)
+    xr_spawner.spawner:check_spawn(npc:id())
+    return true
 end
 
 class "object_spawner"
 function object_spawner:__init()
-	self.list = {}
-	self.timer = game.get_game_time()
-	self.idle = 60
+    self.list = {}
+    self.timer = game.get_game_time()
+    self.idle = 60
 end
 function object_spawner:check_spawn(npc_id)
-	---' !!! Òóò âñòàâèòü ïðîâåðêó ïî êîíäëèñòó
-	local actor = db.actor
-	--print_table(self.list)
-	if actor ~= nil and
-	   self.list[npc_id].cond ~= nil
-	then
-		if xr_logic.pick_section_from_condlist(actor,nil,self.list[npc_id].cond.condlist) ~= nil then
-			self:restore(npc_id)
-		else
-			self:hide(npc_id)
-		end
-	end
+    ---' !!! Ð¢ÑƒÑ‚ Ð²ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÑƒ Ð¿Ð¾ ÐºÐ¾Ð½Ð´Ð»Ð¸ÑÑ‚Ñƒ
+    local actor = db.actor
+    --print_table(self.list)
+    if actor ~= nil and
+       self.list[npc_id].cond ~= nil
+    then
+        if xr_logic.pick_section_from_condlist(actor,nil,self.list[npc_id].cond.condlist) ~= nil then
+            self:restore(npc_id)
+        else
+            self:hide(npc_id)
+        end
+    end
 end
 function object_spawner:addList(sobject)
-	local char_ini = sobject:spawn_ini()
-	
-	---' !!! Òóò äîáàâèòü ÷òåíèå êîíäëèñòà
-	self.list[sobject.id] = {	id = sobject.id, 
-								on = sobject:can_switch_online(), 
-								off = sobject:can_switch_offline(), 
-								int = sobject:interactive(), 
-								pos = sobject.position,
-								cond = xr_logic.cfg_get_condlist(char_ini,"spawner","cond",sobject) }
+    local char_ini = sobject:spawn_ini()
+
+    ---' !!! Ð¢ÑƒÑ‚ Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‡Ñ‚ÐµÐ½Ð¸Ðµ ÐºÐ¾Ð½Ð´Ð»Ð¸ÑÑ‚Ð°
+    self.list[sobject.id] = {   id = sobject.id,
+                                on = sobject:can_switch_online(),
+                                off = sobject:can_switch_offline(),
+                                int = sobject:interactive(),
+                                pos = sobject.position,
+                                cond = xr_logic.cfg_get_condlist(char_ini,"spawner","cond",sobject) }
 end
 function object_spawner:remove_from_list (id)
     printf ("Query for remove object with ID : %d", id)
@@ -74,116 +74,116 @@ function object_spawner:remove_from_list (id)
            printf ("Object with ID : %d successfully removed from spawn list", id)
            return
         end
-    end        
-    
+    end
+
     printf ("Object with ID : %d not found in spawn list", id)
 end
 
 function object_spawner:restore(npc_id)
-	local sim = alife()
-	if sim == nil then return true end	
-	sim:set_switch_online	(npc_id, self.list[npc_id].on)
-	sim:set_switch_offline	(npc_id, self.list[npc_id].off)
-	sim:set_interactive		(npc_id, self.list[npc_id].int)
+    local sim = alife()
+    if sim == nil then return true end
+    sim:set_switch_online   (npc_id, self.list[npc_id].on)
+    sim:set_switch_offline  (npc_id, self.list[npc_id].off)
+    sim:set_interactive     (npc_id, self.list[npc_id].int)
 end
 function object_spawner:hide(npc_id)
-	local sim = alife()
-	if sim == nil then return true end
-	sim:set_switch_online	(npc_id, false)
-	sim:set_switch_offline	(npc_id, true)
-	sim:set_interactive		(npc_id, false)
+    local sim = alife()
+    if sim == nil then return true end
+    sim:set_switch_online   (npc_id, false)
+    sim:set_switch_offline  (npc_id, true)
+    sim:set_interactive     (npc_id, false)
 end
-function object_spawner:update()	
-	--printf("!!%s!! %s", self.name, game.get_game_time():diffSec(self.timer))
-	if game.get_game_time():diffSec(self.timer) > self.idle then
-		for k,v in pairs(self.list) do
-			self:check_spawn(v.id)
-		end		
-		self.timer = game.get_game_time()
-	end
+function object_spawner:update()
+    --printf("!!%s!! %s", self.name, game.get_game_time():diffSec(self.timer))
+    if game.get_game_time():diffSec(self.timer) > self.idle then
+        for k,v in pairs(self.list) do
+            self:check_spawn(v.id)
+        end
+        self.timer = game.get_game_time()
+    end
 end
-function object_spawner:destroy()	
-	for k,v in pairs(self.list) do
-		self:restore(k)
-		self.list[k] = nil
-	end
+function object_spawner:destroy()
+    for k,v in pairs(self.list) do
+        self:restore(k)
+        self.list[k] = nil
+    end
 end
 
 function create_spawner()
-	if xr_spawner.spawner == nil then
-		xr_spawner.spawner = xr_spawner.object_spawner()
-		printf("spawner created")
-		return true	
-	end
-	return false
+    if xr_spawner.spawner == nil then
+        xr_spawner.spawner = xr_spawner.object_spawner()
+        printf("spawner created")
+        return true
+    end
+    return false
 end
 function update()
-	if xr_spawner.spawner ~= nil then
-		xr_spawner.spawner:update()
-	end
+    if xr_spawner.spawner ~= nil then
+        xr_spawner.spawner:update()
+    end
 end
 
 function remove_from_list (id)
     if xr_spawner.spawner ~= nil then
        xr_spawner.spawner:remove_from_list (id)
     end
-end        
+end
 ]]--
 -----------------------------------------------------------------------------------
 local spawn_list = {}
 -----------------------------
 function add_to_spawn_list (s_object)
-	for k,v in pairs(spawn_list) do
-		if v.id == s_object.id then 
-		   return 
+    for k,v in pairs(spawn_list) do
+        if v.id == s_object.id then
+           return
         end
-	end
-	
-	spawn_list[s_object.id] = 
-	                        {
-	                        id = s_object.id,
-	                        cond = xr_logic.cfg_get_condlist (s_object:spawn_ini (), "spawner", "cond", s_object),
-	                        npc = nil,
-	                        online = false
-	                        }
+    end
+
+    spawn_list[s_object.id] =
+                            {
+                            id = s_object.id,
+                            cond = xr_logic.cfg_get_condlist (s_object:spawn_ini (), "spawner", "cond", s_object),
+                            npc = nil,
+                            online = false
+                            }
     printf ("Add object : %s", s_object:name ())
     if spawn_list[s_object.id].cond then print_table (spawn_list[s_object.id].cond) end
 end
 -----------------------------
 function check_spawn (s_object)
-	if this.is_object_in_list (s_object) == false then
-		this.add_to_spawn_list (s_object)
-	end
+    if this.is_object_in_list (s_object) == false then
+        this.add_to_spawn_list (s_object)
+    end
 
-	local actor = db.actor
-	if actor ~= nil then
-		if spawn_list[s_object.id].cond ~= nil then
-		    if spawn_list[s_object.id].npc == nil then
-               if level.object_by_id(s_object.id) ~= nil then 
+    local actor = db.actor
+    if actor ~= nil then
+        if spawn_list[s_object.id].cond ~= nil then
+            if spawn_list[s_object.id].npc == nil then
+               if level.object_by_id(s_object.id) ~= nil then
                   if is_object_online (s_object.id) == true then
                      spawn_list[s_object.id].npc = level.object_by_id(s_object.id)
-                  else   
+                  else
                      spawn_list[s_object.id].npc = nil
                   end
-               else       
-                  spawn_list[s_object.id].npc = nil  
+               else
+                  spawn_list[s_object.id].npc = nil
                end
-            end   
-			if xr_logic.pick_section_from_condlist(actor, spawn_list[s_object.id].npc, 
-			 								   spawn_list[s_object.id].cond.condlist) ~= nil 
-		    then
-				return true
-			else
-			    spawn_list[s_object.id].npc = nil
-			    spawn_list[s_object.id].online = false
-				return false 
-			end
-		else
-			return true
-		end
-	end
-	spawn_list[s_object.id].npc = nil
-	return false
+            end
+            if xr_logic.pick_section_from_condlist(actor, spawn_list[s_object.id].npc,
+                                               spawn_list[s_object.id].cond.condlist) ~= nil
+            then
+                return true
+            else
+                spawn_list[s_object.id].npc = nil
+                spawn_list[s_object.id].online = false
+                return false
+            end
+        else
+            return true
+        end
+    end
+    spawn_list[s_object.id].npc = nil
+    return false
 end
 -----------------------------------------------------------------------------------
 function is_object_in_list (s_object)

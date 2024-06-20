@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------
 -- Test Definitions
 -----------------------------------------------------------------------------------
-local object_list		= {}
-local smart_terrains	= {}
+local object_list       = {}
+local smart_terrains    = {}
 
 -----------------------------------------------------------------------------------------
 -- TEST 1
@@ -128,7 +128,7 @@ object_list["test1"] = {
 "rad_before_tramplin_stalker_0002",
 "rad_before_tramplin_stalker_0003",
 "rad_bloodsucker_strong",
-	"rad_snork_jumper",
+    "rad_snork_jumper",
 "rad_snork_jumper_0000",
 "rad_snork_jumper_0001",
 "rad_snork_jumper_0002",
@@ -138,7 +138,7 @@ object_list["test1"] = {
 "rad_snork_jumper_0006",
 "rad_snork_jumper_0007",
 "rad_snork_jumper_0008",
-	"rad_snork_jumper_0009",
+    "rad_snork_jumper_0009",
 "rad_snork_jumper_0010",
 "rad_snork_jumper_0011",
 "rad_snork_jumper_0012",
@@ -177,31 +177,29 @@ object_list["test1"] = {
 "rad_antenna_monolither_0005",
 "rad_antenna_monolither_0006",
 "rad_psy_dog"
-
 }
 
 -- define smart terrains
 smart_terrains["test1"] = {
-	"rad_antena",
-	"rad_entrance",
-	"rad_antenna_monolith",
-	"rad_valley",
-	"rad_after_valley",
-	"rad_after_tramplin_ambush",
-	"rad_before_tramplin_ambush",
-	"rad_far_road_ambush",
-	"rad_far_road_btr_ambush",
-	"rad_antenna_camper",
-	"rad_zombied1",
-	"rad_zombied2",
-	"freedom_vs_duty",
-	"rad_antenna_specnaz",
-	"rad_gig",
-	"rad_pseudodogs",
-	"rad_bloodsucker",
-		"rad_snork1",
-	"rad_snork2"
-
+    "rad_antena",
+    "rad_entrance",
+    "rad_antenna_monolith",
+    "rad_valley",
+    "rad_after_valley",
+    "rad_after_tramplin_ambush",
+    "rad_before_tramplin_ambush",
+    "rad_far_road_ambush",
+    "rad_far_road_btr_ambush",
+    "rad_antenna_camper",
+    "rad_zombied1",
+    "rad_zombied2",
+    "freedom_vs_duty",
+    "rad_antenna_specnaz",
+    "rad_gig",
+    "rad_pseudodogs",
+    "rad_bloodsucker",
+    "rad_snork1",
+    "rad_snork2"
 }
 
 -----------------------------------------------------------------------------------------
@@ -209,26 +207,22 @@ smart_terrains["test1"] = {
 -----------------------------------------------------------------------------------------
 -- Controller Test
 object_list["test2"] = {
-	"rad_m_flesh_e",
-	"rad_m_flesh_e_0000",
-	"rad_m_flesh_e_0001",
-	"rad_m_flesh_e_0002",
-   	"rad_m_flesh_e_0003",
-	"rad_m_flesh_e_0004"
+    "rad_m_flesh_e",
+    "rad_m_flesh_e_0000",
+    "rad_m_flesh_e_0001",
+    "rad_m_flesh_e_0002",
+    "rad_m_flesh_e_0003",
+    "rad_m_flesh_e_0004"
 }
 
 smart_terrains["test2"] = {
-	"rad_fleshes"
+    "rad_fleshes"
 }
 
 ------------------------------------------------------------------------------
 -- Base Run function (load extern)
 ------------------------------------------------------------------------------
 function r(index)
-	test_utils.setup_test(object_list, smart_terrains)
-	test_utils.run_test(index)
+    test_utils.setup_test(object_list, smart_terrains)
+    test_utils.run_test(index)
 end
-
-
-
-

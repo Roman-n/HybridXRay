@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------
 -- Test Definitions
 -----------------------------------------------------------------------------------
-local object_list		= {}
-local smart_terrains	= {}
+local object_list       = {}
+local smart_terrains    = {}
 
 -- 1
 object_list["test1"] = {
@@ -141,11 +141,10 @@ object_list["test1"] = {
     "mil_zombie_normal_0000",
     "mil_zombie_normal_0001"
 }
-                                     
 
 -- define smart terrains
 smart_terrains["test1"] = {
-   "mil_freedom", "mil_fblockpost", "mil_fneutral" 
+   "mil_freedom", "mil_fblockpost", "mil_fneutral"
 }
 
 -- Controller Test
@@ -153,16 +152,15 @@ object_list["test2"] = {
     "mil_m_controller_e"
 }
 
-
 object_list["test3"] = {
-	"mil_bloodsucker_mil_0000",
-	"mil_bloodsucker_mil_0001",
-	"mil_bloodsucker_mil_0002",
-	"mil_bloodsucker_mil_0003",
-	"mil_bloodsucker_mil_0004",
-	"mil_bloodsucker_mil_0005",
-	"mil_bloodsucker_mil_0006",
-	"mil_bloodsucker_mil_0007"
+    "mil_bloodsucker_mil_0000",
+    "mil_bloodsucker_mil_0001",
+    "mil_bloodsucker_mil_0002",
+    "mil_bloodsucker_mil_0003",
+    "mil_bloodsucker_mil_0004",
+    "mil_bloodsucker_mil_0005",
+    "mil_bloodsucker_mil_0006",
+    "mil_bloodsucker_mil_0007"
 }
 
 object_list["test4"] = {
@@ -173,7 +171,7 @@ object_list["test5"] = {
     "mil_stalker0023",
     "mil_stalker0024",
     "mil_stalker0025"
---	"mil_bloodsucker_mil_0008"
+--  "mil_bloodsucker_mil_0008"
 }
 
 ------------------------------------------------------------------------------
@@ -182,28 +180,25 @@ object_list["test5"] = {
 function r(index)
 
     if (index == 2) then
-       db.actor:give_info_portion ("mil_controller_ready") 
+       db.actor:give_info_portion ("mil_controller_ready")
     end
 
     if (index == 5) then
-       	db.actor:give_info_portion ("mil_hunt_ready") 
+        db.actor:give_info_portion ("mil_hunt_ready")
     end
 
-	if (index == 100) then
-		db.actor:give_info_portion ("mil_village_bloodsucker1")
-	end
-	
-	--test_utils.setup_test(object_list, smart_terrains)
-	--test_utils.run_test(index)
+    if (index == 100) then
+        db.actor:give_info_portion ("mil_village_bloodsucker1")
+    end
+
+    --test_utils.setup_test(object_list, smart_terrains)
+    --test_utils.run_test(index)
 end
 
 ------------------------------------------------------------------------------
 -- Main function (called on level load)
 ------------------------------------------------------------------------------
 function main()
-	test_utils.setup_test(object_list, smart_terrains)
-	test_utils.run_global()
+    test_utils.setup_test(object_list, smart_terrains)
+    test_utils.run_global()
 end
-
-
-

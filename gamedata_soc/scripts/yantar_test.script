@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------
 -- Test Definitions
 -----------------------------------------------------------------------------------
-local object_list		= {}
-local smart_terrains	= {}
+local object_list       = {}
+local smart_terrains    = {}
 
 -----------------------------------------------------------------------------------------
 -- TEST 1
@@ -163,6 +163,6 @@ smart_terrains["test2"] = {
 -- Base Run function (load extern)
 ------------------------------------------------------------------------------
 function r(index)
-	test_utils.setup_test(object_list, smart_terrains)
-	test_utils.run_test(index)
+    test_utils.setup_test(object_list, smart_terrains)
+    test_utils.run_test(index)
 end

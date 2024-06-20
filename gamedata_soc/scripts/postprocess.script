@@ -5,8 +5,6 @@ local func_cosinus = 1
 local func_linear = 2
 
 function printf () end
-
-
 class "PPData" (effector)
 ----------------
 function PPData:__init (host) super (1003,10000000)
@@ -16,27 +14,25 @@ function PPData:__init (host) super (1003,10000000)
 end
 ----------------
 function PPData:process (pp)
-	printf	("0")
+    printf  ("0")
     effector.process (self, pp)
-	printf	("1")
+    printf  ("1")
     local t = time_global ()
-	printf	("2")
-    --if t - self.time ~= 0 then
+    printf  ("2")
+    -- if t - self.time ~= 0 then
        self.host:update2 ((t - self.time) * 0.001)
-	printf	("3")
+    printf  ("3")
        self.time = t
        pp:assign (self.params)
-	printf	("4")
-    --end    
+    printf  ("4")
+    -- end
     return true
 end
 
 function PPData:__finalize()
-	printf	("PPData::~PPData() called!")
+    printf  ("PPData::~PPData() called!")
 end
 ----------------
-
-
 ----------------
 class "PPEffector"
 ----------------
@@ -59,27 +55,27 @@ function PPEffector:__init (ini_file, section)
            end
        end
     end
-    
+
     if table.getn (self.settings) > 1 then
-       if ini_file:line_exist (section, "init_value") then
-          self.settings[1].start_value = ini_file:r_float (section, "init_value")
-       end   
-    end    
-        
-    self:set_next_function ()
+        if ini_file:line_exist (section, "init_value") then
+            self.settings[1].start_value = ini_file:r_float (section, "init_value")
+        end
+    end
+
+    self:set_next_function()
 end
 ----------------
-function PPEffector:parse_data (str)
+function PPEffector:parse_data(str)
     local t = {}
     local size = string.len (str)
         local pos = 1
     while true do
-          local start, finish = string.find (str, ",", pos)
-          if start == nil then start = size + 1 end
-          local temp = string.sub (str, pos, start - 1)
-          table.insert (t, temp)
-          pos = start + 1
-          if finish == nil then break end
+        local start, finish = string.find (str, ",", pos)
+        if start == nil then start = size + 1 end
+        local temp = string.sub (str, pos, start - 1)
+        table.insert (t, temp)
+        pos = start + 1
+        if finish == nil then break end
     end
     return t
 end
@@ -140,7 +136,7 @@ function PPEffector:update (delta)
     end
 
     self.time = self.time + delta
-    
+
     local v = 0.0
     if self.settings[self.current_func].func == "linear" then
        v = self:lin_func (delta)
@@ -152,10 +148,8 @@ function PPEffector:update (delta)
        v = 0.0
     end
 
-
     v = v * self.settings[self.current_func].intensity + self.base + self.settings[self.current_func].base_offset
-    
-    
+
     if v > 1.0 then v = 1.0 end
     if v < -1.0 then v = -1.0 end
 
@@ -164,7 +158,7 @@ function PPEffector:update (delta)
     if self.time > self.func_time then
        self:set_next_function ()
     end
-    
+
     return v
 end
 ----------------
@@ -196,16 +190,15 @@ function PPEffector:reset ()
     self.current_value = 0.0
     self.base = 0.0
     self:set_next_function ()
-    
+
     if self.current_func == 1 then
        if self.settings[self.current_func].func == "linear" then
           self.current_value = self.settings[self.current_func].start_value
        else
           self.base = self.settings[self.current_func].start_value
        end
-    end      
+    end
 end
-
 
 ----------------
 class "PostProcess"
@@ -238,13 +231,13 @@ function PostProcess:__init (ini_file)
 
     self.pp = PPData (self)
     self.pp:start ()
-    self.pp.params.color_base = color (0.5, 0.5, 0.5)               // max base color diff       [0.0-0.5]
-    self.pp.params.color_gray = color (0.0, 0.0, 0.0)               // RGB                       [0.0-1.0]
-    self.pp.params.color_add  = color (0.0, 0.0, 0.0)               // RGB                       [0.0-1.0]
-    self.pp.params.gray       = 0.0                                 // gray max intensity        [0.0-1.0]
+    self.pp.params.color_base = color (0.5, 0.5, 0.5)               -- max base color diff       [0.0-0.5]
+    self.pp.params.color_gray = color (0.0, 0.0, 0.0)               -- RGB                       [0.0-1.0]
+    self.pp.params.color_add  = color (0.0, 0.0, 0.0)               -- RGB                       [0.0-1.0]
+    self.pp.params.gray       = 0.0                                 -- gray max intensity        [0.0-1.0]
     self.pp.params.dual       = duality (0.0, 0.0)
-    self.pp.params.noise      = noise   (0.0, 0.0, 30)              // intensity, grain, fps     [0.0-1.0,0.0-1.0,1-100]
-    
+    self.pp.params.noise      = noise   (0.0, 0.0, 30)              -- intensity, grain, fps     [0.0-1.0,0.0-1.0,1-100]
+
     self.update_called = false
 end
 ----------------
@@ -274,37 +267,37 @@ function PostProcess:update2 (delta)
     self.pp.params.gray         = self.gray:update  (delta)
     self.pp.params.dual         = duality           (self.duality_h:update (delta), self.duality_v:update (delta))
     self.pp.params.noise        = noise             (self.noise_i:update (delta), self.noise_g:update (delta), self.noise_f:update (delta) * 100 + 1)
-    
+
     self.update_called = true
-end    
+end
 ----------------
 function PostProcess:update ()
 
     if self.update_called == false then
        return false
-    end   
-    
-    if self.base_r.end_func == true and 
-       self.base_g.end_func == true and  
-       self.base_b.end_func == true and  
-       self.gray_r.end_func == true and  
-       self.gray_g.end_func == true and  
-       self.gray_b.end_func == true and  
-       self.add_r.end_func == true and  
-       self.add_g.end_func == true and  
-       self.add_b.end_func == true and  
-       self.gray.end_func == true and  
-       self.duality_h.end_func == true and  
-       self.duality_v.end_func == true and  
-       self.noise_i.end_func == true and  
-       self.noise_g.end_func == true and  
+    end
+
+    if self.base_r.end_func == true and
+       self.base_g.end_func == true and
+       self.base_b.end_func == true and
+       self.gray_r.end_func == true and
+       self.gray_g.end_func == true and
+       self.gray_b.end_func == true and
+       self.add_r.end_func == true and
+       self.add_g.end_func == true and
+       self.add_b.end_func == true and
+       self.gray.end_func == true and
+       self.duality_h.end_func == true and
+       self.duality_v.end_func == true and
+       self.noise_i.end_func == true and
+       self.noise_g.end_func == true and
        self.noise_f.end_func == true then
 --       if self.pp ~= nil then
 --          self.pp:finish ()
 --          self.pp = nil
---       end   
+--       end
        return true
-    end   
+    end
     return false
 end
 
@@ -312,17 +305,15 @@ end
 function main ()
     local process = PostProcess (ini_file ("scripts\\proba.ltx"))
     level.set_weather_fx ("surge_day")
-        local prev_time        = time_global ()
-        while 1 do
-                        wait ();
-                        local dt = time_global () - prev_time;
-                        prev_time = time_global()
-                        if process:update () == true then
-                           break
-                        end
+    local prev_time = time_global ()
+    while 1 do
+        wait()
+        local dt = time_global () - prev_time
+        prev_time = time_global()
+        if process:update () == true then
+            break
         end
+    end
 end
 -- run_string set_postprocess ("scripts\\sincos.ltx")
-
-
 --run_string level_object_by_sid (728).clsid = 0

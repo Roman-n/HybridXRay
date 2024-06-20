@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------------------------------------------------
---  Àéäèøíèêè ıâàëóàòîğîâ
+--  ĞĞ¹Ğ´Ğ¸ÑˆĞ½Ğ¸ĞºĞ¸ ÑĞ²Ğ°Ğ»ÑƒĞ°Ñ‚Ğ¾Ñ€Ğ¾Ğ²
 ----------------------------------------------------------------------------------------------------------------------
 
 local id_start = stalker_ids.property_script
 
--- ıâàëóàòîğû Ãëîáàëüíûå
+-- ÑĞ²Ğ°Ğ»ÑƒĞ°Ñ‚Ğ¾Ñ€Ñ‹ Ğ“Ğ»Ğ¾Ğ±Ğ°Ğ»ÑŒĞ½Ñ‹Ğµ
 global_evaluators          = id_start
 script_evaluator           = id_start + 1
 final_trade_init           = id_start + 2
@@ -26,7 +26,7 @@ stohe_camper_base       = id_start + 1080
 assistance              = id_start + 1090
 death                   = id_start + 1100
 script_combat           = id_start + 1110
-abuse_base				= id_start + 1120
+abuse_base              = id_start + 1120
 
 sidor_patrol_base_property          = id_start + 2000
 sidor_wounded_base                  = id_start + 2010
@@ -44,7 +44,7 @@ sidor_yantar                        = id_start + 2200
 sidor_secret_lab                    = id_start + 2220
 sidor_military_radio                = id_start + 2230
 sidor_attendant_eva                 = id_start + 2240
-sidor_patrol_base                   = id_start + 2250  
+sidor_patrol_base                   = id_start + 2250
 
 chugai_commander_base               = id_start + 3020
 chugai_scout_base                   = id_start + 3030
@@ -91,10 +91,9 @@ jon_sniper_see_monster  = id_start + 5011           --5030
 jon_sniper_see_enemy    = id_start + 5012           --5031
 jon_sniper_enemy_near   = id_start + 5013           --5034
 jon_sniper_enemy_is  = id_start + 5014           --5035
-//+5 çàíÿòî
+-- +5 Ğ·Ğ°Ğ½ÑÑ‚Ğ¾
 
 jon_outcast    = id_start + 5020
 jon_outcast_replics     = id_start + 5021
 
 narrator_evaluators = id_start + 6000
-

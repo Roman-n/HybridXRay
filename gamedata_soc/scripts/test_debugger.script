@@ -1,10 +1,10 @@
 function dd()
-	local xxx = 5555
+    local xxx = 5555
   -- level.object()
 end
 
 function dd_()
-	q()
+    q()
    f = 7
 end
 
@@ -13,16 +13,16 @@ function q()
 end
 
 function s()
-	dd_()
-	local w = 5
+    dd_()
+    local w = 5
 end
 
 function main()
    local d = 8
-    local zz = 5	
+    local zz = 5
    dd()
-   qq = 5	
-  
+   qq = 5
+
 end
 
 --this.main()

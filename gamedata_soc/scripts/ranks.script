@@ -1,9 +1,9 @@
 --[[----------------------------------------------------------------------------
-Хранилище текстовых интерпретаций рангов и функции для работы с ним.
-Чугай Александр
+РҐСЂР°РЅРёР»РёС‰Рµ С‚РµРєСЃС‚РѕРІС‹С… РёРЅС‚РµСЂРїСЂРµС‚Р°С†РёР№ СЂР°РЅРіРѕРІ Рё С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅРёРј.
+Р§СѓРіР°Р№ РђР»РµРєСЃР°РЅРґСЂ
 ------------------------------------------------------------------------------]]
 
--- ранги. формат: {novice={0,30}, experienced={30,60}, ...}
+-- СЂР°РЅРіРё. С„РѕСЂРјР°С‚: {novice={0,30}, experienced={30,60}, ...}
 local stalker_rank_intervals
 local monster_rank_intervals
 
@@ -12,76 +12,76 @@ local monster_max_rank_name
 
 local ranks_loaded = false
 
--- парсит заданную строку рангов в заданную таблицу.
--- возвращает название максимального ранга
+-- РїР°СЂСЃРёС‚ Р·Р°РґР°РЅРЅСѓСЋ СЃС‚СЂРѕРєСѓ СЂР°РЅРіРѕРІ РІ Р·Р°РґР°РЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ.
+-- РІРѕР·РІСЂР°С‰Р°РµС‚ РЅР°Р·РІР°РЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЂР°РЅРіР°
 function parse_ranks( s, tbl )
-	s = "0," .. s .. ",10000"
+    s = "0," .. s .. ",10000"
 
-	local t = parse_names( s )
-	local i = 2
+    local t = parse_names( s )
+    local i = 2
 
-	while i < table.getn( t ) do
-		tbl[t[i]] = { tonumber(t[i-1]), tonumber(t[i+1]) }
-		i = i + 2
-	end
+    while i < table.getn( t ) do
+        tbl[t[i]] = { tonumber(t[i-1]), tonumber(t[i+1]) }
+        i = i + 2
+    end
 
-	return t[i-2]
+    return t[i-2]
 end
 
--- вычитывает сталкерские и монстрячие ранги из game_relations.ltx
+-- РІС‹С‡РёС‚С‹РІР°РµС‚ СЃС‚Р°Р»РєРµСЂСЃРєРёРµ Рё РјРѕРЅСЃС‚СЂСЏС‡РёРµ СЂР°РЅРіРё РёР· game_relations.ltx
 function read_all_ranks()
-	stalker_rank_intervals = {}
-	monster_rank_intervals = {}
+    stalker_rank_intervals = {}
+    monster_rank_intervals = {}
 
-	local ltx  = system_ini()
+    local ltx  = system_ini()
 
-	stalker_max_rank_name = parse_ranks( ltx:r_string( "game_relations", "rating" ),         stalker_rank_intervals )
-	monster_max_rank_name = parse_ranks( ltx:r_string( "game_relations", "monster_rating" ), monster_rank_intervals )
+    stalker_max_rank_name = parse_ranks( ltx:r_string( "game_relations", "rating" ),         stalker_rank_intervals )
+    monster_max_rank_name = parse_ranks( ltx:r_string( "game_relations", "monster_rating" ), monster_rank_intervals )
 
-	ranks_loaded = true
+    ranks_loaded = true
 
---	print_table( stalker_rank_intervals )
+--  print_table( stalker_rank_intervals )
 end
 
--- 
+--
 function get_rank_name( rank, tbl )
-	for name, interval in pairs( tbl ) do
-		if rank >= interval[1] and rank < interval[2] then
-			return name
-		end
-	end
+    for name, interval in pairs( tbl ) do
+        if rank >= interval[1] and rank < interval[2] then
+            return name
+        end
+    end
 
-	return nil
+    return nil
 end
 
--- возвращает название ранга заданного game_object (персонажа)
+-- РІРѕР·РІСЂР°С‰Р°РµС‚ РЅР°Р·РІР°РЅРёРµ СЂР°РЅРіР° Р·Р°РґР°РЅРЅРѕРіРѕ game_object (РїРµСЂСЃРѕРЅР°Р¶Р°)
 function get_obj_rank_name( obj )
-	if not ranks_loaded then
-		read_all_ranks()
-	end
+    if not ranks_loaded then
+        read_all_ranks()
+    end
 
-	local obj_rank
+    local obj_rank
 
-	-- HACK
-	if obj.m_story_id ~= nil then
-		obj_rank = obj:rank()
-	else
-		obj_rank = obj:character_rank()
-	end
+    -- HACK
+    if obj.m_story_id ~= nil then
+        obj_rank = obj:rank()
+    else
+        obj_rank = obj:character_rank()
+    end
 
-	if IsStalker(obj) then
-		return get_rank_name( obj_rank, stalker_rank_intervals ) or stalker_max_rank_name
-	else
-		return get_rank_name( obj_rank, monster_rank_intervals ) or monster_max_rank_name
-	end
+    if IsStalker(obj) then
+        return get_rank_name( obj_rank, stalker_rank_intervals ) or stalker_max_rank_name
+    else
+        return get_rank_name( obj_rank, monster_rank_intervals ) or monster_max_rank_name
+    end
 end
 
--- возвращает табличку с интервалом рангов для заданного названия интервала
+-- РІРѕР·РІСЂР°С‰Р°РµС‚ С‚Р°Р±Р»РёС‡РєСѓ СЃ РёРЅС‚РµСЂРІР°Р»РѕРј СЂР°РЅРіРѕРІ РґР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ РЅР°Р·РІР°РЅРёСЏ РёРЅС‚РµСЂРІР°Р»Р°
 function get_rank_interval( name )
-	if not ranks_loaded then
-		read_all_ranks()
-	end
+    if not ranks_loaded then
+        read_all_ranks()
+    end
 
-	return stalker_rank_intervals[name] or monster_rank_intervals[name]
+    return stalker_rank_intervals[name] or monster_rank_intervals[name]
 end
 

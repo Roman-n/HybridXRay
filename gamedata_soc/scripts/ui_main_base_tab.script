@@ -16,23 +16,23 @@ function main_base_tab:__finalize()
 end
 
 function main_base_tab:InitControls(x, y)
-	self:SetAutoDelete(true)	
-	self.main_rect = {}
-	self.main_rect.x = 0
-	self.main_rect.y = 0 
-	self.main_rect.width = 257
-	self.main_rect.height = 270
-	// huge btn struct with all common parameters
-	self.btn = {}
-	self.btn.indent = -1
-	self.btn.x = 0
-	self.btn.y = 0
-	self.btn.width = 256
-	self.btn.height = 33
-	self.btn.font = GetFontLetterica25()
-	self.btn.texture = "ui\\ui_btn_mm"
-	
-	-- CODE
-	self:Init(x, y, self.main_rect.width, self.main_rect.height)
+    self:SetAutoDelete(true)
+    self.main_rect = {}
+    self.main_rect.x = 0
+    self.main_rect.y = 0
+    self.main_rect.width = 257
+    self.main_rect.height = 270
+    -- huge btn struct with all common parameters
+    self.btn = {}
+    self.btn.indent = -1
+    self.btn.x = 0
+    self.btn.y = 0
+    self.btn.width = 256
+    self.btn.height = 33
+    self.btn.font = GetFontLetterica25()
+    self.btn.texture = "ui\\ui_btn_mm"
+
+    -- CODE
+    self:Init(x, y, self.main_rect.width, self.main_rect.height)
 end
 

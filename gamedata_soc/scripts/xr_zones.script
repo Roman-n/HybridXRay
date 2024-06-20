@@ -1,101 +1,100 @@
 --'------------------------------------------------------------------------------------------------------------------
---' Binder скриптовых зон
---' Используется только в одном месте в игре, на арене для того чтобы удалять "отработанные" предметы.
+--' Binder СЃРєСЂРёРїС‚РѕРІС‹С… Р·РѕРЅ
+--' РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РІ РѕРґРЅРѕРј РјРµСЃС‚Рµ РІ РёРіСЂРµ, РЅР° Р°СЂРµРЅРµ РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ СѓРґР°Р»СЏС‚СЊ "РѕС‚СЂР°Р±РѕС‚Р°РЅРЅС‹Рµ" РїСЂРµРґРјРµС‚С‹.
 --'------------------------------------------------------------------------------------------------------------------
 
 function bind(obj)
-	local ini = obj:spawn_ini()
+    local ini = obj:spawn_ini()
 
-	if not ini then
-		return
-	end
+    if not ini then
+        return
+    end
 
-	if ini:section_exist("arena_zone") then
-		if alife() then
-			obj:bind_object(arena_zone_binder(obj))
-		end
-	end
+    if ini:section_exist("arena_zone") then
+        if alife() then
+            obj:bind_object(arena_zone_binder(obj))
+        end
+    end
 end
 
 --'--------------------------------------------------------------------------------------------------------------------
---' класс arena_zone_binder. Он контролирует скриптовую зону для smart terrain
+--' РєР»Р°СЃСЃ arena_zone_binder. РћРЅ РєРѕРЅС‚СЂРѕР»РёСЂСѓРµС‚ СЃРєСЂРёРїС‚РѕРІСѓСЋ Р·РѕРЅСѓ РґР»СЏ smart terrain
 --'--------------------------------------------------------------------------------------------------------------------
 local arena_zones = {}
 class "arena_zone_binder" (object_binder)
 function arena_zone_binder:__init(obj) super(obj)
-	self.saved_obj = {}
-	arena_zones[obj:name()] = self
+    self.saved_obj = {}
+    arena_zones[obj:name()] = self
 end
 function arena_zone_binder:net_spawn(server_object)
-	if not object_binder.net_spawn(self, server_object) then
-		return false
-	end
+    if not object_binder.net_spawn(self, server_object) then
+        return false
+    end
 
-	self.object:set_callback(callback.zone_enter, self.on_enter, self)
-	self.object:set_callback(callback.zone_exit, self.on_exit, self)
+    self.object:set_callback(callback.zone_enter, self.on_enter, self)
+    self.object:set_callback(callback.zone_exit, self.on_exit, self)
 
-	return true
+    return true
 end
 function arena_zone_binder:net_destroy()
-	self.object:set_callback(callback.zone_enter, nil)
-	self.object:set_callback(callback.zone_exit, nil)
+    self.object:set_callback(callback.zone_enter, nil)
+    self.object:set_callback(callback.zone_exit, nil)
 
-	object_binder.net_destroy(self)
+    object_binder.net_destroy(self)
 end
 function arena_zone_binder:purge_items()
-	local alife = alife()
-	for k,v in pairs(self.saved_obj) do
-		local obj = alife:object(k)
-		if obj ~= nil then
+    local alife = alife()
+    for k,v in pairs(self.saved_obj) do
+        local obj = alife:object(k)
+        if obj ~= nil then
             printf("release object %s, id %s", obj:name(), k)
-		    alife:release(obj, true)
+            alife:release(obj, true)
         end
-	end	
+    end
 end
 
---' Сохранение списка зарегистренных объектов
+--' РЎРѕС…СЂР°РЅРµРЅРёРµ СЃРїРёСЃРєР° Р·Р°СЂРµРіРёСЃС‚СЂРµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
 function arena_zone_binder:save(packet)
-	object_binder.save(self, packet)
-	
-	local num = table.getn(self.saved_obj)
-	packet:w_u8(num)
-	for k,v in pairs(self.saved_obj) do
-		packet:w_u16(k)
-	end
+    object_binder.save(self, packet)
+
+    local num = table.getn(self.saved_obj)
+    packet:w_u8(num)
+    for k,v in pairs(self.saved_obj) do
+        packet:w_u16(k)
+    end
 end
---' Загрузка списка зарегистренных объектов
+--' Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР° Р·Р°СЂРµРіРёСЃС‚СЂРµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
 function arena_zone_binder:load(packet)
-	object_binder.load(self, packet)
+    object_binder.load(self, packet)
 
-	local num = packet:r_u8()	
-	for i=1,num do
-		self.saved_obj[packet:r_u16()] = true
-	end	
+    local num = packet:r_u8()
+    for i=1,num do
+        self.saved_obj[packet:r_u16()] = true
+    end
 end
 
---' callback на вход в зону. Нужно регистрить все объекты, кроме игрока.
---' Так как есть глюк, то этот коллбек вызывается и на вход и на выход из скриптовой зоны
+--' callback РЅР° РІС…РѕРґ РІ Р·РѕРЅСѓ. РќСѓР¶РЅРѕ СЂРµРіРёСЃС‚СЂРёС‚СЊ РІСЃРµ РѕР±СЉРµРєС‚С‹, РєСЂРѕРјРµ РёРіСЂРѕРєР°.
+--' РўР°Рє РєР°Рє РµСЃС‚СЊ РіР»СЋРє, С‚Рѕ СЌС‚РѕС‚ РєРѕР»Р»Р±РµРє РІС‹Р·С‹РІР°РµС‚СЃСЏ Рё РЅР° РІС…РѕРґ Рё РЅР° РІС‹С…РѕРґ РёР· СЃРєСЂРёРїС‚РѕРІРѕР№ Р·РѕРЅС‹
 function arena_zone_binder:on_enter(zone, obj)
-	if obj:clsid() == clsid.actor then
-		return
-	end
+    if obj:clsid() == clsid.actor then
+        return
+    end
 
-	printf("[zone %s] on_enter obj=%s, clsid=%s", zone:name(), obj:name(), obj:clsid())
-	self.saved_obj[obj:id()] = true
+    printf("[zone %s] on_enter obj=%s, clsid=%s", zone:name(), obj:name(), obj:clsid())
+    self.saved_obj[obj:id()] = true
 end
 function arena_zone_binder:on_exit(zone, obj)
-	if obj:clsid() == clsid.actor then
-		return
-	end
+    if obj:clsid() == clsid.actor then
+        return
+    end
 
-	printf("[zone %s] on_enter obj=%s, clsid=%s", zone:name(), obj:name(), obj:clsid())
-	self.saved_obj[obj:id()] = nil
+    printf("[zone %s] on_enter obj=%s, clsid=%s", zone:name(), obj:name(), obj:clsid())
+    self.saved_obj[obj:id()] = nil
 end
 
-
 function purge_arena_items(name)
-	local arena_zone = arena_zones[name]
-	if arena_zone then
-		arena_zone:purge_items()
-	end
+    local arena_zone = arena_zones[name]
+    if arena_zone then
+        arena_zone:purge_items()
+    end
 end

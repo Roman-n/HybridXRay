@@ -81,8 +81,8 @@ local patrols = {
                       }
                    }
                 }
-                
-local patrol_params = 
+
+local patrol_params =
                 {
                 --first path
                 {
@@ -111,38 +111,37 @@ function main ()
             patrols[a][b].id = npc:id ()
             this.switch_offline (npc, a, b)
             patrols[a][b].on_move = false
-       end   
+       end
     end
-    
-    
+
     while true do
           this.wait_for_start ()
           this.wait_for_finish ()
           wait (1000)
-    end        
-       
+    end
+
 end
 -------------------------------------------------------------------------------------------
 function wait_for_start ()
-   
+
     if xr_gulag.needRaid ("escape_blockpost") == false then return end
-    
+
     local raid_moved = false
     for a = 1, table.getn (patrols), 1 do
         if patrols[a].on_patrol == false and this.patrols_available (a) == true then
            for b = 1, table.getn (patrols[a]), 1 do
                time_delay = device ():time_global () + 300000
-               this.switch_online (a, b)           
+               this.switch_online (a, b)
                patrols[a][b].on_move = true
            end
            if raid_moved == false then
               escape_raid_heli.activate ()
               xr_gulag.startRaid ("escape_blockpost")
               raid_moved = true
-           end   
+           end
            patrols[a].on_patrol = true
            time_delay = device ():time_global () + 300000
-        end   
+        end
     end
 end
 -------------------------------------------------------------------------------------------
@@ -151,8 +150,8 @@ function wait_for_finish ()
     if time_delay ~= 0 then
        if device ():time_global () - time_delay  > 0 then
           time_delay = 0
-       end    
-    end    
+       end
+    end
 end
 -------------------------------------------------------------------------------------------
 function check_for_deaths ()
@@ -163,10 +162,10 @@ function check_for_deaths ()
                if patrols[a][b].npc == nil or patrols[a][b].npc:alive () == false then
                   patrols[a][b].dead = true
                end
-            end      
+            end
         end
         this.check_need_raid (a)
-    end        
+    end
 end
 -------------------------------------------------------------------------------------------
 function on_enter (zone, obj)
@@ -178,36 +177,36 @@ function on_enter (zone, obj)
             if obj:id () == patrols[a][b].id then
                if patrols[a][b].on_move == true then
                   patrols[a][b].on_move = false
-                  this.switch_offline (obj, a, b) 
+                  this.switch_offline (obj, a, b)
                   escape_raid_heli.deactivate ()
                   this.check_for_return ()
-               end   
-            end      
-        end                          
-    end         
+               end
+            end
+        end
+    end
 end
 -------------------------------------------------------------------------------------------
 function switch_online (a, b)
-    --if npc == nil or npc:alive () == false then return end
+    -- if npc == nil or npc:alive () == false then return end
     local sim = alife ()
     if sim ~= nil then
-       sim:set_switch_online  (patrols[a][b].id, true) 
+       sim:set_switch_online  (patrols[a][b].id, true)
        sim:set_switch_offline (patrols[a][b].id, false)
        local npc = get_level_object (patrols[a][b].name)
        if b == 1 then xr_comm_ptr.set_patrol (npc, true)
-       else xr_follower.set_follower (npc, true) 
+       else xr_follower.set_follower (npc, true)
        patrols[a][b].npc = npc
        printf ("Object %s move to online at %d time", npc:name (), device ():time_global ())
-       end   
+       end
     else
-       if b == 1 then 
+       if b == 1 then
           db.storage[patrols[a][b].id].patrol.enabled = true
-       else   
+       else
           db.storage[patrols[a][b].id].follower.enabled = true
-       end   
+       end
        patrols[a][b].npc = get_level_object (patrols[a][b].name)
        xr_sleeper.set_sleeper (patrols[a][b].npc, false)
-    end   
+    end
 end
 -------------------------------------------------------------------------------------------
 function switch_offline (npc, a, b)
@@ -215,17 +214,17 @@ function switch_offline (npc, a, b)
     if npc == nil or npc:alive () == false then return end
     local sim = alife ()
     if sim ~= nil then
-       sim:set_switch_online  (patrols[a][b].id, false) 
+       sim:set_switch_online  (patrols[a][b].id, false)
        sim:set_switch_offline (patrols[a][b].id, true)
        printf ("Object %s move to offline at %d time", npc:name (), device ():time_global ())
     else
-       if b == 1 then 
+       if b == 1 then
           db.storage[patrols[a][b].id].patrol.enabled = false
-       else   
+       else
           db.storage[patrols[a][b].id].follower.enabled = false
-       end   
+       end
        xr_sleeper.set_sleeper (npc, true)
-    end   
+    end
 end
 -------------------------------------------------------------------------------------------
 function check_for_return ()
@@ -233,48 +232,48 @@ function check_for_return ()
     for a = 1, table.getn (patrols), 1 do
         res = false
         for b = 1, table.getn (patrols[a]), 1 do
-            if patrols[a][b].dead == false and patrols[a][b].on_move == true then 
+            if patrols[a][b].dead == false and patrols[a][b].on_move == true then
                res = true
             end
         end
         if res == false then
            patrols[a].on_patrol = false
            this.check_need_raid (a)
-        end   
-    end        
+        end
+    end
 end
 -------------------------------------------------------------------------------------------
 function patrols_available (a)
     local count = 0
-    for b = 1, table.getn (patrols[a]), 1 do 
-        if patrols[a][b].dead == true then 
+    for b = 1, table.getn (patrols[a]), 1 do
+        if patrols[a][b].dead == true then
            count = count + 1
-        end    
+        end
     end
     if count >= 2 then return false end
-    return true    
+    return true
 end
 -------------------------------------------------------------------------------------------
 function is_all_patrols_return ()
     for a = 1, table.getn (patrols), 1 do
-        if patrols[a].on_patrol == true then return false end     
+        if patrols[a].on_patrol == true then return false end
     end
-    return true    
+    return true
 end
 -------------------------------------------------------------------------------------------
 function check_need_raid (a)
 
     local count = 0
     for c = 1, table.getn (patrols[a]), 1 do
-        if patrols[a][c].dead == true then 
-           count = count + 1 
+        if patrols[a][c].dead == true then
+           count = count + 1
         end
     end
-    
+
 --    if true then return end
-    
+
     if count >= 2 then
        raid_needed = true
    --    printf ("RAID NEEDED !!!")
-    end   
+    end
 end

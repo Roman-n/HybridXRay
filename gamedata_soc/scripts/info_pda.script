@@ -1,11 +1,10 @@
 function main()
+    wait(3000)
+    local   actor = get_actor()
+    GiveInfoViaPda(actor, actor, "actor_start03")
 
-	wait(3000)
-	local 	actor = get_actor()
-	GiveInfoViaPda(actor, actor, "actor_start03")
-
-	while true do
-	wait()
-	end
+    while true do
+    wait()
+    end
 end
 

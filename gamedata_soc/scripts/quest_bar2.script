@@ -1,4 +1,3 @@
 function main()
-	quest_escape2.main()
-
+    quest_escape2.main()
 end

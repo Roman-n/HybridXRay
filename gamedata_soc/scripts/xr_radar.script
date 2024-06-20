@@ -1,181 +1,180 @@
 --
--- Ðàçðàáîò÷èê: Andrey Fidrya (af@svitonline.com) aka Zmey
--- 
+-- Ð Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸Ðº: Andrey Fidrya (af@svitonline.com) aka Zmey
+--
 
 --[postprocess_psi]
---duality_h		= 0.02
---duality_v		= 0.01
---blur			= 10
---gray			= 0.5
+--duality_h     = 0.02
+--duality_v     = 0.01
+--blur          = 10
+--gray          = 0.5
 --noise_intensity = 0.5
---noise_grain		= 1
---noise_fps		= 5
---color_base		= 0.666,0.433,0.0666
---color_gray		= 0.333,0.3330,0.3330
---color_add		= 0.00,0.01,0.00
---radius_min		= 0.5
---radius_max		= 1.1
+--noise_grain       = 1
+--noise_fps     = 5
+--color_base        = 0.666,0.433,0.0666
+--color_gray        = 0.333,0.3330,0.3330
+--color_add     = 0.00,0.01,0.00
+--radius_min        = 0.5
+--radius_max        = 1.1
 
 class "pp_radar" (effector)
 
 function pp_radar:__init(effector_type, start_time, life_time) super(effector_type, start_time)
-	self.start_time = start_time
-	self.life_time = life_time
-	self.stop_time = start_time + life_time
+    self.start_time = start_time
+    self.life_time = life_time
+    self.stop_time = start_time + life_time
 
-	self.percent = 0
-	
-	self.duality_h = 0.02
-	self.duality_v = 0.01
-	self.blur = 10
-	self.gray = 0.5
-	self.noise_intensity = 0.5
-	self.noise_grain = 1
-	self.noise_fps = 5
-	self.color_base_r = 0.666
-	self.color_base_g = 0.433
-	self.color_base_b = 0.0666
-	self.color_gray_r = 0.333
-	self.color_gray_g = 0.3330
-	self.color_gray_b = 0.3330
-	self.color_add_r = 0.00
-	self.color_add_g = 0.01
-	self.color_add_b = 0.00
-	self.radius_min = 0.5
-	self.radius_max = 1.1
+    self.percent = 0
+
+    self.duality_h = 0.02
+    self.duality_v = 0.01
+    self.blur = 10
+    self.gray = 0.5
+    self.noise_intensity = 0.5
+    self.noise_grain = 1
+    self.noise_fps = 5
+    self.color_base_r = 0.666
+    self.color_base_g = 0.433
+    self.color_base_b = 0.0666
+    self.color_gray_r = 0.333
+    self.color_gray_g = 0.3330
+    self.color_gray_b = 0.3330
+    self.color_add_r = 0.00
+    self.color_add_g = 0.01
+    self.color_add_b = 0.00
+    self.radius_min = 0.5
+    self.radius_max = 1.1
 end
 
 -- pos - 0 [from] to 100 [to]
 function pp_radar:range(pos, from, to)
-	if to > from then
-		local tmp = from
-		from = to
-		to = tmp
-		pos = 100 - pos
-	end
-	
-	if pos == 0 then
-		return from
-	end
+    if to > from then
+        local tmp = from
+        from = to
+        to = tmp
+        pos = 100 - pos
+    end
 
-	return from + (((to - from) * pos) / 100)
+    if pos == 0 then
+        return from
+    end
+
+    return from + (((to - from) * pos) / 100)
 end
 
 function pp_radar:process(pp)
-	printf("pp_radar:process()")
-	effector.process(self,pp)
+    printf("pp_radar:process()")
+    effector.process(self,pp)
 
-		local distance = actor:position():distance_to(radar:point(0))
-		printf("[xr_radar] dist = %s", utils.to_str(distance))
-		--local force = 100 - distance
-		--printf("force = %d", force)
-	
-		local tm = time_global()
-		local slowd = distance * 0.05 -- ÷åì áîëüøå ìíîæèòåëü, òåì ìåäëåííåé êîëåáàíèÿ
-		if slowd > 1 then
-			tm = (tm / slowd) / 10
-		end
-	
-		local percent = math.mod(tm, 200)
-		if percent > 100 then
-			percent = 200 - percent
-			percent = percent * 5 -- ïàäàòü â 5 ðàç áûñòðåå, ÷åì ðîñòè
-		else
-			--percent = percent * 5 -- ðîñòè â 5 ðàç áûñòðåå, ÷åì ñïàäàòü
-		end
+        local distance = actor:position():distance_to(radar:point(0))
+        printf("[xr_radar] dist = %s", utils.to_str(distance))
+        --local force = 100 - distance
+        --printf("force = %d", force)
 
-		if percent > 100 then
-			percent = 100
-		end
+        local tm = time_global()
+        local slowd = distance * 0.05 -- Ñ‡ÐµÐ¼ Ð±Ð¾Ð»ÑŒÑˆÐµ Ð¼Ð½Ð¾Ð¶Ð¸Ñ‚ÐµÐ»ÑŒ, Ñ‚ÐµÐ¼ Ð¼ÐµÐ´Ð»ÐµÐ½Ð½ÐµÐ¹ ÐºÐ¾Ð»ÐµÐ±Ð°Ð½Ð¸Ñ
+        if slowd > 1 then
+            tm = (tm / slowd) / 10
+        end
 
-		
-		--[[
-		local distance = actor:position():distance_to(radar:point(0))
-		local force = 100 - distance
-		printf("force = %d", force)
-		if percent < force and force >= 0 then
-			if force <= 100 then
-				percent = force
-			else
-				percent = 100
-			end
-		end
-		--]]
-		
-		--effect.percent = percent
-	
-	--local percent = ((time_global() - self.start_time) * 100) / self.life_time
-	--local percent = math.random(100)
-	--local percent = self.percent
-	if percent < 0 then
-		percent = 0
-	elseif percent > 100 then
-		percent = 100
-	end
-	--percent = 100 - percent
-	printf("percent = %d", percent)
-	
-	local dual      = duality()
-	local noise     = noise()
-	local base      = color()
-	local gray      = color()
-	local add       = color()
+        local percent = math.mod(tm, 200)
+        if percent > 100 then
+            percent = 200 - percent
+            percent = percent * 5 -- Ð¿Ð°Ð´Ð°Ñ‚ÑŒ Ð² 5 Ñ€Ð°Ð· Ð±Ñ‹ÑÑ‚Ñ€ÐµÐµ, Ñ‡ÐµÐ¼ Ñ€Ð¾ÑÑ‚Ð¸
+        else
+            --percent = percent * 5 -- Ñ€Ð¾ÑÑ‚Ð¸ Ð² 5 Ñ€Ð°Ð· Ð±Ñ‹ÑÑ‚Ñ€ÐµÐµ, Ñ‡ÐµÐ¼ ÑÐ¿Ð°Ð´Ð°Ñ‚ÑŒ
+        end
 
-	dual.h          = self:range(percent, 0, self.duality_h)
-	dual.v          = self:range(percent, 0, self.duality_v)
+        if percent > 100 then
+            percent = 100
+        end
 
-	noise.grain     = self.noise_grain
-	noise.intensity = self:range(percent, 0, self.noise_intensity)
-	noise.fps       = self.noise_fps
+        --[[
+        local distance = actor:position():distance_to(radar:point(0))
+        local force = 100 - distance
+        printf("force = %d", force)
+        if percent < force and force >= 0 then
+            if force <= 100 then
+                percent = force
+            else
+                percent = 100
+            end
+        end
+        --]]
 
-	base.r          = self:range(percent, 0.5, self.color_base_r)
-	base.g          = self:range(percent, 0.5, self.color_base_g)
-	base.b          = self:range(percent, 0.5, self.color_base_b)
+        --effect.percent = percent
 
-	gray.r          = self:range(percent, 0, self.color_gray_r) -- ???
-	gray.g          = self:range(percent, 0, self.color_gray_g)
-	gray.b          = self:range(percent, 0, self.color_gray_b)
+    --local percent = ((time_global() - self.start_time) * 100) / self.life_time
+    --local percent = math.random(100)
+    --local percent = self.percent
+    if percent < 0 then
+        percent = 0
+    elseif percent > 100 then
+        percent = 100
+    end
+    --percent = 100 - percent
+    printf("percent = %d", percent)
 
-	add.r           = self:range(percent, 0, self.color_add_r)
-	add.g           = self:range(percent, 0, self.color_add_g)
-	add.b           = self:range(percent, 0, self.color_add_b)
+    local dual      = duality()
+    local noise     = noise()
+    local base      = color()
+    local gray      = color()
+    local add       = color()
 
-	pp.gray         = self:range(percent, 0, self.gray)
-	pp.blur         = self:range(percent, 0, self.blur)
+    dual.h          = self:range(percent, 0, self.duality_h)
+    dual.v          = self:range(percent, 0, self.duality_v)
 
-	pp.dual         = dual
-	pp.noise        = noise
-	pp.color_base       = base
-	pp.color_gray       = gray
-	pp.color_add        = add
+    noise.grain     = self.noise_grain
+    noise.intensity = self:range(percent, 0, self.noise_intensity)
+    noise.fps       = self.noise_fps
 
-	self.info       = pp
+    base.r          = self:range(percent, 0.5, self.color_base_r)
+    base.g          = self:range(percent, 0.5, self.color_base_g)
+    base.b          = self:range(percent, 0.5, self.color_base_b)
 
-	return              true
+    gray.r          = self:range(percent, 0, self.color_gray_r) -- ???
+    gray.g          = self:range(percent, 0, self.color_gray_g)
+    gray.b          = self:range(percent, 0, self.color_gray_b)
+
+    add.r           = self:range(percent, 0, self.color_add_r)
+    add.g           = self:range(percent, 0, self.color_add_g)
+    add.b           = self:range(percent, 0, self.color_add_b)
+
+    pp.gray         = self:range(percent, 0, self.gray)
+    pp.blur         = self:range(percent, 0, self.blur)
+
+    pp.dual         = dual
+    pp.noise        = noise
+    pp.color_base       = base
+    pp.color_gray       = gray
+    pp.color_add        = add
+
+    self.info       = pp
+
+    return              true
 end
 
 function pp_radar:finished()
-	return self.stop_time < time_global()
+    return self.stop_time < time_global()
 end
 
 
 function main()
-	printf("XR_RADAR activated")
+    printf("XR_RADAR activated")
 
-	--local ini_file = system_ini()
+    --local ini_file = system_ini()
 
-	actor = get_actor()
-	radar = patrol("radar")
-	
-	local effect = pp_radar(4, time_global() + 5000, 4000)
-	effect:start()
-	while true do
-		if not level.object("radar_control") then
-			break
-		end
-		wait()
-	end
-	effect:finish()
+    actor = get_actor()
+    radar = patrol("radar")
 
-	return 1
+    local effect = pp_radar(4, time_global() + 5000, 4000)
+    effect:start()
+    while true do
+        if not level.object("radar_control") then
+            break
+        end
+        wait()
+    end
+    effect:finish()
+
+    return 1
 end

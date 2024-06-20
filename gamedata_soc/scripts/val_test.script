@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------
 -- Test Definitions
 -----------------------------------------------------------------------------------
-local object_list		= {}
-local smart_terrains	= {}
+local object_list       = {}
+local smart_terrains    = {}
 
 -- 1
 object_list["test1"] = {
@@ -98,14 +98,13 @@ object_list["test1"] = {
 "val_soldiers_raid_stalker_0029"
 }
 
-
 -- define smart terrains
 smart_terrains["test1"] = {
-	"val_escort",
-	"val_sacrifice",
-	"val_prisoner",
-	"val_rob",
-	"val_lager_bandits",
+    "val_escort",
+    "val_sacrifice",
+    "val_prisoner",
+    "val_rob",
+    "val_lager_bandits",
     "val_x18_exit_base",
     "val_main_gulag1",
     "val_main_gulag2",
@@ -126,14 +125,14 @@ smart_terrains["test2"] = {
 -- Base Run function (load extern)
 ------------------------------------------------------------------------------
 function r(index)
-	test_utils.setup_test(object_list, smart_terrains)
-	test_utils.run_test(index)
+    test_utils.setup_test(object_list, smart_terrains)
+    test_utils.run_test(index)
 end
 
 ------------------------------------------------------------------------------
 -- Main function (called on level load)
 ------------------------------------------------------------------------------
 function main()
-	test_utils.setup_test(object_list, smart_terrains)
-	test_utils.run_global()
+    test_utils.setup_test(object_list, smart_terrains)
+    test_utils.run_global()
 end

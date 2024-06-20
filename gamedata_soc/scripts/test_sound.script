@@ -1,7 +1,7 @@
 
 class "test"
 function test:__init( name, nom )
-	self.npc    = get_level_object( name )
+    self.npc    = get_level_object( name )
     self.i      = 0
     self.use    = nom
     self.pos    = self.npc:position()
@@ -17,7 +17,7 @@ function test:start()
 end
 
 function test:select_sound()
-	if( i == 1 ) then
+    if( i == 1 ) then
         printf( "idle" )
         action( self.npc, move( move.walk_fwd, patrol( "way2" ) ), sound( sound.idle, 1000 ), cond( cond.time_end, 10000 ) )
         i = 2
@@ -56,34 +56,34 @@ function test:select_sound()
     elseif( i == 10 ) then
         printf( "growling" )
         action( self.npc, move( move.walk_fwd, patrol( "way2" ) ), sound( sound.growling, 1000 ), cond( cond.time_end, 10000 ) )
-		i = 11
-	elseif( i == 11 ) then
+        i = 11
+    elseif( i == 11 ) then
         action( self.npc, move( move.walk_fwd, patrol( "way2" ) ), sound( sound.growling, 1000 ), cond( cond.time_end, 10000 ) )
         action( self.npc, move( move.walk_fwd, self.pos ), cond( cond.move_end ) )
         i = 1
         action( self.npc, anim( anim.sleep, 0 ), cond( cond.time_end, 100000000000000000 ) )
         return true
-	end
+    end
 
     return false
 end
 
 function test:update()
-	if( self.use == 0 ) then return true end
+    if( self.use == 0 ) then return true end
 
-	if( self.npc:action() == nil ) then
-    	return self:select_sound()
+    if( self.npc:action() == nil ) then
+        return self:select_sound()
     end
-	return false
+    return false
 end
 
 local monstr = {
                     { "burer1",       0 },
-                    { "boar1",  	  0 },       --Íàïğîòèâ ìîíòğà ñòîèò 1 - ìîíñòğ èñïîëüçóåòñÿ, 0 - íå èñïîëüçóåòñÿ
-                    { "flesh1", 	  0 },
-                    { "chimera1", 	  0 },
+                    { "boar1",        0 },       --ĞĞ°Ğ¿Ñ€Ğ¾Ñ‚Ğ¸Ğ² Ğ¼Ğ¾Ğ½Ñ‚Ñ€Ğ° ÑÑ‚Ğ¾Ğ¸Ñ‚ 1 - Ğ¼Ğ¾Ğ½ÑÑ‚Ñ€ Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·ÑƒĞµÑ‚ÑÑ, 0 - Ğ½Ğµ Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·ÑƒĞµÑ‚ÑÑ
+                    { "flesh1",       0 },
+                    { "chimera1",     0 },
                     { "bloodsucker1", 0 },
-                    { "gigant1", 	  0 },
+                    { "gigant1",      0 },
                     { "pseudodog1",   0 },
                     { "controller1",  0 },
                     { "dog1",         1 }
@@ -96,14 +96,14 @@ function main()
     local i   = 1
 
     for i = 1, table.getn( monstr ) do
-    	table.insert( m, this.test( monstr[i][1], monstr[i][2] ) )
+        table.insert( m, this.test( monstr[i][1], monstr[i][2] ) )
     end
 
-	m[i]:start()
+    m[i]:start()
 
     while( true ) do
-		if( m[i]:update() ) then     --İòîò ìîíñòğ ïğîèãğàë âñå çâóêè
-        	i = i + 1
+        if( m[i]:update() ) then     --Ğ­Ñ‚Ğ¾Ñ‚ Ğ¼Ğ¾Ğ½ÑÑ‚Ñ€ Ğ¿Ñ€Ğ¾Ğ¸Ğ³Ñ€Ğ°Ğ» Ğ²ÑĞµ Ğ·Ğ²ÑƒĞºĞ¸
+            i = i + 1
             if( i > table.getn( m ) ) then i = 1 end
             m[i]:start()
         end
