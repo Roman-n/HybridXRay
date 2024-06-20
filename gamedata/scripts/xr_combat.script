@@ -1,50 +1,50 @@
 --[[------------------------------------------------------------------------------------------------------------------
-Переключение боевых схем
+С•РµСЂРµРєР»СЋС‡РµРЅРёРµ Р±РѕРµРІС‹С… СЃС…РµРј
 --------------------------------------------------------------------------------------------------------------------]]
 
 function set_combat_type(npc, actor, t)
-	if t == nil then
-		return
-	end
-	-- это нужно для функций в xr_conditions.script
-	local storage = db.storage[npc:id()]
-	storage.enemy = npc:best_enemy()
+    if t == nil then
+        return
+    end
+    -- СЌС‚Рѕ РЅСѓР¶РЅРѕ РґР»В¤ С„СѓРЅРєС†РёР№ РІ xr_conditions.script
+    local storage = db.storage[npc:id()]
+    storage.enemy = npc:best_enemy()
 
-	local script_combat_type = nil
-	if t.combat_type ~= nil then
-		script_combat_type = xr_logic.pick_section_from_condlist(actor, npc, t.combat_type.condlist)
-		if script_combat_type == "nil" then
-			script_combat_type = nil
-		end
-	end
+    local script_combat_type = nil
+    if t.combat_type ~= nil then
+        script_combat_type = xr_logic.pick_section_from_condlist(actor, npc, t.combat_type.condlist)
+        if script_combat_type == "nil" then
+            script_combat_type = nil
+        end
+    end
 
-	storage.script_combat_type = script_combat_type
-	t.script_combat_type = script_combat_type
+    storage.script_combat_type = script_combat_type
+    t.script_combat_type = script_combat_type
 end
 
 ----------------------------------------------------------------------------------------------------------------------
--- Эвалуатор переключения между скриптовым и движковым боем
+-- РЃРІР°Р»СѓР°С‚РѕСЂ РїРµСЂРµРєР»СЋС‡РµРЅРёВ¤ РјРµР¶РґСѓ СЃРєСЂРёРїС‚РѕРІС‹Рј Рё РґРІРёР¶РєРѕРІС‹Рј Р±РѕРµРј
 -- false - engine combat, true - script combat
 ----------------------------------------------------------------------------------------------------------------------
 class "evaluator_check_combat" (property_evaluator)
 
 function evaluator_check_combat:__init(name, storage) super (nil, name)
-	self.st = storage
+    self.st = storage
 end
 function evaluator_check_combat:evaluate()
-	local st = self.st
-	if st.enabled and self.object:best_enemy() then
-		local actor = db.actor
-		if not actor then
-			return false
-		end
-		return st.script_combat_type ~= nil
-	end
-	return false
+    local st = self.st
+    if st.enabled and self.object:best_enemy() then
+        local actor = db.actor
+        if not actor then
+            return false
+        end
+        return st.script_combat_type ~= nil
+    end
+    return false
 end
 
 ----------------------------------------------------------------------------------------------------------------------
--- Дублирующий эвалуатор врагов для планировщика скриптового боя
+-- Ж’СѓР±Р»РёСЂСѓСЋС‰РёР№ СЌРІР°Р»СѓР°С‚РѕСЂ РІСЂР°РіРѕРІ РґР»В¤ РїР»Р°РЅРёСЂРѕРІС‰РёРєР° СЃРєСЂРёРїС‚РѕРІРѕРіРѕ Р±РѕВ¤
 ----------------------------------------------------------------------------------------------------------------------
 class "evaluator_enemy" (property_evaluator)
 
@@ -52,52 +52,52 @@ function evaluator_enemy:__init(name) super (nil, name)
 end
 
 function evaluator_enemy:evaluate()
-	return self.object:best_enemy() ~= nil
+    return self.object:best_enemy() ~= nil
 end
 
 ----------------------------------------------------------------------------------------------------------------------
 -- binder
 ----------------------------------------------------------------------------------------------------------------------
 function add_to_binder(npc, ini, scheme, section, storage)
-	local manager = npc:motivation_action_manager()
+    local manager = npc:motivation_action_manager()
 
-	manager:add_evaluator( xr_evaluators_id.script_combat, this.evaluator_check_combat("script_combat",storage) )
+    manager:add_evaluator( xr_evaluators_id.script_combat, this.evaluator_check_combat("script_combat",storage) )
 
-	local action = manager:action(stalker_ids.action_combat_planner)
-	action:add_precondition(world_property(xr_evaluators_id.script_combat, false))
+    local action = manager:action(stalker_ids.action_combat_planner)
+    action:add_precondition(world_property(xr_evaluators_id.script_combat, false))
 
-	xr_combat_zombied.add_to_binder ( npc, ini, storage, manager )
-	xr_combat_camper.add_to_binder  ( npc, ini, storage, manager )
+    xr_combat_zombied.add_to_binder ( npc, ini, storage, manager )
+    xr_combat_camper.add_to_binder  ( npc, ini, storage, manager )
 end
 
 function set_combat_checker(npc, ini, scheme, section)
-	local is_zombied = character_community(npc) == "zombied"
+    local is_zombied = character_community(npc) == "zombied"
 
-	if section or is_zombied then
-		local st      = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
-		st.logic      = xr_logic.cfg_get_switch_conditions(ini, section, npc)
-		st.enabled    = true
+    if section or is_zombied then
+        local st      = xr_logic.assign_storage_and_bind(npc, ini, scheme, section)
+        st.logic      = xr_logic.cfg_get_switch_conditions(ini, section, npc)
+        st.enabled    = true
 
-		st.combat_type = xr_logic.cfg_get_condlist(ini, section, "combat_type", npc)
+        st.combat_type = xr_logic.cfg_get_condlist(ini, section, "combat_type", npc)
 
-		if st.combat_type == "monolith" then
-			st.combat_type  = nil
-		end
+        if st.combat_type == "monolith" then
+            st.combat_type  = nil
+        end
 
-		-- зомбированные сражаются по умолчанию на зомбированной боевой схеме
-		if not st.combat_type and is_zombied then
-			st.combat_type = { condlist = xr_logic.parse_condlist(npc, section, "", "zombied") }
-		end
+        -- Р·РѕРјР±РёСЂРѕРІР°РЅРЅС‹Рµ СЃСЂР°Р¶Р°СЋС‚СЃВ¤ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РЅР° Р·РѕРјР±РёСЂРѕРІР°РЅРЅРѕР№ Р±РѕРµРІРѕР№ СЃС…РµРјРµ
+        if not st.combat_type and is_zombied then
+            st.combat_type = { condlist = xr_logic.parse_condlist(npc, section, "", "zombied") }
+        end
 
-		if st.combat_type then
-			set_combat_type( npc, db.actor, st )
-		end
-	end
+        if st.combat_type then
+            set_combat_type( npc, db.actor, st )
+        end
+    end
 end
 
 function disable_scheme(npc, scheme)
-	local st = db.storage[npc:id()][scheme]
-	if st then
-		st.enabled = false
-	end
+    local st = db.storage[npc:id()][scheme]
+    if st then
+        st.enabled = false
+    end
 end

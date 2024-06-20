@@ -1,6 +1,6 @@
 --
 -- DELME
--- 
+--
 local leader_no_command             = 0
 local leader_move                   = 1
 local leader_stop                   = 2
@@ -14,7 +14,7 @@ class "evaluator_enabled" (property_evaluator)
 -------------
 function evaluator_enabled:__init (name, storage) super (nil, name)
     self.a = storage
-end    
+end
 -------------
 function evaluator_enabled:evaluate ()
     return xr_logic.is_active (self.object, self.a)
@@ -38,7 +38,7 @@ function evaluator_escape:evaluate ()
         if is_object_online (npc_id) == false or npc == nil or npc:alive () == false then
            return true
         end
-    end        
+    end
     return false
 end
 ----------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class "evaluator_raid" (property_evaluator)
 -------------
 function evaluator_raid:__init (name, storage) super (nil, name)
     self.a = storage
-end    
+end
 -------------
 function evaluator_raid:evaluate ()
     return self.a.raid_process
@@ -61,35 +61,35 @@ class "action_patrol" (action_base)
 -------------
 function action_patrol:__init (name, storage) super (nil, name)
     self.a = storage
-	self.move_mgr = move_mgr.move_mgr (storage.npc)
-	self.stage = 0
-	self.sub_stage = 0
+    self.move_mgr = move_mgr.move_mgr (storage.npc)
+    self.stage = 0
+    self.sub_stage = 0
     self.current_phrase = 0
 end
 -------------
 function action_patrol:initialize ()
     action_base.initialize (self)
-    
-	self.move_mgr:initialize ()
-	
-	self.object:set_node_evaluator()
-	self.object:set_path_evaluator()
-	self.object:set_desired_position()
-	self.object:set_desired_direction()
 
-	self:reset_scheme()
-	
-	self.stage = 0
-	
+    self.move_mgr:initialize ()
+
+    self.object:set_node_evaluator()
+    self.object:set_path_evaluator()
+    self.object:set_desired_position()
+    self.object:set_desired_direction()
+
+    self:reset_scheme()
+
+    self.stage = 0
+
     local obj = self.object:object ("hand_radio")
     if obj ~= nil then
        --self.object:enable_attachable_item (true)
        --printf ("DISABLE RADIO 1")
        obj:enable_attachable_item (false)
     end
-    
+
      self.sounds =
-                 { 
+                 {
                  rnd = 100,
                  maxidle = 1,
                  sumidle = 0,
@@ -97,66 +97,66 @@ function action_patrol:initialize ()
                  last_num = 0
                  }
     self.sounds["seq_cnt"] = 0
-	
+
 end
 -------------
 function action_patrol:execute ()
     action_base.execute (self)
 
-    
-    if self.stage == 0 then    
-	   self.move_mgr:update ()
-	   --update soldier positions
-       if self.a.raid_enabled == false then 
+
+    if self.stage == 0 then
+       self.move_mgr:update ()
+       --update soldier positions
+       if self.a.raid_enabled == false then
           self:set_soldier_positions ()
-       else 
+       else
           self:set_soldier_positions_raid ()
        end
        --update soldier states
-	   if self.move_mgr.moving == true then 
-	      self:set_command (leader_move) 
-	   else   
-	      self:set_command (leader_stop) 
-	   end
-	elseif self.stage == 1 then 
-	      self:set_command (leader_stop)  
-	      if self:process_radio () == true then
+       if self.move_mgr.moving == true then
+          self:set_command (leader_move)
+       else
+          self:set_command (leader_stop)
+       end
+    elseif self.stage == 1 then
+          self:set_command (leader_stop)
+          if self:process_radio () == true then
              self.move_mgr:update_movement_state ()
-	         self.stage = 0
-	      end
-	end
-	
-end    
+             self.stage = 0
+          end
+    end
+
+end
 -------------
 function action_patrol:finalize ()
-    
+
     local obj = self.object:object ("hand_radio")
     if obj ~= nil then
        obj:enable_attachable_item (false)
-    end    
-	self.move_mgr:finalize ()
+    end
+    self.move_mgr:finalize ()
     action_base.finalize (self)
 end
 -------------
 function action_patrol:reset_scheme ()
-	if self.a.path_walk_info == nil then
-	   self.a.path_walk_info = utils.path_parse_waypoints(self.a.patrol_path)
-	end
-	if self.a.path_look_info == nil then
-	   self.a.path_look_info = utils.path_parse_waypoints(self.a.patrol_look)
-	end   
-	self.move_mgr:reset(self.a.patrol_path, self.a.path_walk_info, self.a.patrol_look, self.a.path_look_info, nil, nil, {obj = self, func = self.callback})
-end	
+    if self.a.path_walk_info == nil then
+       self.a.path_walk_info = utils.path_parse_waypoints(self.a.patrol_path)
+    end
+    if self.a.path_look_info == nil then
+       self.a.path_look_info = utils.path_parse_waypoints(self.a.patrol_look)
+    end
+    self.move_mgr:reset(self.a.patrol_path, self.a.path_walk_info, self.a.patrol_look, self.a.path_look_info, nil, nil, {obj = self, func = self.callback})
+end
 -------------
 function action_patrol:callback (mode, number)
-    if number == 0 then 
+    if number == 0 then
        self.object:clear_animations ()
        self.object:set_movement_type (move.stand)
        self.object:add_animation ("raciya_0", true)
        self.object:add_animation ("raciya_1", true)
        self.object:add_animation ("raciya_2", true)
        self.object:set_movement_type (move.stand)
-	   printf("SET_SIGHT!!!action_patrol:callback")
+       printf("SET_SIGHT!!!action_patrol:callback")
        self.object:set_sight (look.path_dir, nil, 0)
        self.sub_stage = 0
        self.current_phrase = 1
@@ -286,17 +286,17 @@ end
 -------------
 function action_escape:initialize ()
     action_base.initialize (self)
-    
+
     if self.a.escape_path == nil then
        utils.abort ("Escape path not defined for patrol soldier %s", self.object:name ())
     end
-    
+
     self.object:clear_animations          ()
     self.object:set_node_evaluator        ()
     self.object:set_path_evaluator        ()
     self.object:set_desired_position      ()
     self.object:set_desired_direction     ()
-    
+
     self.object:set_item                  (object.activate, self.object:best_weapon ())
     self.object:set_detail_path_type      (move.line)
     self.object:set_body_state            (move.standing)
@@ -304,17 +304,17 @@ function action_escape:initialize ()
     self.object:set_patrol_path           (self.a.escape_path, patrol.nearest, patrol.continue, true)
     self.object:set_movement_type         (move.run)
     self.object:set_mental_state          (anim.danger)
-	  printf("SET_SIGHT!!!action_escape:initialize")
+      printf("SET_SIGHT!!!action_escape:initialize")
     self.object:set_sight                 (look.path_dir, nil, 0)
 
     self.object:set_callback (self, "move_callback", game_object.movement)
-    
+
 end
 -------------
 function action_escape:execute ()
     action_base.execute (self)
     self:set_command (leader_return)
-end    
+end
 -------------
 function action_escape:finalize ()
     action_base.finalize (self)
@@ -328,7 +328,7 @@ function action_escape:move_callback (obj, action_type, index)
        if st ~= nil then
           xr_gulag.resetJob (st, self.object)
        end
-    end    
+    end
 end
 ----------------------------------------------------------------------------------------
 function action_escape:set_command (command)
@@ -347,45 +347,45 @@ class "action_raid" (action_base)
 -------------
 function action_raid:__init (name, storage) super (nil, name)
     self.a = storage
-	self.move_mgr = move_mgr.move_mgr (storage.npc)
+    self.move_mgr = move_mgr.move_mgr (storage.npc)
 end
 -------------
 function action_raid:initialize ()
     action_base.initialize (self)
-    
-	self.move_mgr:initialize ()
-        
+
+    self.move_mgr:initialize ()
+
     self.object:clear_animations          ()
     self.object:set_node_evaluator        ()
     self.object:set_path_evaluator        ()
     self.object:set_desired_position      ()
     self.object:set_desired_direction     ()
 
-	self:reset_scheme ()
+    self:reset_scheme ()
 end
 -------------
 function action_raid:execute ()
     action_base.execute (self)
-     
+
     self.move_mgr:update ()
-    
-end    
+
+end
 -------------
 function action_raid:finalize ()
-	self.move_mgr:finalize ()
+    self.move_mgr:finalize ()
     action_base.finalize (self)
 end
 -------------
 function action_raid:reset_scheme ()
     if self.a.raid_path == nil then return end
-	if self.a.raid_walk_info == nil then
-	   self.a.raid_walk_info = utils.path_parse_waypoints(self.a.raid_path)
-	end
-	if self.a.raid_look_info == nil then
-	   self.a.raid_look_info = utils.path_parse_waypoints(self.a.raid_look)
-	end   
-	self.move_mgr:reset(self.a.raid_path, self.a.raid_walk_info, self.a.raid_look, self.a.raid_look_info, self.a.team, nil, {obj = self, func = self.callback})
-	local id = self.object:id()
+    if self.a.raid_walk_info == nil then
+       self.a.raid_walk_info = utils.path_parse_waypoints(self.a.raid_path)
+    end
+    if self.a.raid_look_info == nil then
+       self.a.raid_look_info = utils.path_parse_waypoints(self.a.raid_look)
+    end
+    self.move_mgr:reset(self.a.raid_path, self.a.raid_walk_info, self.a.raid_look, self.a.raid_look_info, self.a.team, nil, {obj = self, func = self.callback})
+    local id = self.object:id()
     local size = #db.storage[id].followers
     if size == 0 then return end
     for a = 1, size, 1 do
@@ -393,14 +393,14 @@ function action_raid:reset_scheme ()
         --local npc = db.storage[self.object:id()].followers[a].npc
         --db.storage[npc:id ()].patrol.raid_process = true
     end
-end	
+end
 -------------
 function action_raid:callback (mode, number)
-    if number == 0 then 
-       self.a.raid_process = false 
+    if number == 0 then
+       self.a.raid_process = false
        self.a.raid_enabled = false
        return true
-    end   
+    end
     return false
 end
 ----------------------------------------------------------------------------------------
@@ -409,23 +409,23 @@ end
 ----------------------------------------------------------------------------------------
 function add_to_binder (npc, ini, scheme, section, storage)
 
-    local operators	= {}
+    local operators = {}
     local properties  = {}
-    
+
     properties["enabled"] = xr_evaluators_id.sidor_ptr
     properties["escape"]  = xr_evaluators_id.sidor_ptr + 1
     properties["raid"]    = xr_evaluators_id.sidor_ptr + 2
-    
+
     operators["patrol"] = xr_actions_id.sidor_act_ptr
     operators["escape"] = xr_actions_id.sidor_act_ptr + 1
     operators["raid"]   = xr_actions_id.sidor_act_ptr + 2
-    
+
     local manager = npc:motivation_action_manager()
 
     manager:add_evaluator (properties["enabled"], this.evaluator_enabled ("comm_ptr_enabled", storage))
     manager:add_evaluator (properties["escape"], this.evaluator_escape ("comm_ptr_escape_enabled", storage))
     manager:add_evaluator (properties["raid"], this.evaluator_raid ("comm_ptr_raid_enabled", storage))
-    
+
     local action = this.action_patrol ("patrol", storage)
     action:add_precondition (world_property(stalker_ids.property_alive, true))
     action:add_precondition (world_property(stalker_ids.property_enemy, false))
@@ -437,7 +437,7 @@ function add_to_binder (npc, ini, scheme, section, storage)
     manager:add_action (operators["patrol"], action)
 
     xr_logic.subscribe_action_for_events (npc, storage, action)
-    
+
     action = this.action_escape ("escape", storage)
     action:add_precondition (world_property(stalker_ids.property_alive, true))
     action:add_precondition (world_property(stalker_ids.property_enemy, false))
@@ -456,32 +456,32 @@ function add_to_binder (npc, ini, scheme, section, storage)
     xr_motivator.addCommonPrecondition(action_new)
     action_new:add_effect (world_property(properties["raid"], false))
     manager:add_action (operators["raid"], action_new)
-    
+
     xr_logic.subscribe_action_for_events (npc, storage, action_new)
-    
+
     action = manager:action (xr_actions_id.alife)
     action:add_precondition (world_property(properties["enabled"], false))
-    
+
     --this.set_patrol (npc)
 
 end
 ----------------------------------------------------------------------------------------
 function set_scheme (npc, ini, scheme, section, gulag_name)
 
-	local st = xr_logic.assign_storage_and_bind (npc, ini, scheme, section)
-	st.logic = xr_logic.cfg_get_switch_conditions (ini, section, npc)
-	st.patrol_path  = utils.cfg_get_string (ini, section, "patrol_path", npc, true,  gulag_name)
-	st.patrol_look  = utils.cfg_get_string (ini, section, "patrol_look", npc, false, gulag_name)
-	st.escape_path  = utils.cfg_get_string (ini, section, "escape_path", npc, false, gulag_name)
-	st.raid_enabled = utils.cfg_get_bool   (ini, section, "raid_enabled",npc, false)
-	st.raid_path    = utils.cfg_get_string (ini, section, "raid_path",   npc, false, gulag_name)
-	st.raid_look    = utils.cfg_get_string (ini, section, "raid_look",   npc, false, gulag_name)
-	st.team         = utils.cfg_get_string (ini, section, "team",        npc, false, gulag_name)
+    local st = xr_logic.assign_storage_and_bind (npc, ini, scheme, section)
+    st.logic = xr_logic.cfg_get_switch_conditions (ini, section, npc)
+    st.patrol_path  = utils.cfg_get_string (ini, section, "patrol_path", npc, true,  gulag_name)
+    st.patrol_look  = utils.cfg_get_string (ini, section, "patrol_look", npc, false, gulag_name)
+    st.escape_path  = utils.cfg_get_string (ini, section, "escape_path", npc, false, gulag_name)
+    st.raid_enabled = utils.cfg_get_bool   (ini, section, "raid_enabled",npc, false)
+    st.raid_path    = utils.cfg_get_string (ini, section, "raid_path",   npc, false, gulag_name)
+    st.raid_look    = utils.cfg_get_string (ini, section, "raid_look",   npc, false, gulag_name)
+    st.team         = utils.cfg_get_string (ini, section, "team",        npc, false, gulag_name)
 
-	st.path_walk_info = nil -- Будут инициализированы в reset(), сейчас пути могут еще
-	st.path_look_info = nil -- быть не загружены.
-	st.raid_walk_info = nil
-	st.raid_look_info = nil
-	st.raid_process = false
+    st.path_walk_info = nil -- Р‘СѓРґСѓС‚ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅС‹ РІ reset(), СЃРµР№С‡Р°СЃ РїСѓС‚Рё РјРѕРіСѓС‚ РµС‰Рµ
+    st.path_look_info = nil -- Р±С‹С‚СЊ РЅРµ Р·Р°РіСЂСѓР¶РµРЅС‹.
+    st.raid_walk_info = nil
+    st.raid_look_info = nil
+    st.raid_process = false
 end
 

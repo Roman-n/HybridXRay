@@ -6,16 +6,16 @@ function se_heli:__init (section) super (section)
 end
 
 function se_heli:on_register()
-	cse_alife_helicopter.on_register(self)
-	-- Проверяем кастомдату обьекта на наличие стори айди.
-	story_objects.check_spawn_ini_for_story_id(self)
+    cse_alife_helicopter.on_register(self)
+    -- РџСЂРѕРІРµСЂСЏРµРј РєР°СЃС‚РѕРјРґР°С‚Сѓ РѕР±СЊРµРєС‚Р° РЅР° РЅР°Р»РёС‡РёРµ СЃС‚РѕСЂРё Р°Р№РґРё.
+    story_objects.check_spawn_ini_for_story_id(self)
 end
 
 function se_heli:on_unregister()
-	unregister_story_object_by_id(self.id)
-	cse_alife_helicopter.on_unregister(self)
+    unregister_story_object_by_id(self.id)
+    cse_alife_helicopter.on_unregister(self)
 end
 
 function se_heli:keep_saved_data_anyway()
-	return true
+    return true
 end

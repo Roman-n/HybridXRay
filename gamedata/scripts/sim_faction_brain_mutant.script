@@ -1,122 +1,122 @@
 --'******************************************************
---'*	Îáúåêò ãðóïïèðîâêè.
+--'*    ÐžÐ±ÑŠÐµÐºÑ‚ Ð³Ñ€ÑƒÐ¿Ð¿Ð¸Ñ€Ð¾Ð²ÐºÐ¸.
 --'******************************************************
 
--- Â äíåâíîå âðåìÿ ñòàðàåòñÿ äåðæàòüñÿ ñâîåãî ëîãîâà
--- Â íî÷íîå âðåìÿ íàïàäàåò íà îòðÿäû ñòàëêåðîâ
+-- Ð’ Ð´Ð½ÐµÐ²Ð½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ ÑÑ‚Ð°Ñ€Ð°ÐµÑ‚ÑÑ Ð´ÐµÑ€Ð¶Ð°Ñ‚ÑŒÑÑ ÑÐ²Ð¾ÐµÐ³Ð¾ Ð»Ð¾Ð³Ð¾Ð²Ð°
+-- Ð’ Ð½Ð¾Ñ‡Ð½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ Ð½Ð°Ð¿Ð°Ð´Ð°ÐµÑ‚ Ð½Ð° Ð¾Ñ‚Ñ€ÑÐ´Ñ‹ ÑÑ‚Ð°Ð»ÐºÐµÑ€Ð¾Ð²
 
 class "faction_brain_mutant"
 function faction_brain_mutant:__init(faction)
-	self.faction = faction
+    self.faction = faction
 
-	self.human = false	
-	self.use_issue_order = false
-	self.use_cover_attack = false
-	
-	if self.faction.player_name == "monster" then
-		self.use_delay_attack = true
-		self.use_prepare_phase = false		
-	else
-		self.use_delay_attack = false
-		self.use_prepare_phase = true
-	end
-	
-	self.use_counter_attack = false
+    self.human = false
+    self.use_issue_order = false
+    self.use_cover_attack = false
+
+    if self.faction.player_name == "monster" then
+        self.use_delay_attack = true
+        self.use_prepare_phase = false
+    else
+        self.use_delay_attack = false
+        self.use_prepare_phase = true
+    end
+
+    self.use_counter_attack = false
 end
 
 function faction_brain_mutant:calculate_current_expansion()
-	local faction = self.faction
-	--callstack()
-	--printf("faction [%s] brain update %s", faction.player_name, relative_power)
-	for k, expansion in pairs(faction.expansion_level) do
-		--printf("check %s, current %s", k, faction.current_expansion_level)
-		if faction.current_expansion_level > k then
-			-- Åñëè ïðîâåðÿåìûé óðîâåíü ýêñïàíñèè íèæå, ÷åì òåêóùèé
-			local cond_valid = xr_logic.pick_section_from_condlist(db.actor, self, expansion.precondition_cond) == "true"
-			
-			-- Ïðîâåðÿåì âñå ëè óñëîâèÿ âûïîëíÿþòñÿ
-			if not cond_valid then
-				faction.current_expansion_level = k
-				break
-			end
+    local faction = self.faction
+    --callstack()
+    --printf("faction [%s] brain update %s", faction.player_name, relative_power)
+    for k, expansion in pairs(faction.expansion_level) do
+        --printf("check %s, current %s", k, faction.current_expansion_level)
+        if faction.current_expansion_level > k then
+            -- Ð•ÑÐ»Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼Ñ‹Ð¹ ÑƒÑ€Ð¾Ð²ÐµÐ½ÑŒ ÑÐºÑÐ¿Ð°Ð½ÑÐ¸Ð¸ Ð½Ð¸Ð¶Ðµ, Ñ‡ÐµÐ¼ Ñ‚ÐµÐºÑƒÑ‰Ð¸Ð¹
+            local cond_valid = xr_logic.pick_section_from_condlist(db.actor, self, expansion.precondition_cond) == "true"
 
-		elseif faction.current_expansion_level == k then
-			-- Åñëè ïðîâåðÿåìûé óðîâåíü ðàâåí òåêóùåìó.
-			-- Ïðîâåðÿåì, âñå ëè óñëîâèÿ âûïîëíÿþòñÿ.
-			local cond_valid = xr_logic.pick_section_from_condlist(db.actor, self, expansion.precondition_cond) == "true"
-			
-			if not cond_valid then
-				-- Åñëè íå âûïîëíÿþòñÿ - ïðåêðàùàåì ðàáîòó öèêëà.
-				break
-			end
-		else
-			-- Åñëè ïðîâåðÿåìûé óðîâåíü âûøå òåêóùåãî.
-			faction.current_expansion_level = k
-			break
-		end
-	end
-	
-	self:calculate_expansion_targets()
+            -- ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ð²ÑÐµ Ð»Ð¸ ÑƒÑÐ»Ð¾Ð²Ð¸Ñ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÑŽÑ‚ÑÑ
+            if not cond_valid then
+                faction.current_expansion_level = k
+                break
+            end
+
+        elseif faction.current_expansion_level == k then
+            -- Ð•ÑÐ»Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼Ñ‹Ð¹ ÑƒÑ€Ð¾Ð²ÐµÐ½ÑŒ Ñ€Ð°Ð²ÐµÐ½ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ¼Ñƒ.
+            -- ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼, Ð²ÑÐµ Ð»Ð¸ ÑƒÑÐ»Ð¾Ð²Ð¸Ñ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÑŽÑ‚ÑÑ.
+            local cond_valid = xr_logic.pick_section_from_condlist(db.actor, self, expansion.precondition_cond) == "true"
+
+            if not cond_valid then
+                -- Ð•ÑÐ»Ð¸ Ð½Ðµ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÑŽÑ‚ÑÑ - Ð¿Ñ€ÐµÐºÑ€Ð°Ñ‰Ð°ÐµÐ¼ Ñ€Ð°Ð±Ð¾Ñ‚Ñƒ Ñ†Ð¸ÐºÐ»Ð°.
+                break
+            end
+        else
+            -- Ð•ÑÐ»Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼Ñ‹Ð¹ ÑƒÑ€Ð¾Ð²ÐµÐ½ÑŒ Ð²Ñ‹ÑˆÐµ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾.
+            faction.current_expansion_level = k
+            break
+        end
+    end
+
+    self:calculate_expansion_targets()
 end
---' Ïðîñ÷åò ìîçãîâ.
+--' ÐŸÑ€Ð¾ÑÑ‡ÐµÑ‚ Ð¼Ð¾Ð·Ð³Ð¾Ð².
 function faction_brain_mutant:calculate_expansion_targets()
-	local faction = self.faction
-	faction.target_smart_value = {}
+    local faction = self.faction
+    faction.target_smart_value = {}
 
-	printf("faction [%s] brain update", faction.player_name)
-	if faction.current_expansion_level == 0 then
-		return
-	end
+    printf("faction [%s] brain update", faction.player_name)
+    if faction.current_expansion_level == 0 then
+        return
+    end
 
 
---	if level.name() ~= nil then
---		if (level.get_time_hours() >= 5 and level.get_time_hours() < 21) then
---			self:register_day_point()
---		else
-			self:register_night_point()		
---		end
---	end
-	
-	--' Ñ÷èòàåì ìàêñèìàëüíûé ïîòîëîê îòðÿäîâ.
-	faction:calculate_total_squads()
-	-- Ðàçäàåì öåëè
-	faction:calculate_squad_tasks()
+--  if level.name() ~= nil then
+--      if (level.get_time_hours() >= 5 and level.get_time_hours() < 21) then
+--          self:register_day_point()
+--      else
+            self:register_night_point()
+--      end
+--  end
+
+    --' Ð¡Ñ‡Ð¸Ñ‚Ð°ÐµÐ¼ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð¿Ð¾Ñ‚Ð¾Ð»Ð¾Ðº Ð¾Ñ‚Ñ€ÑÐ´Ð¾Ð².
+    faction:calculate_total_squads()
+    -- Ð Ð°Ð·Ð´Ð°ÐµÐ¼ Ñ†ÐµÐ»Ð¸
+    faction:calculate_squad_tasks()
 end
--- Íî÷íîé âûáîð ðàáîò. Îõîòèìñÿ íà ñòàëêåðîâ
+-- ÐÐ¾Ñ‡Ð½Ð¾Ð¹ Ð²Ñ‹Ð±Ð¾Ñ€ Ñ€Ð°Ð±Ð¾Ñ‚. ÐžÑ…Ð¾Ñ‚Ð¸Ð¼ÑÑ Ð½Ð° ÑÑ‚Ð°Ð»ÐºÐµÑ€Ð¾Ð²
 function faction_brain_mutant:register_night_point()
-	--printf("NIGHT")
-	-- Èòåðèðóåìñÿ ïî ñìàðòàì, ãäå åñòü îòðÿäû - ÷åëîâåêè.
-	for k,v in pairs(self.faction.board.smarts) do
-		if v.smrt.player_name ~= "none" and self.faction.board.players[v.smrt.player_name].brain.human == true then
-			-- Ïî êàæäîé òî÷êå ñîçäàåì çàäàíèå.
-			self:register_target_point(v.smrt)
-		end	
-	end	
+    --printf("NIGHT")
+    -- Ð˜Ñ‚ÐµÑ€Ð¸Ñ€ÑƒÐµÐ¼ÑÑ Ð¿Ð¾ ÑÐ¼Ð°Ñ€Ñ‚Ð°Ð¼, Ð³Ð´Ðµ ÐµÑÑ‚ÑŒ Ð¾Ñ‚Ñ€ÑÐ´Ñ‹ - Ñ‡ÐµÐ»Ð¾Ð²ÐµÐºÐ¸.
+    for k,v in pairs(self.faction.board.smarts) do
+        if v.smrt.player_name ~= "none" and self.faction.board.players[v.smrt.player_name].brain.human == true then
+            -- ÐŸÐ¾ ÐºÐ°Ð¶Ð´Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐµ ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ Ð·Ð°Ð´Ð°Ð½Ð¸Ðµ.
+            self:register_target_point(v.smrt)
+        end
+    end
 end
--- Äíåâíîé âûáîð ðàáîò. Òÿãîòååì ê ëîãîâó.
+-- Ð”Ð½ÐµÐ²Ð½Ð¾Ð¹ Ð²Ñ‹Ð±Ð¾Ñ€ Ñ€Ð°Ð±Ð¾Ñ‚. Ð¢ÑÐ³Ð¾Ñ‚ÐµÐµÐ¼ Ðº Ð»Ð¾Ð³Ð¾Ð²Ñƒ.
 function faction_brain_mutant:register_day_point()
-	--printf("DAY")
-	for k,v in pairs(self.faction.board.mutant_lair) do
-		self:register_target_point(self.faction.board.smarts[k].smrt)	
-	end
+    --printf("DAY")
+    for k,v in pairs(self.faction.board.mutant_lair) do
+        self:register_target_point(self.faction.board.smarts[k].smrt)
+    end
 end
 
--- Ðåãèñòðèò òàðãåò ñìàðò. Ïðè ýòîì ìîæåò èçìåíèòü åãî êàïàñèòè
+-- Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð¸Ñ‚ Ñ‚Ð°Ñ€Ð³ÐµÑ‚ ÑÐ¼Ð°Ñ€Ñ‚. ÐŸÑ€Ð¸ ÑÑ‚Ð¾Ð¼ Ð¼Ð¾Ð¶ÐµÑ‚ Ð¸Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ ÐµÐ³Ð¾ ÐºÐ°Ð¿Ð°ÑÐ¸Ñ‚Ð¸
 function faction_brain_mutant:register_target_point(smart_obj)
-	if not sim_board.is_point_avail(smart_obj, self.faction.player_name) then
-		return
-	end
-				
-	local point_capacity = smart_obj.squad_capacity
-	
-	if smart_obj.player_name == self.faction.player_name or smart_obj.player_name == "none" then
-		-- Åñëè òî÷êà - ìåñòî ïîÿâëåíèÿ îòðÿäà, òî îñòàâëÿåì îêîøêî â 1, ÷òîáû ìîã ïîÿâèòüñÿ íîâûé îòðÿä.
-		if smart_obj.respawn_sector ~= nil then
-			point_capacity = point_capacity - 1
-		end
-	end
-	-- Ñïåöèàëüíî óâåëè÷èâàåì êàïàñèòè, ÷òîáû äàæå åñëè â ëîãîâå íåò ìåñò - ìîíñòðû òÿãîòåëè ê ëîãîâó.
-	self.faction.target_smart_value[smart_obj.id] = {smart = smart_obj, cap = 2*point_capacity, num = 0, smart_name = smart_obj:name(), smart_id = smart_obj.id}
-	
-	--printf("register target point %s", smart_obj:name())
+    if not sim_board.is_point_avail(smart_obj, self.faction.player_name) then
+        return
+    end
+
+    local point_capacity = smart_obj.squad_capacity
+
+    if smart_obj.player_name == self.faction.player_name or smart_obj.player_name == "none" then
+        -- Ð•ÑÐ»Ð¸ Ñ‚Ð¾Ñ‡ÐºÐ° - Ð¼ÐµÑÑ‚Ð¾ Ð¿Ð¾ÑÐ²Ð»ÐµÐ½Ð¸Ñ Ð¾Ñ‚Ñ€ÑÐ´Ð°, Ñ‚Ð¾ Ð¾ÑÑ‚Ð°Ð²Ð»ÑÐµÐ¼ Ð¾ÐºÐ¾ÑˆÐºÐ¾ Ð² 1, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¼Ð¾Ð³ Ð¿Ð¾ÑÐ²Ð¸Ñ‚ÑŒÑÑ Ð½Ð¾Ð²Ñ‹Ð¹ Ð¾Ñ‚Ñ€ÑÐ´.
+        if smart_obj.respawn_sector ~= nil then
+            point_capacity = point_capacity - 1
+        end
+    end
+    -- Ð¡Ð¿ÐµÑ†Ð¸Ð°Ð»ÑŒÐ½Ð¾ ÑƒÐ²ÐµÐ»Ð¸Ñ‡Ð¸Ð²Ð°ÐµÐ¼ ÐºÐ°Ð¿Ð°ÑÐ¸Ñ‚Ð¸, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð´Ð°Ð¶Ðµ ÐµÑÐ»Ð¸ Ð² Ð»Ð¾Ð³Ð¾Ð²Ðµ Ð½ÐµÑ‚ Ð¼ÐµÑÑ‚ - Ð¼Ð¾Ð½ÑÑ‚Ñ€Ñ‹ Ñ‚ÑÐ³Ð¾Ñ‚ÐµÐ»Ð¸ Ðº Ð»Ð¾Ð³Ð¾Ð²Ñƒ.
+    self.faction.target_smart_value[smart_obj.id] = {smart = smart_obj, cap = 2*point_capacity, num = 0, smart_name = smart_obj:name(), smart_id = smart_obj.id}
+
+    --printf("register target point %s", smart_obj:name())
 end

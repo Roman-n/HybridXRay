@@ -1,8 +1,8 @@
 --'******************************************************
---'*	Биндер объекта группировки.
+--'*    Р‘РёРЅРґРµСЂ РѕР±СЉРµРєС‚Р° РіСЂСѓРїРїРёСЂРѕРІРєРё.
 --'******************************************************
 function bind(obj)
-	obj:bind_object(faction_binder(obj))
+    obj:bind_object(faction_binder(obj))
 end
 
 class "faction_binder" (object_binder)
@@ -11,14 +11,14 @@ function faction_binder:__init(obj) super(obj)
 end
 
 function faction_binder:net_spawn(server_object)
-	if not object_binder.net_spawn(self, server_object) then
-		return false
-	end
-	--' получить ссылку на настоящий серверный объект
-	self.faction = alife():object(self.object:id())
-	return true
+    if not object_binder.net_spawn(self, server_object) then
+        return false
+    end
+    --' РїРѕР»СѓС‡РёС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° РЅР°СЃС‚РѕСЏС‰РёР№ СЃРµСЂРІРµСЂРЅС‹Р№ РѕР±СЉРµРєС‚
+    self.faction = alife():object(self.object:id())
+    return true
 end
 function faction_binder:update(delta)
-	object_binder.update(self, delta)
-	self.faction:update()
+    object_binder.update(self, delta)
+    self.faction:update()
 end

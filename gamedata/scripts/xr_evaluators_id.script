@@ -1,10 +1,10 @@
 ----------------------------------------------------------------------------------------------------------------------
---  Àéäèøíèêè ıâàëóàòîğîâ
+--  ĞĞ¹Ğ´Ğ¸ÑˆĞ½Ğ¸ĞºĞ¸ ÑĞ²Ğ°Ğ»ÑƒĞ°Ñ‚Ğ¾Ñ€Ğ¾Ğ²
 ----------------------------------------------------------------------------------------------------------------------
 
 local id_start = stalker_ids.property_script
 log("PROPERTY_BASE "..tostring(id_start))
--- ıâàëóàòîğû Ãëîáàëüíûå
+-- ÑĞ²Ğ°Ğ»ÑƒĞ°Ñ‚Ğ¾Ñ€Ñ‹ Ğ“Ğ»Ğ¾Ğ±Ğ°Ğ»ÑŒĞ½Ñ‹Ğµ
 global_evaluators          = id_start
 script_evaluator           = id_start + 1
 final_trade_init           = id_start + 2
@@ -12,15 +12,15 @@ state_change               = id_start + 3
 position                   = id_start + 4
 reaction                   = id_start + 5
 danger                     = id_start + 6
-reached_task_location  	   = id_start + 7
-corpse_exist  	   		   = id_start + 50
-wounded_exist  	   		   = id_start + 55
+reached_task_location      = id_start + 7
+corpse_exist               = id_start + 50
+wounded_exist              = id_start + 55
 state_mgr                  = id_start + 100
---bloodsucker_reaction	   = id_start + 200
---actor_reaction		   = id_start + 300
-smartcover_action		   = id_start + 400
-animpoint_property		   = id_start + 500
-test_reaction			   = id_start + 600
+--bloodsucker_reaction     = id_start + 200
+--actor_reaction           = id_start + 300
+smartcover_action          = id_start + 400
+animpoint_property         = id_start + 500
+test_reaction              = id_start + 600
 
 stohe_tradeseller_base  = id_start + 1000
 stohe_kamp_base         = id_start + 1020
@@ -33,8 +33,8 @@ stohe_camper_base       = id_start + 1080
 assistance              = id_start + 1090
 death                   = id_start + 1100
 script_combat           = id_start + 1110
-abuse_base				= id_start + 1120
-post_combat				= id_start + 1130
+abuse_base              = id_start + 1120
+post_combat             = id_start + 1130
 
 
 sidor_patrol_base_property          = id_start + 2000
@@ -100,11 +100,11 @@ jon_sniper_see_monster  = id_start + 5011           --5030
 jon_sniper_see_enemy    = id_start + 5012           --5031
 jon_sniper_enemy_near   = id_start + 5013           --5034
 jon_sniper_enemy_is  = id_start + 5014           --5035
---+5 çàíÿòî
+--+5 Ğ·Ğ°Ğ½ÑÑ‚Ğ¾
 
 jon_outcast    = id_start + 5020
 jon_outcast_replics     = id_start + 5021
 
 narrator_evaluators = id_start + 6000
 
-peace_sh_base         				= id_start + 7000
+peace_sh_base                       = id_start + 7000

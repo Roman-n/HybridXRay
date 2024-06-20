@@ -30,10 +30,10 @@ function set_scheme(obj, ini, scheme, section, gulag_name)
 -- standart lines: assigning new storage and binding our space restrictor
     local st = xr_logic.assign_storage_and_bind(obj, ini, scheme, section)
     st.logic = xr_logic.cfg_get_switch_conditions(ini, section, obj)
-	
-	if db.storage.silence_zone_table == nil then
-		db.storage.silence_zone_table = {}
-	end
---' записываем все обькты с данной схемой в таблицу
-	db.storage.silence_zone_table[obj:id()] = obj:name()
+
+    if db.storage.silence_zone_table == nil then
+        db.storage.silence_zone_table = {}
+    end
+--' Р·Р°РїРёСЃС‹РІР°РµРј РІСЃРµ РѕР±СЊРєС‚С‹ СЃ РґР°РЅРЅРѕР№ СЃС…РµРјРѕР№ РІ С‚Р°Р±Р»РёС†Сѓ
+    db.storage.silence_zone_table[obj:id()] = obj:name()
 end

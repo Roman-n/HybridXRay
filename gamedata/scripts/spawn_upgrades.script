@@ -100,27 +100,27 @@ toolkit_1 = 1,
 toolkit_2 = 1,
 toolkit_3 = 1,
 vodka = 10,
-					}
+                    }
 
-	local actor = db.actor
-	local actor_id = actor:id()
-	local actor_position = actor:position()
+    local actor = db.actor
+    local actor_id = actor:id()
+    local actor_position = actor:position()
 
-	local function drop_item(item)
-		if item ~= nil then
-			alife():release(alife():object(item:id()), true)
-		end
-	end
-	
-	db.actor:inventory_for_each(drop_item)
-	
-	if db.actor:money() < 999999 then
-		db.actor:give_money(999999)
-	end
-	
-	for k,v in pairs(items_table) do
-		for j = 1, v do
-			alife():create(k, actor_position, 0, 0, actor_id)
-		end
-	end
+    local function drop_item(item)
+        if item ~= nil then
+            alife():release(alife():object(item:id()), true)
+        end
+    end
+
+    db.actor:inventory_for_each(drop_item)
+
+    if db.actor:money() < 999999 then
+        db.actor:give_money(999999)
+    end
+
+    for k,v in pairs(items_table) do
+        for j = 1, v do
+            alife():create(k, actor_position, 0, 0, actor_id)
+        end
+    end
 end

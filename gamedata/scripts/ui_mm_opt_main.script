@@ -169,8 +169,8 @@ function options_dialog:OnBtnKeybDefault()
 end
 
 function options_dialog:OnPresetChanged()
-    local opt                   = COptionsManager()
-    opt:SetCurrentValues        ("mm_opt_video_adv")
+    local opt                = COptionsManager()
+    opt:SetCurrentValues     ("mm_opt_video_adv")
 end
 
 function options_dialog:OnBtnDefGraph()

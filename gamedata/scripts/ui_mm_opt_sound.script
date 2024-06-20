@@ -8,89 +8,89 @@ end
 
 function opt_sound:InitControls(x, y, xml, handler)
 
-	self:SetWndPos(vector2():set(x,y))
-	self:SetWndSize(vector2():set(738,416))
-	self:SetAutoDelete(true)
-	
-	--self.bk = xml:InitFrame("frame", self)
-	
-	xml:InitStatic("tab_sound:cap_mastervolume", self)
-	xml:InitStatic("tab_sound:cap_musicvolume", self)
+    self:SetWndPos(vector2():set(x,y))
+    self:SetWndSize(vector2():set(738,416))
+    self:SetAutoDelete(true)
 
-	xml:InitStatic("tab_sound:cap_check_eax", self)
-	xml:InitStatic("tab_sound:cap_check_dynamic_music",	self)
+    --self.bk = xml:InitFrame("frame", self)
 
-	xml:InitCheck("tab_sound:check_eax", self)
-	xml:InitCheck("tab_sound:check_dynamic_music", self)
+    xml:InitStatic("tab_sound:cap_mastervolume", self)
+    xml:InitStatic("tab_sound:cap_musicvolume", self)
 
-	xml:InitTrackBar("tab_sound:track_musicvolume", self)
-	xml:InitTrackBar("tab_sound:track_mastervolume", self)
+    xml:InitStatic("tab_sound:cap_check_eax", self)
+    xml:InitStatic("tab_sound:cap_check_dynamic_music", self)
 
-	xml:InitStatic("tab_sound:cap_snd_device", self)
-	xml:InitComboBox("tab_sound:list_snd_device", self)
+    xml:InitCheck("tab_sound:check_eax", self)
+    xml:InitCheck("tab_sound:check_dynamic_music", self)
 
-	
-	-- ïğîâåğÿåì ñóùåñòâîâàíèå êîìàíäû, ÷òî áû íå êëèíèòü ìåíş â ñëó÷àå ÷åãî
-	if get_console():get_token("snd_crossfeed") then
-		local xml_efx = CScriptXmlInit()
-		xml_efx:ParseFile("ui_mm_opt_efx.xml")
-    
-		xml_efx:InitStatic("tab_sound_efx:cap_crossfeed", self)
-		self.crossfeed = xml_efx:InitComboBox("tab_sound_efx:list_crossfeed", self)
-		xml_efx:InitStatic("tab_sound_efx:cap_resampler", self)
-		xml_efx:InitComboBox("tab_sound_efx:list_resampler", self)
-		xml_efx:InitStatic("tab_sound_efx:cap_stereomode", self)
-		xml_efx:InitComboBox("tab_sound_efx:list_stereomode", self)
+    xml:InitTrackBar("tab_sound:track_musicvolume", self)
+    xml:InitTrackBar("tab_sound:track_mastervolume", self)
 
-		xml_efx:InitStatic("tab_sound_efx:cap_hrtf", self)
-		self.hrtf = xml_efx:InitCheck("tab_sound_efx:check_hrtf", self)
+    xml:InitStatic("tab_sound:cap_snd_device", self)
+    xml:InitComboBox("tab_sound:list_snd_device", self)
 
-		self:RegisterCallback(self.hrtf, "tab_sound_check_hrtf", ui_events.BUTTON_CLICKED, self.OnClickHRTF, handler)
-		self:RegisterCallback(self.crossfeed, "tab_sound_check_crossfeed", ui_events.LIST_ITEM_SELECT, self.OnClickCrossfeed, handler)	
 
-		self.OShow = self.Show	
-		self.Show = self.HShow
-	end
+    -- Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€ÑĞµĞ¼ ÑÑƒÑ‰ĞµÑÑ‚Ğ²Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ñ‹, Ñ‡Ñ‚Ğ¾ Ğ±Ñ‹ Ğ½Ğµ ĞºĞ»Ğ¸Ğ½Ğ¸Ñ‚ÑŒ Ğ¼ĞµĞ½Ñ Ğ² ÑĞ»ÑƒÑ‡Ğ°Ğµ Ñ‡ĞµĞ³Ğ¾
+    if get_console():get_token("snd_crossfeed") then
+        local xml_efx = CScriptXmlInit()
+        xml_efx:ParseFile("ui_mm_opt_efx.xml")
+
+        xml_efx:InitStatic("tab_sound_efx:cap_crossfeed", self)
+        self.crossfeed = xml_efx:InitComboBox("tab_sound_efx:list_crossfeed", self)
+        xml_efx:InitStatic("tab_sound_efx:cap_resampler", self)
+        xml_efx:InitComboBox("tab_sound_efx:list_resampler", self)
+        xml_efx:InitStatic("tab_sound_efx:cap_stereomode", self)
+        xml_efx:InitComboBox("tab_sound_efx:list_stereomode", self)
+
+        xml_efx:InitStatic("tab_sound_efx:cap_hrtf", self)
+        self.hrtf = xml_efx:InitCheck("tab_sound_efx:check_hrtf", self)
+
+        self:RegisterCallback(self.hrtf, "tab_sound_check_hrtf", ui_events.BUTTON_CLICKED, self.OnClickHRTF, handler)
+        self:RegisterCallback(self.crossfeed, "tab_sound_check_crossfeed", ui_events.LIST_ITEM_SELECT, self.OnClickCrossfeed, handler)
+
+        self.OShow = self.Show
+        self.Show = self.HShow
+    end
 end
 
 function opt_sound:RegisterCallback(obj, eventString, event, callback, that)
-	that:Register(obj, eventString)
-	that:AddCallback(eventString, event, callback, that)
+    that:Register(obj, eventString)
+    that:AddCallback(eventString, event, callback, that)
 end
 
 function opt_sound:HShow(b)
-	if b then
-		self:OnClickHRTF()
-		self:OnClickCrossfeed()
-		
-		self:OShow(true)
-	else
-		self:OShow(false)
-	end	
+    if b then
+        self:OnClickHRTF()
+        self:OnClickCrossfeed()
+
+        self:OShow(true)
+    else
+        self:OShow(false)
+    end
 end
 
 function opt_sound:OnClickHRTF()
-	if self.dlg_sound then 
-		self = self.dlg_sound
-	end
+    if self.dlg_sound then
+        self = self.dlg_sound
+    end
 
-	if self.hrtf:GetCheck() then
-		self.crossfeed:Enable(false)
-		--self.crossfeed:SetCurrentOptValue(false)
-	else
-		self.crossfeed:Enable(true)
-	end
+    if self.hrtf:GetCheck() then
+        self.crossfeed:Enable(false)
+        --self.crossfeed:SetCurrentOptValue(false)
+    else
+        self.crossfeed:Enable(true)
+    end
 end
 
 function opt_sound:OnClickCrossfeed()
-	if self.dlg_sound then 
-		self = self.dlg_sound
-	end
-	
-	if self.crossfeed:CurrentID() > 0 then
-		self.hrtf:SetCheck(false)
-		self.hrtf:Enable(false)
-	else
-		self.hrtf:Enable(true)
-	end
+    if self.dlg_sound then
+        self = self.dlg_sound
+    end
+
+    if self.crossfeed:CurrentID() > 0 then
+        self.hrtf:SetCheck(false)
+        self.hrtf:Enable(false)
+    else
+        self.hrtf:Enable(true)
+    end
 end

@@ -1,126 +1,126 @@
 --'******************************************************
---'*	Реестр персонажей.
+--'*    Р РµРµСЃС‚СЂ РїРµСЂСЃРѕРЅР°Р¶РµР№.
 --'******************************************************
 
---' Таблица содержащая объекты и данные о них в формате:
+--' РўР°Р±Р»РёС†Р° СЃРѕРґРµСЂР¶Р°С‰Р°СЏ РѕР±СЉРµРєС‚С‹ Рё РґР°РЅРЅС‹Рµ Рѕ РЅРёС… РІ С„РѕСЂРјР°С‚Рµ:
 --' npc = { smart_id, squad_id, flags}
 local objects = {}
 
---' Таблица содержащая объекты сгрупированные по squad_id:
+--' РўР°Р±Р»РёС†Р° СЃРѕРґРµСЂР¶Р°С‰Р°СЏ РѕР±СЉРµРєС‚С‹ СЃРіСЂСѓРїРёСЂРѕРІР°РЅРЅС‹Рµ РїРѕ squad_id:
 local squad_objects = {}
 
---' Значения флагов:
---' alive - живой персонаж или мертвый
---' marked - помечен ли он мапспотом.
+--' Р—РЅР°С‡РµРЅРёСЏ С„Р»Р°РіРѕРІ:
+--' alive - Р¶РёРІРѕР№ РїРµСЂСЃРѕРЅР°Р¶ РёР»Рё РјРµСЂС‚РІС‹Р№
+--' marked - РїРѕРјРµС‡РµРЅ Р»Рё РѕРЅ РјР°РїСЃРїРѕС‚РѕРј.
 
---' Регистрация нового персонажа.
+--' Р РµРіРёСЃС‚СЂР°С†РёСЏ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.
 function register_object(obj)
-	if objects[obj.id] ~= nil then
-		abort("Object already exist in list [%s]", obj:name())
-	end
+    if objects[obj.id] ~= nil then
+        abort("Object already exist in list [%s]", obj:name())
+    end
 
-	objects[obj.id] = {smart_id = -1, squad_id = nil, flags = {}}
+    objects[obj.id] = {smart_id = -1, squad_id = nil, flags = {}}
 
-	objects[obj.id].flags.alive = obj:alive()
-	set_obj_squad(obj, -1)
+    objects[obj.id].flags.alive = obj:alive()
+    set_obj_squad(obj, -1)
 
-	show_object_spot(obj)
+    show_object_spot(obj)
 
-	--' ВРЕМЕННО. Здесь будем выбирать смарттеррейн.
-	local obj_ini = obj:spawn_ini()
-	local smart = utils.cfg_get_string(obj_ini, "logic", "smart_terrain", obj, false, "", "")
-	printf("SMART = %s", smart)
-	local smart_obj = sim_board.get_sim_board():get_smart_by_name(smart)
+    --' Р’Р Р•РњР•РќРќРћ. Р—РґРµСЃСЊ Р±СѓРґРµРј РІС‹Р±РёСЂР°С‚СЊ СЃРјР°СЂС‚С‚РµСЂСЂРµР№РЅ.
+    local obj_ini = obj:spawn_ini()
+    local smart = utils.cfg_get_string(obj_ini, "logic", "smart_terrain", obj, false, "", "")
+    printf("SMART = %s", smart)
+    local smart_obj = sim_board.get_sim_board():get_smart_by_name(smart)
 
-	if smart_obj == nil then
-		return
-	end
+    if smart_obj == nil then
+        return
+    end
 
-	printf("SMART_ID = %s ", smart_obj.id)
-	alife():object(smart_obj.id):register_npc(obj)
-	--obj.m_smart_terrain_id = tonumber(smart_id)
+    printf("SMART_ID = %s ", smart_obj.id)
+    alife():object(smart_obj.id):register_npc(obj)
+    --obj.m_smart_terrain_id = tonumber(smart_id)
 end
 
---' АнРегистрация персонажа.
+--' РђРЅР РµРіРёСЃС‚СЂР°С†РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
 function unregister_object(obj)
-	if objects[obj.id] == nil then
-		abort("Trying to unregister nil object [%s]", obj:name())
-	end
+    if objects[obj.id] == nil then
+        abort("Trying to unregister nil object [%s]", obj:name())
+    end
 
-	hide_object_spot(obj)
+    hide_object_spot(obj)
 
-	objects[obj.id] = nil
+    objects[obj.id] = nil
 end
 
---' Отметить объект как померший.
+--' РћС‚РјРµС‚РёС‚СЊ РѕР±СЉРµРєС‚ РєР°Рє РїРѕРјРµСЂС€РёР№.
 function object_die(obj)
-	objects[obj.id].flags.alive = false
+    objects[obj.id].flags.alive = false
 
-	hide_object_spot(obj)
+    hide_object_spot(obj)
 
-	--' Убрать объект из отряда.
-	local squad_id = objects[obj.id].squad_id
-	squad_objects[squad_id][obj.id] = nil
-	objects[obj.id].squad_id = nil
+    --' РЈР±СЂР°С‚СЊ РѕР±СЉРµРєС‚ РёР· РѕС‚СЂСЏРґР°.
+    local squad_id = objects[obj.id].squad_id
+    squad_objects[squad_id][obj.id] = nil
+    objects[obj.id].squad_id = nil
 
-	printf("Object %s died:", obj:name())
-	print_table(objects[obj.id])
+    printf("Object %s died:", obj:name())
+    print_table(objects[obj.id])
 end
 
---' Показать объект на карте
+--' РџРѕРєР°Р·Р°С‚СЊ РѕР±СЉРµРєС‚ РЅР° РєР°СЂС‚Рµ
 function show_object_spot(obj)
-	if objects[obj.id].flags.marked then
-		return
-	end
-	if not objects[obj.id].flags.alive then
-		return
-	end
+    if objects[obj.id].flags.marked then
+        return
+    end
+    if not objects[obj.id].flags.alive then
+        return
+    end
 
-	objects[obj.id].flags.marked = true
+    objects[obj.id].flags.marked = true
 
-	local community = getObjComunity(obj)
-	if(_G.dev_debug) then
-		level.map_add_object_spot(obj.id, "alife_presentation_"..community, obj:name())
-	end
+    local community = getObjComunity(obj)
+    if(_G.dev_debug) then
+        level.map_add_object_spot(obj.id, "alife_presentation_"..community, obj:name())
+    end
 end
 
---' Убрать объект с карты
+--' РЈР±СЂР°С‚СЊ РѕР±СЉРµРєС‚ СЃ РєР°СЂС‚С‹
 function hide_object_spot(obj)
-	if not objects[obj.id].flags.marked then
-		return
-	end
+    if not objects[obj.id].flags.marked then
+        return
+    end
 
-	objects[obj.id].flags.marked = false
+    objects[obj.id].flags.marked = false
 
-	local community = getObjComunity(obj)
-	if(_G.dev_debug) then
-		level.map_remove_object_spot(obj.id, "alife_presentation_"..community)
-	end 
+    local community = getObjComunity(obj)
+    if(_G.dev_debug) then
+        level.map_remove_object_spot(obj.id, "alife_presentation_"..community)
+    end
 end
 
---' Получить группировку объекта
+--' РџРѕР»СѓС‡РёС‚СЊ РіСЂСѓРїРїРёСЂРѕРІРєСѓ РѕР±СЉРµРєС‚Р°
 function getObjComunity(obj)
-	if obj:clsid() == clsid.script_stalker then
-		return obj:community()
-	else
-		return "monster"
-	end
+    if obj:clsid() == clsid.script_stalker then
+        return obj:community()
+    else
+        return "monster"
+    end
 end
 
 
---' Обнуление списка на создании игры.
+--' РћР±РЅСѓР»РµРЅРёРµ СЃРїРёСЃРєР° РЅР° СЃРѕР·РґР°РЅРёРё РёРіСЂС‹.
 function clear()
-	objects = {}
-	squad_objects = {}
+    objects = {}
+    squad_objects = {}
 end
 
 
 
---' Тестовые функции
+--' РўРµСЃС‚РѕРІС‹Рµ С„СѓРЅРєС†РёРё
 function print()
-	printf("Object list:")
-	print_table(objects)
-	printf("Squad list:")
-	print_table(squad_objects)
+    printf("Object list:")
+    print_table(objects)
+    printf("Squad list:")
+    print_table(squad_objects)
 
 end

@@ -1,44 +1,44 @@
 
---' Скриптовое положение у тела
---' мы уже находимся в необходимом состоянии?
+--' РЎРєСЂРёРїС‚РѕРІРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Сѓ С‚РµР»Р°
+--' РјС‹ СѓР¶Рµ РЅР°С…РѕРґРёРјСЃСЏ РІ РЅРµРѕР±С…РѕРґРёРјРѕРј СЃРѕСЃС‚РѕСЏРЅРёРё?
 class "eva_state_mgr_animstate" (property_evaluator)
 function eva_state_mgr_animstate:__init(name, st) super (nil, name)
-	self.st = st
+    self.st = st
 end
 function eva_state_mgr_animstate:evaluate()
-	return state_lib.states[self.st.target_state].animstate == self.st.animstate.states.current_state
+    return state_lib.states[self.st.target_state].animstate == self.st.animstate.states.current_state
 end
 
---' Заняли ли мы сейчас какое то скриптовое положение тела
+--' Р—Р°РЅСЏР»Рё Р»Рё РјС‹ СЃРµР№С‡Р°СЃ РєР°РєРѕРµ С‚Рѕ СЃРєСЂРёРїС‚РѕРІРѕРµ РїРѕР»РѕР¶РµРЅРёРµ С‚РµР»Р°
 class "eva_state_mgr_animstate_play_now" (property_evaluator)
 function eva_state_mgr_animstate_play_now:__init(name, st) super (nil, name)
-	self.st = st
+    self.st = st
 end
 function eva_state_mgr_animstate_play_now:evaluate()
-	return self.st.animstate.states.current_state ~= nil
+    return self.st.animstate.states.current_state ~= nil
 end
 
---' Мы не находимся ни в каком скриптовом положении тела
+--' РњС‹ РЅРµ РЅР°С…РѕРґРёРјСЃСЏ РЅРё РІ РєР°РєРѕРј СЃРєСЂРёРїС‚РѕРІРѕРј РїРѕР»РѕР¶РµРЅРёРё С‚РµР»Р°
 class "eva_state_mgr_animstate_idle_now" (property_evaluator)
 function eva_state_mgr_animstate_idle_now:__init(name, st) super (nil, name)
-	self.st = st
+    self.st = st
 end
 function eva_state_mgr_animstate_idle_now:evaluate()
-	return self.st.animstate.states.current_state == nil
+    return self.st.animstate.states.current_state == nil
 end
 
 
---' Мы начали отыгрывать анимацию и ждем коллбека от нее
+--' РњС‹ РЅР°С‡Р°Р»Рё РѕС‚С‹РіСЂС‹РІР°С‚СЊ Р°РЅРёРјР°С†РёСЋ Рё Р¶РґРµРј РєРѕР»Р»Р±РµРєР° РѕС‚ РЅРµРµ
 class "eva_state_mgr_animstate_locked" (property_evaluator)
 function eva_state_mgr_animstate_locked:__init(name, st) super (nil, name)
-	self.st = st
+    self.st = st
 end
 function eva_state_mgr_animstate_locked:evaluate()
---	if self.st.fast_set == true then
---		return false
---	end
-	
-	return self.st.animstate.states.anim_marker ~= nil and self.st.animstate.states.anim_marker ~= 3  -- MARKER_IDLE 
+--  if self.st.fast_set == true then
+--      return false
+--  end
+
+    return self.st.animstate.states.anim_marker ~= nil and self.st.animstate.states.anim_marker ~= 3  -- MARKER_IDLE
 end
 
 
@@ -46,41 +46,41 @@ end
 
 
 
---' Играем входную анимацию
+--' РРіСЂР°РµРј РІС…РѕРґРЅСѓСЋ Р°РЅРёРјР°С†РёСЋ
 class "act_state_mgr_animstate_start" (action_base)
 function act_state_mgr_animstate_start:__init(name, st) super (nil, name)
-	self.st = st
+    self.st = st
 end
 function act_state_mgr_animstate_start:initialize()
-	action_base.initialize(self)
-	
-	self.st.animstate:set_state(state_lib.states[self.st.target_state].animstate)
-	self.st.animstate:set_control()
+    action_base.initialize(self)
+
+    self.st.animstate:set_state(state_lib.states[self.st.target_state].animstate)
+    self.st.animstate:set_control()
 end
 function act_state_mgr_animstate_start:execute()
-	action_base.execute(self)
+    action_base.execute(self)
 end
 function act_state_mgr_animstate_start:finalize()
-	action_base.finalize(self)
+    action_base.finalize(self)
 end
 
 
---' Играем выходную анимацию
+--' РРіСЂР°РµРј РІС‹С…РѕРґРЅСѓСЋ Р°РЅРёРјР°С†РёСЋ
 class "act_state_mgr_animstate_stop" (action_base)
 function act_state_mgr_animstate_stop:__init(name, st) super (nil, name)
-	self.st = st
+    self.st = st
 end
 function act_state_mgr_animstate_stop:initialize()
-	action_base.initialize(self)
-	
-	self.st.animstate:set_state(nil, self.st.fast_set or state_lib.states[self.st.target_state].fast_set)
-	self.st.animstate:set_control()
+    action_base.initialize(self)
+
+    self.st.animstate:set_state(nil, self.st.fast_set or state_lib.states[self.st.target_state].fast_set)
+    self.st.animstate:set_control()
 end
 function act_state_mgr_animstate_stop:execute()
-	action_base.execute(self)
+    action_base.execute(self)
 end
 function act_state_mgr_animstate_stop:finalize()
-	action_base.finalize(self)
+    action_base.finalize(self)
 end
 
 

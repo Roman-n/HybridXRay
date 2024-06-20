@@ -1,4 +1,4 @@
- 
+
 List of the classes exported to LUA
 
 C++ class entity_memory_object : memory_object {
@@ -6,7 +6,7 @@ C++ class entity_memory_object : memory_object {
     property level_time;
     property object_info;
     property self_info;
-    
+
     function object(const entity_memory_object&);
 
 };
@@ -16,7 +16,7 @@ C++ class game_memory_object : memory_object {
     property level_time;
     property object_info;
     property self_info;
-    
+
     function object(const game_memory_object&);
 
 };
@@ -26,9 +26,9 @@ C++ class fcolor {
     property b;
     property g;
     property r;
-    
+
     fcolor ();
-    
+
     function set(number, number, number, number);
     function set(const fcolor&);
     function set(number);
@@ -37,7 +37,7 @@ C++ class fcolor {
 
 C++ class flags16 {
     flags16 ();
-    
+
     function zero();
 
     function assign(const flags16&);
@@ -72,7 +72,7 @@ C++ class flags16 {
 
 C++ class flags32 {
     flags32 ();
-    
+
     function zero();
 
     function assign(const flags32&);
@@ -114,9 +114,9 @@ C++ class matrix {
     property i;
     property j;
     property k;
-    
+
     matrix ();
-    
+
     function mk_xform(const struct _quaternion<number>&, const vector&);
 
     function set(const matrix&);
@@ -148,9 +148,9 @@ C++ class Frect {
     property x2;
     property y1;
     property y2;
-    
+
     Frect ();
-    
+
     function set(number, number, number, number);
 
 };
@@ -158,9 +158,9 @@ C++ class Frect {
 C++ class vector2 {
     property x;
     property y;
-    
+
     vector2 ();
-    
+
     function set(number, number);
     function set(const vector2&);
 
@@ -170,9 +170,9 @@ C++ class vector {
     property x;
     property y;
     property z;
-    
+
     vector ();
-    
+
     function set_length(number);
 
     function sub(number);
@@ -260,7 +260,7 @@ C++ class vector {
 
 C++ class spawn_story_ids {
     const INVALID_SPAWN_STORY_ID = -1;
-    
+
 };
 
 C++ class story_ids {
@@ -271,7 +271,7 @@ C++ class story_ids {
     const test_03 = 65002;
     const test_04 = 65003;
     const test_05 = 65004;
-    
+
 };
 
 C++ class callback {
@@ -311,7 +311,7 @@ C++ class callback {
     const weapon_no_ammo = 35;
     const zone_enter = 4;
     const zone_exit = 5;
-    
+
 };
 
 C++ class key_bindings {
@@ -357,7 +357,7 @@ C++ class key_bindings {
     const kWPN_NEXT = 29;
     const kWPN_RELOAD = 34;
     const kWPN_ZOOM = 31;
-    
+
 };
 
 C++ class GAME_TYPE {
@@ -366,7 +366,7 @@ C++ class GAME_TYPE {
     const eGameIDCaptureTheArtefact = 16;
     const eGameIDDeathmatch = 2;
     const eGameIDTeamDeathmatch = 4;
-    
+
 };
 
 C++ class game_difficulty {
@@ -374,7 +374,7 @@ C++ class game_difficulty {
     const novice = 0;
     const stalker = 1;
     const veteran = 2;
-    
+
 };
 
 C++ class snd_type {
@@ -424,7 +424,7 @@ C++ class snd_type {
     const world_object_break = 134218752;
     const world_object_collide = 134218240;
     const world_object_explode = 134217984;
-    
+
 };
 
 C++ class task {
@@ -434,7 +434,7 @@ C++ class task {
     const in_progress = 1;
     const storyline = 0;
     const task_dummy = 65535;
-    
+
 };
 
 C++ class ui_events {
@@ -466,31 +466,31 @@ C++ class ui_events {
     const WINDOW_MOUSE_MOVE = 6;
     const WINDOW_RBUTTON_DOWN = 1;
     const WINDOW_RBUTTON_UP = 4;
-    
+
 };
 
 C++ class GameGraph__LEVEL_MAP__value_type {
     property id;
     property level;
-    
+
 };
 
 C++ class MEMBERS__value_type {
     property id;
     property object;
-    
+
 };
 
 C++ class award_pair_t {
     property first;
     property second;
-    
+
 };
 
 C++ class best_scores_pair_t {
     property first;
     property second;
-    
+
 };
 
 C++ class hit_memory_object : entity_memory_object {
@@ -501,7 +501,7 @@ C++ class hit_memory_object : entity_memory_object {
     property level_time;
     property object_info;
     property self_info;
-    
+
     function object(const entity_memory_object&);
 
 };
@@ -724,7 +724,7 @@ C++ class clsid {
     const zone_radioactive = 212;
     const zone_rusty_hair = 213;
     const zone_torrid_s = 203;
-    
+
 };
 
 C++ class memory_info : visible_memory_object {
@@ -735,7 +735,7 @@ C++ class memory_info : visible_memory_object {
     property self_info;
     property sound_info;
     property visual_info;
-    
+
     function object(const game_memory_object&);
 
 };
@@ -746,12 +746,12 @@ C++ class MonsterSpace {
     const head_anim_kind = 3;
     const head_anim_normal = 0;
     const sound_script = 128;
-    
+
 };
 
 C++ class not_yet_visible_object {
     property value;
-    
+
     function object(const not_yet_visible_object&);
 
 };
@@ -770,13 +770,13 @@ C++ class CSightParams {
     const eSightTypePathDirection = 1;
     const eSightTypePosition = 3;
     const eSightTypeSearch = 6;
-    
+
     property m_object;
     property m_sight_type;
     property m_vector;
-    
+
     CSightParams ();
-    
+
 };
 
 C++ class sound_memory_object : game_memory_object {
@@ -785,7 +785,7 @@ C++ class sound_memory_object : game_memory_object {
     property object_info;
     property power;
     property self_info;
-    
+
     function object(const game_memory_object&);
 
     function type() const;
@@ -797,7 +797,7 @@ C++ class visible_memory_object : game_memory_object {
     property level_time;
     property object_info;
     property self_info;
-    
+
     function object(const game_memory_object&);
 
 };
@@ -830,17 +830,17 @@ C++ class color {
     property b;
     property g;
     property r;
-    
+
     color ();
     color (number, number, number);
-    
+
     function set(number, number, number);
 
 };
 
 C++ class SDrawStaticStruct {
     property m_endTime;
-    
+
     function wnd();
 
 };
@@ -848,10 +848,10 @@ C++ class SDrawStaticStruct {
 C++ class duality {
     property h;
     property v;
-    
+
     duality ();
     duality (number, number);
-    
+
     function set(number, number);
 
 };
@@ -859,17 +859,17 @@ C++ class duality {
 C++ class memory_object {
     property last_level_time;
     property level_time;
-    
+
 };
 
 C++ class noise {
     property fps;
     property grain;
     property intensity;
-    
+
     noise ();
     noise (number, number, number);
-    
+
     function set(number, number, number);
 
 };
@@ -877,7 +877,7 @@ C++ class noise {
 C++ class object_params {
     property level_vertex;
     property position;
-    
+
 };
 
 C++ class effector_params {
@@ -888,9 +888,9 @@ C++ class effector_params {
     property dual;
     property gray;
     property noise;
-    
+
     effector_params ();
-    
+
     function assign(effector_params*, effector_params*);
 
 };
@@ -898,13 +898,13 @@ C++ class effector_params {
 C++ class rotation {
     property pitch;
     property yaw;
-    
+
 };
 
 C++ class award_data {
     property m_count;
     property m_last_reward_date;
-    
+
 };
 
 C++ class fs_file {
@@ -914,7 +914,7 @@ C++ class fs_file {
     property size_compressed;
     property size_real;
     property vfs;
-    
+
 };
 
 C++ class DIK_keys {
@@ -1042,12 +1042,12 @@ C++ class DIK_keys {
     const MOUSE_1 = 337;
     const MOUSE_2 = 338;
     const MOUSE_3 = 339;
-    
+
 };
 
 C++ class color_animator {
     color_animator (string);
-    
+
     function calculate(number);
 
     function load(string);
@@ -1066,7 +1066,7 @@ C++ class profile {
 C++ class profile_timer {
     profile_timer ();
     profile_timer (profile_timer&);
-    
+
     operator +(const profile_timer&, profile_timer);
 
     function stop();
@@ -1084,19 +1084,19 @@ C++ class profile_timer {
 C++ class token {
     property id;
     property name;
-    
+
     token ();
-    
+
 };
 
 C++ class action_base {
     property object;
     property storage;
-    
+
     action_base ();
     action_base (game_object*);
     action_base (game_object*, string);
-    
+
     function finalize();
 
     function add_precondition(const world_property&);
@@ -1122,9 +1122,9 @@ C++ class action_base {
 C++ class action_planner {
     property object;
     property storage;
-    
+
     action_planner ();
-    
+
     function initialized() const;
 
     function remove_action(const number&);
@@ -1160,11 +1160,11 @@ C++ class action_planner {
 C++ class planner_action : action_planner,action_base {
     property object;
     property storage;
-    
+
     planner_action ();
     planner_action (game_object*);
     planner_action (game_object*, string);
-    
+
     function finalize();
 
     function action(const number&);
@@ -1219,7 +1219,7 @@ C++ class planner_action : action_planner,action_base {
 C++ class world_state {
     world_state ();
     world_state (world_state);
-    
+
     function clear();
 
     function includes(const world_state&) const;
@@ -1238,7 +1238,7 @@ C++ class world_state {
 
 C++ class world_property {
     world_property (number, boolean);
-    
+
     function value() const;
 
     operator <(const world_property&, world_property);
@@ -1252,11 +1252,11 @@ C++ class world_property {
 C++ class property_evaluator {
     property object;
     property storage;
-    
+
     property_evaluator ();
     property_evaluator (game_object*);
     property_evaluator (game_object*, string);
-    
+
     function evaluate();
 
     function setup(game_object*, property_storage*);
@@ -1266,9 +1266,9 @@ C++ class property_evaluator {
 C++ class property_evaluator_const : property_evaluator {
     property object;
     property storage;
-    
+
     property_evaluator_const (boolean);
-    
+
     function evaluate();
 
     function setup(game_object*, property_storage*);
@@ -1287,15 +1287,15 @@ C++ class ipure_alife_load_save_object : ipure_alife_load_object,ipure_alife_sav
 C++ class Fbox {
     property max;
     property min;
-    
+
     Fbox ();
-    
+
 };
 
 C++ class suggest_nicks_cb {
     suggest_nicks_cb ();
     suggest_nicks_cb (object, function<void>);
-    
+
     function bind(object, function<void>);
 
     function clear();
@@ -1305,7 +1305,7 @@ C++ class suggest_nicks_cb {
 C++ class account_profiles_cb {
     account_profiles_cb ();
     account_profiles_cb (object, function<void>);
-    
+
     function bind(object, function<void>);
 
     function clear();
@@ -1315,7 +1315,7 @@ C++ class account_profiles_cb {
 C++ class login_operation_cb {
     login_operation_cb ();
     login_operation_cb (object, function<void>);
-    
+
     function bind(object, function<void>);
 
     function clear();
@@ -1325,7 +1325,7 @@ C++ class login_operation_cb {
 C++ class account_operation_cb {
     account_operation_cb ();
     account_operation_cb (object, function<void>);
-    
+
     function bind(object, function<void>);
 
     function clear();
@@ -1335,7 +1335,7 @@ C++ class account_operation_cb {
 C++ class found_email_cb {
     found_email_cb ();
     found_email_cb (object, function<void>);
-    
+
     function bind(object, function<void>);
 
     function clear();
@@ -1345,7 +1345,7 @@ C++ class found_email_cb {
 C++ class store_operation_cb {
     store_operation_cb ();
     store_operation_cb (object, function<void>);
-    
+
     function bind(object, function<void>);
 
     function clear();
@@ -1354,7 +1354,7 @@ C++ class store_operation_cb {
 
 C++ class CAI_Bloodsucker : CGameObject {
     CAI_Bloodsucker ();
-    
+
     function Visual() const;
 
     function getEnabled() const;
@@ -1377,7 +1377,7 @@ C++ class CAI_Bloodsucker : CGameObject {
 
 C++ class CAI_Boar : CGameObject {
     CAI_Boar ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1398,7 +1398,7 @@ C++ class CAI_Boar : CGameObject {
 
 C++ class CAI_Dog : CGameObject {
     CAI_Dog ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1419,7 +1419,7 @@ C++ class CAI_Dog : CGameObject {
 
 C++ class CAI_Flesh : CGameObject {
     CAI_Flesh ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1440,7 +1440,7 @@ C++ class CAI_Flesh : CGameObject {
 
 C++ class CAI_PseudoDog : CGameObject {
     CAI_PseudoDog ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1461,7 +1461,7 @@ C++ class CAI_PseudoDog : CGameObject {
 
 C++ class CAI_Stalker : CGameObject {
     CAI_Stalker ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1482,7 +1482,7 @@ C++ class CAI_Stalker : CGameObject {
 
 C++ class CAI_Trader : CGameObject {
     CAI_Trader ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1528,8 +1528,8 @@ C++ class CALifeMonsterDetailPathManager {
 
     function failed() const;
 
-    function speed	(const number&);
-    function speed	() const;
+    function speed  (const number&);
+    function speed  () const;
 
     function actual() const;
 
@@ -1632,7 +1632,7 @@ C++ class CALifeSmartTerrainTask {
     CALifeSmartTerrainTask (string);
     CALifeSmartTerrainTask (string, number);
     CALifeSmartTerrainTask (number, number);
-    
+
     function level_vertex_id() const;
 
     function position() const;
@@ -1643,7 +1643,7 @@ C++ class CALifeSmartTerrainTask {
 
 C++ class CActor : CGameObject {
     CActor ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1664,7 +1664,7 @@ C++ class CActor : CGameObject {
 
 C++ class CAntirad : CGameObject {
     CAntirad ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1685,7 +1685,7 @@ C++ class CAntirad : CGameObject {
 
 C++ class CArtefact : CGameObject {
     CArtefact ();
-    
+
     function Visual() const;
 
     function getEnabled() const;
@@ -1712,7 +1712,7 @@ C++ class CArtefact : CGameObject {
 
 C++ class CBastArtefact : CArtefact {
     CBastArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1739,7 +1739,7 @@ C++ class CBastArtefact : CArtefact {
 
 C++ class CBlackDrops : CArtefact {
     CBlackDrops ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1766,7 +1766,7 @@ C++ class CBlackDrops : CArtefact {
 
 C++ class CBlackGraviArtefact : CArtefact {
     CBlackGraviArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1796,7 +1796,7 @@ C++ class CBlend {
 
 C++ class CBottleItem : CGameObject {
     CBottleItem ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1817,7 +1817,7 @@ C++ class CBottleItem : CGameObject {
 
 C++ class CBurer : CGameObject {
     CBurer ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1843,9 +1843,9 @@ C++ class CCar : CGameObject,holder {
     const eWpnDesiredPos = 2;
     const eWpnFire = 4;
     const eWpnToDefaultDir = 6;
-    
+
     CCar ();
-    
+
     function _construct();
 
     function GetfHealth() const;
@@ -1892,7 +1892,7 @@ C++ class CCar : CGameObject,holder {
 
 C++ class CCat : CGameObject {
     CCat ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1913,7 +1913,7 @@ C++ class CCat : CGameObject {
 
 C++ class CChimera : CGameObject {
     CChimera ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -1965,7 +1965,7 @@ C++ class CConsole {
 
 C++ class CController : CGameObject {
     CController ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2005,7 +2005,7 @@ C++ class danger_object {
     const hit = 2;
     const sound = 1;
     const visual = 0;
-    
+
     function type() const;
 
     function time() const;
@@ -2024,7 +2024,7 @@ C++ class danger_object {
 
 C++ class CDestroyablePhysicsObject : CGameObject {
     CDestroyablePhysicsObject ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2069,7 +2069,7 @@ C++ class CPhraseScript {
 
 C++ class CDummyArtefact : CArtefact {
     CDummyArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2108,7 +2108,7 @@ C++ class cef_storage {
 
 C++ class CElectricBall : CArtefact {
     CElectricBall ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2140,7 +2140,7 @@ C++ class explosive {
 
 C++ class CExplosiveItem : CGameObject {
     CExplosiveItem ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2161,7 +2161,7 @@ C++ class CExplosiveItem : CGameObject {
 
 C++ class CF1 : CGameObject {
     CF1 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2182,7 +2182,7 @@ C++ class CF1 : CGameObject {
 
 C++ class CFadedBall : CArtefact {
     CFadedBall ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2209,7 +2209,7 @@ C++ class CFadedBall : CArtefact {
 
 C++ class CFoodItem : CGameObject {
     CFoodItem ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2230,7 +2230,7 @@ C++ class CFoodItem : CGameObject {
 
 C++ class CFracture : CGameObject {
     CFracture ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2251,7 +2251,7 @@ C++ class CFracture : CGameObject {
 
 C++ class CGalantineArtefact : CArtefact {
     CGalantineArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2280,7 +2280,7 @@ C++ class CGameFont {
     const alCenter = 2;
     const alLeft = 0;
     const alRight = 1;
-    
+
 };
 
 C++ class CGameGraph {
@@ -2299,7 +2299,7 @@ C++ class CGameGraph {
 
 C++ class CGameObject : DLL_Pure,ISheduled,ICollidable,IRenderable {
     CGameObject ();
-    
+
     function Visual() const;
 
     function getEnabled() const;
@@ -2320,7 +2320,7 @@ C++ class CGameObject : DLL_Pure,ISheduled,ICollidable,IRenderable {
 
 C++ class CGameTask {
     CGameTask ();
-    
+
     function get_id();
 
     function set_priority(number);
@@ -2369,7 +2369,7 @@ C++ class CGameTask {
 
 C++ class CGraviArtefact : CArtefact {
     CGraviArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2396,7 +2396,7 @@ C++ class CGraviArtefact : CArtefact {
 
 C++ class CGrenadeLauncher : CGameObject {
     CGrenadeLauncher ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2417,7 +2417,7 @@ C++ class CGrenadeLauncher : CGameObject {
 
 C++ class CHairsZone : CGameObject {
     CHairsZone ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2438,7 +2438,7 @@ C++ class CHairsZone : CGameObject {
 
 C++ class hanging_lamp : CGameObject {
     hanging_lamp ();
-    
+
     function Visual() const;
 
     function getEnabled() const;
@@ -2475,7 +2475,7 @@ C++ class CHelicopter : CGameObject {
     const eMovRoundPath = 3;
     const eMovTakeOff = 5;
     const eMovToPoint = 1;
-    
+
     property m_dead;
     property m_exploded;
     property m_flame_started;
@@ -2488,9 +2488,9 @@ C++ class CHelicopter : CGameObject {
     property m_time_between_rocket_attack;
     property m_use_mgun_on_attack;
     property m_use_rocket_on_attack;
-    
+
     CHelicopter ();
-    
+
     function _construct();
 
     function SetSpeedInDestPoint(number);
@@ -2588,7 +2588,7 @@ C++ class holder {
 
 C++ class CInventoryBox : CGameObject {
     CInventoryBox ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2609,7 +2609,7 @@ C++ class CInventoryBox : CGameObject {
 
 C++ class CLevelChanger : CGameObject {
     CLevelChanger ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2639,7 +2639,7 @@ C++ class FS {
     const FS_sort_by_name_up = 0;
     const FS_sort_by_size_down = 3;
     const FS_sort_by_size_up = 2;
-    
+
     function get_file_age(string);
 
     function file_length(string);
@@ -2709,7 +2709,7 @@ C++ class CMainMenu {
 
 C++ class CMedkit : CGameObject {
     CMedkit ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2730,7 +2730,7 @@ C++ class CMedkit : CGameObject {
 
 C++ class CMercuryBall : CArtefact {
     CMercuryBall ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2757,7 +2757,7 @@ C++ class CMercuryBall : CArtefact {
 
 C++ class CMincer : CGameObject {
     CMincer ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2778,7 +2778,7 @@ C++ class CMincer : CGameObject {
 
 C++ class CMosquitoBald : CGameObject {
     CMosquitoBald ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2808,7 +2808,7 @@ C++ class particle_params {
     particle_params (const vector&);
     particle_params (const vector&, const vector&);
     particle_params (const vector&, const vector&, const vector&);
-    
+
 };
 
 C++ class patrol {
@@ -2819,13 +2819,13 @@ C++ class patrol {
     const next = 4;
     const start = 0;
     const stop = 0;
-    
+
     patrol (string);
     patrol (string, enum PatrolPathManager::EPatrolStartType);
     patrol (string, enum PatrolPathManager::EPatrolStartType, enum PatrolPathManager::EPatrolRouteType);
     patrol (string, enum PatrolPathManager::EPatrolStartType, enum PatrolPathManager::EPatrolRouteType, boolean);
     patrol (string, enum PatrolPathManager::EPatrolStartType, enum PatrolPathManager::EPatrolRouteType, boolean, number);
-    
+
     function level_vertex_id(number) const;
 
     function point(const patrol*, number);
@@ -2850,7 +2850,7 @@ C++ class patrol {
 
 C++ class CPda : CGameObject {
     CPda ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2881,7 +2881,7 @@ C++ class CPhraseDialog {
 
 C++ class CPhysicObject : CGameObject {
     CPhysicObject ();
-    
+
     function set_door_ignore_dynamics();
 
     function _construct();
@@ -2920,7 +2920,7 @@ C++ class CPhysicObject : CGameObject {
 
 C++ class CPoltergeist : CGameObject {
     CPoltergeist ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2941,7 +2941,7 @@ C++ class CPoltergeist : CGameObject {
 
 C++ class property_storage {
     property_storage ();
-    
+
     function property(const number&) const;
 
     function set_property(const number&, const boolean&);
@@ -2950,7 +2950,7 @@ C++ class property_storage {
 
 C++ class CPseudoGigant : CGameObject {
     CPseudoGigant ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2971,7 +2971,7 @@ C++ class CPseudoGigant : CGameObject {
 
 C++ class CPsyDog : CGameObject {
     CPsyDog ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -2992,7 +2992,7 @@ C++ class CPsyDog : CGameObject {
 
 C++ class CPsyDogPhantom : CGameObject {
     CPsyDogPhantom ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -3016,7 +3016,7 @@ C++ class cpure_server_object : ipure_server_object {
 
 C++ class CRGD5 : CGameObject {
     CRGD5 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -3037,7 +3037,7 @@ C++ class CRGD5 : CGameObject {
 
 C++ class CRadioactiveZone : CGameObject {
     CRadioactiveZone ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -3069,7 +3069,7 @@ C++ class render_device {
     property precache_frame;
     property time_delta;
     property width;
-    
+
     function time_global(const render_device*);
 
     function is_paused(render_device*);
@@ -3080,7 +3080,7 @@ C++ class render_device {
 
 C++ class CRustyHairArtefact : CArtefact {
     CRustyHairArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -3115,9 +3115,9 @@ C++ class cse_anomalous_zone : cse_custom_zone {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_anomalous_zone (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -3182,9 +3182,9 @@ C++ class cse_alife_car : cse_alife_dynamic_object_visual,cse_ph_skeleton {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_car (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -3252,9 +3252,9 @@ C++ class cse_alife_creature_abstract : cse_alife_dynamic_object_visual {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_creature_abstract (string);
-    
+
     function on_death(cse_abstract*);
 
     function on_before_register();
@@ -3336,9 +3336,9 @@ C++ class cse_alife_creature_actor : cse_alife_creature_abstract,cse_alife_trade
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_creature_actor (string);
-    
+
     function can_save() const;
 
     function can_switch_online() const;
@@ -3428,9 +3428,9 @@ C++ class cse_alife_creature_crow : cse_alife_creature_abstract {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_creature_crow (string);
-    
+
     function on_death(cse_abstract*);
 
     function on_before_register();
@@ -3512,9 +3512,9 @@ C++ class cse_alife_creature_phantom : cse_alife_creature_abstract {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_creature_phantom (string);
-    
+
     function on_death(cse_abstract*);
 
     function on_before_register();
@@ -3593,9 +3593,9 @@ C++ class cse_custom_zone : cse_alife_dynamic_object,cse_shape {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_custom_zone (string);
-    
+
     function move_offline() const;
     function move_offline(boolean);
 
@@ -3660,9 +3660,9 @@ C++ class cse_alife_dynamic_object : cse_alife_object {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_dynamic_object (string);
-    
+
     function used_ai_locations() const;
 
     function use_ai_locations(boolean);
@@ -3727,9 +3727,9 @@ C++ class cse_alife_dynamic_object_visual : cse_alife_dynamic_object,cse_visual 
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_dynamic_object_visual (string);
-    
+
     function move_offline() const;
     function move_offline(boolean);
 
@@ -3790,9 +3790,9 @@ C++ class cse_alife_graph_point : cse_abstract {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_graph_point (string);
-    
+
     function STATE_Write(net_packet&);
 
     function init();
@@ -3826,9 +3826,9 @@ C++ class cse_alife_helicopter : cse_alife_dynamic_object_visual,cse_motion,cse_
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_helicopter (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -3898,9 +3898,9 @@ C++ class cse_alife_human_abstract : cse_alife_trader_abstract,cse_alife_monster
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_human_abstract (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -4019,9 +4019,9 @@ C++ class cse_alife_human_stalker : cse_alife_human_abstract,cse_ph_skeleton {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_human_stalker (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -4135,9 +4135,9 @@ C++ class cse_alife_inventory_box : cse_alife_dynamic_object_visual {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_inventory_box (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4205,9 +4205,9 @@ C++ class cse_alife_item : cse_alife_dynamic_object_visual,cse_alife_inventory_i
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4274,9 +4274,9 @@ C++ class cse_alife_item_ammo : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_ammo (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4343,9 +4343,9 @@ C++ class cse_alife_item_artefact : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_artefact (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4412,9 +4412,9 @@ C++ class cse_alife_item_bolt : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_bolt (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4481,9 +4481,9 @@ C++ class cse_alife_item_custom_outfit : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_custom_outfit (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4550,9 +4550,9 @@ C++ class cse_alife_item_detector : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_detector (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4619,9 +4619,9 @@ C++ class cse_alife_item_document : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_document (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4688,9 +4688,9 @@ C++ class cse_alife_item_explosive : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_explosive (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4757,9 +4757,9 @@ C++ class cse_alife_item_grenade : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_grenade (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4826,9 +4826,9 @@ C++ class cse_alife_item_pda : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_pda (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4895,9 +4895,9 @@ C++ class cse_alife_item_torch : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_torch (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -4964,9 +4964,9 @@ C++ class cse_alife_item_weapon : cse_alife_item {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_weapon (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5035,9 +5035,9 @@ C++ class cse_alife_item_weapon_auto_shotgun : cse_alife_item_weapon {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_weapon_auto_shotgun (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5106,9 +5106,9 @@ C++ class cse_alife_item_weapon_magazined : cse_alife_item_weapon {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_weapon_magazined (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5177,9 +5177,9 @@ C++ class cse_alife_item_weapon_magazined_w_gl : cse_alife_item_weapon_magazined
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_weapon_magazined_w_gl (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5248,9 +5248,9 @@ C++ class cse_alife_item_weapon_shotgun : cse_alife_item_weapon {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_item_weapon_shotgun (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5319,9 +5319,9 @@ C++ class cse_alife_level_changer : cse_alife_space_restrictor {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_level_changer (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5391,9 +5391,9 @@ C++ class cse_alife_monster_abstract : cse_alife_creature_abstract,cse_alife_sch
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_monster_abstract (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -5503,9 +5503,9 @@ C++ class cse_alife_monster_base : cse_alife_monster_abstract,cse_ph_skeleton {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_monster_base (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -5615,9 +5615,9 @@ C++ class cse_alife_monster_rat : cse_alife_monster_abstract,cse_alife_inventory
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_monster_rat (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -5727,9 +5727,9 @@ C++ class cse_alife_monster_zombie : cse_alife_monster_abstract {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_monster_zombie (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -5834,9 +5834,9 @@ C++ class cse_alife_mounted_weapon : cse_alife_dynamic_object_visual {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_mounted_weapon (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -5901,9 +5901,9 @@ C++ class cse_alife_object : cse_abstract {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_object (string);
-    
+
     function used_ai_locations() const;
 
     function use_ai_locations(boolean);
@@ -5954,9 +5954,9 @@ C++ class cse_alife_object_breakable : cse_alife_dynamic_object_visual {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_object_breakable (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6017,9 +6017,9 @@ C++ class cse_alife_object_climable : cse_shape,cse_abstract {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_object_climable (string);
-    
+
     function STATE_Write(net_packet&);
 
     function init();
@@ -6050,9 +6050,9 @@ C++ class cse_alife_object_hanging_lamp : cse_alife_dynamic_object_visual,cse_ph
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_object_hanging_lamp (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6117,9 +6117,9 @@ C++ class cse_alife_object_physic : cse_alife_dynamic_object_visual,cse_ph_skele
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_object_physic (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6184,9 +6184,9 @@ C++ class cse_alife_object_projector : cse_alife_dynamic_object_visual {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_object_projector (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6251,9 +6251,9 @@ C++ class cse_alife_online_offline_group : cse_alife_dynamic_object,cse_alife_sc
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_online_offline_group (string);
-    
+
     function can_save() const;
 
     function update();
@@ -6338,9 +6338,9 @@ C++ class cse_alife_ph_skeleton_object : cse_alife_dynamic_object_visual,cse_ph_
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_ph_skeleton_object (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6410,9 +6410,9 @@ C++ class cse_alife_psydog_phantom : cse_alife_monster_base {
     property script_version;
     property squad;
     property team;
-    
+
     cse_alife_psydog_phantom (string);
-    
+
     function kill();
 
     function can_save() const;
@@ -6520,9 +6520,9 @@ C++ class cse_alife_smart_zone : cse_alife_space_restrictor,cse_alife_schedulabl
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_smart_zone (string);
-    
+
     function detect_probability();
 
     function on_before_register();
@@ -6603,9 +6603,9 @@ C++ class cse_alife_space_restrictor : cse_alife_dynamic_object,cse_shape {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_space_restrictor (string);
-    
+
     function move_offline() const;
     function move_offline(boolean);
 
@@ -6670,9 +6670,9 @@ C++ class cse_alife_team_base_zone : cse_alife_space_restrictor {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_team_base_zone (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6737,9 +6737,9 @@ C++ class cse_torrid_zone : cse_custom_zone,cse_motion {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_torrid_zone (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6804,9 +6804,9 @@ C++ class cse_alife_trader : cse_alife_dynamic_object_visual,cse_alife_trader_ab
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_alife_trader (string);
-    
+
     function on_before_register();
 
     function use_ai_locations(boolean);
@@ -6890,9 +6890,9 @@ C++ class cse_zone_visual : cse_anomalous_zone,cse_visual {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_zone_visual (string);
-    
+
     function move_offline() const;
     function move_offline(boolean);
 
@@ -6953,7 +6953,7 @@ C++ class cse_abstract : cpure_server_object {
     property parent_id;
     property position;
     property script_version;
-    
+
     function UPDATE_Read(net_packet&);
 
     function STATE_Read(net_packet&, number);
@@ -6978,9 +6978,9 @@ C++ class CSE_AbstractVisual : cse_visual,cse_abstract {
     property parent_id;
     property position;
     property script_version;
-    
+
     CSE_AbstractVisual (string);
-    
+
     function STATE_Write(net_packet&);
 
     function init();
@@ -7022,9 +7022,9 @@ C++ class cse_smart_cover : cse_alife_dynamic_object {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_smart_cover (string);
-    
+
     function move_offline() const;
     function move_offline(boolean);
 
@@ -7089,9 +7089,9 @@ C++ class cse_spectator : cse_abstract {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_spectator (string);
-    
+
     function STATE_Write(net_packet&);
 
     function init();
@@ -7118,9 +7118,9 @@ C++ class cse_temporary : cse_abstract {
     property parent_id;
     property position;
     property script_version;
-    
+
     cse_temporary (string);
-    
+
     function STATE_Write(net_packet&);
 
     function init();
@@ -7146,7 +7146,7 @@ C++ class cse_visual {
 
 C++ class CSavedGameWrapper {
     CSavedGameWrapper (string);
-    
+
     function level_name() const;
 
     function level_id() const;
@@ -7159,7 +7159,7 @@ C++ class CSavedGameWrapper {
 
 C++ class CScope : CGameObject {
     CScope ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -7186,11 +7186,11 @@ C++ class cond {
     const object_end = 32;
     const sound_end = 8;
     const time_end = 64;
-    
+
     cond ();
     cond (number);
     cond (number, double);
-    
+
 };
 
 C++ class anim {
@@ -7207,13 +7207,13 @@ C++ class anim {
     const sleep = 5;
     const stand_idle = 0;
     const turn = 9;
-    
+
     anim ();
     anim (string);
     anim (string, boolean);
     anim (enum MonsterSpace::EMentalState);
     anim (enum MonsterSpace::EScriptMonsterAnimAction, number);
-    
+
     function completed();
 
     function type(enum MonsterSpace::EMentalState);
@@ -7224,9 +7224,9 @@ C++ class anim {
 
 C++ class object_binder {
     property object;
-    
+
     object_binder (game_object*);
-    
+
     function save(net_packet*);
 
     function update(number);
@@ -7253,7 +7253,7 @@ C++ class object_binder {
 
 C++ class effector {
     effector (number, number);
-    
+
     function start(effector*);
 
     function process(effector_params*);
@@ -7265,7 +7265,7 @@ C++ class effector {
 C++ class entity_action {
     entity_action ();
     entity_action (const entity_action*);
-    
+
     function set_action(move&);
     function set_action(look&);
     function set_action(anim&);
@@ -7320,14 +7320,14 @@ C++ class game_object {
     const relation_kill = 0;
     const sound = 3;
     const watch = 1;
-    
+
     property bleeding;
     property health;
     property morale;
     property power;
     property psy_health;
     property radiation;
-    
+
     function memory_time(const game_object&);
 
     function dont_has_info(string);
@@ -8141,23 +8141,23 @@ C++ class hit {
     const strike = 5;
     const telepatic = 4;
     const wound = 6;
-    
+
     property direction;
     property draftsman;
     property impulse;
     property power;
     property type;
-    
+
     hit ();
     hit (const hit*);
-    
+
     function bone(string);
 
 };
 
 C++ class ini_file {
     ini_file (string);
-    
+
     function line_count(string);
 
     function r_bool(string, string);
@@ -8191,18 +8191,18 @@ C++ class act {
     const eat = 1;
     const panic = 3;
     const rest = 0;
-    
+
     act ();
     act (enum MonsterSpace::EScriptMonsterGlobalAction);
     act (enum MonsterSpace::EScriptMonsterGlobalAction, game_object*);
-    
+
 };
 
 C++ class MonsterHitInfo {
     property direction;
     property time;
     property who;
-    
+
 };
 
 C++ class move {
@@ -8236,7 +8236,7 @@ C++ class move {
     const walk_bkwd = 1;
     const walk_fwd = 0;
     const walk_with_leader = 6;
-    
+
     move ();
     move (enum CScriptMovementAction::EInputKeys);
     move (enum CScriptMovementAction::EInputKeys, number);
@@ -8258,7 +8258,7 @@ C++ class move {
     move (enum MonsterSpace::EScriptMonsterMoveAction, vector*, number, enum MonsterSpace::EScriptMonsterSpeedParam);
     move (enum MonsterSpace::EScriptMonsterMoveAction, patrol*, number, enum MonsterSpace::EScriptMonsterSpeedParam);
     move (enum MonsterSpace::EScriptMonsterMoveAction, game_object*, number, enum MonsterSpace::EScriptMonsterSpeedParam);
-    
+
     function completed();
 
     function path(enum DetailPathManager::EDetailPathType);
@@ -8299,13 +8299,13 @@ C++ class object {
     const turn_off = 20;
     const turn_on = 19;
     const use = 18;
-    
+
     object ();
     object (game_object*, enum MonsterSpace::EObjectAction);
     object (game_object*, enum MonsterSpace::EObjectAction, number);
     object (enum MonsterSpace::EObjectAction);
     object (string, enum MonsterSpace::EObjectAction);
-    
+
     function completed();
 
     function object(string);
@@ -8322,7 +8322,7 @@ C++ class particle {
     particle (string, string, const particle_params&, boolean);
     particle (string, const particle_params&);
     particle (string, const particle_params&, boolean);
-    
+
     function set_velocity(const vector&);
 
     function set_position(const vector&);
@@ -8339,7 +8339,7 @@ C++ class particle {
 
 C++ class particles_object {
     particles_object (string);
-    
+
     function pause_path(boolean);
 
     function play_at_pos(const vector&);
@@ -8366,7 +8366,7 @@ C++ class particles_object {
 
 C++ class rtoken_list {
     rtoken_list ();
-    
+
     function clear();
 
     function remove(number);
@@ -8383,15 +8383,15 @@ C++ class sound_object {
     const looped = 1;
     const s2d = 2;
     const s3d = 0;
-    
+
     property frequency;
     property max_distance;
     property min_distance;
     property volume;
-    
+
     sound_object (string);
     sound_object (string, enum ESoundTypes);
-    
+
     function set_position(const vector&);
 
     function stop_deffered();
@@ -8428,7 +8428,7 @@ C++ class sound {
     const steal = 10;
     const take_damage = 5;
     const threaten = 9;
-    
+
     sound ();
     sound (string, string);
     sound (string, string, const vector&);
@@ -8446,7 +8446,7 @@ C++ class sound {
     sound (enum MonsterSound::EType);
     sound (enum MonsterSound::EType, number);
     sound (string, string, enum MonsterSpace::EMonsterHeadAnimType);
-    
+
     function set_sound(string);
     function set_sound(const sound_object&);
 
@@ -8468,12 +8468,12 @@ C++ class SoundInfo {
     property power;
     property time;
     property who;
-    
+
 };
 
 C++ class token_list {
     token_list ();
-    
+
     function clear();
 
     function remove(string);
@@ -8494,7 +8494,7 @@ C++ class look {
     const path_dir = 1;
     const point = 3;
     const search = 6;
-    
+
     look ();
     look (enum SightManager::ESightType);
     look (enum SightManager::ESightType, vector&);
@@ -8502,7 +8502,7 @@ C++ class look {
     look (enum SightManager::ESightType, game_object*, string);
     look (const vector&, number, number);
     look (game_object*, number, number);
-    
+
     function completed();
 
     function type(enum SightManager::ESightType);
@@ -8517,7 +8517,7 @@ C++ class look {
 
 C++ class CScriptXmlInit {
     CScriptXmlInit ();
-    
+
     function InitSpinText(string, CUIWindow*);
 
     function InitTab(string, CUIWindow*);
@@ -8576,14 +8576,14 @@ C++ class CScriptXmlInit {
 
 C++ class ce_script_zone : DLL_Pure {
     ce_script_zone ();
-    
+
     function _construct();
 
 };
 
 C++ class CServerList : CUIWindow {
     CServerList ();
-    
+
     function SetPlayerName(string);
 
     function SetWindowName(string);
@@ -8640,7 +8640,7 @@ C++ class CServerList : CUIWindow {
 
 C++ class CSilencer : CGameObject {
     CSilencer ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8661,14 +8661,14 @@ C++ class CSilencer : CGameObject {
 
 C++ class ce_smart_zone : DLL_Pure {
     ce_smart_zone ();
-    
+
     function _construct();
 
 };
 
 C++ class CSnork : CGameObject {
     CSnork ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8693,12 +8693,12 @@ C++ class sound_params {
     property min_distance;
     property position;
     property volume;
-    
+
 };
 
 C++ class CSpaceRestrictor : CGameObject {
     CSpaceRestrictor ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8719,7 +8719,7 @@ C++ class CSpaceRestrictor : CGameObject {
 
 C++ class CStalkerOutfit : CGameObject {
     CStalkerOutfit ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8861,12 +8861,12 @@ C++ class stalker_ids {
     const sound_search1_with_allies = 10;
     const sound_tolls = 17;
     const sound_wounded = 18;
-    
+
 };
 
 C++ class CThornArtefact : CArtefact {
     CThornArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8893,7 +8893,7 @@ C++ class CThornArtefact : CArtefact {
 
 C++ class CTorch : CGameObject {
     CTorch ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8914,7 +8914,7 @@ C++ class CTorch : CGameObject {
 
 C++ class CTorridZone : CGameObject {
     CTorridZone ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8935,7 +8935,7 @@ C++ class CTorridZone : CGameObject {
 
 C++ class CTushkano : CGameObject {
     CTushkano ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -8956,7 +8956,7 @@ C++ class CTushkano : CGameObject {
 
 C++ class CUI3tButton : CUIButton {
     CUI3tButton ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9007,7 +9007,7 @@ C++ class CUI3tButton : CUIButton {
 
 C++ class CUIButton : CUIStatic {
     CUIButton ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9058,7 +9058,7 @@ C++ class CUIButton : CUIStatic {
 
 C++ class CUICheckButton : CUI3tButton {
     CUICheckButton ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9115,7 +9115,7 @@ C++ class CUICheckButton : CUI3tButton {
 
 C++ class CUIComboBox : CUIWindow {
     CUIComboBox ();
-    
+
     function ClearList();
 
     function SetWindowName(string);
@@ -9313,7 +9313,7 @@ C++ class CUIDialogWnd : CUIWindow {
 
 C++ class CUIScriptWnd : CUIDialogWnd,DLL_Pure {
     CUIScriptWnd ();
-    
+
     function HideDialog();
 
     function _construct();
@@ -9374,7 +9374,7 @@ C++ class CUIScriptWnd : CUIDialogWnd,DLL_Pure {
 
 C++ class CUIEditBox : CUICustomEdit {
     CUIEditBox ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9425,7 +9425,7 @@ C++ class CUIEditBox : CUICustomEdit {
 
 C++ class CUIEditBoxEx : CUICustomEdit {
     CUIEditBoxEx ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9476,7 +9476,7 @@ C++ class CUIEditBoxEx : CUICustomEdit {
 
 C++ class CUIFrameLineWnd : CUIWindow {
     CUIFrameLineWnd ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9523,7 +9523,7 @@ C++ class CUIFrameLineWnd : CUIWindow {
 
 C++ class CUIFrameWindow : CUIWindow {
     CUIFrameWindow ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9606,7 +9606,7 @@ C++ class CUILines {
 
 C++ class CUIListBox : CUIScrollView {
     CUIListBox ();
-    
+
     function SetWindowName(string);
 
     function Enable(boolean);
@@ -9685,7 +9685,7 @@ C++ class CUIListBox : CUIScrollView {
 
 C++ class CUIListBoxItem : CUIFrameLineWnd {
     CUIListBoxItem (number);
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9740,7 +9740,7 @@ C++ class CUIListBoxItem : CUIFrameLineWnd {
 
 C++ class CUIListBoxItemMsgChain : CUIListBoxItem {
     CUIListBoxItemMsgChain (number);
-    
+
     function SetWindowName(string);
 
     function Enable(boolean);
@@ -9797,7 +9797,7 @@ C++ class CUIMMShniaga : CUIWindow {
     const epi_main = 0;
     const epi_new_game = 1;
     const epi_new_network_game = 2;
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9844,7 +9844,7 @@ C++ class CUIMMShniaga : CUIWindow {
 
 C++ class CUIMapInfo : CUIWindow {
     CUIMapInfo ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -9889,7 +9889,7 @@ C++ class CUIMapInfo : CUIWindow {
 
 C++ class CUIMapList : CUIWindow {
     CUIMapList ();
-    
+
     function IsEmpty();
 
     function StartDedicatedServer();
@@ -9956,7 +9956,7 @@ C++ class CUIMapList : CUIWindow {
 
 C++ class CUIMessageBox : CUIStatic {
     CUIMessageBox ();
-    
+
     function InitMessageBox(string);
 
     function SetWindowName(string);
@@ -10015,7 +10015,7 @@ C++ class CUIMessageBox : CUIStatic {
 
 C++ class CUIMessageBoxEx : CUIDialogWnd {
     CUIMessageBoxEx ();
-    
+
     function HideDialog();
 
     function InitMessageBox(string);
@@ -10070,7 +10070,7 @@ C++ class CUIMessageBoxEx : CUIDialogWnd {
 
 C++ class COptionsManager {
     COptionsManager ();
-    
+
     function SendMessage2Group(string, string);
 
     function UndoGroup(string);
@@ -10091,7 +10091,7 @@ C++ class COptionsManager {
 
 C++ class CUIProgressBar : CUIWindow {
     CUIProgressBar ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10140,7 +10140,7 @@ C++ class CUIProgressBar : CUIWindow {
 
 C++ class CUIPropertiesBox : CUIFrameWindow {
     CUIPropertiesBox ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10198,7 +10198,7 @@ C++ class CUIPropertiesBox : CUIFrameWindow {
 
 C++ class CUIScrollView : CUIWindow {
     CUIScrollView ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10257,7 +10257,7 @@ C++ class CUIScrollView : CUIWindow {
 
 C++ class CUISleepStatic : CUIStatic {
     CUISleepStatic ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10308,7 +10308,7 @@ C++ class CUISleepStatic : CUIStatic {
 
 C++ class CUISpinFlt : CUICustomSpin {
     CUISpinFlt ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10351,7 +10351,7 @@ C++ class CUISpinFlt : CUICustomSpin {
 
 C++ class CUISpinNum : CUICustomSpin {
     CUISpinNum ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10394,7 +10394,7 @@ C++ class CUISpinNum : CUICustomSpin {
 
 C++ class CUISpinText : CUICustomSpin {
     CUISpinText ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10437,7 +10437,7 @@ C++ class CUISpinText : CUICustomSpin {
 
 C++ class CUIStatic : CUIWindow {
     CUIStatic ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10488,7 +10488,7 @@ C++ class CUIStatic : CUIWindow {
 
 C++ class CUITabButton : CUIButton {
     CUITabButton ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10539,7 +10539,7 @@ C++ class CUITabButton : CUIButton {
 
 C++ class CUITabControl : CUIWindow {
     CUITabControl ();
-    
+
     function SetWindowName(string);
 
     function GetWndPos(CUIWindow*);
@@ -10593,7 +10593,7 @@ C++ class CUITabControl : CUIWindow {
 
 C++ class CUITextWnd : CUIWindow {
     CUITextWnd ();
-    
+
     function SetWndRect(Frect);
 
     function GetFont();
@@ -10662,7 +10662,7 @@ C++ class CUITextWnd : CUIWindow {
 
 C++ class CUITrackBar : CUIWindow {
     CUITrackBar ();
-    
+
     function GetFValue();
 
     function SetWindowName(string);
@@ -10713,7 +10713,7 @@ C++ class CUITrackBar : CUIWindow {
 
 C++ class CUIWindow {
     CUIWindow ();
-    
+
     function SetWindowName(string);
 
     function Enable(boolean);
@@ -10765,7 +10765,7 @@ C++ class GameGraph__CVertex {
 
 C++ class CWeaponAK74 : CGameObject {
     CWeaponAK74 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10786,7 +10786,7 @@ C++ class CWeaponAK74 : CGameObject {
 
 C++ class CWeaponAmmo : CGameObject {
     CWeaponAmmo ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10807,7 +10807,7 @@ C++ class CWeaponAmmo : CGameObject {
 
 C++ class CWeaponAutomaticShotgun : CGameObject {
     CWeaponAutomaticShotgun ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10828,7 +10828,7 @@ C++ class CWeaponAutomaticShotgun : CGameObject {
 
 C++ class CWeaponBM16 : CGameObject {
     CWeaponBM16 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10849,7 +10849,7 @@ C++ class CWeaponBM16 : CGameObject {
 
 C++ class CWeaponBinoculars : CGameObject {
     CWeaponBinoculars ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10870,7 +10870,7 @@ C++ class CWeaponBinoculars : CGameObject {
 
 C++ class CWeaponFN2000 : CGameObject {
     CWeaponFN2000 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10891,7 +10891,7 @@ C++ class CWeaponFN2000 : CGameObject {
 
 C++ class CWeaponFORT : CGameObject {
     CWeaponFORT ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10912,7 +10912,7 @@ C++ class CWeaponFORT : CGameObject {
 
 C++ class CWeaponGroza : CGameObject {
     CWeaponGroza ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10933,7 +10933,7 @@ C++ class CWeaponGroza : CGameObject {
 
 C++ class CWeaponHPSA : CGameObject {
     CWeaponHPSA ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10954,7 +10954,7 @@ C++ class CWeaponHPSA : CGameObject {
 
 C++ class CWeaponKnife : CGameObject {
     CWeaponKnife ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10975,7 +10975,7 @@ C++ class CWeaponKnife : CGameObject {
 
 C++ class CWeaponLR300 : CGameObject {
     CWeaponLR300 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -10996,7 +10996,7 @@ C++ class CWeaponLR300 : CGameObject {
 
 C++ class CWeaponPM : CGameObject {
     CWeaponPM ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11017,7 +11017,7 @@ C++ class CWeaponPM : CGameObject {
 
 C++ class CWeaponRG6 : CGameObject {
     CWeaponRG6 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11038,7 +11038,7 @@ C++ class CWeaponRG6 : CGameObject {
 
 C++ class CWeaponRPG7 : CGameObject {
     CWeaponRPG7 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11059,7 +11059,7 @@ C++ class CWeaponRPG7 : CGameObject {
 
 C++ class CWeaponSVD : CGameObject {
     CWeaponSVD ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11080,7 +11080,7 @@ C++ class CWeaponSVD : CGameObject {
 
 C++ class CWeaponSVU : CGameObject {
     CWeaponSVU ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11101,7 +11101,7 @@ C++ class CWeaponSVU : CGameObject {
 
 C++ class CWeaponShotgun : CGameObject {
     CWeaponShotgun ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11122,7 +11122,7 @@ C++ class CWeaponShotgun : CGameObject {
 
 C++ class CWeaponUSP45 : CGameObject {
     CWeaponUSP45 ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11143,7 +11143,7 @@ C++ class CWeaponUSP45 : CGameObject {
 
 C++ class CWeaponVal : CGameObject {
     CWeaponVal ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11164,7 +11164,7 @@ C++ class CWeaponVal : CGameObject {
 
 C++ class CWeaponVintorez : CGameObject {
     CWeaponVintorez ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11185,7 +11185,7 @@ C++ class CWeaponVintorez : CGameObject {
 
 C++ class CWeaponWalther : CGameObject {
     CWeaponWalther ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11206,7 +11206,7 @@ C++ class CWeaponWalther : CGameObject {
 
 C++ class CZombie : CGameObject {
     CZombie ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11227,7 +11227,7 @@ C++ class CZombie : CGameObject {
 
 C++ class CZoneCampfire : CGameObject {
     CZoneCampfire ();
-    
+
     function Visual() const;
 
     function getEnabled() const;
@@ -11254,7 +11254,7 @@ C++ class CZoneCampfire : CGameObject {
 
 C++ class CZudaArtefact : CArtefact {
     CZudaArtefact ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11281,7 +11281,7 @@ C++ class CZudaArtefact : CArtefact {
 
 C++ class ClientID {
     ClientID ();
-    
+
     function value() const;
 
     operator ==(ClientID&, ClientID);
@@ -11292,7 +11292,7 @@ C++ class ClientID {
 
 C++ class DLL_Pure {
     DLL_Pure ();
-    
+
     function _construct();
 
 };
@@ -11338,12 +11338,12 @@ C++ class FactionState {
     property war_state_hint3;
     property war_state_hint4;
     property war_state_hint5;
-    
+
 };
 
 C++ class ICollidable {
     ICollidable ();
-    
+
 };
 
 C++ class IKinematicsAnimated {
@@ -11428,7 +11428,7 @@ C++ class ISheduled {
 
 C++ class net_packet {
     net_packet ();
-    
+
     function r_advance(number);
 
     function r_begin(number&);
@@ -11549,9 +11549,9 @@ C++ class SServerFilters {
     property with_pass;
     property without_ff;
     property without_pass;
-    
+
     SServerFilters ();
-    
+
 };
 
 C++ class account_manager {
@@ -11766,7 +11766,7 @@ C++ class login_manager {
 
 C++ class smart_cover_object : CGameObject {
     smart_cover_object ();
-    
+
     function Visual() const;
 
     function _construct();
@@ -11796,7 +11796,7 @@ C++ class profile_store {
     const bst_kills_in_row = 0;
     const bst_kinife_kills_in_row = 1;
     const bst_score_types_count = 7;
-    
+
     function get_best_scores();
 
     function get_awards();
@@ -11815,10 +11815,10 @@ C++ class CTime {
     const TimeToMilisecs = 3;
     const TimeToMinutes = 1;
     const TimeToSeconds = 2;
-    
+
     CTime ();
     CTime (const CTime&);
-    
+
     function sub(CTime*);
 
     function timeToString(number);
@@ -11855,10 +11855,10 @@ C++ class CTime {
 
 End of list of the classes exported to LUA
 
- 
+
 List of the namespaces exported to LUA
 
- 
+
 namespace  {
     function game_ini();
     function bit_and(number, number);
@@ -11908,7 +11908,7 @@ namespace  {
     function GetARGB(number, number, number, number);
     function user_name();
     function bit_xor(number, number);
- 
+
     namespace level {
         function add_complex_effector(string, number);
         function enable_input();
@@ -11979,7 +11979,7 @@ namespace  {
         function hide_indicators_safe();
         function debug_actor();
     };
- 
+
     namespace relation_registry {
         function change_community_goodwill(string, number, number);
         function community_relation(string, string);
@@ -11987,11 +11987,11 @@ namespace  {
         function community_goodwill(string, number);
         function set_community_relation(string, string, number);
     };
- 
+
     namespace main_menu {
         function get_main_menu();
     };
- 
+
     namespace game {
         function translate_string(string);
         function time();
@@ -12000,7 +12000,7 @@ namespace  {
         function has_active_tutorial();
         function stop_tutorial();
     };
- 
+
     namespace actor_stats {
         function add_points_str(string, string, string);
         function get_points(string);

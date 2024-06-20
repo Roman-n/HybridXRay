@@ -1,21 +1,21 @@
 ----------------------------------------------------------------------------------------------------------------------
---  ¿È‰Ë¯ÌËÍË ˝Í¯ËÌÓ‚
+--  –ê–π–¥–∏—à–Ω–∏–∫–∏ —ç–∫—à–∏–Ω–æ–≤
 ----------------------------------------------------------------------------------------------------------------------
 
--- √ÎÓ·‡Î¸Ì˚Â
+-- –ì–ª–æ–±–∞–ª—å–Ω—ã–µ
 global_actions           = stalker_ids.action_script
 action_script            = stalker_ids.action_script + 1
 alife                    = stalker_ids.action_alife_planner
 script_combat_planner    = stalker_ids.action_script + 3
-reach_task_location  	 = stalker_ids.action_script + 4
-corpse_exist  	 		 = stalker_ids.action_script + 50
-wounded_exist  	 		 = stalker_ids.action_script + 55
+reach_task_location      = stalker_ids.action_script + 4
+corpse_exist             = stalker_ids.action_script + 50
+wounded_exist            = stalker_ids.action_script + 55
 state_mgr                = stalker_ids.action_script + 100
---bloodsucker_reaction	 = stalker_ids.action_script + 200
---actor_reaction		 = stalker_ids.action_script + 210
-smartcover_action	     = stalker_ids.action_script + 215
-test_reaction			 = stalker_ids.action_script + 218
--- —ÚÓıÂ
+--bloodsucker_reaction   = stalker_ids.action_script + 200
+--actor_reaction         = stalker_ids.action_script + 210
+smartcover_action        = stalker_ids.action_script + 215
+test_reaction            = stalker_ids.action_script + 218
+-- –°—Ç–æ—Ö–µ
 stohe_actions = stalker_ids.action_script + 220
 
 stohe_tradeseller_init      = stohe_actions + 1
@@ -24,16 +24,16 @@ stohe_tradeseller_base      = stohe_actions + 10
 stohe_kamp_base             = stohe_actions + 20
 stohe_meet_base             = stohe_actions + 30
 stohe_reactions_base        = stohe_actions + 40
-stohe_state_base			= stohe_actions + 50
-stohe_position				= stohe_actions + 60
-stohe_gulag_base			= stohe_actions + 70
-stohe_cover_base			= stohe_actions + 80
-stohe_camper_base			= stohe_actions + 90
-assistance					= stohe_actions + 100
-death						= stohe_actions + 110
-abuse_base					= stohe_actions + 120
-post_combat					= stohe_actions + 130
-animpoint_action			= stohe_actions + 140
+stohe_state_base            = stohe_actions + 50
+stohe_position              = stohe_actions + 60
+stohe_gulag_base            = stohe_actions + 70
+stohe_cover_base            = stohe_actions + 80
+stohe_camper_base           = stohe_actions + 90
+assistance                  = stohe_actions + 100
+death                       = stohe_actions + 110
+abuse_base                  = stohe_actions + 120
+post_combat                 = stohe_actions + 130
+animpoint_action            = stohe_actions + 140
 
 --Sidorovich
 sidor_actions = stohe_actions + 1024
@@ -72,7 +72,7 @@ combat_zombied_base                 = chugai_actions + 110
 combat_monolith_base                = chugai_actions + 120
 combat_camper_base                  = chugai_actions + 130
 
--- «ÏÂÈ
+-- –ó–º–µ–π
 zmey_actions = chugai_actions + 1024
 zmey_action_guard_activity = zmey_actions + 100
 zmey_guard_base        = zmey_actions + 200
@@ -92,7 +92,7 @@ zmey_test_base         = zmey_actions + 600
 zmey_remark_base       = zmey_actions + 630
 zmey_companion_base    = zmey_actions + 660
 
--- ∆ÂÌˇ
+-- –ñ–µ–Ω—è
 jon_actions = zmey_actions + 1024
 
 jon_stalker_zombie     = jon_actions + 0
@@ -109,15 +109,15 @@ jon_sniper_enabled     = jon_actions + 10
 jon_sniper_see_monster = jon_actions + 11
 jon_sniper_see_enemy   = jon_actions + 12
 jon_sniper_camper      = jon_actions + 13
---+5 «‡ÌˇÚÓ
+--+5 –ó–∞–Ω—è—Ç–æ
 
-jon_outcast			   = jon_actions + 20
+jon_outcast            = jon_actions + 20
 jon_outcast_replics    = jon_actions + 21
 
 --
 narrator_actions = jon_actions + 1024
 
 
-peacemaker_actions 	= narrator_actions + 1024
+peacemaker_actions  = narrator_actions + 1024
 
-peace_sh_base		= peacemaker_actions + 10
+peace_sh_base       = peacemaker_actions + 10

@@ -4,8 +4,8 @@
 class "action_particle"
 ------------------------
 function action_particle:__init (obj, storage)
-	self.object = obj
-	self.st = storage
+    self.object = obj
+    self.st = storage
     self.particles = {}
     self.path = nil
     self.last_update = 0
@@ -102,7 +102,7 @@ function action_particle:is_end ()
     end
 
     for a = 1, size, 1 do
-		local particle = self.particles[a].particle
+        local particle = self.particles[a].particle
         if particle and particle:playing () == true then
            return false
         end
@@ -146,7 +146,7 @@ function action_particle:deactivate ()
     local size = #self.particles
     for a = 1, size, 1 do
         if self.particles[a].particle:playing () == true then
-           self.particles[a].particle:stop ();
+           self.particles[a].particle:stop ()
         end
         self.particles[a].particle = nil
         if self.particles[a].snd ~= nil and self.particles[a].snd:playing () == true then
@@ -160,16 +160,16 @@ end
 
 -----------------------------------------------------------------------------------------------------
 function add_to_binder (npc, ini, scheme, section, storage)
-	printf("DEBUG: add_to_binder: scheme='%s', section='%s'", scheme, section)
-	local new_action = action_particle (npc, storage)
-	xr_logic.subscribe_action_for_events (npc, storage, new_action)
+    printf("DEBUG: add_to_binder: scheme='%s', section='%s'", scheme, section)
+    local new_action = action_particle (npc, storage)
+    xr_logic.subscribe_action_for_events (npc, storage, new_action)
 
 end
 -----------------------------------------------------------------------------------------------------
 function set_scheme (obj, ini, scheme, section, gulag_name)
 
-	local st = xr_logic.assign_storage_and_bind (obj, ini, scheme, section)
-	st.logic = xr_logic.cfg_get_switch_conditions (ini, section, obj)
+    local st = xr_logic.assign_storage_and_bind (obj, ini, scheme, section)
+    st.logic = xr_logic.cfg_get_switch_conditions (ini, section, obj)
 
     st.name         = utils.cfg_get_string (ini, section, "name", obj, true, "", nil)
     st.path         = utils.cfg_get_string (ini, section, "path", obj, true, "", nil)

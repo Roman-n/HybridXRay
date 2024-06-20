@@ -36,10 +36,10 @@ function lchanger_binder:net_spawn(sobject)
         return false
     end
     if string.find(command_line(), "-designer") then
-		return true
-	end
+        return true
+    end
 
-	local obj = self.object
+    local obj = self.object
     db.add_obj(obj)
 
     self.st.s_obj = alife():object(obj:id())
@@ -54,19 +54,19 @@ function lchanger_binder:net_destroy()
 end
 -- Standart function for save
 function lchanger_binder:net_save_relevant()
-	return true
+    return true
 end
 -- Saving level changer
 function lchanger_binder:save(package)
-	set_save_marker(package, "save", false, "lchanger_binder")
-	object_binder.save(self, package)
-	xr_logic.save_obj(self.object, package)
-	set_save_marker(package, "save", true, "lchanger_binder")
+    set_save_marker(package, "save", false, "lchanger_binder")
+    object_binder.save(self, package)
+    xr_logic.save_obj(self.object, package)
+    set_save_marker(package, "save", true, "lchanger_binder")
 end
 -- Loading level changer
 function lchanger_binder:load(reader)
-	set_save_marker(reader, "load", false, "lchanger_binder")
-	object_binder.load(self, reader)
-	xr_logic.load_obj(self.object, reader)
-	set_save_marker(reader, "load", true, "lchanger_binder")
+    set_save_marker(reader, "load", false, "lchanger_binder")
+    object_binder.load(self, reader)
+    xr_logic.load_obj(self.object, reader)
+    set_save_marker(reader, "load", true, "lchanger_binder")
 end
