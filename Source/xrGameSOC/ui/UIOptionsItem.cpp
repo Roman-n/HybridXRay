@@ -1,9 +1,11 @@
 ﻿#include "StdAfx.h"
 #include "UIOptionsItem.h"
 #include "UIOptionsManager.h"
-#include "../xrEngine/xr_ioconsole.h"
+#include "../../xrEngine/xr_ioconsole.h"
 
 CUIOptionsManager CUIOptionsItem::m_optionsManager;
+
+CUIOptionsItem::CUIOptionsItem() : m_dep(sdNothing) {}
 
 CUIOptionsItem::~CUIOptionsItem()
 {
@@ -99,4 +101,23 @@ void CUIOptionsItem::SaveValue()
 
     if (/*m_entry == "snd_freq" ||*/ m_entry == "snd_efx")
         m_optionsManager.DoSndRestart();
+}
+/*
+void CUIOptionsItem::SaveOptValue()
+{
+    if (!IsChangedOptValue())
+        return;
+
+    if (m_dep == sdVidRestart)
+        m_optionsManager.DoVidRestart();
+    else if (m_dep == sdSndRestart)
+        m_optionsManager.DoSndRestart();
+    else if (m_dep == sdSystemRestart)
+        m_optionsManager.DoSystemRestart();
+}
+*/
+void CUIOptionsItem::OnChangedOptValue()
+{
+    if (m_dep == sdApplyOnChange)
+        SaveValue();
 }

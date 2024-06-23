@@ -24,8 +24,8 @@ end
 schemes = {} -- соответствие схем модулям
 stypes = {} -- типv схем
 
--- іагружает схему из файла на диске и активирует в мотиваторе.
--- ідесь:
+-- Загружает схему из файла на диске и активирует в мотиваторе.
+-- Здесь:
 --  filename - имя файла, в котором реализована схема, без расширения
 --  scheme - имя схем
 function load_scheme(filename, scheme, stype)
@@ -181,14 +181,14 @@ function distance_between(obj1, obj2)
     return obj1:position():distance_to(obj2:position())
 end
 
--- +сли один объект nil, например нет актера, то считаем, что он далеко
+-- если один объект nil, например нет актера, то считаем, что он далеко
 function distance_between_safe(obj1, obj2)
     if(obj1 == nil or obj2 == nil) then return 100000 end
     return obj1:position():distance_to(obj2:position())
 end
 
 local aa = nil
---' іроверка на инфопоршнv, даже если игрока не су  ествует
+--' Проверка на инфопоршны, даже если игрока не существует
 function has_alife_info(info_id)
     if aa == nil then
         return false
@@ -207,10 +207,10 @@ end
 -- Functions and variables added by Zmey
 --------------------------------------------------
 
--- іонстанта, которуі использовать в местах, где нужно задать неограниченное время действия
+-- Константа, которую использовать в местах, где нужно задать неограниченное время действия
 time_infinite = 100000000
 
--- +сли в даннvй момент вvполняется какое-то действие, прерvвает его и отклічает скриптовvй режим
+-- Если в данный момент выполняется какое-то действие, прерывает его и отключает скриптовый режим
 function interrupt_action(who, script_name)
     if who:get_script() then
         who:script(false, script_name)
@@ -298,7 +298,7 @@ function get_clsid(npc)
     return npc:clsid()
 end
 
---Tvчисляет yaw в радианах
+--Вычисляет yaw в радианах
 function yaw( v1, v2 )
     return  math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / ( math.sqrt(v1.x*v1.x + v1.z*v1.z ) * math.sqrt(v2.x*v2.x + v2.z*v2.z ) ) )
 end
@@ -481,7 +481,7 @@ function set_inactivate_input_time(delta)
     level.disable_input()
 end
 
--- іринимает: позициі положения, позициі куда смотреть, время сна в минутах.
+-- Принимает: позицию положения, позицию куда смотреть, время сна в минутах.
 --[[
 function set_sleep_relocate(point, look, timeout)
     db.storage[db.actor:id()].sleep_relocate_time = game.get_game_time()

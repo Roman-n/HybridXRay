@@ -107,6 +107,20 @@ void CUIComboBox::OnListItemSelect()
     }
 }
 
+void CUIComboBox::disable_id(int id)
+{
+    if (m_disabled.end() == std::find(m_disabled.begin(), m_disabled.end(), id))
+        m_disabled.push_back(id);
+}
+
+void CUIComboBox::enable_id(int id)
+{
+    xr_vector<int>::iterator it = std::find(m_disabled.begin(), m_disabled.end(), id);
+
+    if (m_disabled.end() != it)
+        m_disabled.erase(it);
+}
+
 #include "../string_table.h"
 void CUIComboBox::SetCurrentValue()
 {
@@ -115,7 +129,10 @@ void CUIComboBox::SetCurrentValue()
 
     while (tok->name)
     {
-        AddItem_(tok->name, tok->id);
+        if (m_disabled.end() == std::find(m_disabled.begin(), m_disabled.end(), tok->id))
+        {
+            AddItem_(tok->name, tok->id);
+        }
         tok++;
     }
 
@@ -293,4 +310,13 @@ void CUIComboBox::Undo()
     SetItem(m_backup_itoken_id);
     SaveValue();
     SetCurrentValue();
+}
+
+void CUIComboBox::ClearList()
+{
+    m_list.Clear();
+    m_text.SetText("");
+    m_itoken_id = 0;
+    ShowList(false);
+    m_disabled.clear();
 }

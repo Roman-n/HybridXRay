@@ -21,7 +21,7 @@ function printf(fmt,...)
     local result = fmt
     if debug == nil then
         log(string.format(fmt,...))
-        return
+    return
     end
     local info_table = debug.getinfo(2)
     local script_name = string.gsub(info_table.short_src, "%.script", "")
@@ -155,7 +155,7 @@ function has_alife_info(info_id)
 end
 
 --------------------------------------------------
--- іласс LUA реализуі   ий Finite State Machine
+-- Класс LUA реализующий Finite State Machine
 -- для управления персонажами
 --------------------------------------------------
 class 'FSM'
@@ -166,13 +166,13 @@ function FSM:__init(script_name, npc_obj)
     self.npc = npc_obj
     -- строка - имя скрипта, которvй запускает игру
     self.script_name = script_name
-    -- матрица, задаі   ая граф переходов состояний
+    -- матрица, задающая граф переходов состояний
     -- реализуется как двумерная таблица
     self.transition_matrix = {[0] = {}}
-    -- номер теку   его состояния
+    -- номер текущего состояния
     self.current_state = 0
 
-    -- флаг того, что машина вклічена
+    -- флаг того, что машина включена
     self.machine_running = true
 
     printf("inialization FSM for NPC %s", self.npc:name())
@@ -194,7 +194,7 @@ function FSM:stop()
 end
 
 --  добавление указателя на булеву
---  функциі условия перехода
+--  функции условия перехода
 function FSM:set_transition(from_state_num, to_state_num, cond_func)
     printf("in setting transition %d, %d ", from_state_num, to_state_num)
 
@@ -302,7 +302,7 @@ function script_object:update()
 end
 
 --
--- іередача персонажу информации
+-- Передача персонажу информации
 --
 
 function GiveInfoViaPda(obj_receiver, obj_sender, info_number)
@@ -313,22 +313,22 @@ end
 -- Functions and variables added by Zmey
 --------------------------------------------------
 
--- іонстанта, которуі использовать в местах, где нужно задать неограниченное время действия
+-- Константа, которую использовать в местах, где нужно задать неограниченное время действия
 time_infinite = 100000000
 
--- =азвание скрипта, которvй в даннvй момент находится в отладке
--- (в этом скрипте будут срабатvвать вvзовv функции debug_log)
+-- Название скрипта, который в данный момент находится в отладке
+-- (в этом скрипте будут срабатvвать вызовы функции debug_log)
 debug_script_name = ""
 
--- Tvводит в лог строчку, если script_name == debug_script_name
--- Lспользуется для отрадки сценариев
+-- Выводит в лог строчку, если script_name == debug_script_name
+-- Используется для отрадки сценариев
 function debug_log(script_name, fmt, ...)
     if debug_script_name == script_name then
         log(string.format(fmt, ...))
     end
 end
 
--- +сли в даннvй момент вvполняется какое-то действие, прерvвает его и отклічает скриптовvй режим
+-- Если в данный момент выполняется какое-то действие, прерывает его и отключает скриптовыvй режим
 function interrupt_action(who, script_name)
   if who:get_script() then
     who:script(false, script_name)
@@ -551,7 +551,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 -- Evaluators
 ----------------------------------------------------------------------------------------------------------------------
--- зарезервированv id с номерами от 0 до 256 для создания стандартнvх эвалуаторов.
+-- зарезервированы id с номерами от 0 до 256 для создания стандартнvх эвалуаторов.
 
 --Constant evaluator
 class "const_evaluator" (property_evaluator)
@@ -720,7 +720,7 @@ function parse_nums( s )
     return t
 end
 
--- Їа®ўҐапҐв, Ґбвм «Ё ®ЎкҐЄв ў ®­« ©­Ґ
+-- Находится ли обьект в онлайне.
 function is_object_online(obj_id)
     return level.object_by_id(obj_id) ~= nil
 end
@@ -765,7 +765,7 @@ function isWeapon(object)
     else return false end
 end
 
---Tvчисляет yaw в радианах
+-- Вычисляет yaw в радианах
 function yaw( v1, v2 )
     return  math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / ( math.sqrt(v1.x*v1.x + v1.z*v1.z ) * math.sqrt(v2.x*v2.x + v2.z*v2.z ) ) )
 end
@@ -782,7 +782,6 @@ function vector_cross (v1, v2)
 end
 
 -- Вращает вектор вокруг оси y против часовой стрелки
-
 function vector_rotate_y (v, angle)
     angle = angle * 0.017453292519943295769236907684886
     local c = math.cos (angle)

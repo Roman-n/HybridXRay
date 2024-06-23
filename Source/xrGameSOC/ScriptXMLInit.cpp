@@ -28,6 +28,8 @@ void _attach_child(CUIWindow* _child, CUIWindow* _parent)
 {
     if (!_parent)
         return;
+
+    _child->SetAutoDelete(true);
     CUIScrollView* _parent_scroll = smart_cast<CUIScrollView*>(_parent);
     if (_parent_scroll)
         _parent_scroll->AddWindow(_child, true);
@@ -61,9 +63,7 @@ CUIFrameWindow* CScriptXmlInit::InitFrame(LPCSTR path, CUIWindow* parent)
 {
     CUIFrameWindow* pWnd = xr_new<CUIFrameWindow>();
     CUIXmlInit::InitFrameWindow(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -71,9 +71,7 @@ CUIFrameLineWnd* CScriptXmlInit::InitFrameLine(LPCSTR path, CUIWindow* parent)
 {
     CUIFrameLineWnd* pWnd = xr_new<CUIFrameLineWnd>();
     CUIXmlInit::InitFrameLine(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -81,9 +79,7 @@ CUILabel* CScriptXmlInit::InitLabel(LPCSTR path, CUIWindow* parent)
 {
     CUILabel* pWnd = xr_new<CUILabel>();
     CUIXmlInit::InitLabel(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -91,9 +87,7 @@ CUIEditBox* CScriptXmlInit::InitEditBox(LPCSTR path, CUIWindow* parent)
 {
     CUIEditBox* pWnd = xr_new<CUIEditBox>();
     CUIXmlInit::InitEditBox(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -101,9 +95,7 @@ CUIStatic* CScriptXmlInit::InitStatic(LPCSTR path, CUIWindow* parent)
 {
     CUIStatic* pWnd = xr_new<CUIStatic>();
     CUIXmlInit::InitStatic(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -116,9 +108,7 @@ CUIStatic* CScriptXmlInit::InitAnimStatic(LPCSTR path, CUIWindow* parent)
 {
     CUIAnimatedStatic* pWnd = xr_new<CUIAnimatedStatic>();
     CUIXmlInit::InitAnimatedStatic(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -126,9 +116,7 @@ CUIScrollView* CScriptXmlInit::InitScrollView(LPCSTR path, CUIWindow* parent)
 {
     CUIScrollView* pWnd = xr_new<CUIScrollView>();
     CUIXmlInit::InitScrollView(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -136,9 +124,7 @@ CUICheckButton* CScriptXmlInit::InitCheck(LPCSTR path, CUIWindow* parent)
 {
     CUICheckButton* pWnd = xr_new<CUICheckButton>();
     CUIXmlInit::InitCheck(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -146,9 +132,7 @@ CUISpinNum* CScriptXmlInit::InitSpinNum(LPCSTR path, CUIWindow* parent)
 {
     CUISpinNum* pWnd = xr_new<CUISpinNum>();
     CUIXmlInit::InitSpin(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -156,9 +140,7 @@ CUISpinFlt* CScriptXmlInit::InitSpinFlt(LPCSTR path, CUIWindow* parent)
 {
     CUISpinFlt* pWnd = xr_new<CUISpinFlt>();
     CUIXmlInit::InitSpin(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -166,9 +148,7 @@ CUISpinText* CScriptXmlInit::InitSpinText(LPCSTR path, CUIWindow* parent)
 {
     CUISpinText* pWnd = xr_new<CUISpinText>();
     CUIXmlInit::InitSpin(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
-    if (parent)
-        parent->AttachChild(pWnd);
+    _attach_child(pWnd, parent);
     return pWnd;
 }
 
@@ -176,9 +156,7 @@ CUIComboBox* CScriptXmlInit::InitComboBox(LPCSTR path, CUIWindow* parent)
 {
     CUIComboBox* pWnd = xr_new<CUIComboBox>();
     CUIXmlInit::InitComboBox(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -186,9 +164,7 @@ CUIButton* CScriptXmlInit::InitButton(LPCSTR path, CUIWindow* parent)
 {
     CUIButton* pWnd = xr_new<CUIButton>();
     CUIXmlInit::InitButton(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -196,9 +172,7 @@ CUI3tButton* CScriptXmlInit::Init3tButton(LPCSTR path, CUIWindow* parent)
 {
     CUI3tButton* pWnd = xr_new<CUI3tButton>();
     CUIXmlInit::Init3tButton(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -206,9 +180,7 @@ CUIListWnd* CScriptXmlInit::InitList(LPCSTR path, CUIWindow* parent)
 {
     CUIListWnd* pWnd = xr_new<CUIListWnd>();
     CUIXmlInit::InitListWnd(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -216,9 +188,7 @@ CUITabControl* CScriptXmlInit::InitTab(LPCSTR path, CUIWindow* parent)
 {
     CUITabControl* pWnd = xr_new<CUITabControl>();
     CUIXmlInit::InitTabControl(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -231,9 +201,7 @@ CServerList* CScriptXmlInit::InitServerList(LPCSTR path, CUIWindow* parent)
 {
     CServerList* pWnd = xr_new<CServerList>();
     pWnd->InitFromXml(m_xml, path);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -241,9 +209,7 @@ CUIMapList* CScriptXmlInit::InitMapList(LPCSTR path, CUIWindow* parent)
 {
     CUIMapList* pWnd = xr_new<CUIMapList>();
     pWnd->InitFromXml(m_xml, path);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -251,9 +217,7 @@ CUIMMShniaga* CScriptXmlInit::InitMMShniaga(LPCSTR path, CUIWindow* parent)
 {
     CUIMMShniaga* pWnd = xr_new<CUIMMShniaga>();
     pWnd->Init(m_xml, path);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -261,9 +225,7 @@ CUIMapInfo* CScriptXmlInit::InitMapInfo(LPCSTR path, CUIWindow* parent)
 {
     CUIMapInfo* pWnd = xr_new<CUIMapInfo>();
     CUIXmlInit::InitWindow(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
-    //.	if(parent) parent->AttachChild(pWnd);
     return pWnd;
 }
 
@@ -271,7 +233,6 @@ CUIWindow* CScriptXmlInit::InitKeyBinding(LPCSTR path, CUIWindow* parent)
 {
     CUIKeyBinding* pWnd = xr_new<CUIKeyBinding>();
     pWnd->InitFromXml(m_xml, path);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
     return pWnd;
 }
@@ -280,7 +241,6 @@ CUITrackBar* CScriptXmlInit::InitTrackBar(LPCSTR path, CUIWindow* parent)
 {
     CUITrackBar* pWnd = xr_new<CUITrackBar>();
     CUIXmlInit::InitTrackBar(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
     return pWnd;
 }
@@ -289,7 +249,6 @@ CUIProgressBar* CScriptXmlInit::InitProgressBar(LPCSTR path, CUIWindow* parent)
 {
     CUIProgressBar* pWnd = xr_new<CUIProgressBar>();
     CUIXmlInit::InitProgressBar(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
     return pWnd;
 }
@@ -298,7 +257,6 @@ CUIEditBox* CScriptXmlInit::InitCDkey(LPCSTR path, CUIWindow* parent)
 {
     CUICDkey* pWnd = xr_new<CUICDkey>();
     CUIXmlInit::InitEditBox(m_xml, path, 0, pWnd);
-    pWnd->SetAutoDelete(true);
     _attach_child(pWnd, parent);
     return pWnd;
 }

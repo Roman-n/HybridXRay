@@ -158,7 +158,9 @@ function action_remark_activity:update()
             end
         end
 
-        if self.sound_end_signalled == true andself.anim_end_signalled == true then
+        if self.sound_end_signalled == true and
+           self.anim_end_signalled == true
+        then
             if self.action_end_signalled == false then
                 self.st.signals["action_end"] = true
                 self.action_end_signalled = true

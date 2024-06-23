@@ -243,6 +243,14 @@ public:
     {
         CUISimpleWindow::SetWndRect(rect);
     }
+    void SetWndPos_script(Fvector2 pos)
+    {
+        CUISimpleWindow::SetWndPos(pos);
+    }
+    void SetWndSize_script(Fvector2 size)
+    {
+        CUISimpleWindow::SetWndSize(size);
+    }
 
     //прорисовка окна
     virtual void Draw();

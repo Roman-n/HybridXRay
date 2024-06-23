@@ -46,5 +46,5 @@ void CUIButton::script_register(lua_State* L)
 
         class_<CUISpinText, CUICustomSpin>("CUISpinText").def(constructor<>()),
 
-        class_<CUITrackBar, CUIWindow>("CUITrackBar").def(constructor<>()).def("GetCheck", &CUITrackBar::GetCheck).def("SetCheck", &CUITrackBar::SetCheck)];
+        class_<CUITrackBar, CUIWindow>("CUITrackBar").def(constructor<>()).def("GetCheck", &CUITrackBar::GetCheck).def("SetCheck", &CUITrackBar::SetCheck).def("GetIValue", &CUITrackBar::GetIValue).def("GetFValue", &CUITrackBar::GetFValue).def("SetOptIBounds", &CUITrackBar::SetOptIBounds).def("SetOptFBounds", &CUITrackBar::SetOptFBounds).def("SetCurrentValue", &CUITrackBar::SetCurrentValue)];
 }

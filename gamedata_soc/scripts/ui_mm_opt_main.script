@@ -8,7 +8,7 @@ class "options_dialog" (CUIScriptWnd)
 function options_dialog:__init() super()
    self:SetFont(GetFontMedium()) --set base font for dialog.
 
-    self.m_preconditions    = {}
+    self.m_preconditions = {}
 
     self:InitControls()
     self:InitCallBacks()
@@ -97,29 +97,42 @@ function options_dialog:SetCurrentValues()
 
     opt:SetCurrentValues("key_binding")
 
-    if not xrRender_test_r2_hw() then
-        self.combo_r2:SetCurrentID      (0)
-        self.combo_r2:Enable            (false)
-    end
-
     self:UpdateDependControls()
 end
 
 function options_dialog:UpdateDependControls()
-    local _current_id   = self.combo_r2:CurrentID()
+    self.scroll_v:Clear()
+    local _current_id = self.combo_renderer:CurrentID()
 
     for i,j in pairs(self.m_preconditions) do
-        j               (i, _current_id)
+        if (j.func(_current_id)) then
+            self.scroll_v:AddWindow(j.control, true)
+            j.control:SetAutoDelete(false)
+        end
     end
---[[
-    if self.combo_r2:CurrentID()==1 then
-        self.ch_r2_sun:Enable           (true)
-        self.ch_r2_sun_det:Enable       (true)
-    else
-        self.ch_r2_sun:Enable           (false)
-        self.ch_r2_sun_det:Enable       (false)
+
+    local max_texture_lod = 4
+    local min_texture_lod = 0
+
+    if _current_id ~= 0 then
+        if not is_enough_address_space_available() then
+            min_texture_lod = 1
+        end
     end
-]]
+
+    self.texture_lod_track:SetOptIBounds(min_texture_lod, max_texture_lod)
+    self:OnAOOptionChange()
+end
+
+function options_dialog:OnR2changed()
+
+    self:UpdateDependControls()
+
+    if false==self.b_r2_restart_shown then
+        self.b_r2_restart_shown = true
+        self.message_box:Init("message_box_restart_game")
+        self:GetHolder():start_stop_menu(self.message_box,true)
+    end
 end
 
 function options_dialog:InitCallBacks()
@@ -129,14 +142,13 @@ function options_dialog:InitCallBacks()
     self:AddCallback("btn_cancel",          ui_events.BUTTON_CLICKED,   self.OnBtnCancel,           self)
     self:AddCallback("btn_default_graphic", ui_events.BUTTON_CLICKED,   self.OnBtnDefGraph,         self)
     self:AddCallback("btn_default_sound",   ui_events.BUTTON_CLICKED,   self.OnBtnDefSound,         self)
-    self:AddCallback("combo_r2",            ui_events.LIST_ITEM_SELECT, self.OnR2changed,           self)
     self:AddCallback("combo_preset",        ui_events.LIST_ITEM_SELECT, self.OnPresetChanged,       self)
     self:AddCallback("btn_simply_graphic",  ui_events.BUTTON_CLICKED,   self.OnSimplyGraphic,       self)
     self:AddCallback("btn_keyb_default",    ui_events.BUTTON_CLICKED,   self.OnBtnDefault,          self)
     self:AddCallback("btn_check_updates",   ui_events.BUTTON_CLICKED,   self.OnBtnCheckUpdates,     self)
-
+    self:AddCallback("combo_renderer",      ui_events.LIST_ITEM_SELECT, self.OnR2changed,           self)
     self:AddCallback("btn_cancel_download", ui_events.BUTTON_CLICKED,   self.OnBtn_CancelDownload,  self)
-
+    self:AddCallback("tab_ao_opt",          ui_events.TAB_CHANGED,      self.OnAOOptionChange,      self)
 end
 
 function options_dialog:OnBtnCheckUpdates()
@@ -158,17 +170,6 @@ function options_dialog:OnPresetChanged()
     local opt                   = COptionsManager()
     opt:SetCurrentValues        ("mm_opt_video")
     opt:SetCurrentValues        ("mm_opt_video_adv")
-end
-
-function options_dialog:OnR2changed()
-
-    self:UpdateDependControls               ()
-
-    if false==self.b_r2_restart_shown then
-        self.b_r2_restart_shown          = true
-        self.message_box:Init           ("message_box_restart_game")
-        self:GetHolder():start_stop_menu(self.message_box,true)
-    end
 end
 
 function options_dialog:OnBtnDefGraph()
@@ -229,6 +230,17 @@ function options_dialog:OnTabChange()
     elseif i == 3 then
         self.dlg_controls:Show(true)
     end
+end
+
+function options_dialog:OnAOOptionChange()
+    local ao_opt_id = self.tab_ao_opt:GetActiveIndex()
+    local render_id = self.combo_renderer:CurrentID()
+    if(render_id>=4) and (ao_opt_id=="hdao") then
+        self.combo_ssao:enable_id(4)
+    else
+        self.combo_ssao:disable_id(4)
+    end
+    self.combo_ssao:SetCurrentOptValue()
 end
 
 function options_dialog:OnBtnAdvGraphic()

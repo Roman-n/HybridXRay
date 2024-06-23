@@ -7,7 +7,7 @@
 --  file ext:   script
 --  author:     Sidorovich
 --
---  purpose:    ѕомощник, мать его...
+--  purpose:    Помощник, мать его...
 ----------------------------------------------------------------------
 
 local   sos_ignore           = 0
@@ -48,10 +48,10 @@ function decide (npc, sos)
     local health = npc.health
     local rel = npc:relation (sos)
 
-    --если у нас нет оружия или патронов, то пошел он подальше
+    -- Если у нас нет оружия или патронов, то пошел он подальше
     if wpn_code == wpn_bad then return sos_ignore end
 
-    -- если мужик друг и у нас более 50 оборотов здоровья, то идем на помощь
+    -- Если мужик друг и у нас более 50 оборотов здоровья, то идем на помощь
     if rel == game_object.friend then
        npc:set_goodwill (100, sos)
        if health < 0.5 then return sos_ignore end
@@ -69,7 +69,7 @@ function decide (npc, sos)
        return sos_mercant
     end
 
-    -- Враг. будем его мочить, если у нас хорошее вооружение и здоровья не менее 90%
+    -- Враг. Идем его мочить, если у нас хорошее вооружение и здоровья не менее 90%
     if rel == game_object.enemy then
        npc:set_goodwill (0, sos)
        if wpn_code == wpn_good and health >= 0.9 then
@@ -156,7 +156,7 @@ end
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
--- инициализация помощи (экшен-заглушка, служит только для определения типа помощи.
+-- Инициализация помощи (экшен-заглушка, служит только для определения типа помощи.
 class "action_initialize" (action_base)
 -----------------------
 function action_initialize:__init (name, storage) super (nil, name)
@@ -187,7 +187,7 @@ end
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
--- идем помогать
+-- Идем помогать
 class "action_help" (action_base)
 -----------------------
 function action_help:__init (name, storage) super (nil, name)

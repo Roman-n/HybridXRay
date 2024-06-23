@@ -249,3 +249,25 @@ void CUITrackBar::SetCheck(bool b)
     VERIFY(!m_b_is_float);
     m_i_val = (b) ? m_i_max : m_i_min;
 }
+
+void CUITrackBar::SetOptIBounds(int imin, int imax)
+{
+    m_i_min = imin;
+    m_i_max = imax;
+    if (m_i_val < m_i_min || m_i_val > m_i_max)
+    {
+        clamp(m_i_val, m_i_min, m_i_max);
+        OnChangedOptValue();
+    }
+}
+
+void CUITrackBar::SetOptFBounds(float fmin, float fmax)
+{
+    m_f_min = fmin;
+    m_f_max = fmax;
+    if (m_i_val < m_i_min || m_i_val > m_i_max)
+    {
+        clamp(m_f_val, m_f_min, m_f_max);
+        OnChangedOptValue();
+    }
+}

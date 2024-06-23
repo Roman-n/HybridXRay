@@ -59,7 +59,7 @@ void test_update();
 
 using namespace InventoryUtilities;
 
-//	hud adjust mode
+//  hud adjust mode
 int       g_bHudAdjustMode  = 0;
 float     g_fHudAdjustValue = 0.0f;
 
@@ -143,7 +143,7 @@ void CUIMainIngameWnd::Init()
 
     UIWeaponIcon.Enable(false);
 
-    //����������
+    // индикаторы
     UIZoneMap->Init();
     UIZoneMap->SetScale(DEFAULT_MAP_SCALE);
 
@@ -155,12 +155,12 @@ void CUIMainIngameWnd::Init()
 
     //������ ��������� ��������
     UIStaticHealth.AttachChild(&UIHealthBar);
-    //.	xml_init.InitAutoStaticGroup(uiXml,"static_health", &UIStaticHealth);
+    //. xml_init.InitAutoStaticGroup(uiXml,"static_health", &UIStaticHealth);
     xml_init.InitProgressBar(uiXml, "progress_bar_health", 0, &UIHealthBar);
 
     //������ ��������� ������
     UIStaticArmor.AttachChild(&UIArmorBar);
-    //.	xml_init.InitAutoStaticGroup(uiXml,"static_armor", &UIStaticArmor);
+    //. xml_init.InitAutoStaticGroup(uiXml,"static_armor", &UIStaticArmor);
     xml_init.InitProgressBar(uiXml, "progress_bar_armor", 0, &UIArmorBar);
 
     // ���������, ������� ��������� ��� ��������� ������� �� ������
@@ -174,7 +174,7 @@ void CUIMainIngameWnd::Init()
     xml_init.InitScrollView(uiXml, "icons_scroll_view", 0, m_UIIcons);
     AttachChild(m_UIIcons);
 
-    // ��������� ������
+    // Загружаем иконки
     if (IsGameTypeSingle())
     {
         xml_init.InitStatic(uiXml, "starvation_static", 0, &UIStarvationIcon);
@@ -204,11 +204,11 @@ void CUIMainIngameWnd::Init()
 
     shared_str    warningStrings[6] = {"jammed", "radiation", "wounds", "starvation", "fatigue", "invincible"};
 
-    // ��������� ��������� �������� ��� �����������
+    // Загружаем пороговые значения для индикаторов
     EWarningIcons j                 = ewiWeaponJammed;
     while (j < ewiInvincible)
     {
-        // ������ ������ ������� ��� ������� ����������
+        // Читаем данные порогов для каждого индикатора
         shared_str cfgRecord = pSettings->r_string("main_ingame_indicators_thresholds", *warningStrings[static_cast<int>(j) - 1]);
         u32        count     = _GetItemCount(*cfgRecord);
 
@@ -313,7 +313,7 @@ void CUIMainIngameWnd::SetAmmoIcon(const shared_str& sect_name)
     };
 
     UIWeaponIcon.Show(true);
-    //properties used by inventory menu
+    // properties used by inventory menu
     float iGridWidth  = pSettings->r_float(sect_name, "inv_grid_width");
     float iGridHeight = pSettings->r_float(sect_name, "inv_grid_height");
 
@@ -417,7 +417,7 @@ void CUIMainIngameWnd::Update()
             float value = 0;
             switch (i)
             {
-                    //radiation
+                    // radiation
                 case ewiRadiation:
                     value = m_pActor->conditions().GetRadiation();
                     break;
@@ -479,7 +479,7 @@ void CUIMainIngameWnd::Update()
 bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 {
 #if 0   //def DEBUG
-	test_key(dik);
+    test_key(dik);
 #endif
     // ��������� ������ adjust hud mode
     bool flag = false;
@@ -489,7 +489,7 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
         if (m_pWeapon)
         {
             pWpnHud = m_pWeapon->GetHUD();
-            //			if (!pWpnHud) return false;
+            //          if (!pWpnHud) return false;
         }
         else
             return false;
@@ -948,7 +948,7 @@ void CUIMainIngameWnd::SetWarningIconColor(EWarningIcons icon, const u32 cl)
 {
     bool bMagicFlag = true;
 
-    // ������ ���� ��������� ������
+    // Задаем цвет требуемой иконки
     switch (icon)
     {
         case ewiAll:
@@ -994,7 +994,7 @@ void CUIMainIngameWnd::TurnOffWarningIcon(EWarningIcons icon)
 
 void CUIMainIngameWnd::SetFlashIconState_(EFlashingIcons type, bool enable)
 {
-    // �������� �������� ��������� ������
+    // Включаем анимацию требуемой иконки
     FlashingIcons_it icon = m_FlashingIcons.find(type);
     R_ASSERT2(icon != m_FlashingIcons.end(), "Flashing icon with this type not existed");
     icon->second->Show(enable);
@@ -1007,14 +1007,14 @@ void CUIMainIngameWnd::InitFlashingIcons(CUIXml* node)
 
     CUIXmlInit        xml_init;
     CUIStatic*        pIcon = NULL;
-    // ����������� �� ���� ����� � �������������� �� ��� �������
+    // Пробегаемся по всем нодам и инициализируем из них статики
     for (int i = 0; i < staticsCount; ++i)
     {
         pIcon = xr_new<CUIStatic>();
         xml_init.InitStatic(*node, flashingIconNodeName, i, pIcon);
         shared_str     iconType = node->ReadAttrib(flashingIconNodeName, i, "type", "none");
 
-        // ������ ���������� ������ � �� ���
+        // Теперь запоминаем иконку и ее тип
         EFlashingIcons type     = efiPdaTask;
 
         if (iconType == "pda")
@@ -1193,53 +1193,53 @@ void test_key(int dik)
     }
 
     /*
-	if(dik==DIK_K){
-		if(g_pTestFont){
-			g_pTestFont->Release();
-			g_pTestFont = NULL;
-			
-			g_pTextSprite->Release();
-			return;
-		}
-	HRESULT hr;
-	static int _height	= -12;
-	static u32 _width	= 0;
-	static u32 _weigth	= FW_BOLD;
-	static BOOL _italic = FALSE;
+    if(dik==DIK_K){
+        if(g_pTestFont){
+            g_pTestFont->Release();
+            g_pTestFont = NULL;
+            
+            g_pTextSprite->Release();
+            return;
+        }
+    HRESULT hr;
+    static int _height  = -12;
+    static u32 _width   = 0;
+    static u32 _weigth  = FW_BOLD;
+    static BOOL _italic = FALSE;
 
     hr = D3DXCreateFont( HW.pDevice, _height, _width, _weigth, 1, _italic, DEFAULT_CHARSET, 
                          OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, 
                          "Times New Roman", &g_pTestFont );
 
 
-	D3DXCreateSprite( HW.pDevice, &g_pTextSprite );
+    D3DXCreateSprite( HW.pDevice, &g_pTextSprite );
 
-	g_pTestFont->PreloadText("This is a trivial call to ID3DXFont::DrawText", xr_strlen("This is a trivial call to ID3DXFont::DrawText"));
+    g_pTestFont->PreloadText("This is a trivial call to ID3DXFont::DrawText", xr_strlen("This is a trivial call to ID3DXFont::DrawText"));
 
-	}
+    }
 */
 }
 /*
-D3DCOLOR _clr	= D3DXCOLOR( 1.0f, 0.0f, 0.0f, 1.0f );
-LPCSTR _str		= "This is a trivial call to ID3DXFont::DrawText";
-int _len		= 43;
+D3DCOLOR _clr   = D3DXCOLOR( 1.0f, 0.0f, 0.0f, 1.0f );
+LPCSTR _str     = "This is a trivial call to ID3DXFont::DrawText";
+int _len        = 43;
 */
 void test_draw()
 {
     if (pUIFrame)
         pUIFrame->Draw();
     /*
-	if(g_pTestFont){
+    if(g_pTestFont){
 
-//	g_pTestFont->PreloadText("This is a trivial call to ID3DXFont::DrawText", xr_strlen("This is a trivial call to ID3DXFont::DrawText"));
-//	g_pTestFont2->PreloadText("This is a trivial call to ID3DXFont::DrawText", xr_strlen("This is a trivial call to ID3DXFont::DrawText"));
+//  g_pTestFont->PreloadText("This is a trivial call to ID3DXFont::DrawText", xr_strlen("This is a trivial call to ID3DXFont::DrawText"));
+//  g_pTestFont2->PreloadText("This is a trivial call to ID3DXFont::DrawText", xr_strlen("This is a trivial call to ID3DXFont::DrawText"));
 
-//	IDirect3DTexture9	*T;
-//	RECT				R;
-//	POINT				P;
-//	g_pTestFont2->PreloadGlyphs(0,255);
-//	g_pTestFont2->GetGlyphData(50, &T, &R, &P);
-//	R_CHK		(D3DXSaveTextureToFile	("x:\\test_font.dds",D3DXIFF_DDS,T,0));
+//  IDirect3DTexture9   *T;
+//  RECT                R;
+//  POINT               P;
+//  g_pTestFont2->PreloadGlyphs(0,255);
+//  g_pTestFont2->GetGlyphData(50, &T, &R, &P);
+//  R_CHK       (D3DXSaveTextureToFile  ("x:\\test_font.dds",D3DXIFF_DDS,T,0));
 
 #define DT_TOP                      0x00000000
 #define DT_LEFT                     0x00000000
@@ -1258,94 +1258,94 @@ void test_draw()
 #define DT_INTERNAL                 0x00001000
 
 
-		RECT rc;
+        RECT rc;
         g_pTextSprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE );
 
-		rc.left   = 50;
-		rc.top    = 150;
-		rc.right  = 250;
-		rc.bottom = 180;
+        rc.left   = 50;
+        rc.top    = 150;
+        rc.right  = 250;
+        rc.bottom = 180;
 
-		for(int i=0; i<13; ++i){
-			g_pTestFont->DrawText( g_pTextSprite, _str, _len, &rc, DT_SINGLELINE, _clr);
-			rc.top			+= 30; rc.bottom		+= 30;
-		}
+        for(int i=0; i<13; ++i){
+            g_pTestFont->DrawText( g_pTextSprite, _str, _len, &rc, DT_SINGLELINE, _clr);
+            rc.top          += 30; rc.bottom        += 30;
+        }
 
-		g_pTextSprite->End();
+        g_pTextSprite->End();
 
-	}
+    }
 */
 }
 
 void CUIMainIngameWnd::draw_adjust_mode()
 {
     /*if (g_bHudAdjustMode && m_pWeapon) //draw firePoint,ShellPoint etc
-	{
-		CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
-		if(!pActor)
-			return;
+    {
+        CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
+        if(!pActor)
+            return;
 
-		bool bCamFirstEye = !!m_pWeapon->GetHUDmode();
-		string32 hud_view="HUD view";
-		string32 _3rd_person_view="3-rd person view";
-		CGameFont* F		= UI()->Font()->pFontDI;
-		F->SetAligment		(CGameFont::alCenter);
-//.		F->SetSizeI			(0.02f);
-		F->OutSetI			(0.f,-0.8f);
-		F->SetColor			(0xffffffff);
-		F->OutNext			("Hud_adjust_mode=%d",g_bHudAdjustMode);
-		if(g_bHudAdjustMode==1)
-			F->OutNext			("adjusting zoom offset");
-		else if(g_bHudAdjustMode==2)
-			F->OutNext			("adjusting fire point for %s",bCamFirstEye?hud_view:_3rd_person_view);
-		else if(g_bHudAdjustMode==3)
-			F->OutNext			("adjusting missile offset");
-		else if(g_bHudAdjustMode==4)
-			F->OutNext			("adjusting shell point for %s",bCamFirstEye?hud_view:_3rd_person_view);
-		else if(g_bHudAdjustMode == 5)
-			F->OutNext			("adjusting fire point 2 for %s",bCamFirstEye?hud_view:_3rd_person_view);
+        bool bCamFirstEye = !!m_pWeapon->GetHUDmode();
+        string32 hud_view="HUD view";
+        string32 _3rd_person_view="3-rd person view";
+        CGameFont* F        = UI()->Font()->pFontDI;
+        F->SetAligment      (CGameFont::alCenter);
+//.     F->SetSizeI         (0.02f);
+        F->OutSetI          (0.f,-0.8f);
+        F->SetColor         (0xffffffff);
+        F->OutNext          ("Hud_adjust_mode=%d",g_bHudAdjustMode);
+        if(g_bHudAdjustMode==1)
+            F->OutNext          ("adjusting zoom offset");
+        else if(g_bHudAdjustMode==2)
+            F->OutNext          ("adjusting fire point for %s",bCamFirstEye?hud_view:_3rd_person_view);
+        else if(g_bHudAdjustMode==3)
+            F->OutNext          ("adjusting missile offset");
+        else if(g_bHudAdjustMode==4)
+            F->OutNext          ("adjusting shell point for %s",bCamFirstEye?hud_view:_3rd_person_view);
+        else if(g_bHudAdjustMode == 5)
+            F->OutNext          ("adjusting fire point 2 for %s",bCamFirstEye?hud_view:_3rd_person_view);
 
-		if(bCamFirstEye)
-		{
-			CWeaponHUD *pWpnHud = NULL;
-			pWpnHud = m_pWeapon->GetHUD();
+        if(bCamFirstEye)
+        {
+            CWeaponHUD *pWpnHud = NULL;
+            pWpnHud = m_pWeapon->GetHUD();
 
-			Fvector FP,SP,FP2;
+            Fvector FP,SP,FP2;
 
-			IKinematics* V			= smart_cast<IKinematics*>(pWpnHud->Visual());
-			VERIFY					(V);
-			V->CalculateBones		();
+            IKinematics* V          = smart_cast<IKinematics*>(pWpnHud->Visual());
+            VERIFY                  (V);
+            V->CalculateBones       ();
 
-			// fire point&direction
-			Fmatrix& fire_mat		= V->LL_GetTransform(u16(pWpnHud->FireBone()));
-			Fmatrix& parent			= pWpnHud->Transform	();
+            // fire point&direction
+            Fmatrix& fire_mat       = V->LL_GetTransform(u16(pWpnHud->FireBone()));
+            Fmatrix& parent         = pWpnHud->Transform    ();
 
-			const Fvector& fp		= pWpnHud->FirePoint();
-			const Fvector& fp2		= pWpnHud->FirePoint2();
-			const Fvector& sp		= pWpnHud->ShellPoint();
+            const Fvector& fp       = pWpnHud->FirePoint();
+            const Fvector& fp2      = pWpnHud->FirePoint2();
+            const Fvector& sp       = pWpnHud->ShellPoint();
 
-			fire_mat.transform_tiny	(FP,fp);
-			parent.transform_tiny	(FP);
+            fire_mat.transform_tiny (FP,fp);
+            parent.transform_tiny   (FP);
 
-			fire_mat.transform_tiny	(FP2,fp2);
-			parent.transform_tiny	(FP2);
+            fire_mat.transform_tiny (FP2,fp2);
+            parent.transform_tiny   (FP2);
 
-			fire_mat.transform_tiny	(SP,sp);
-			parent.transform_tiny	(SP);
+            fire_mat.transform_tiny (SP,sp);
+            parent.transform_tiny   (SP);
 
 
-			RCache.dbg_DrawAABB(FP,0.01f,0.01f,0.01f,color_xrgb(255,0,0));
-			RCache.dbg_DrawAABB(FP2,0.02f,0.02f,0.02f,color_xrgb(0,0,255));
-			RCache.dbg_DrawAABB(SP,0.01f,0.01f,0.01f,color_xrgb(0,255,0));
-		
-		}else{
-			Fvector FP = m_pWeapon->get_CurrentFirePoint();
-			Fvector FP2 = m_pWeapon->get_CurrentFirePoint2();
-			Fvector SP = m_pWeapon->get_LastSP();
-			RCache.dbg_DrawAABB(FP,0.01f,0.01f,0.01f,color_xrgb(255,0,0));
-			RCache.dbg_DrawAABB(FP2,0.02f,0.02f,0.02f,color_xrgb(0,0,255));
-			RCache.dbg_DrawAABB(SP,0.02f,0.02f,0.02f,color_xrgb(0,255,0));
-		}
-	}*/
+            RCache.dbg_DrawAABB(FP,0.01f,0.01f,0.01f,color_xrgb(255,0,0));
+            RCache.dbg_DrawAABB(FP2,0.02f,0.02f,0.02f,color_xrgb(0,0,255));
+            RCache.dbg_DrawAABB(SP,0.01f,0.01f,0.01f,color_xrgb(0,255,0));
+        
+        }else{
+            Fvector FP = m_pWeapon->get_CurrentFirePoint();
+            Fvector FP2 = m_pWeapon->get_CurrentFirePoint2();
+            Fvector SP = m_pWeapon->get_LastSP();
+            RCache.dbg_DrawAABB(FP,0.01f,0.01f,0.01f,color_xrgb(255,0,0));
+            RCache.dbg_DrawAABB(FP2,0.02f,0.02f,0.02f,color_xrgb(0,0,255));
+            RCache.dbg_DrawAABB(SP,0.02f,0.02f,0.02f,color_xrgb(0,255,0));
+        }
+    }*/
 }
 #endif
