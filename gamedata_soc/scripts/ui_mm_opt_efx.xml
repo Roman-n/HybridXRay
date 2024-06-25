@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+    <tab_sound_efx>
+        <cap_efxsetup x="6" y="142" width="135" height="24">
+            <texture a="650">ui_brokenline</texture>
+            <text font="letterica16" r="215" g="195" b="170" a="100" x="10">efx_restart_tips</text>
+        </cap_efxsetup>
+
+        <cap_stereomode x="15" y="167" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_snd_stereo_mode</text>
+        </cap_stereomode>
+        <list_stereomode x="175" y="168" width="235" height="20" list_length="3" always_show_scroll="1">
+            <options_item entry="snd_stereo_mode" group="mm_opt_sound" depend="restart"/>
+            <list_font r="170" g="170" b="170" font="letterica16"/>
+            <text_color>
+                <e r="170" g="170" b="170"/>
+                <d r="70" g="70" b="70"/>
+            </text_color>
+        </list_stereomode>
+
+        <cap_resampler x="15" y="196" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_snd_resampler</text>
+        </cap_resampler>
+        <list_resampler x="175" y="197" width="235" height="20" list_length="3" always_show_scroll="1">
+            <options_item entry="snd_resampler" group="mm_opt_sound" depend="restart"/>
+            <list_font r="170" g="170" b="170" font="letterica16"/>
+            <text_color>
+                <e r="170" g="170" b="170"/>
+                <d r="70" g="70" b="70"/>
+            </text_color>
+        </list_resampler>
+
+        <cap_crossfeed x="15" y="226" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_crossfeed</text>
+        </cap_crossfeed>
+        <list_crossfeed x="175" y="227" width="235" height="20" list_length="5">
+            <options_item entry="snd_crossfeed" group="mm_opt_sound" depend="restart"/>
+            <list_font r="170" g="170" b="170" font="letterica16"/>
+            <text_color>
+                <e r="170" g="170" b="170"/>
+                <d r="70" g="70" b="70"/>
+            </text_color>
+        </list_crossfeed>
+
+        <cap_hrtf x="15" y="259" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_snd_hrtf</text>
+        </cap_hrtf>
+        <check_hrtf x="162" y="254" width="44" height="29">
+            <texture>ui_inGame2_checkbox</texture>
+            <options_item entry="snd_hrtf" group="mm_opt_sound" depend="restart"/>
+        </check_hrtf>
+
+        <cap_widestereo x="15" y="286" width="135" height="24">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_snd_wide_stereo</text>
+        </cap_widestereo>
+        <check_widestereo x="162" y="281" width="44" height="29">
+            <texture>ui_inGame2_checkbox</texture>
+            <options_item entry="snd_wide_stereo" group="mm_opt_sound" depend="restart"/>
+        </check_widestereo>
+    </tab_sound_efx>
+</window>

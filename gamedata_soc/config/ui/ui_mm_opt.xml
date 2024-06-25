@@ -193,22 +193,6 @@
             <options_item entry="r__tf_aniso" group="mm_opt_video_adv"/>
         </track_aniso>
 
-        <cap_ssample x="20" y="5" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_supersample</text>
-        </cap_ssample>
-        <track_ssample x="194" y="0" width="245" height="21" step="1" is_integer="1">
-            <options_item entry="r__supersample" group="mm_opt_video_adv" depend="vid"/>
-        </track_ssample>
-        <combo_ssample x="194" y="0" width="245" height="21" list_length="3" always_show_scroll="0">
-            <options_item entry="r3_msaa" group="mm_opt_video_adv" depend="vid"/>
-            <text_color>
-                <e r="216" g="186" b="140"/>
-                <d r="227" g="199" b="178"/>
-            </text_color>
-            <list_font_s r="240" g="217" b="182"/>
-            <list_font   r="216" g="186" b="140" font="letterica16"/>
-        </combo_ssample>
-
         <cap_r2_sun x="20" y="5" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_r2_sun</text>
         </cap_r2_sun>
@@ -243,19 +227,6 @@
         <check_r2_steep_parallax x="194" y="0" width="30" height="21">
             <options_item entry="r2_steep_parallax" group="mm_opt_video_adv"/>
         </check_r2_steep_parallax>
-
-        <cap_r2_sun_quality x="20" y="5" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_r2_sun_quality</text>
-        </cap_r2_sun_quality>
-        <list_r2_sun_quality x="194" y="0" width="245" height="21" list_length="5">
-            <options_item entry="r2_sun_quality" group="mm_opt_video_adv" depend="vid"/>
-            <text_color>
-                <e r="216" g="186" b="140"/>
-                <d r="227" g="199" b="178"/>
-            </text_color>
-            <list_font_s r="240" g="217" b="182"/>
-            <list_font   r="216" g="186" b="140" font="letterica16"/>
-        </list_r2_sun_quality>
 
         <cap_r3_dynamic_wet_surfaces x="20" y="5" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_r3_dynamic_wet_surfaces</text>
@@ -306,19 +277,6 @@
             <options_item entry="rs_refresh_60hz" group="mm_opt_video_adv"/>
         </check_60hz>
 
-        <cap_sun_shafts x="20" y="5" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_sun_shafts</text>
-        </cap_sun_shafts>
-        <combo_sun_shafts x="194" y="0" width="245" height="21" list_length="4">
-            <options_item entry="r2_sun_shafts" group="mm_opt_video_adv" depend="vid"/>
-            <text_color>
-                <e r="216" g="186" b="140"/>
-                <d r="227" g="199" b="178"/>
-            </text_color>
-            <list_font_s r="240" g="217" b="182"/>
-            <list_font   r="216" g="186" b="140" font="letterica16"/>
-        </combo_sun_shafts>
-
         <cap_ao x="20" y="5" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_ssao_text</text>
         </cap_ao>
@@ -354,19 +312,6 @@
             </button>
         </radio_tab_ao_options>
 
-        <cap_ssao x="20" y="5" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_ssao_quality</text>
-        </cap_ssao>
-        <combo_ssao x="194" y="0" width="245" height="21" list_length="4">
-            <options_item entry="r2_ssao" group="mm_opt_video_adv" depend="restart"/>
-            <text_color>
-                <e r="216" g="186" b="140"/>
-                <d r="227" g="199" b="178"/>
-            </text_color>
-            <list_font_s r="240" g="217" b="182"/>
-            <list_font   r="216" g="186" b="140" font="letterica16"/>
-        </combo_ssao>
-
         <cap_soft_water x="20" y="5" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_soft_water</text>
         </cap_soft_water>
@@ -395,19 +340,6 @@
             <options_item entry="r2_volumetric_lights" group="mm_opt_video_adv" depend="vid"/>
         </check_volumetric_light>
 
-        <cap_r3_msaa_alphatest x="20" y="5" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_msaa_alphatest</text>
-        </cap_r3_msaa_alphatest>
-        <combo_r3_msaa_alphatest x="194" y="0" width="245" height="21" list_length="5">
-            <options_item entry="r3_msaa_alphatest" group="mm_opt_video_adv" depend="restart"/>
-            <text_color>
-                <e r="216" g="186" b="140"/>
-                <d r="227" g="199" b="178"/>
-            </text_color>
-            <list_font_s r="240" g="217" b="182"/>
-            <list_font   r="216" g="186" b="140" font="letterica16"/>
-        </combo_r3_msaa_alphatest>
-
         <cap_r3_msaa_opt x="20" y="5" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_r3_DX10_1</text>
         </cap_r3_msaa_opt>
@@ -422,6 +354,74 @@
             <options_item entry="r4_enable_tessellation" group="mm_opt_video_adv" depend="vid"/>
         </check_r4_tessellation>
 
+        <cap_ssample x="20" y="5" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_supersample</text>
+        </cap_ssample>
+        <track_ssample x="194" y="0" width="245" height="21" step="1" is_integer="1">
+            <options_item entry="r__supersample" group="mm_opt_video_adv" depend="vid"/>
+        </track_ssample>
+        <combo_ssample x="194" y="0" width="245" height="21" list_length="3" always_show_scroll="0">
+            <options_item entry="r3_msaa" group="mm_opt_video_adv" depend="vid"/>
+            <text_color>
+                <e r="216" g="186" b="140"/>
+                <d r="227" g="199" b="178"/>
+            </text_color>
+            <list_font_s r="240" g="217" b="182"/>
+            <list_font   r="216" g="186" b="140" font="letterica16"/>
+        </combo_ssample>
+
+        <cap_r2_sun_quality x="20" y="5" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_r2_sun_quality</text>
+        </cap_r2_sun_quality>
+        <list_r2_sun_quality x="194" y="0" width="245" height="21" list_length="5">
+            <options_item entry="r2_sun_quality" group="mm_opt_video_adv" depend="vid"/>
+            <text_color>
+                <e r="216" g="186" b="140"/>
+                <d r="227" g="199" b="178"/>
+            </text_color>
+            <list_font_s r="240" g="217" b="182"/>
+            <list_font   r="216" g="186" b="140" font="letterica16"/>
+        </list_r2_sun_quality>
+
+        <cap_sun_shafts x="20" y="5" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_sun_shafts</text>
+        </cap_sun_shafts>
+        <combo_sun_shafts x="194" y="0" width="245" height="21" list_length="4">
+            <options_item entry="r2_sun_shafts" group="mm_opt_video_adv" depend="vid"/>
+            <text_color>
+                <e r="216" g="186" b="140"/>
+                <d r="227" g="199" b="178"/>
+            </text_color>
+            <list_font_s r="240" g="217" b="182"/>
+            <list_font   r="216" g="186" b="140" font="letterica16"/>
+        </combo_sun_shafts>
+
+        <cap_ssao x="20" y="5" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_ssao_quality</text>
+        </cap_ssao>
+        <combo_ssao x="194" y="0" width="245" height="21" list_length="4">
+            <options_item entry="r2_ssao" group="mm_opt_video_adv" depend="restart"/>
+            <text_color>
+                <e r="216" g="186" b="140"/>
+                <d r="227" g="199" b="178"/>
+            </text_color>
+            <list_font_s r="240" g="217" b="182"/>
+            <list_font   r="216" g="186" b="140" font="letterica16"/>
+        </combo_ssao>
+
+        <cap_r3_msaa_alphatest x="20" y="5" width="143" height="21">
+            <text r="170" g="170" b="170" font="letterica16" align="r" vert_align="c">ui_mm_msaa_alphatest</text>
+        </cap_r3_msaa_alphatest>
+        <combo_r3_msaa_alphatest x="194" y="0" width="245" height="21" list_length="5" always_show_scroll="1">
+            <options_item entry="r3_msaa_alphatest" group="mm_opt_video_adv" depend="restart"/>
+            <text_color>
+                <e r="216" g="186" b="140"/>
+                <d r="227" g="199" b="178"/>
+            </text_color>
+            <list_font_s r="240" g="217" b="182"/>
+            <list_font   r="216" g="186" b="140" font="letterica16"/>
+        </combo_r3_msaa_alphatest>
+
         <btn_to_simply x="342" y="325" width="111" height="29">
             <text align="c" font="letterica16" r="227" g="199" b="178">ui_mm_simply</text>
             <texture>ui_button_ordinary</texture>
@@ -432,35 +432,52 @@
         <cap_mastervolume x="20" y="20" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_master_volume</text>
         </cap_mastervolume>
-        <cap_musicvolume x="20" y="45" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_music_volume</text>
-        </cap_musicvolume>
-        <_cap_soundquality x="20" y="70" width="143" height="21">
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_sound_quality</text>
-        </_cap_soundquality>
-
-        <check_eax x="20" y="70" width="143" height="21">
-            <options_item entry="snd_efx" group="mm_opt_sound"/>
-            <text font="letterica16" r="215" g="195" b="170">ui_mm_eax</text>
-        </check_eax>
-
         <track_mastervolume x="194" y="20" width="245" height="21">
             <options_item entry="snd_volume_eff" group="mm_opt_sound"/>
         </track_mastervolume>
+		
+        <cap_musicvolume x="20" y="45" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_music_volume</text>
+        </cap_musicvolume>
         <track_musicvolume x="194" y="45" width="245" height="21">
             <options_item entry="snd_volume_music" group="mm_opt_sound"/>
         </track_musicvolume>
+		
+        <_cap_soundquality x="20" y="70" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_sound_quality</text>
+        </_cap_soundquality>
         <_list_soundquality x="194" y="70" width="245" height="21">
             <options_item entry="snd_freq" group="mm_opt_sound"/>
         </_list_soundquality>
+
+        <cap_snd_device x="20" y="90" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_snd_device</text>
+        </cap_snd_device>
+        <list_snd_device x="194" y="90" width="245" height="21" list_length="4" always_show_scroll="1">
+            <options_item entry="snd_device" group="mm_opt_sound" depend="restart"/>
+            <text_color>
+                <e r="216" g="186" b="140"/>
+                <d r="227" g="199" b="178"/>
+            </text_color>
+            <list_font_s r="240" g="217" b="182"/>
+            <list_font   r="216" g="186" b="140" font="letterica16"/>
+        </list_snd_device>
+
+        <cap_check_eax x="20" y="125" width="143" height="21">
+            <text font="letterica16" r="215" g="195" b="170">ui_mm_eax</text>
+        </cap_check_eax>
+        <check_eax x="194" y="125" width="143" height="21">
+            <options_item entry="snd_efx" group="mm_opt_sound" depend="snd"/>
+            <!-- <text font="letterica16" r="215" g="195" b="170">ui_mm_eax</text> -->
+        </check_eax>
 
         <btn_default_set x="342" y="325" width="111" height="29">
             <text align="c" font="letterica16" r="188" g="153" b="123">ui_mm_default</text>
             <texture>ui_button_ordinary</texture>
         </btn_default_set>
     </tab_sound>
+	
     <tab_gameplay>
-
         <cap_difficulty x="20" y="20" width="143" height="21">
             <text font="letterica16" r="215" g="195" b="170">ui_mm_difficulty</text>
         </cap_difficulty>

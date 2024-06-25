@@ -13,27 +13,79 @@ function opt_sound:InitControls(x, y, xml, handler)
 
     self.bk = xml:InitFrame("frame", self)
 
---  local c
+    xml:InitStatic("tab_sound:cap_mastervolume", self)
+    xml:InitStatic("tab_sound:cap_musicvolume", self)
 
-    xml:InitStatic("tab_sound:cap_mastervolume",        self)
-    xml:InitStatic("tab_sound:cap_musicvolume",     self)
---  xml:InitStatic("tab_sound:cap_sfxvolume",       self)
---  xml:InitStatic("tab_sound:cap_voicevolume",     self)
---  xml:InitStatic("tab_sound:cap_soundquality",        self)
-
---  c = xml:InitCheck("tab_sound:check_reverse",    self)
---  c:Enable(false)
-    xml:InitCheck("tab_sound:check_eax",            self)
-
---  c = xml:InitSpinText("tab_sound:list_speakersetup", self)
---  c:Enable(false)
---  xml:InitSpinText("tab_sound:list_soundquality", self)
+    xml:InitStatic("tab_sound:cap_check_eax", self)
+    xml:InitCheck("tab_sound:check_eax", self)
 
     xml:InitTrackBar("tab_sound:track_musicvolume", self)
-    xml:InitTrackBar("tab_sound:track_mastervolume",self)
---  c = xml:InitTrackBar("tab_sound:track_voice",   self)
---  c:Enable(false)
+    xml:InitTrackBar("tab_sound:track_mastervolume", self)
 
---  btn = xml:Init3tButton("tab_sound:btn_default_set", self)
---  handler:Register(btn, "btn_default_sound")
+    xml:InitStatic("tab_sound:cap_snd_device", self)
+    xml:InitComboBox("tab_sound:list_snd_device", self)
+
+    -- проверяем существование команды, что бы не клинить меню в случае чего
+    if get_console():get_token("snd_crossfeed") then
+        local xml_efx = CScriptXmlInit()
+        xml_efx:ParseFile("ui_mm_opt_efx.xml")
+
+        xml_efx:InitStatic("tab_sound_efx:cap_crossfeed", self)
+        self.crossfeed = xml_efx:InitComboBox("tab_sound_efx:list_crossfeed", self)
+        xml_efx:InitStatic("tab_sound_efx:cap_resampler", self)
+        xml_efx:InitComboBox("tab_sound_efx:list_resampler", self)
+        xml_efx:InitStatic("tab_sound_efx:cap_stereomode", self)
+        xml_efx:InitComboBox("tab_sound_efx:list_stereomode", self)
+
+        xml_efx:InitStatic("tab_sound_efx:cap_hrtf", self)
+        self.hrtf = xml_efx:InitCheck("tab_sound_efx:check_hrtf", self)
+
+        self:RegisterCallback(self.hrtf, "tab_sound_check_hrtf", ui_events.BUTTON_CLICKED, self.OnClickHRTF, handler)
+        self:RegisterCallback(self.crossfeed, "tab_sound_check_crossfeed", ui_events.LIST_ITEM_SELECT, self.OnClickCrossfeed, handler)
+
+        self.OShow = self.Show
+        self.Show = self.HShow
+    end
+end
+
+function opt_sound:RegisterCallback(obj, eventString, event, callback, that)
+    that:Register(obj, eventString)
+    that:AddCallback(eventString, event, callback, that)
+end
+
+function opt_sound:HShow(b)
+    if b then
+        self:OnClickHRTF()
+        self:OnClickCrossfeed()
+
+        self:OShow(true)
+    else
+        self:OShow(false)
+    end
+end
+
+function opt_sound:OnClickHRTF()
+    if self.dlg_sound then
+        self = self.dlg_sound
+    end
+
+    if self.hrtf:GetCheck() then
+        self.crossfeed:Enable(false)
+        --self.crossfeed:SetCurrentOptValue(false)
+    else
+        self.crossfeed:Enable(true)
+    end
+end
+
+function opt_sound:OnClickCrossfeed()
+    if self.dlg_sound then
+        self = self.dlg_sound
+    end
+
+    if self.crossfeed:CurrentID() > 0 then
+        self.hrtf:SetCheck(false)
+        self.hrtf:Enable(false)
+    else
+        self.hrtf:Enable(true)
+    end
 end
