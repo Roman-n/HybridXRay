@@ -6,58 +6,258 @@
 #include "xr_level_controller.h"
 #include "string_table.h"
 
-_binding   g_key_bindings[bindings_count];
+_binding g_key_bindings[bindings_count];
 _key_group g_current_keygroup = _sp;
 
-_action    actions[]          = {{"left", kLEFT, _both}, {"right", kRIGHT, _both}, {"up", kUP, _both}, {"down", kDOWN, _both}, {"jump", kJUMP, _both}, {"crouch", kCROUCH, _both}, {"accel", kACCEL, _both}, {"sprint_toggle", kSPRINT_TOGGLE, _both},
+_action actions[]       = {
+    { "left",               kLEFT                   ,_both},
+    { "right",              kRIGHT                  ,_both},
+    { "up",                 kUP                     ,_both},
+    { "down",               kDOWN                   ,_both},
+    { "jump",               kJUMP                   ,_both},
+    { "crouch",             kCROUCH                 ,_both},
+    { "accel",              kACCEL                  ,_both},
+    { "sprint_toggle",      kSPRINT_TOGGLE          ,_both},
 
-                {"forward", kFWD, _both}, {"back", kBACK, _both}, {"lstrafe", kL_STRAFE, _both}, {"rstrafe", kR_STRAFE, _both},
+    { "forward",            kFWD                    ,_both},
+    { "back",               kBACK                   ,_both},
+    { "lstrafe",            kL_STRAFE               ,_both},
+    { "rstrafe",            kR_STRAFE               ,_both},
 
-                {"llookout", kL_LOOKOUT, _both}, {"rlookout", kR_LOOKOUT, _both},
+    { "llookout",           kL_LOOKOUT              ,_both},
+    { "rlookout",           kR_LOOKOUT              ,_both},
 
-                {"cam_1", kCAM_1, _both}, {"cam_2", kCAM_2, _both}, {"cam_3", kCAM_3, _both}, {"cam_zoom_in", kCAM_ZOOM_IN, _both}, {"cam_zoom_out", kCAM_ZOOM_OUT, _both},
+    { "cam_1",              kCAM_1                  ,_both},
+    { "cam_2",              kCAM_2                  ,_both},
+    { "cam_3",              kCAM_3                  ,_both},
+    { "cam_zoom_in",        kCAM_ZOOM_IN            ,_both},
+    { "cam_zoom_out",       kCAM_ZOOM_OUT           ,_both},
 
-                {"torch", kTORCH, _both}, {"night_vision", kNIGHT_VISION, _both}, {"show_detector", kDETECTOR, _sp},
+    { "torch",              kTORCH                  ,_both},
+    { "night_vision",       kNIGHT_VISION           ,_both},
+    { "show_detector",      kDETECTOR               ,_sp},
 
-                {"wpn_1", kWPN_1, _both}, {"wpn_2", kWPN_2, _both}, {"wpn_3", kWPN_3, _both}, {"wpn_4", kWPN_4, _both}, {"wpn_5", kWPN_5, _both}, {"wpn_6", kWPN_6, _both}, {"artefact", kARTEFACT, _both /*_mp*/}, {"wpn_next", kWPN_NEXT, _both},   // means next ammo type
-                {"wpn_fire", kWPN_FIRE, _both}, {"wpn_zoom", kWPN_ZOOM, _both}, {"wpn_zoom_inc", kWPN_ZOOM_INC, _both}, {"wpn_zoom_dec", kWPN_ZOOM_DEC, _both}, {"wpn_reload", kWPN_RELOAD, _both}, {"wpn_func", kWPN_FUNC, _both}, {"wpn_firemode_prev", kWPN_FIREMODE_PREV, _both}, {"wpn_firemode_next", kWPN_FIREMODE_NEXT, _both},
+    { "wpn_1",              kWPN_1                  ,_both},
+    { "wpn_2",              kWPN_2                  ,_both},
+    { "wpn_3",              kWPN_3                  ,_both},
+    { "wpn_4",              kWPN_4                  ,_both},
+    { "wpn_5",              kWPN_5                  ,_both},
+    { "wpn_6",              kWPN_6                  ,_both},
+    { "artefact",           kARTEFACT               ,_both/*_mp*/},
+    { "wpn_next",           kWPN_NEXT               ,_both},    // means next ammo type
+    { "wpn_fire",           kWPN_FIRE               ,_both},
+    { "wpn_zoom",           kWPN_ZOOM               ,_both},
+    { "wpn_zoom_inc",       kWPN_ZOOM_INC           ,_both},
+    { "wpn_zoom_dec",       kWPN_ZOOM_DEC           ,_both},
+    { "wpn_reload",         kWPN_RELOAD             ,_both},
+    { "wpn_func",           kWPN_FUNC               ,_both},
+    { "wpn_firemode_prev",  kWPN_FIREMODE_PREV      ,_both},
+    { "wpn_firemode_next",  kWPN_FIREMODE_NEXT      ,_both},
 
-                {"pause", kPAUSE, _both}, {"drop", kDROP, _both}, {"use", kUSE, _both}, {"scores", kSCORES, _both}, {"chat", kCHAT, _mp}, {"chat_team", kCHAT_TEAM, _mp}, {"screenshot", kSCREENSHOT, _both}, {"quit", kQUIT, _both}, {"console", kCONSOLE, _both}, {"inventory", kINVENTORY, _both}, {"buy_menu", kBUY, _mp}, {"skin_menu", kSKIN, _mp}, {"team_menu", kTEAM, _mp}, {"active_jobs", kACTIVE_JOBS, _sp},
+    { "pause",              kPAUSE                  ,_both},
+    { "drop",               kDROP                   ,_both},
+    { "use",                kUSE                    ,_both},
+    { "scores",             kSCORES                 ,_both},
+    { "chat",               kCHAT                   ,_mp},
+    { "chat_team",          kCHAT_TEAM              ,_mp},
+    { "screenshot",         kSCREENSHOT             ,_both},
+    { "quit",               kQUIT                   ,_both},
+    { "console",            kCONSOLE                ,_both},
+    { "inventory",          kINVENTORY              ,_both},
+    { "buy_menu",           kBUY                    ,_mp},
+    { "skin_menu",          kSKIN                   ,_mp},
+    { "team_menu",          kTEAM                   ,_mp},
+    { "active_jobs",        kACTIVE_JOBS            ,_both},
 
-                {"vote_begin", kVOTE_BEGIN, _mp}, {"show_admin_menu", kSHOW_ADMIN_MENU, _mp}, {"vote", kVOTE, _mp}, {"vote_yes", kVOTEYES, _mp}, {"vote_no", kVOTENO, _mp},
+    { "vote_begin",         kVOTE_BEGIN             ,_mp},
+    { "show_admin_menu",    kSHOW_ADMIN_MENU        ,_mp},
+    { "vote",               kVOTE                   ,_mp},
+    { "vote_yes",           kVOTEYES                ,_mp},
+    { "vote_no",            kVOTENO                 ,_mp},
 
-                {"next_slot", kNEXT_SLOT, _both}, {"prev_slot", kPREV_SLOT, _both},
+    { "next_slot",          kNEXT_SLOT              ,_both},
+    { "prev_slot",          kPREV_SLOT              ,_both},
 
-                {"speech_menu_0", kSPEECH_MENU_0, _mp}, {"speech_menu_1", kSPEECH_MENU_1, _mp},
+    { "speech_menu_0",      kSPEECH_MENU_0          ,_mp},
+    { "speech_menu_1",      kSPEECH_MENU_1          ,_mp},
 
-                {"quick_use_1", kQUICK_USE_1, _both}, {"quick_use_2", kQUICK_USE_2, _both}, {"quick_use_3", kQUICK_USE_3, _both}, {"quick_use_4", kQUICK_USE_4, _both},
+    { "quick_use_1",        kQUICK_USE_1            ,_both},
+    { "quick_use_2",        kQUICK_USE_2            ,_both},
+    { "quick_use_3",        kQUICK_USE_3            ,_both},
+    { "quick_use_4",        kQUICK_USE_4            ,_both},
 
-                {"quick_save", kQUICK_SAVE, _sp}, {"quick_load", kQUICK_LOAD, _sp},
-                //	{ "alife_command",		kALIFE_CMD				,_sp},
+    { "quick_save",         kQUICK_SAVE             ,_sp},
+    { "quick_load",         kQUICK_LOAD             ,_sp},
+//  { "alife_command",      kALIFE_CMD              ,_sp},
 
-                {NULL, kLASTACTION, _both}};
+    { nullptr,              kLASTACTION             ,_both}
+};
 
-_keyboard  keyboards[] = {{"kESCAPE", DIK_ESCAPE}, {"k1", DIK_1}, {"k2", DIK_2}, {"k3", DIK_3}, {"k4", DIK_4}, {"k5", DIK_5}, {"k6", DIK_6}, {"k7", DIK_7}, {"k8", DIK_8}, {"k9", DIK_9}, {"k0", DIK_0}, {"kMINUS", DIK_MINUS}, {"kEQUALS", DIK_EQUALS}, {"kBACK", DIK_BACK}, {"kTAB", DIK_TAB}, {"kQ", DIK_Q}, {"kW", DIK_W}, {"kE", DIK_E}, {"kR", DIK_R}, {"kT", DIK_T}, {"kY", DIK_Y}, {"kU", DIK_U}, {"kI", DIK_I}, {"kO", DIK_O}, {"kP", DIK_P}, {"kLBRACKET", DIK_LBRACKET}, {"kRBRACKET", DIK_RBRACKET},
-     {"kRETURN", DIK_RETURN}, {"kLCONTROL", DIK_LCONTROL}, {"kA", DIK_A}, {"kS", DIK_S}, {"kD", DIK_D}, {"kF", DIK_F}, {"kG", DIK_G}, {"kH", DIK_H}, {"kJ", DIK_J}, {"kK", DIK_K}, {"kL", DIK_L}, {"kSEMICOLON", DIK_SEMICOLON}, {"kAPOSTROPHE", DIK_APOSTROPHE}, {"kGRAVE", DIK_GRAVE}, {"kLSHIFT", DIK_LSHIFT}, {"kBACKSLASH", DIK_BACKSLASH}, {"kZ", DIK_Z}, {"kX", DIK_X}, {"kC", DIK_C}, {"kV", DIK_V}, {"kB", DIK_B}, {"kN", DIK_N}, {"kM", DIK_M}, {"kCOMMA", DIK_COMMA}, {"kPERIOD", DIK_PERIOD},
-     {"kSLASH", DIK_SLASH}, {"kRSHIFT", DIK_RSHIFT}, {"kMULTIPLY", DIK_MULTIPLY}, {"kLMENU", DIK_LMENU}, {"kSPACE", DIK_SPACE}, {"kCAPITAL", DIK_CAPITAL}, {"kF1", DIK_F1}, {"kF2", DIK_F2}, {"kF3", DIK_F3}, {"kF4", DIK_F4}, {"kF5", DIK_F5}, {"kF6", DIK_F6}, {"kF7", DIK_F7}, {"kF8", DIK_F8}, {"kF9", DIK_F9}, {"kF10", DIK_F10}, {"kNUMLOCK", DIK_NUMLOCK}, {"kSCROLL", DIK_SCROLL}, {"kNUMPAD7", DIK_NUMPAD7}, {"kNUMPAD8", DIK_NUMPAD8}, {"kNUMPAD9", DIK_NUMPAD9}, {"kSUBTRACT", DIK_SUBTRACT},
-     {"kNUMPAD4", DIK_NUMPAD4}, {"kNUMPAD5", DIK_NUMPAD5}, {"kNUMPAD6", DIK_NUMPAD6}, {"kADD", DIK_ADD}, {"kNUMPAD1", DIK_NUMPAD1}, {"kNUMPAD2", DIK_NUMPAD2}, {"kNUMPAD3", DIK_NUMPAD3}, {"kNUMPAD0", DIK_NUMPAD0}, {"kDECIMAL", DIK_DECIMAL}, {"kF11", DIK_F11}, {"kF12", DIK_F12}, {"kF13", DIK_F13}, {"kF14", DIK_F14}, {"kF15", DIK_F15}, {"kKANA", DIK_KANA}, {"kCONVERT", DIK_CONVERT}, {"kNOCONVERT", DIK_NOCONVERT}, {"kYEN", DIK_YEN}, {"kNUMPADEQUALS", DIK_NUMPADEQUALS},
-     {"kCIRCUMFLEX", DIK_CIRCUMFLEX}, {"kAT", DIK_AT}, {"kCOLON", DIK_COLON}, {"kUNDERLINE", DIK_UNDERLINE}, {"kKANJI", DIK_KANJI}, {"kSTOP", DIK_STOP}, {"kAX", DIK_AX}, {"kUNLABELED", DIK_UNLABELED}, {"kNUMPADENTER", DIK_NUMPADENTER}, {"kRCONTROL", DIK_RCONTROL}, {"kNUMPADCOMMA", DIK_NUMPADCOMMA}, {"kDIVIDE", DIK_DIVIDE}, {"kSYSRQ", DIK_SYSRQ}, {"kRMENU", DIK_RMENU}, {"kHOME", DIK_HOME}, {"kUP", DIK_UP}, {"kPRIOR", DIK_PRIOR}, {"kLEFT", DIK_LEFT}, {"kRIGHT", DIK_RIGHT}, {"kEND", DIK_END},
-     {"kDOWN", DIK_DOWN}, {"kNEXT", DIK_NEXT}, {"kINSERT", DIK_INSERT}, {"kDELETE", DIK_DELETE}, {"kLWIN", DIK_LWIN}, {"kRWIN", DIK_RWIN}, {"kAPPS", DIK_APPS}, {"kPAUSE", DIK_PAUSE}, {"mouse1", MOUSE_1}, {"mouse2", MOUSE_2}, {"mouse3", MOUSE_3}, {"mouse4", MOUSE_4}, {"mouse5", MOUSE_5}, {"mouse6", MOUSE_6}, {"mouse7", MOUSE_7}, {"mouse8", MOUSE_8}, {NULL, 0}};
+_keyboard keyboards[] = {
+    { "kA",            DIK_A },
+    { "kB",            DIK_B },
+    { "kC",            DIK_C },
+    { "kD",            DIK_D },
+    { "kE",            DIK_E },
+    { "kF",            DIK_F },
+    { "kG",            DIK_G },
+    { "kH",            DIK_H },
+    { "kI",            DIK_I },
+    { "kJ",            DIK_J },
+    { "kK",            DIK_K },
+    { "kL",            DIK_L },
+    { "kM",            DIK_M },
+    { "kN",            DIK_N },
+    { "kO",            DIK_O },
+    { "kP",            DIK_P },
+    { "kQ",            DIK_Q },
+    { "kR",            DIK_R },
+    { "kS",            DIK_S },
+    { "kT",            DIK_T },
+    { "kU",            DIK_U },
+    { "kV",            DIK_V },
+    { "kW",            DIK_W },
+    { "kX",            DIK_X },
+    { "kY",            DIK_Y },
+    { "kZ",            DIK_Z },
 
-void       initialize_bindings()
+    { "k1",            DIK_1 },
+    { "k2",            DIK_2 },
+    { "k3",            DIK_3 },
+    { "k4",            DIK_4 },
+    { "k5",            DIK_5 },
+    { "k6",            DIK_6 },
+    { "k7",            DIK_7 },
+    { "k8",            DIK_8 },
+    { "k9",            DIK_9 },
+    { "k0",            DIK_0 },
+
+    { "kRETURN",       DIK_RETURN },
+    { "kESCAPE",       DIK_ESCAPE },
+    { "kBACK",         DIK_BACK },
+    { "kTAB",          DIK_TAB },
+    { "kSPACE",        DIK_SPACE },
+
+    { "kMINUS",        DIK_MINUS },
+    { "kEQUALS",       DIK_EQUALS },
+    { "kLBRACKET",     DIK_LBRACKET },
+    { "kRBRACKET",     DIK_RBRACKET },
+    { "kBACKSLASH",    DIK_BACKSLASH },
+
+    { "kSEMICOLON",    DIK_SEMICOLON },
+    { "kAPOSTROPHE",   DIK_APOSTROPHE },
+    { "kGRAVE",        DIK_GRAVE },
+    { "kCOMMA",        DIK_COMMA },
+    { "kPERIOD",       DIK_PERIOD },
+    { "kSLASH",        DIK_SLASH },
+
+    { "kCAPITAL",      DIK_CAPITAL },
+
+    { "kF1",           DIK_F1 },
+    { "kF2",           DIK_F2 },
+    { "kF3",           DIK_F3 },
+    { "kF4",           DIK_F4 },
+    { "kF5",           DIK_F5 },
+    { "kF6",           DIK_F6 },
+    { "kF7",           DIK_F7 },
+    { "kF8",           DIK_F8 },
+    { "kF9",           DIK_F9 },
+    { "kF10",          DIK_F10 },
+    { "kF11",          DIK_F11 },
+    { "kF12",          DIK_F12 },
+
+    { "kSCROLL",       DIK_SCROLL },
+    { "kPAUSE",        DIK_PAUSE },
+    { "kINSERT",       DIK_INSERT },
+
+    { "kHOME",         DIK_HOME },
+
+    { "kDELETE",       DIK_DELETE },
+    { "kEND",          DIK_END },
+
+    { "kRIGHT",        DIK_RIGHT },
+    { "kLEFT",         DIK_LEFT },
+    { "kDOWN",         DIK_DOWN },
+    { "kUP",           DIK_UP },
+
+    { "kNUMLOCK",      DIK_NUMLOCK },
+
+    { "kMULTIPLY",     DIK_MULTIPLY },
+    { "kSUBTRACT",     DIK_SUBTRACT },
+    { "kADD",          DIK_ADD },
+    { "kNUMPADENTER",  DIK_NUMPADENTER },
+
+    { "kNUMPAD1",      DIK_NUMPAD1 },
+    { "kNUMPAD2",      DIK_NUMPAD2 },
+    { "kNUMPAD3",      DIK_NUMPAD3 },
+    { "kNUMPAD4",      DIK_NUMPAD4 },
+    { "kNUMPAD5",      DIK_NUMPAD5 },
+    { "kNUMPAD6",      DIK_NUMPAD6 },
+    { "kNUMPAD7",      DIK_NUMPAD7 },
+    { "kNUMPAD8",      DIK_NUMPAD8 },
+    { "kNUMPAD9",      DIK_NUMPAD9 },
+    { "kNUMPAD0",      DIK_NUMPAD0 },
+
+    { "kNUMPADEQUALS", DIK_NUMPADEQUALS },
+
+    { "kF13",          DIK_F13 },
+    { "kF14",          DIK_F14 },
+    { "kF15",          DIK_F15 },
+    { "kSTOP",         DIK_STOP },
+
+    { "kNUMPADCOMMA",  DIK_NUMPADCOMMA },
+    { "kYEN",          DIK_YEN },
+    { "kDECIMAL",      DIK_DECIMAL },
+    { "kKANA",         DIK_KANA },
+    { "kCONVERT",      DIK_CONVERT },
+    { "kNOCONVERT",    DIK_NOCONVERT },
+    { "kCIRCUMFLEX",   DIK_CIRCUMFLEX },
+    { "kAT",           DIK_AT },
+    { "kCOLON",        DIK_COLON },
+    { "kUNDERLINE",    DIK_UNDERLINE },
+    { "kKANJI",        DIK_KANJI },
+    { "kAX",           DIK_AX },
+    { "kUNLABELED",    DIK_UNLABELED },
+    { "kDIVIDE",       DIK_DIVIDE },
+    { "kSYSRQ",        DIK_SYSRQ },
+    { "kNEXT",         DIK_NEXT },
+    { "kAPPS",         DIK_APPS },
+    { "kPRIOR",        DIK_PRIOR },
+
+    { "kLCONTROL",     DIK_LCONTROL },
+    { "kLSHIFT",       DIK_LSHIFT },
+    { "kLMENU",        DIK_LMENU },
+    { "kLWIN",         DIK_LWIN },
+    { "kRCONTROL",     DIK_RCONTROL },
+    { "kRSHIFT",       DIK_RSHIFT },
+    { "kRMENU",        DIK_RMENU },
+    { "kRWIN",         DIK_RWIN },
+
+    { "mouse1",        MOUSE_1 },
+    { "mouse2",        MOUSE_2 },
+    { "mouse3",        MOUSE_3 },
+    { "mouse4",        MOUSE_4 },
+    { "mouse5",        MOUSE_5 },
+    { "mouse6",        MOUSE_6 },
+    { "mouse7",        MOUSE_7 },
+    { "mouse8",        MOUSE_8 },
+    { nullptr,         0 }
+};
+
+void initialize_bindings()
 {
 #ifdef DEBUG
     int i1 = 0;
-    while (true)
+    while(true)
     {
         _keyboard& _k1 = keyboards[i1];
-        if (_k1.key_name == NULL)
+        if (_k1.key_name == nullptr)
             break;
         int i2 = i1;
         while (true)
         {
             _keyboard& _k2 = keyboards[i2];
-            if (_k2.key_name == NULL)
+            if (_k2.key_name == nullptr)
                 break;
             if (_k1.dik == _k2.dik && i1 != i2)
             {
@@ -75,7 +275,7 @@ void       initialize_bindings()
 
 void remap_keys()
 {
-    int       idx = 0;
+    int idx = 0;
     string128 buff;
     while (keyboards[idx].key_name)
     {
@@ -87,7 +287,6 @@ void remap_keys()
         else
             kb.key_local_name = kb.key_name;
 
-        //.		Msg("[%s]-[%s]",kb.key_name, kb.key_local_name.c_str());
         ++idx;
     }
 }
@@ -101,7 +300,7 @@ LPCSTR id_to_action_name(EGameActions _id)
             return actions[idx].action_name;
         ++idx;
     }
-    Msg("! cant find corresponding [action_name] for id");
+    Msg("! cant find corresponding [action_name] for id[%d]", _id);
     return NULL;
 }
 
@@ -123,7 +322,7 @@ _action* action_name_to_ptr(LPCSTR _name)
             return &actions[idx];
         ++idx;
     }
-    Msg("! cant find corresponding [id] for action_name", _name);
+    Msg("! cant find corresponding [id] for action_name %s", _name);
     return NULL;
 }
 
@@ -269,6 +468,7 @@ class CCC_Bind: public IConsole_Command
 
 public:
     CCC_Bind(LPCSTR N, int idx): IConsole_Command(N), m_work_idx(idx){};
+
     virtual void Execute(LPCSTR args)
     {
         string256 action;
