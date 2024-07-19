@@ -19,7 +19,7 @@
 #define REGISTRY_CHUNK_DATA    0x0009
 #define SECTION_HEADER         "location_"
 #define SAVE_EXTENSION         ".scop"
-#define SAVE_EXTENSION_SOC     ".sav"
+#define SAVE_EXTENSION_SOC_CS  ".sav"
 #define SPAWN_NAME             "game.spawn"
 // inventory rukzak size
 #define MAX_ITEM_VOLUME        100

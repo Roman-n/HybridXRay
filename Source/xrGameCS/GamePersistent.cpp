@@ -76,7 +76,8 @@ CGamePersistent::CGamePersistent(void)
     m_pUI_core  = NULL;
     m_pMainMenu = NULL;
     m_intro     = NULL;
-    m_intro_event.bind(this, &CGamePersistent::start_logo_intro);
+    if (!Device->IsEditorMode())
+        m_intro_event.bind(this, &CGamePersistent::start_logo_intro);
 #ifdef DEBUG
     m_frame_counter    = 0;
     m_last_stats_frame = u32(-2);
@@ -452,17 +453,14 @@ void CGamePersistent::WeathersUpdate()
 
 void CGamePersistent::start_logo_intro()
 {
-#ifdef MASTER_GOLD
-    if (g_SASH.IsRunning())
-#else    // #ifdef MASTER_GOLD
-    if ((0 != strstr(Core.Params, "-nointro")) || g_SASH.IsRunning())
-#endif   // #ifdef MASTER_GOLD
+    if (0 != strstr(Core.Params, "-nointro"))
     {
         m_intro_event = 0;
         Console->Show();
         Console->Execute("main_menu on");
         return;
     }
+
     if (Device->dwPrecacheFrame == 0)
     {
         m_intro_event.bind(this, &CGamePersistent::update_logo_intro);
@@ -471,27 +469,26 @@ void CGamePersistent::start_logo_intro()
             VERIFY(NULL == m_intro);
             m_intro = xr_new<CUISequencer>();
             m_intro->Start("intro_logo");
+            Msg("intro_start: intro_logo");
             Console->Hide();
         }
     }
 }
+
 void CGamePersistent::update_logo_intro()
 {
     if (m_intro && (false == m_intro->IsActive()))
     {
         m_intro_event = 0;
         xr_delete(m_intro);
+        Msg("intro_delete ::update_logo_intro");
         Console->Execute("main_menu on");
     }
 }
 
 void CGamePersistent::start_game_intro()
 {
-#ifdef MASTER_GOLD
-    if (g_SASH.IsRunning())
-#else    // #ifdef MASTER_GOLD
-    if ((0 != strstr(Core.Params, "-nointro")) || g_SASH.IsRunning())
-#endif   // #ifdef MASTER_GOLD
+    if (0 != strstr(Core.Params, "-nointro") || Device->IsEditorMode())
     {
         m_intro_event = 0;
         return;
@@ -505,9 +502,8 @@ void CGamePersistent::start_game_intro()
             VERIFY(NULL == m_intro);
             m_intro = xr_new<CUISequencer>();
             m_intro->Start("intro_game");
-#ifdef DEBUG
-            Log("Intro start", Device->dwFrame);
-#endif   // #ifdef DEBUG
+            load_screen_renderer.stop();
+            Msg("intro_start: intro_game");
         }
     }
 }
@@ -516,6 +512,7 @@ void CGamePersistent::update_game_intro()
     if (m_intro && (false == m_intro->IsActive()))
     {
         xr_delete(m_intro);
+        Msg("intro_delete ::update_game_intro");
         m_intro_event = 0;
     }
     else if (!m_intro)
@@ -527,7 +524,7 @@ void CGamePersistent::update_game_intro()
 extern CUISequencer* g_tutorial;
 extern CUISequencer* g_tutorial2;
 
-void                 CGamePersistent::OnFrame()
+void CGamePersistent::OnFrame()
 {
     if (g_tutorial2)
     {
@@ -545,8 +542,10 @@ void                 CGamePersistent::OnFrame()
 #endif
     if (!g_dedicated_server && !m_intro_event.empty())
         m_intro_event();
+
     if (!g_dedicated_server && Device->dwPrecacheFrame == 0 && !m_intro && m_intro_event.empty())
         load_screen_renderer.stop();
+
     if (!m_pMainMenu->IsActive())
         m_pMainMenu->DestroyInternal(false);
 

@@ -33,6 +33,7 @@ class CGamePersistent: public IGame_Persistent, public IEventReceiver
 
     void                          start_logo_intro();
     void                          update_logo_intro();
+
     void                          start_game_intro();
     void                          update_game_intro();
 

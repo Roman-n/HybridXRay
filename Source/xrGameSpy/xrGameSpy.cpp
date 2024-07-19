@@ -41,6 +41,9 @@ const char* GetGameVersion()
     if (xrGameManager::GetGame() == EGame::SHOC)
         return GAME_VERSION_SOC;
     else
+    if (xrGameManager::GetGame() == EGame::CS)
+        return GAME_VERSION_CS;
+    else
         return GAME_VERSION;
 }
 

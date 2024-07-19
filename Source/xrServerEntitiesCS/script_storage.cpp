@@ -288,7 +288,7 @@ void CScriptStorage::reinit()
     if (!strstr(Core.Params, "-nojit"))
     {
         luajit::open_lib(lua(), LUA_JITLIBNAME, luaopen_jit);
-#ifndef DEBUG
+#if 0
         put_function(lua(), opt_lua_binary, sizeof(opt_lua_binary), "jit.opt");
         put_function(lua(), opt_inline_lua_binary, sizeof(opt_lua_binary), "jit.opt_inline");
         dojitopt(lua(), "2");

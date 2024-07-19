@@ -18,10 +18,10 @@
 
 extern LPCSTR alife_section;
 
-LPCSTR        CSavedGameWrapper::saved_game_full_name(LPCSTR saved_game_name, string_path& result)
+LPCSTR CSavedGameWrapper::saved_game_full_name(LPCSTR saved_game_name, string_path& result)
 {
     string_path temp;
-    strconcat(sizeof(temp), temp, saved_game_name, SAVE_EXTENSION);
+    strconcat(sizeof(temp), temp, saved_game_name, SAVE_EXTENSION_SOC_CS);
     FS.update_path(result, "$game_saves$", temp);
     return (result);
 }
