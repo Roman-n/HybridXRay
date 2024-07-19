@@ -42,8 +42,8 @@ void CAI_Space::init()
 {
     if (g_dedicated_server)
         return;
-#ifndef NO_SINGLE
 
+#ifndef NO_SINGLE
     VERIFY(!m_ef_storage);
     m_ef_storage = xr_new<CEF_Storage>();
 
@@ -58,7 +58,7 @@ void CAI_Space::init()
 
     VERIFY(!m_moving_objects);
     m_moving_objects = xr_new<::moving_objects>();
-#endif   //#ifndef NO_SINGLE
+#endif   // #ifndef NO_SINGLE
 
     VERIFY(!m_script_engine);
     m_script_engine = xr_new<CScriptEngine>();
@@ -67,7 +67,7 @@ void CAI_Space::init()
 #ifndef NO_SINGLE
     extern string4096 g_ca_stdout;
     setvbuf(stderr, g_ca_stdout, _IOFBF, sizeof(g_ca_stdout));
-#endif   //#ifndef NO_SINGLE
+#endif   // #ifndef NO_SINGLE
 }
 
 CAI_Space::~CAI_Space()
@@ -104,7 +104,7 @@ void CAI_Space::load(LPCSTR level_name)
 
     const IGameGraph::SLevel& current_level = game_graph().header().level(level_name);
 
-    m_level_graph                           = xr_new<ILevelGraph>();
+    m_level_graph = xr_new<CLevelGraph>();
     game_graph().set_current_level(current_level.id());
     R_ASSERT2(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
     R_ASSERT2(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");
@@ -157,7 +157,7 @@ void CAI_Space::validate(const u32 level_id) const
 
         IGameGraph::const_spawn_iterator I, E;
         game_graph().begin_spawn(i, I, E);
-        //		Msg									("vertex [%d] has %d death points",i,game_graph().vertex(i)->death_point_count());
+        // Msg("vertex [%d] has %d death points",i,game_graph().vertex(i)->death_point_count());
         for (; I != E; ++I)
         {
             VERIFY(cross_table().vertex((*I).level_vertex_id()).game_vertex_id() == i);
