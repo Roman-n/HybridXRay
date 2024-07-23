@@ -9,7 +9,7 @@
 #pragma once
 
 #include "script_export_macroses.h"
-#include "..\Editors\Public\xrEProps.h"
+#include "../Editors/Public/xrEProps.h"
 #include "ai_space.h"
 #include "script_engine.h"
 #include "luabind/error.hpp"

@@ -130,12 +130,12 @@ void CSE_Temporary::STATE_Write(NET_Packet& tNetPacket)
     tNetPacket.w_u32(m_tNodeID);
 };
 
-void CSE_Temporary::UPDATE_Read(NET_Packet& tNetPacket){};
+void CSE_Temporary::UPDATE_Read(NET_Packet& tNetPacket) {};
 
-void CSE_Temporary::UPDATE_Write(NET_Packet& tNetPacket){};
+void CSE_Temporary::UPDATE_Write(NET_Packet& tNetPacket) {};
 
 #ifndef XRGAME_EXPORTS
-void CSE_Temporary::FillProps(LPCSTR pref, PropItemVec& values){};
+void CSE_Temporary::FillProps(LPCSTR pref, PropItemVec& values) {};
 #endif   // #ifndef XRGAME_EXPORTS
 
 /**
@@ -143,55 +143,48 @@ void CSE_Temporary::FillProps(LPCSTR pref, PropItemVec& values){};
 // CSE_SpawnGroup
 ////////////////////////////////////////////////////////////////////////////
 
-CSE_SpawnGroup::CSE_SpawnGroup				(LPCSTR caSection) : CSE_Abstract(caSection)
-{
-}
+CSE_SpawnGroup::CSE_SpawnGroup(LPCSTR caSection): CSE_Abstract(caSection){}
 
-CSE_SpawnGroup::~CSE_SpawnGroup				()
-{
-}
+CSE_SpawnGroup::~CSE_SpawnGroup() {}
 
-void CSE_SpawnGroup::STATE_Read				(NET_Packet	&tNetPacket, u16 size)
+void CSE_SpawnGroup::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
     if (m_wVersion < 84)
-        tNetPacket.r_float		(m_spawn_probability);
+        tNetPacket.r_float(m_spawn_probability);
 
-    if (m_wVersion > 80) {
-        if (m_wVersion < 84) {
-            tNetPacket.r_float	();
-            tNetPacket.r_float	();
+    if (m_wVersion > 80)
+    {
+        if (m_wVersion < 84)
+        {
+            tNetPacket.r_float();
+            tNetPacket.r_float();
             m_spawn_flags.assign(tNetPacket.r_u32());
             tNetPacket.r_stringZ(m_spawn_control);
         }
-        else {
-            if (m_wVersion < 85) {
-                tNetPacket.r_u64		(m_min_spawn_interval);
-                tNetPacket.r_u64		(m_max_spawn_interval);
+        else
+        {
+            if (m_wVersion < 85)
+            {
+                tNetPacket.r_u64(m_min_spawn_interval);
+                tNetPacket.r_u64(m_max_spawn_interval);
             }
         }
     }
 }
 
-void CSE_SpawnGroup::STATE_Write			(NET_Packet	&tNetPacket)
-{
-}
+void CSE_SpawnGroup::STATE_Write(NET_Packet& tNetPacket) {}
 
-void CSE_SpawnGroup::UPDATE_Read			(NET_Packet	&tNetPacket)
-{
-}
+void CSE_SpawnGroup::UPDATE_Read(NET_Packet& tNetPacket) {}
 
-void CSE_SpawnGroup::UPDATE_Write			(NET_Packet	&tNetPacket)
-{
-}
+void CSE_SpawnGroup::UPDATE_Write(NET_Packet& tNetPacket) {}
 
 #ifndef XRGAME_EXPORTS
-void CSE_SpawnGroup::FillProps				(LPCSTR pref, PropItemVec& values)
+void CSE_SpawnGroup::FillProps(LPCSTR pref, PropItemVec& values)
 {
-    inherited::FillProps		(pref,values);
-    PHelper().CreateFlag32		(values,PrepareKey(pref,*s_name,"Spawn\\spawn single item only"),	&m_spawn_flags,
-flSpawnSingleItemOnly);
+    inherited::FillProps(pref, values);
+    PHelper().CreateFlag32(values, PrepareKey(pref, *s_name, "Spawn\\spawn single item only"), &m_spawn_flags, flSpawnSingleItemOnly);
 }
-#endif // #ifndef XRGAME_EXPORTS
+#endif   // #ifndef XRGAME_EXPORTS
 /**/
 
 ////////////////////////////////////////////////////////////////////////////
@@ -241,10 +234,10 @@ void CSE_PHSkeleton::data_load(NET_Packet& tNetPacket)
 void CSE_PHSkeleton::data_save(NET_Packet& tNetPacket)
 {
     saved_bones.net_Save(tNetPacket);
-    //	this comment is added by Dima (correct me if this is wrong)
-    //  if we call 2 times in a row StateWrite then we get different results
-    //	WHY???
-    //	_flags.set(flSavedData,FALSE);
+    // this comment is added by Dima (correct me if this is wrong)
+    // if we call 2 times in a row StateWrite then we get different results
+    // WHY???
+    // _flags.set(flSavedData, FALSE);
 }
 
 void CSE_PHSkeleton::load(NET_Packet& tNetPacket)

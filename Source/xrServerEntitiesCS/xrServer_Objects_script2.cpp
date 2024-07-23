@@ -18,12 +18,12 @@ void CSE_AbstractVisual::script_register(lua_State* L)
 /**
 void CSE_SpawnGroup::script_register(lua_State *L)
 {
-	module(L)[
-		luabind_class_abstract1(
-			CSE_SpawnGroup,
-			"cse_event",
-			CSE_Abstract
-		)
-	];
+    module(L)[
+        luabind_class_abstract1(
+            CSE_SpawnGroup,
+            "cse_event",
+            CSE_Abstract
+        )
+    ];
 }
 /**/

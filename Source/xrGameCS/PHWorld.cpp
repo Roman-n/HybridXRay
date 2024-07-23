@@ -179,12 +179,12 @@ void CPHWorld::SetGravity(float g)
 
 void CPHWorld::OnFrame()
 {
-    // Msg									("------------- physics: %d / %d",u32(Device->dwFrame),u32(m_steps_num));
-    //���������� ����� ����
+    // Msg("------------- physics: %d / %d",u32(Device->dwFrame),u32(m_steps_num));
+    // просчитать полет пуль
     /*
-	Device->Statistic->TEST0.Begin		();
-	Level().BulletManager().Update		();
-	Device->Statistic->TEST0.End			();
+	Device->Statistic->TEST0.Begin();
+	Level().BulletManager().Update();
+	Device->Statistic->TEST0.End();
 	*/
 #ifdef DEBUG
     //DBG_DrawFrameStart();

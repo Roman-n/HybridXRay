@@ -66,6 +66,7 @@ void CPHCommander::clear()
 
 void CPHCommander::update()
 {
+    m_IsWork = true;
     for (u32 i = 0; i < m_calls.size(); i++)
     {
         try
@@ -86,6 +87,13 @@ void CPHCommander::update()
             continue;
         }
     }
+    m_IsWork = false;
+    for (size_t i = m_calls_as_delete_buffer.size(); i != 0; i--)
+    {
+        delete_call(*(m_calls.begin() + m_calls_as_delete_buffer[i - 1]));
+        m_calls.erase(m_calls.begin() + m_calls_as_delete_buffer[i - 1]);
+    }
+    m_calls_as_delete_buffer.clear_not_free();
 }
 
 void CPHCommander::add_call(CPHCondition* condition, CPHAction* action, PHCALL_STORAGE& cs)
@@ -190,8 +198,23 @@ void CPHCommander::remove_calls(CPHReqComparerV* cmp_object, PHCALL_STORAGE& cs)
 {
     cs.erase(std::remove_if(cs.begin(), cs.end(), SRemoveRped(cmp_object)), cs.end());
 }
+
 void CPHCommander::remove_calls(CPHReqComparerV* cmp_object)
 {
+    if (m_IsWork)
+    {
+        size_t id = std::find_if(m_calls.begin(), m_calls.end(),
+                        [&cmp_object](CPHCall* call)
+                        {
+                            return call->is_any(cmp_object);
+                        }) -
+            m_calls.begin();
+        auto item = std::lower_bound(m_calls_as_delete_buffer.begin(), m_calls_as_delete_buffer.end(), id);
+        if (item != m_calls_as_delete_buffer.end() && *item == id)
+            return;
+        m_calls_as_delete_buffer.insert(item, id);
+        return;
+    }
     remove_calls(cmp_object, m_calls);
 }
 

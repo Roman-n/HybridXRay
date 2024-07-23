@@ -19,7 +19,16 @@ CLevelGraph::CLevelGraph()
     sh_debug->create("debug\\ai_nodes", "$null");
 #endif
     string_path file_name;
-    FS.update_path(file_name, "$level$", LEVEL_GRAPH_NAME);
+#ifndef MASTER_GOLD
+    if (strstr(Core.Params, "-editor_scene"))
+    {
+        FS.update_path(file_name, "$level$", "level.ai.temp");
+}
+    else
+#endif
+    {
+        FS.update_path(file_name, "$level$", LEVEL_GRAPH_NAME);
+    }
 #else
     string256 file_name;
     strconcat(sizeof(file_name), file_name, filename, LEVEL_GRAPH_NAME);

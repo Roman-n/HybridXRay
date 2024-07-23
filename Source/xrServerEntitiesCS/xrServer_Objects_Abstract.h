@@ -3,6 +3,7 @@
 #include "../xrCDB/xrCDB.h"
 #include "../xrEngine/ShapeData.h"
 #include "../xrEngine/gametype_chooser.h"
+#include "../../XrEngine/xrISEAbstract.h"
 
 class NET_Packet;
 class CDUInterface;
@@ -22,5 +23,6 @@ class CDUInterface;
 #endif
 #pragma warning(push)
 #pragma warning(disable:4005)
+
 #include "../xrServerEntities/xrServer_Objects_Abstract_Base.h"
 #pragma warning(pop)

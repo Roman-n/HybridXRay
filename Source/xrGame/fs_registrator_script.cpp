@@ -202,24 +202,58 @@ LPCSTR get_file_age_str(ILocatorAPI* fs, LPCSTR nm)
 #pragma optimize("s", on)
 void fs_registrator::script_register(lua_State* L)
 {
-    module(L)[class_<FS_item>("FS_item").def("NameFull", &FS_item::NameFull).def("NameShort", &FS_item::NameShort).def("Size", &FS_item::Size).def("ModifDigitOnly", &FS_item::ModifDigitOnly).def("Modif", &FS_item::Modif),
+    module(L)
+    [
+        class_<FS_item>("FS_item")
+            .def("NameFull", &FS_item::NameFull)
+            .def("NameShort", &FS_item::NameShort)
+            .def("Size", &FS_item::Size)
+            .def("ModifDigitOnly", &FS_item::ModifDigitOnly)
+            .def("Modif", &FS_item::Modif),
 
-        class_<FS_file_list_ex>("FS_file_list_ex").def("Size", &FS_file_list_ex::Size).def("GetAt", &FS_file_list_ex::GetAt).def("Sort", &FS_file_list_ex::Sort),
+        class_<FS_file_list_ex>("FS_file_list_ex")
+            .def("Size", &FS_file_list_ex::Size)
+            .def("GetAt", &FS_file_list_ex::GetAt)
+            .def("Sort", &FS_file_list_ex::Sort),
 
-        class_<FS_file_list>("FS_file_list").def("Size", &FS_file_list::Size).def("GetAt", &FS_file_list::GetAt).def("Free", &FS_file_list::Free),
+        class_<FS_file_list>("FS_file_list")
+            .def("Size", &FS_file_list::Size)
+            .def("GetAt", &FS_file_list::GetAt)
+            .def("Free", &FS_file_list::Free),
 
-        /*		class_<FS_Path>("FS_Path")
-                     .def_readonly("m_Path",						&FS_Path::m_Path)
-                     .def_readonly("m_Root",						&FS_Path::m_Root)
-                     .def_readonly("m_Add",						&FS_Path::m_Add)
-                     .def_readonly("m_DefExt",					&FS_Path::m_DefExt)
-                     .def_readonly("m_FilterCaption",			&FS_Path::m_FilterCaption),
-         */
-        class_<ILocatorAPIFile>("fs_file").def_readonly("name", &ILocatorAPIFile::name).def_readonly("vfs", &ILocatorAPIFile::vfs).def_readonly("ptr", &ILocatorAPIFile::ptr).def_readonly("size_real", &ILocatorAPIFile::size_real).def_readonly("size_compressed", &ILocatorAPIFile::size_compressed).def_readonly("modif", &ILocatorAPIFile::modif),
+        /*
+        class_<FS_Path>("FS_Path")
+            .def_readonly("m_Path", &FS_Path::m_Path)
+            .def_readonly("m_Root", &FS_Path::m_Root)
+            .def_readonly("m_Add", &FS_Path::m_Add)
+            .def_readonly("m_DefExt", &FS_Path::m_DefExt)
+            .def_readonly("m_FilterCaption", &FS_Path::m_FilterCaption),
+        */
+        class_<ILocatorAPIFile>("fs_file")
+            .def_readonly("name", &ILocatorAPIFile::name)
+            .def_readonly("vfs", &ILocatorAPIFile::vfs)
+            .def_readonly("ptr", &ILocatorAPIFile::ptr)
+            .def_readonly("size_real", &ILocatorAPIFile::size_real)
+            .def_readonly("size_compressed", &ILocatorAPIFile::size_compressed)
+            .def_readonly("modif", &ILocatorAPIFile::modif),
 
         class_<ILocatorAPI>("FS")
-            .enum_("FS_sort_mode")[value("FS_sort_by_name_up", int(FS_file_list_ex::eSortByNameUp)), value("FS_sort_by_name_down", int(FS_file_list_ex::eSortByNameDown)), value("FS_sort_by_size_up", int(FS_file_list_ex::eSortBySizeUp)), value("FS_sort_by_size_down", int(FS_file_list_ex::eSortBySizeDown)), value("FS_sort_by_modif_up", int(FS_file_list_ex::eSortByModifUp)), value("FS_sort_by_modif_down", int(FS_file_list_ex::eSortByModifDown))]
-            .enum_("FS_List")[value("FS_ListFiles", int(FS_ListFiles)), value("FS_ListFolders", int(FS_ListFolders)), value("FS_ClampExt", int(FS_ClampExt)), value("FS_RootOnly", int(FS_RootOnly))]
+            .enum_("FS_sort_mode")
+            [
+                value("FS_sort_by_name_up", int(FS_file_list_ex::eSortByNameUp)),
+                value("FS_sort_by_name_down", int(FS_file_list_ex::eSortByNameDown)),
+                value("FS_sort_by_size_up", int(FS_file_list_ex::eSortBySizeUp)),
+                value("FS_sort_by_size_down", int(FS_file_list_ex::eSortBySizeDown)),
+                value("FS_sort_by_modif_up", int(FS_file_list_ex::eSortByModifUp)),
+                value("FS_sort_by_modif_down", int(FS_file_list_ex::eSortByModifDown))
+            ]
+            .enum_("FS_List")
+            [
+                value("FS_ListFiles", int(FS_ListFiles)),
+                value("FS_ListFolders", int(FS_ListFolders)),
+                value("FS_ClampExt", int(FS_ClampExt)),
+                value("FS_RootOnly", int(FS_RootOnly))
+            ]
             .def("path_exist", &ILocatorAPI::path_exist)
             .def("update_path", &update_path_script)
             .def("get_path", &ILocatorAPI::get_path)
@@ -252,5 +286,6 @@ void fs_registrator::script_register(lua_State* L)
             .def("file_list_open", &file_list_open_script_2)
             .def("file_list_open_ex", &file_list_open_ex),
 
-        def("getFS", getFS)];
+        def("getFS", getFS)
+    ];
 }

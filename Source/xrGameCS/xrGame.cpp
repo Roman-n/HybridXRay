@@ -20,6 +20,9 @@
 void CCC_RegisterCommands();
 void setup_luabind_allocator();
 
+CSE_Abstract* F_entity_Create(LPCSTR section);
+extern void clean_game_globals();
+extern void init_game_globals();
 extern "C"
 {
     DLL_API void __cdecl xrGameInitialize()
@@ -48,5 +51,9 @@ extern "C"
     DLL_API void __cdecl xrFactory_Destroy(DLL_Pure* O)
     {
         xr_delete(O);
+    }
+    DLL_API ISE_Abstract* __cdecl xrFactory_Create_From_Section(LPCSTR section)
+    {
+        return (F_entity_Create(section));
     }
 };

@@ -489,9 +489,6 @@
     <ClInclude Include="..\..\xrServerEntitiesCS\xrServer_script_macroses.h">
       <Filter>ServerStuff\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesCS\gametype_chooser.h">
-      <Filter>ServerStuff\ServerEntities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xrServerEntitiesCS\xrServer_Object_Base.h">
       <Filter>ServerStuff\ServerEntities\objects</Filter>
     </ClInclude>

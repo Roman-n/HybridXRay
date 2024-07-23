@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
+#ifndef XRSEFACTORY_EXPORTS
 IC IGameGraph& CAI_Space::game_graph() const
 {
     VERIFY(m_game_graph);
@@ -59,12 +59,6 @@ IC const CCoverManager& CAI_Space::cover_manager() const
     return (*m_cover_manager);
 }
 
-IC CScriptEngine& CAI_Space::script_engine() const
-{
-    VERIFY(m_script_engine);
-    return (*m_script_engine);
-}
-
 IC const CPatrolPathStorage& CAI_Space::patrol_paths() const
 {
     VERIFY(m_patrol_path_storage);
@@ -75,6 +69,12 @@ IC moving_objects& CAI_Space::moving_objects() const
 {
     VERIFY(m_moving_objects);
     return (*m_moving_objects);
+}
+#endif
+IC CScriptEngine& CAI_Space::script_engine() const
+{
+    VERIFY(m_script_engine);
+    return (*m_script_engine);
 }
 
 IC CAI_Space& ai()

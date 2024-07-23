@@ -76,11 +76,14 @@ public:
 DEFINE_VECTOR(CPHCall*, PHCALL_STORAGE, PHCALL_I);
 class CPHCommander
 {
-    PHCALL_STORAGE m_calls;
-    PHCALL_STORAGE m_calls_as_add_buffer;
-    PHCALL_STORAGE m_calls_as_remove_buffer;
+    bool              m_IsWork;
+    PHCALL_STORAGE    m_calls;
+    PHCALL_STORAGE    m_calls_as_add_buffer;
+    PHCALL_STORAGE    m_calls_as_remove_buffer;
+    xr_vector<size_t> m_calls_as_delete_buffer;
 
 public:
+    CPHCommander() :m_IsWork(false) {}
     ~CPHCommander();
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void     add_call_unique(CPHCondition* condition, CPHReqComparerV* cmp_condition, CPHAction* action, CPHReqComparerV* cmp_action);

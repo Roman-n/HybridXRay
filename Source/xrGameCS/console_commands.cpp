@@ -754,7 +754,7 @@ public:
 
     virtual void Execute(LPCSTR args)
     {
-        if (!ai().get_level_graph())
+        if (!ai().get_level_graph() || dynamic_cast<CLevelGraph*>(&ai().level_graph()) == 0)
             return;
 
         dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level(-1);
@@ -771,7 +771,7 @@ public:
 
     virtual void Execute(LPCSTR args)
     {
-        if (!ai().get_level_graph())
+        if (!ai().get_level_graph() || dynamic_cast<CLevelGraph*>(&ai().level_graph()) == 0)
             return;
         dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level(dynamic_cast<CLevelGraph*>(&ai().level_graph())->level_id());
     }
@@ -785,6 +785,8 @@ public:
     virtual void Execute(LPCSTR args)
     {
         if (!ai().get_level_graph())
+            return;
+        if (!ai().get_level_graph() || dynamic_cast<CLevelGraph*>(&ai().level_graph()) == 0)
             return;
 
         string256 S;

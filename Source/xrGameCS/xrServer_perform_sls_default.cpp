@@ -19,7 +19,7 @@ void xrServer::SLS_Default()
     }
 
 #ifdef USE_DESIGNER_KEY
-    bool                    _designer = !!strstr(Core.Params, "-designer");
+    bool                    _designer = !!strstr(Core.Params, "-designer") && !Device->IsEditorMode();
     CSE_ALifeCreatureActor* _actor    = 0;
 #endif
 

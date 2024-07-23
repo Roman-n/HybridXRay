@@ -124,7 +124,7 @@ CSE_Abstract* CALifeSimulatorBase::spawn_item(LPCSTR section, const Fvector& pos
     CSE_ALifeDynamicObject* dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(abstract);
     VERIFY(dynamic_object);
 
-    //������ ������� � ������ ���������
+    // оружие спавним с полным магазинои
     CSE_ALifeItemWeapon* weapon = smart_cast<CSE_ALifeItemWeapon*>(dynamic_object);
     if (weapon)
         weapon->a_elapsed = weapon->get_ammo_magsize();
@@ -139,7 +139,7 @@ CSE_Abstract* CALifeSimulatorBase::spawn_item(LPCSTR section, const Fvector& pos
     dynamic_object->spawn_supplies();
     dynamic_object->on_spawn();
 
-    //	Msg							("LSS : SPAWN : [%s],[%s], level %s",*dynamic_object->s_name,dynamic_object->name_replace(),*ai().game_graph().header().level(ai().game_graph().vertex(dynamic_object->m_tGraphID)->level_id()).name());
+    // Msg("LSS : SPAWN : [%s], [%s], level %s", *dynamic_object->s_name, dynamic_object->name_replace(), *ai().game_graph().header().level(ai().game_graph().vertex(dynamic_object->m_tGraphID)->level_id()).name());
     return (dynamic_object);
 }
 
@@ -246,7 +246,7 @@ void CALifeSimulatorBase::create(CSE_ALifeObject* object)
     VERIFY(dynamic_object->m_bOnline);
 
 #ifdef DEBUG
-//	Msg							("Creating object from client spawn [%d][%d][%s][%s]",dynamic_object->ID,dynamic_object->ID_Parent,dynamic_object->name(),dynamic_object->name_replace());
+// Msg("Creating object from client spawn [%d][%d][%s][%s]", dynamic_object->ID, dynamic_object->ID_Parent, dynamic_object->name(), dynamic_object->name_replace());
 #endif
 
     if (0xffff != dynamic_object->ID_Parent)

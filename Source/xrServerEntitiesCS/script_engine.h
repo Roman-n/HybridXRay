@@ -18,7 +18,7 @@ extern "C"
 #include <lua/lua.h>
 };
 
-//#define DBG_DISABLE_SCRIPTS
+// #define DBG_DISABLE_SCRIPTS
 
 #include "script_engine_space.h"
 

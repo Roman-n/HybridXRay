@@ -120,7 +120,7 @@ add_to_type_list(CSE_ALifeItem)
 #define script_type_list save_type_list(CSE_ALifeItem)
 
     SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemTorch, CSE_ALifeItem)
-    //флаги
+    // флаги
     enum EStats
 {
     eTorchActive       = (1 << 0),
@@ -157,7 +157,7 @@ add_to_type_list(CSE_ALifeItemAmmo)
 
         typedef ALife::EWeaponAddonStatus EWeaponAddonStatus;
 
-//текущее состояние аддонов
+// текущее состояние аддонов
 enum EWeaponAddonState
 {
     eWeaponAddonScope           = 0x01,
@@ -175,8 +175,8 @@ u8                 wpn_state;
 u8                 ammo_type;
 u16                a_current;
 u16                a_elapsed;
-//count of grenades to spawn in grenade launcher [ttcccccc]
-//WARNING! hight 2 bits (tt bits) indicate type of grenade, so maximum grenade count is 2^6 = 64
+// count of grenades to spawn in grenade launcher [ttcccccc]
+// WARNING! hight 2 bits (tt bits) indicate type of grenade, so maximum grenade count is 2^6 = 64
 struct grenade_count_t
 {
     u8 grenades_count:6;
@@ -188,10 +188,11 @@ struct grenade_count_t
     void unpack_from_byte(u8 const b)
     {
         grenades_type  = (b >> 6);
-        grenades_count = b & 0x3f;   //111111
+        grenades_count = b & 0x3f;   // 111111
     }
-};   //struct grenade_count_t
+};   // struct grenade_count_t
 grenade_count_t a_elapsed_grenades;
+
 float           m_fHitPower;
 ALife::EHitType m_tHitType;
 LPCSTR          m_caAmmoSections;

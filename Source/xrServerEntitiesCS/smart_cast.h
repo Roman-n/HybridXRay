@@ -9,13 +9,13 @@
 #ifndef SMART_CAST_H
 #define SMART_CAST_H
 
-#if 0   //def DEBUG
+#if defined(DEBUG) || defined(XRSEFACTORY_EXPORTS)
 #define PURE_DYNAMIC_CAST
 #endif   // DEBUG
 
 #define TL_FAST_COMPILATION
 #undef STATIC_CHECK
-#include <loki/typelist.h>
+#include "loki/typelist.h"
 
 #ifdef PURE_DYNAMIC_CAST
 #define smart_cast dynamic_cast
@@ -23,7 +23,7 @@
 #define PURE_DYNAMIC_CAST_COMPATIBILITY_CHECK
 
 #ifdef DEBUG
-//#		define SMART_CAST_STATS_ALL
+// #		define SMART_CAST_STATS_ALL
 #endif
 
 #ifndef DECLARE_SPECIALIZATION
@@ -160,11 +160,11 @@ DECLARE_SPECIALIZATION(CWeaponAmmo, CInventoryItem, cast_weapon_ammo);
 #undef cast_type_list
 #define cast_type_list save_cast_list(CWeaponAmmo, CInventoryItem)
 /*
-		DECLARE_SPECIALIZATION	(CCameraShotEffector, CCameraEffector,		cast_effector_shot);
+        DECLARE_SPECIALIZATION	(CCameraShotEffector, CCameraEffector,		cast_effector_shot);
 #		undef cast_type_list
 #		define cast_type_list save_cast_list	(CCameraShotEffector,		CCameraEffector)
 
-		DECLARE_SPECIALIZATION	(CEffectorZoomInertion,	CCameraEffector,	cast_effector_zoom_inertion);
+        DECLARE_SPECIALIZATION	(CEffectorZoomInertion,	CCameraEffector,	cast_effector_zoom_inertion);
 #		undef cast_type_list
 #		define cast_type_list save_cast_list	(CEffectorZoomInertion,	CCameraEffector)
 */
@@ -258,13 +258,13 @@ DECLARE_SPECIALIZATION(CSE_ALifeTraderAbstract, CSE_Abstract, cast_trader_abstra
 #undef cast_type_list
 #define cast_type_list save_cast_list(CSE_ALifeTraderAbstract, CSE_Abstract)
 
-DECLARE_SPECIALIZATION(CSE_Visual, CSE_Abstract, visual);
+DECLARE_SPECIALIZATION(ISE_Visual, CSE_Visual, visual);
 #undef cast_type_list
-#define cast_type_list save_cast_list(CSE_Visual, CSE_Abstract)
+#define cast_type_list save_cast_list(ISE_Visual, CSE_Visual)
 
-DECLARE_SPECIALIZATION(CSE_Motion, CSE_Abstract, motion);
+DECLARE_SPECIALIZATION(ISE_Motion, CSE_Abstract, motion);
 #undef cast_type_list
-#define cast_type_list save_cast_list(CSE_Motion, CSE_Abstract)
+#define cast_type_list save_cast_list(ISE_Motion, CSE_Abstract)
 
 DECLARE_SPECIALIZATION(ISE_Shape, CSE_Abstract, shape);
 #undef cast_type_list
@@ -331,4 +331,4 @@ DECLARE_SPECIALIZATION(CSE_ALifeItemPDA, CSE_Abstract, cast_item_pda);
 #endif
 #endif
 
-#endif   //SMART_CAST_H
+#endif   // SMART_CAST_H

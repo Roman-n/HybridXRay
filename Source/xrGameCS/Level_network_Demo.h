@@ -1,4 +1,4 @@
-﻿private:
+﻿protected:
 BOOL            m_DemoPlay;
 BOOL            m_DemoPlayStarted;
 BOOL            m_DemoPlayStoped;

@@ -55,7 +55,7 @@ void CSE_ALifeObject::spawn_supplies(LPCSTR ini_string)
                 bScope    = (NULL != strstr(V, "scope"));
                 bSilencer = (NULL != strstr(V, "silencer"));
                 bLauncher = (NULL != strstr(V, "launcher"));
-                //probability
+                // probability
                 if (NULL != strstr(V, "prob="))
                     p = (float)atof(strstr(V, "prob=") + 5);
                 if (fis_zero(p))
@@ -68,7 +68,7 @@ void CSE_ALifeObject::spawn_supplies(LPCSTR ini_string)
                 if (randF(1.f) < p)
                 {
                     CSE_Abstract*        E = alife().spawn_item(N, o_Position, m_tNodeID, m_tGraphID, ID);
-                    //подсоединить аддоны к оружию, если включены соответствующие флажки
+                    // подсоединить аддоны к оружию, если включены соответствующие флажки
                     CSE_ALifeItemWeapon* W = smart_cast<CSE_ALifeItemWeapon*>(E);
                     if (W)
                     {

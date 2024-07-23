@@ -158,6 +158,7 @@
 // 121 - GameTypeChooser				m_gameType using instead og u8 value;
 // 122 - CSE_ALifeItemWeapon			appended with count of grenades to spawn in grenade launcher (if it attached)
 // 123 - CSE_ALifeInventoryItem			added functions has_upgrade & add_upgrade, xr_vector<shared_str> m_upgrades;
+// 127 - CSE_ALifeObjectClimable		added material;
 //------------------------------------------------------------------------------
 #define SPAWN_VERSION u16(124)
 
@@ -201,7 +202,7 @@ enum
 };
 Flags8       _flags;
 SPHBonesData saved_bones;
-u16          source_id;   //for break only
+u16          source_id;   // for break only
 virtual void load(NET_Packet& tNetPacket);
 virtual bool need_save() const
 {
@@ -234,7 +235,7 @@ typedef CSE_Visual inherited2;
 
 CSE_AbstractVisual(LPCSTR caSection);
 virtual ~CSE_AbstractVisual();
-virtual CSE_Visual* visual();
+virtual ISE_Visual* visual();
 LPCSTR              getStartupAnimation();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_AbstractVisual)
@@ -245,10 +246,10 @@ add_to_type_list(CSE_AbstractVisual)
 #endif
 
 /**
-SERVER_ENTITY_DECLARE_BEGIN(CSE_SpawnGroup,CSE_Abstract)
+SERVER_ENTITY_DECLARE_BEGIN(CSE_SpawnGroup, CSE_Abstract)
 public:
-									CSE_SpawnGroup	(LPCSTR caSection);
-	virtual							~CSE_SpawnGroup	();
+            CSE_SpawnGroup(LPCSTR caSection);
+    virtual ~CSE_SpawnGroup();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_SpawnGroup)
 #define script_type_list save_type_list(CSE_SpawnGroup)

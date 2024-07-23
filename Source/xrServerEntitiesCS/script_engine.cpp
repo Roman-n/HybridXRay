@@ -27,7 +27,7 @@ static LogCallback                                    s_old_log_callback       =
 #endif   // #ifndef USE_LUA_STUDIO
 #endif
 
-#ifndef XRSEFACTORY_EXPORTS;
+#ifndef XRSEFACTORY_EXPORTS
 #ifdef DEBUG
 #include "ai_debug.h"
 extern Flags32 psAI_Flags;
@@ -383,7 +383,7 @@ void CScriptEngine::process_file_if_exists(LPCSTR file_name, bool warn_if_not_ex
         {
 #ifdef PRINT_CALL_STACK
 #ifdef DEBUG
-#ifndef XRSEFACTORY_EXPORTS;
+#ifndef XRSEFACTORY_EXPORTS
             if (psAI_Flags.test(aiNilObjectAccess))
 #endif
             {

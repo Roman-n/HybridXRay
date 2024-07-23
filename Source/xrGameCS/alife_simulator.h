@@ -24,11 +24,16 @@ protected:
 public:
     CALifeSimulator(xrServer* server, shared_str* command_line);
     virtual ~CALifeSimulator();
-    virtual void destroy();
+    virtual void   destroy();
+    IReader const* get_config(shared_str config) const;
 
-#if 0    //def DEBUG
-			void	validate			();
-#endif   //DEBUG
+#if 0    // def DEBUG
+    void validate();
+#endif   // DEBUG
+
+private:
+    typedef xr_list<std::pair<shared_str, IReader*>> configs_type;
+    mutable configs_type                             m_configs_lru;
 
     DECLARE_SCRIPT_REGISTER_FUNCTION
 };

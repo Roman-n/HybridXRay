@@ -68,6 +68,7 @@ public:
     virtual void                save(IWriter& memory_stream);
     void                        load(IReader& file_stream, LPCSTR game_name);
     void                        load(LPCSTR spawn_name);
+    void                        load_from_editor();
     void                        fill_new_spawns(xr_vector<ALife::_SPAWN_ID>& spawns, ALife::_TIME_ID game_time, xr_vector<ALife::_SPAWN_ID>& objects);
     IC const CALifeSpawnHeader& header() const;
     IC const SPAWN_GRAPH&       spawns() const;

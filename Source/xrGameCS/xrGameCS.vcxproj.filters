@@ -7455,6 +7455,8 @@
     <ClInclude Include="ui\UIGameTutorial.h">
       <Filter>UI\Tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="xrGameEditor.h" />
+    <ClInclude Include="xrLevelEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11093,8 +11095,14 @@
     <ClCompile Include="ui\UIGameTutorialVideoItem.cpp">
       <Filter>UI\Tutorial</Filter>
     </ClCompile>
-    <ClCompile Include="game_graph.cpp" />
-    <ClCompile Include="game_level_cross_table.cpp" />
+    <ClCompile Include="game_level_cross_table.cpp">
+      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
+    </ClCompile>
+    <ClCompile Include="game_graph.cpp">
+      <Filter>AI\ANavigation\GameGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="xrGameEditor.cpp" />
+    <ClCompile Include="xrLevelEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="graph_abstract.h">

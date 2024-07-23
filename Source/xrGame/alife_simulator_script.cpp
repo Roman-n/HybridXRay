@@ -193,8 +193,8 @@ CSE_Abstract* CALifeSimulator__spawn_item2(CALifeSimulator* self, LPCSTR section
 
 CSE_Abstract* CALifeSimulator__spawn_ammo(CALifeSimulator* self, LPCSTR section, const Fvector& position, u32 level_vertex_id, GameGraph::_GRAPH_ID game_vertex_id, ALife::_OBJECT_ID id_parent, int ammo_to_spawn)
 {
-    //	if (id_parent == ALife::_OBJECT_ID(-1))
-    //		return (self->spawn_item(section,position,level_vertex_id,game_vertex_id,id_parent));
+    // if (id_parent == ALife::_OBJECT_ID(-1))
+    //     return (self->spawn_item(section,position,level_vertex_id,game_vertex_id,id_parent));
     CSE_ALifeDynamicObject* object = 0;
     if (id_parent != ALife::_OBJECT_ID(-1))
     {
@@ -308,12 +308,12 @@ bool dont_has_info(const CALifeSimulator* self, const ALife::_OBJECT_ID& id, LPC
 }
 
 // void disable_info_portion						(const CALifeSimulator *self, const ALife::_OBJECT_ID &id)
-//{
+// {
 //	THROW								(self);
 // }
 
 // void give_info_portion							(const CALifeSimulator *self, const ALife::_OBJECT_ID &id)
-//{
+// {
 //	THROW								(self);
 // }
 

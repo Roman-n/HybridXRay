@@ -100,13 +100,13 @@ void CSE_ALifeAnomalousZone::spawn_artefacts				()
                 break;
         }
         if (p < n) {
-            CSE_Abstract		*l_tpSE_Abstract =
-alife().spawn_item(*weights[p].first,position(),m_tNodeID,m_tGraphID,0xffff); R_ASSERT3			(l_tpSE_Abstract,"Can't
-spawn artefact ",*weights[p].first); CSE_ALifeDynamicObject	*i = smart_cast<CSE_ALifeDynamicObject*>(l_tpSE_Abstract);
-            R_ASSERT2			(i,"Non-ALife object in the 'game.spawn'");
+            CSE_Abstract        *l_tpSE_Abstract = alife().spawn_item(*weights[p].first,position(),m_tNodeID,m_tGraphID,0xffff);
+            R_ASSERT3           (l_tpSE_Abstract,"Can't spawn artefact ",*weights[p].first);
+            CSE_ALifeDynamicObject	*i = smart_cast<CSE_ALifeDynamicObject*>(l_tpSE_Abstract);
+            R_ASSERT2           (i,"Non-ALife object in the 'game.spawn'");
 
-            i->m_tSpawnID		= m_tSpawnID;
-            i->m_bALifeControl	= true;
+            i->m_tSpawnID       = m_tSpawnID;
+            i->m_bALifeControl  = true;
             ai().alife().spawns().assign_artefact_position(this,i);
 
             Fvector				t = i->o_Position	;
@@ -118,11 +118,9 @@ spawn artefact ",*weights[p].first); CSE_ALifeDynamicObject	*i = smart_cast<CSE_
             i->m_fDistance		= q;
 
             CSE_ALifeItemArtefact *l_tpALifeItemArtefact = smart_cast<CSE_ALifeItemArtefact*>(i);
-            R_ASSERT2		(l_tpALifeItemArtefact,"Anomalous zone can't generate non-artefact objects since they don't
-have an 'anomaly property'!");
+            R_ASSERT2		(l_tpALifeItemArtefact,"Anomalous zone can't generate non-artefact objects since they don't have an 'anomaly property'!");
 
-            l_tpALifeItemArtefact->m_fAnomalyValue = m_maxPower*(1.f -
-i->o_Position.distance_to(o_Position)/m_offline_interactive_radius);
+            l_tpALifeItemArtefact->m_fAnomalyValue = m_maxPower*(1.f - i->o_Position.distance_to(o_Position)/m_offline_interactive_radius);
         }
     }
 }*/
@@ -130,7 +128,7 @@ i->o_Position.distance_to(o_Position)/m_offline_interactive_radius);
 void CSE_ALifeAnomalousZone::on_spawn()
 {
     inherited1::on_spawn();
-    //	spawn_artefacts			();
+    // spawn_artefacts();
 }
 
 bool CSE_ALifeAnomalousZone::keep_saved_data_anyway() const

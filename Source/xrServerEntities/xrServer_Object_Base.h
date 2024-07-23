@@ -43,8 +43,8 @@ virtual void load(IReader& tFileStream);
 virtual void save(IWriter& tMemoryStream);
 virtual void load(NET_Packet& tNetPacket);
 virtual void save(NET_Packet& tNetPacket);
-}
-;
+};
+
 add_to_type_list(CPureServerObject)
 #define script_type_list save_type_list(CPureServerObject)
 

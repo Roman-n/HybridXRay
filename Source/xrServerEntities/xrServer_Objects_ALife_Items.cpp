@@ -1176,7 +1176,7 @@ void CSE_ALifeItemBolt::UPDATE_Read(NET_Packet& tNetPacket)
 
 bool CSE_ALifeItemBolt::can_save() const
 {
-    return (false);   //! attached());
+    return (false);   // !attached());
 }
 bool CSE_ALifeItemBolt::used_ai_locations() const
 {

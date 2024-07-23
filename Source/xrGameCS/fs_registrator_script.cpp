@@ -4,15 +4,15 @@
 
 using namespace luabind;
 
-LPCSTR       get_file_age_str(CLocatorAPI* fs, LPCSTR nm);
-CLocatorAPI* getFS()
+LPCSTR       get_file_age_str(ILocatorAPI* fs, LPCSTR nm);
+ILocatorAPI* getFS()
 {
-    CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+    ILocatorAPI* RealFS = dynamic_cast<ILocatorAPI*>(xr_FS);
     VERIFY(RealFS);
     return RealFS;
 }
 
-LPCSTR update_path_script(CLocatorAPI* fs, LPCSTR initial, LPCSTR src)
+LPCSTR update_path_script(ILocatorAPI* fs, LPCSTR initial, LPCSTR src)
 {
     string_path temp;
     shared_str  temp_2;
@@ -129,10 +129,10 @@ FS_file_list_ex::FS_file_list_ex(LPCSTR path, u32 flags, LPCSTR mask)
 {
     FS_Path* P = FS.get_path(path);
     P->m_Flags.set(FS_Path::flNeedRescan, TRUE);
-    FS.m_Flags.set(CLocatorAPI::flNeedCheck, TRUE);
+    FS.m_Flags.set(ILocatorAPI::flNeedCheck, TRUE);
     CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
-    VERIFY(RealFS);
-    RealFS->rescan_pathes();
+    if (RealFS)
+        RealFS->rescan_pathes();
 
     FS_FileSet files;
     FS.file_list(files, path, flags, mask);
@@ -147,7 +147,7 @@ FS_file_list_ex::FS_file_list_ex(LPCSTR path, u32 flags, LPCSTR mask)
         itm.size  = it->size;
     }
 
-    FS.m_Flags.set(CLocatorAPI::flNeedCheck, FALSE);
+    FS.m_Flags.set(ILocatorAPI::flNeedCheck, FALSE);
 }
 
 void FS_file_list_ex::Sort(u32 flags)
@@ -166,32 +166,32 @@ void FS_file_list_ex::Sort(u32 flags)
         std::sort(m_file_items.begin(), m_file_items.end(), modifSorter<false>);
 }
 
-FS_file_list_ex file_list_open_ex(CLocatorAPI* fs, LPCSTR path, u32 flags, LPCSTR mask)
+FS_file_list_ex file_list_open_ex(ILocatorAPI* fs, LPCSTR path, u32 flags, LPCSTR mask)
 {
     return FS_file_list_ex(path, flags, mask);
 }
 
-FS_file_list file_list_open_script(CLocatorAPI* fs, LPCSTR initial, u32 flags)
+FS_file_list file_list_open_script(ILocatorAPI* fs, LPCSTR initial, u32 flags)
 {
     return FS_file_list(fs->file_list_open(initial, flags));
 }
 
-FS_file_list file_list_open_script_2(CLocatorAPI* fs, LPCSTR initial, LPCSTR folder, u32 flags)
+FS_file_list file_list_open_script_2(ILocatorAPI* fs, LPCSTR initial, LPCSTR folder, u32 flags)
 {
     return FS_file_list(fs->file_list_open(initial, folder, flags));
 }
 
-void dir_delete_script_2(CLocatorAPI* fs, LPCSTR path, LPCSTR nm, int remove_files)
+void dir_delete_script_2(ILocatorAPI* fs, LPCSTR path, LPCSTR nm, int remove_files)
 {
     fs->dir_delete(path, nm, remove_files);
 }
 
-void dir_delete_script(CLocatorAPI* fs, LPCSTR full_path, int remove_files)
+void dir_delete_script(ILocatorAPI* fs, LPCSTR full_path, int remove_files)
 {
     fs->dir_delete(full_path, remove_files);
 }
 
-LPCSTR get_file_age_str(CLocatorAPI* fs, LPCSTR nm)
+LPCSTR get_file_age_str(ILocatorAPI* fs, LPCSTR nm)
 {
     time_t     t = fs->get_file_age(nm);
     struct tm* newtime;
@@ -202,55 +202,90 @@ LPCSTR get_file_age_str(CLocatorAPI* fs, LPCSTR nm)
 #pragma optimize("s", on)
 void fs_registrator::script_register(lua_State* L)
 {
-    module(L)[class_<FS_item>("FS_item").def("NameFull", &FS_item::NameFull).def("NameShort", &FS_item::NameShort).def("Size", &FS_item::Size).def("ModifDigitOnly", &FS_item::ModifDigitOnly).def("Modif", &FS_item::Modif),
+    module(L)
+    [
+        class_<FS_item>("FS_item")
+            .def("NameFull", &FS_item::NameFull)
+            .def("NameShort", &FS_item::NameShort)
+            .def("Size", &FS_item::Size)
+            .def("ModifDigitOnly", &FS_item::ModifDigitOnly)
+            .def("Modif", &FS_item::Modif),
 
-        class_<FS_file_list_ex>("FS_file_list_ex").def("Size", &FS_file_list_ex::Size).def("GetAt", &FS_file_list_ex::GetAt).def("Sort", &FS_file_list_ex::Sort),
+        class_<FS_file_list_ex>("FS_file_list_ex")
+            .def("Size", &FS_file_list_ex::Size)
+            .def("GetAt", &FS_file_list_ex::GetAt)
+            .def("Sort", &FS_file_list_ex::Sort),
 
-        class_<FS_file_list>("FS_file_list").def("Size", &FS_file_list::Size).def("GetAt", &FS_file_list::GetAt).def("Free", &FS_file_list::Free),
+        class_<FS_file_list>("FS_file_list")
+            .def("Size", &FS_file_list::Size)
+            .def("GetAt", &FS_file_list::GetAt)
+            .def("Free", &FS_file_list::Free),
 
-        /*		class_<FS_Path>("FS_Path")
-			.def_readonly("m_Path",						&FS_Path::m_Path)
-			.def_readonly("m_Root",						&FS_Path::m_Root)
-			.def_readonly("m_Add",						&FS_Path::m_Add)
-			.def_readonly("m_DefExt",					&FS_Path::m_DefExt)
-			.def_readonly("m_FilterCaption",			&FS_Path::m_FilterCaption),
-*/
-        class_<ILocatorAPIFile>("fs_file").def_readonly("name", &ILocatorAPIFile::name).def_readonly("vfs", &ILocatorAPIFile::vfs).def_readonly("ptr", &ILocatorAPIFile::ptr).def_readonly("size_real", &ILocatorAPIFile::size_real).def_readonly("size_compressed", &ILocatorAPIFile::size_compressed).def_readonly("modif", &ILocatorAPIFile::modif),
+        /*
+        class_<FS_Path>("FS_Path")
+            .def_readonly("m_Path", &FS_Path::m_Path)
+            .def_readonly("m_Root", &FS_Path::m_Root)
+            .def_readonly("m_Add", &FS_Path::m_Add)
+            .def_readonly("m_DefExt", &FS_Path::m_DefExt)
+            .def_readonly("m_FilterCaption", &FS_Path::m_FilterCaption),
+        */
+        class_<ILocatorAPIFile>("fs_file")
+            .def_readonly("name", &ILocatorAPIFile::name)
+            .def_readonly("vfs", &ILocatorAPIFile::vfs)
+            .def_readonly("ptr", &ILocatorAPIFile::ptr)
+            .def_readonly("size_real", &ILocatorAPIFile::size_real)
+            .def_readonly("size_compressed", &ILocatorAPIFile::size_compressed)
+            .def_readonly("modif", &ILocatorAPIFile::modif),
 
-        class_<CLocatorAPI>("FS")
-            .enum_("FS_sort_mode")[value("FS_sort_by_name_up", int(FS_file_list_ex::eSortByNameUp)), value("FS_sort_by_name_down", int(FS_file_list_ex::eSortByNameDown)), value("FS_sort_by_size_up", int(FS_file_list_ex::eSortBySizeUp)), value("FS_sort_by_size_down", int(FS_file_list_ex::eSortBySizeDown)), value("FS_sort_by_modif_up", int(FS_file_list_ex::eSortByModifUp)), value("FS_sort_by_modif_down", int(FS_file_list_ex::eSortByModifDown))]
-            .enum_("FS_List")[value("FS_ListFiles", int(FS_ListFiles)), value("FS_ListFolders", int(FS_ListFolders)), value("FS_ClampExt", int(FS_ClampExt)), value("FS_RootOnly", int(FS_RootOnly))]
-            .def("path_exist", &CLocatorAPI::path_exist)
+        class_<ILocatorAPI>("FS")
+            .enum_("FS_sort_mode")
+            [
+                value("FS_sort_by_name_up", int(FS_file_list_ex::eSortByNameUp)),
+                value("FS_sort_by_name_down", int(FS_file_list_ex::eSortByNameDown)),
+                value("FS_sort_by_size_up", int(FS_file_list_ex::eSortBySizeUp)),
+                value("FS_sort_by_size_down", int(FS_file_list_ex::eSortBySizeDown)),
+                value("FS_sort_by_modif_up", int(FS_file_list_ex::eSortByModifUp)),
+                value("FS_sort_by_modif_down", int(FS_file_list_ex::eSortByModifDown))
+            ]
+            .enum_("FS_List")
+            [
+                value("FS_ListFiles", int(FS_ListFiles)),
+                value("FS_ListFolders", int(FS_ListFolders)),
+                value("FS_ClampExt", int(FS_ClampExt)),
+                value("FS_RootOnly", int(FS_RootOnly))
+            ]
+            .def("path_exist", &ILocatorAPI::path_exist)
             .def("update_path", &update_path_script)
-            .def("get_path", &CLocatorAPI::get_path)
-            .def("append_path", &CLocatorAPI::append_path)
+            .def("get_path", &ILocatorAPI::get_path)
+            .def("append_path", &ILocatorAPI::append_path)
 
-            .def("file_delete", (void(CLocatorAPI::*)(LPCSTR, LPCSTR))(&CLocatorAPI::file_delete))
-            .def("file_delete", (void(CLocatorAPI::*)(LPCSTR))(&CLocatorAPI::file_delete))
+            .def("file_delete", (void(ILocatorAPI::*)(LPCSTR, LPCSTR))(&ILocatorAPI::file_delete))
+            .def("file_delete", (void(ILocatorAPI::*)(LPCSTR))(&ILocatorAPI::file_delete))
 
             .def("dir_delete", &dir_delete_script)
             .def("dir_delete", &dir_delete_script_2)
 
-            .def("file_rename", &CLocatorAPI::file_rename)
-            .def("file_length", &CLocatorAPI::file_length)
-            .def("file_copy", &CLocatorAPI::file_copy)
+            .def("file_rename", &ILocatorAPI::file_rename)
+            .def("file_length", &ILocatorAPI::file_length)
+            .def("file_copy", &ILocatorAPI::file_copy)
 
-            .def("exist", (const ILocatorAPIFile* (CLocatorAPI::*)(LPCSTR))(&CLocatorAPI::exist))
-            .def("exist", (const ILocatorAPIFile* (CLocatorAPI::*)(LPCSTR, LPCSTR))(&CLocatorAPI::exist))
+            .def("exist", (const ILocatorAPIFile* (ILocatorAPI::*)(LPCSTR))(&ILocatorAPI::exist))
+            .def("exist", (const ILocatorAPIFile* (ILocatorAPI::*)(LPCSTR, LPCSTR))(&ILocatorAPI::exist))
 
-            .def("get_file_age", &CLocatorAPI::get_file_age)
+            .def("get_file_age", &ILocatorAPI::get_file_age)
             .def("get_file_age_str", &get_file_age_str)
-            .def("r_open", (IReader * (CLocatorAPI::*)(LPCSTR, LPCSTR))(&CLocatorAPI::r_open))
-            .def("r_open", (IReader * (CLocatorAPI::*)(LPCSTR))(&CLocatorAPI::r_open))
-            .def("r_close", (void(CLocatorAPI::*)(IReader*&))(&CLocatorAPI::r_close))
+            .def("r_open", (IReader * (ILocatorAPI::*)(LPCSTR, LPCSTR))(&ILocatorAPI::r_open))
+            .def("r_open", (IReader * (ILocatorAPI::*)(LPCSTR))(&ILocatorAPI::r_open))
+            .def("r_close", (void(ILocatorAPI::*)(IReader*&))(&ILocatorAPI::r_close))
 
-            .def("w_open", (IWriter * (CLocatorAPI::*)(LPCSTR, LPCSTR))(&CLocatorAPI::w_open))
-            .def("w_open", (IWriter * (CLocatorAPI::*)(LPCSTR))(&CLocatorAPI::w_close))
-            .def("w_close", &CLocatorAPI::w_close)
+            .def("w_open", (IWriter * (ILocatorAPI::*)(LPCSTR, LPCSTR))(&ILocatorAPI::w_open))
+            .def("w_open", (IWriter * (ILocatorAPI::*)(LPCSTR))(&ILocatorAPI::w_open))
+            .def("w_close", &ILocatorAPI::w_close)
 
             .def("file_list_open", &file_list_open_script)
             .def("file_list_open", &file_list_open_script_2)
             .def("file_list_open_ex", &file_list_open_ex),
 
-        def("getFS", getFS)];
+        def("getFS", getFS)
+    ];
 }

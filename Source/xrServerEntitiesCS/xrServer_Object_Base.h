@@ -43,8 +43,8 @@ virtual void load(IReader& tFileStream);
 virtual void save(IWriter& tMemoryStream);
 virtual void load(NET_Packet& tNetPacket);
 virtual void save(NET_Packet& tNetPacket);
-}
-;
+};
+
 add_to_type_list(CPureServerObject)
 #define script_type_list save_type_list(CPureServerObject)
 
@@ -96,6 +96,7 @@ virtual void   set_name(LPCSTR s)
 {
     s_name = s;
 };
+
 virtual void set_name_replace(LPCSTR s)
 {
     xr_free(s_name_replace);
@@ -104,9 +105,9 @@ virtual void set_name_replace(LPCSTR s)
 virtual Fvector&    position();
 virtual Fvector&    angle();
 virtual Flags16&    flags();
-virtual CSE_Visual* visual();
+virtual ISE_Visual* visual();
 virtual ISE_Shape*  shape();
-virtual CSE_Motion* motion();
+virtual ISE_Motion* motion();
 virtual bool        validate();
 //
 

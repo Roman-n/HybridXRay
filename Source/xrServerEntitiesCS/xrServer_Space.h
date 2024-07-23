@@ -47,6 +47,16 @@
                                                          \
     public:                                              \
         SERVER_ENTITY_SCRIPT_METHODS
+#define SERVER_ENTITY_DECLARE_BEGIN4(__A, __B, __C, __D, __E) \
+    class __A: public __B, public __C, public __D, public __E \
+    {                                                         \
+        typedef __B inherited1;                               \
+        typedef __C inherited2;                               \
+        typedef __D inherited3;                               \
+        typedef __E inherited4;                               \
+                                                              \
+    public:                                                   \
+        SERVER_ENTITY_SCRIPT_METHODS
 
 #define SERVER_ENTITY_DECLARE_END                     \
                                                       \
@@ -92,7 +102,7 @@ DEFINE_VECTOR(Fvector, FVECTOR_VECTOR, FVECTOR_IT);
 #define DECLARE_ENTITY_DESTROY
 #endif
 
-#ifdef XRSEFACTORY_EXPORTS;
+#ifdef XRSEFACTORY_EXPORTS
 #define DECLARE_ENTITY_DESTROY
 #endif
 

@@ -27,14 +27,14 @@ enum eTraderFlags
     eTraderFlagInfiniteAmmo = u32(1) << 0,
     eTraderFlagDummy        = u32(-1),
 };
-//	float							m_fCumulativeItemMass;
-//	int								m_iCumulativeItemVolume;
+// float m_fCumulativeItemMass;
+// int m_iCumulativeItemVolume;
 u32     m_dwMoney;
 float   m_fMaxItemMass;
 Flags32 m_trader_flags;
 
 ////////////////////////////////////////////////////
-//character profile info
+// character profile info
 #ifndef AI_COMPILER
 shared_str character_profile();
 void       set_character_profile(shared_str);
@@ -48,7 +48,7 @@ CHARACTER_RANK_VALUE       m_rank;
 xr_string                  m_character_name;
 
 #ifdef XRGAME_EXPORTS
-//для работы с relation system
+// для работы с relation system
 u16                        object_id() const;
 CHARACTER_COMMUNITY_INDEX  Community() const;
 LPCSTR                     CommunityName() const;
@@ -61,7 +61,7 @@ void                       SetRank(CHARACTER_RANK_VALUE val);
 shared_str            m_sCharacterProfile;
 shared_str            m_SpecificCharacter;
 
-//буферный вектор проверенных персонажей
+// буферный вектор проверенных персонажей
 xr_vector<shared_str> m_CheckedCharacters;
 xr_vector<shared_str> m_DefaultCharacters;
 
@@ -86,8 +86,8 @@ void OnChangeProfile(PropValue* sender);
 #ifdef XRGAME_EXPORTS
 virtual void add_online(const bool& update_registries);
 virtual void add_offline(const xr_vector<ALife::_OBJECT_ID>& saved_children, const bool& update_registries);
-#if 0   //def DEBUG
-			bool					check_inventory_consistency	();
+#if 0   // def DEBUG
+    bool check_inventory_consistency();
 #endif
 void         vfInitInventory();
 virtual void spawn_supplies();
@@ -150,13 +150,22 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCustomZone)
 #define script_type_list save_type_list(CSE_ALifeCustomZone)
 
-    SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeAnomalousZone, CSE_ALifeCustomZone) CSE_ALifeItemWeapon* m_tpCurrentBestWeapon;
-float m_offline_interactive_radius;
-u32   m_artefact_position_offset;
-u16   m_artefact_spawn_count;
+    SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeAnomalousZone, CSE_ALifeCustomZone, ISE_ALifeAnomalousZone) CSE_ALifeItemWeapon* m_tpCurrentBestWeapon;
 
 CSE_ALifeAnomalousZone(LPCSTR caSection);
 virtual ~CSE_ALifeAnomalousZone();
+virtual ISE_ALifeObject* CastALifeObject()
+{
+    return this;
+}
+virtual ISE_Abstract* CastAbstract()
+{
+    return this;
+}
+virtual ISE_ALifeAnomalousZone* CastALifeAnomalousZone()
+{
+    return this;
+}
 virtual CSE_Abstract*       init();
 virtual CSE_Abstract*       base();
 virtual const CSE_Abstract* base() const;
@@ -172,7 +181,7 @@ virtual u32 ef_anomaly_type() const;
 virtual u32 ef_weapon_type() const;
 virtual u32 ef_creature_type() const;
 #ifdef XRGAME_EXPORTS
-//			void					spawn_artefacts			();
+// void spawn_artefacts();
 virtual void                    on_spawn();
 virtual CSE_ALifeItemWeapon*    tpfGetBestWeapon(ALife::EHitType& tHitType, float& fHitPower);
 virtual ALife::EMeetActionType  tfGetActionType(CSE_ALifeSchedulable* tpALifeSchedulable, int iGroupIndex, bool bMutualDetection);
@@ -185,7 +194,7 @@ add_to_type_list(CSE_ALifeAnomalousZone)
 
     SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeTorridZone, CSE_ALifeCustomZone, CSE_Motion) CSE_ALifeTorridZone(LPCSTR caSection);
 virtual ~CSE_ALifeTorridZone();
-virtual CSE_Motion* motion();
+virtual ISE_Motion* motion();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeTorridZone)
 #define script_type_list save_type_list(CSE_ALifeTorridZone)
@@ -193,7 +202,7 @@ add_to_type_list(CSE_ALifeTorridZone)
     SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeZoneVisual, CSE_ALifeAnomalousZone, CSE_Visual) shared_str attack_animation;
 CSE_ALifeZoneVisual(LPCSTR caSection);
 virtual ~CSE_ALifeZoneVisual();
-virtual CSE_Visual* visual();
+virtual ISE_Visual* visual();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeZoneVisual)
 #define script_type_list save_type_list(CSE_ALifeZoneVisual)
@@ -216,8 +225,8 @@ float                        m_fIntelligence;
 
 u32                          timestamp;   // server(game) timestamp
 u8                           flags;
-float                        o_model;   // model yaw
-SRotation                    o_torso;   // torso in world coords
+float                        o_model;     // model yaw
+SRotation                    o_torso;     // torso in world coords
 bool                         m_bDeathIsProcessed;
 
 xr_vector<ALife::_OBJECT_ID> m_dynamic_out_restrictions;
@@ -272,7 +281,8 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCreatureAbstract)
 #define script_type_list save_type_list(CSE_ALifeCreatureAbstract)
 
-    SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeMonsterAbstract, CSE_ALifeCreatureAbstract, CSE_ALifeSchedulable) GameGraph::_GRAPH_ID m_tNextGraphID;
+    SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeMonsterAbstract, CSE_ALifeCreatureAbstract, CSE_ALifeSchedulable)
+GameGraph::_GRAPH_ID m_tNextGraphID;
 GameGraph::_GRAPH_ID               m_tPrevGraphID;
 float                              m_fGoingSpeed;
 float                              m_fCurrentLevelGoingSpeed;
@@ -342,17 +352,17 @@ IC int                      Rank()
 #ifndef XRGAME_EXPORTS
 virtual void update(){};
 #else
-virtual void                    update();
-virtual CSE_ALifeItemWeapon*    tpfGetBestWeapon(ALife::EHitType& tHitType, float& fHitPower);
-virtual ALife::EMeetActionType  tfGetActionType(CSE_ALifeSchedulable* tpALifeSchedulable, int iGroupIndex, bool bMutualDetection);
-virtual bool                    bfActive();
-virtual CSE_ALifeDynamicObject* tpfGetBestDetector();
-virtual void                    vfDetachAll(bool bFictitious = false){};
-void                            vfCheckForPopulationChanges();
-virtual void                    add_online(const bool& update_registries);
-virtual void                    add_offline(const xr_vector<ALife::_OBJECT_ID>& saved_children, const bool& update_registries);
-virtual Fvector                 draw_level_position() const;
-virtual bool                    redundant() const;
+virtual void                          update();
+virtual CSE_ALifeItemWeapon*          tpfGetBestWeapon(ALife::EHitType& tHitType, float& fHitPower);
+virtual ALife::EMeetActionType        tfGetActionType(CSE_ALifeSchedulable* tpALifeSchedulable, int iGroupIndex, bool bMutualDetection);
+virtual bool                          bfActive();
+virtual CSE_ALifeDynamicObject*       tpfGetBestDetector();
+virtual void                          vfDetachAll(bool bFictitious = false){};
+void                                  vfCheckForPopulationChanges();
+virtual void                          add_online(const bool& update_registries);
+virtual void                          add_offline(const xr_vector<ALife::_OBJECT_ID>& saved_children, const bool& update_registries);
+virtual Fvector                       draw_level_position() const;
+virtual bool                          redundant() const;
 #endif
 virtual bool need_update(CSE_ALifeDynamicObject* object);
 
@@ -364,20 +374,20 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeMonsterAbstract)
 #define script_type_list save_type_list(CSE_ALifeMonsterAbstract)
 
-    SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCreatureActor, CSE_ALifeCreatureAbstract, CSE_ALifeTraderAbstract, CSE_PHSkeleton)
+    SERVER_ENTITY_DECLARE_BEGIN4(CSE_ALifeCreatureActor, CSE_ALifeCreatureAbstract, CSE_ALifeTraderAbstract, CSE_PHSkeleton, ISE_ALifeCreatureActor)
 
         u16 mstate;
 Fvector     accel;
 Fvector     velocity;
-//	float							fArmor;
+// float    fArmor;
 float       fRadiation;
 u8          weapon;
 ///////////////////////////////////////////
 u16         m_u16NumItems;
 u16         m_holderID;
-//	DEF_DEQUE		(PH_STATES, SPHNetState);
+// DEF_DEQUE(PH_STATES, SPHNetState);
 SPHNetState m_AliveState;
-//	PH_STATES						m_DeadStates;
+// PH_STATES m_DeadStates;
 
 // статический массив - 6 float(вектора пределов квантизации) + m_u16NumItems*(7 u8) (позиция и поворот кости)
 u8          m_BoneDataSize;
@@ -414,6 +424,18 @@ virtual CSE_Abstract* cast_abstract()
     return this;
 };
 virtual CSE_ALifeTraderAbstract* cast_trader_abstract()
+{
+    return this;
+};
+virtual ISE_ALifeObject* CastALifeObject()
+{
+    return this;
+};
+virtual ISE_Abstract* CastAbstract()
+{
+    return this;
+};
+virtual ISE_ALifeCreatureActor* CastALifeCreatureActor()
 {
     return this;
 };
@@ -539,8 +561,7 @@ add_to_type_list(CSE_ALifePsyDogPhantom)
     //-------------------------------
     SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeHumanAbstract, CSE_ALifeTraderAbstract, CSE_ALifeMonsterAbstract) public: ALife::_OBJECT_ID m_group_id;
 
-public:
-CSE_ALifeHumanAbstract(LPCSTR caSection);
+        public: CSE_ALifeHumanAbstract(LPCSTR caSection);
 virtual ~CSE_ALifeHumanAbstract();
 virtual CSE_Abstract*       init();
 virtual CSE_Abstract*       base();
@@ -643,23 +664,23 @@ public:
 IC CALifeOnlineOfflineGroupBrain& brain() const;
 
 public:
-virtual CSE_ALifeItemWeapon*    tpfGetBestWeapon(ALife::EHitType& tHitType, float& fHitPower);
-virtual ALife::EMeetActionType  tfGetActionType(CSE_ALifeSchedulable* tpALifeSchedulable, int iGroupIndex, bool bMutualDetection);
-virtual bool                    bfActive();
-virtual CSE_ALifeDynamicObject* tpfGetBestDetector();
-virtual void                    update();
-void                            register_member(ALife::_OBJECT_ID member_id);
-void                            unregister_member(ALife::_OBJECT_ID member_id);
-void                            notify_on_member_death(MEMBER* member);
-MEMBER*                         member(ALife::_OBJECT_ID member_id, bool no_assert = false);
-virtual void                    on_before_register();
-void                            on_after_game_load();
-virtual bool                    synchronize_location();
-virtual void                    try_switch_online();
-virtual void                    try_switch_offline();
-virtual void                    switch_online();
-virtual void                    switch_offline();
-virtual bool                    redundant() const;
+virtual CSE_ALifeItemWeapon*          tpfGetBestWeapon(ALife::EHitType& tHitType, float& fHitPower);
+virtual ALife::EMeetActionType        tfGetActionType(CSE_ALifeSchedulable* tpALifeSchedulable, int iGroupIndex, bool bMutualDetection);
+virtual bool                          bfActive();
+virtual CSE_ALifeDynamicObject*       tpfGetBestDetector();
+virtual void                          update();
+void                                  register_member(ALife::_OBJECT_ID member_id);
+void                                  unregister_member(ALife::_OBJECT_ID member_id);
+void                                  notify_on_member_death(MEMBER* member);
+MEMBER*                               member(ALife::_OBJECT_ID member_id, bool no_assert = false);
+virtual void                          on_before_register();
+void                                  on_after_game_load();
+virtual bool                          synchronize_location();
+virtual void                          try_switch_online();
+virtual void                          try_switch_offline();
+virtual void                          switch_online();
+virtual void                          switch_offline();
+virtual bool                          redundant() const;
 #else
 virtual void update(){};
 #endif

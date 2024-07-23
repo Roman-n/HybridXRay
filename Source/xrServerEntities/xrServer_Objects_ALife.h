@@ -96,8 +96,8 @@ virtual ALife::EMeetActionType  tfGetActionType(CSE_ALifeSchedulable* tpALifeSch
 virtual bool                    bfActive()                                                                                        = 0;
 virtual CSE_ALifeDynamicObject* tpfGetBestDetector()                                                                              = 0;
 #endif
-}
-;
+};
+
 add_to_type_list(CSE_ALifeSchedulable)
 #define script_type_list save_type_list(CSE_ALifeSchedulable)
 
@@ -476,8 +476,8 @@ virtual CSE_Abstract* cast_abstract()
 {
     return this;
 }
-//	virtual	void					load					(IReader& r){inherited::load(r);}
-//	using inherited::load(IReader&);
+// virtual void load(IReader& r){inherited::load(r);}
+// using inherited::load(IReader&);
 
 private:
 u32              m_freeze_time;
@@ -495,7 +495,7 @@ enum
     inventory_item_state_enabled = u8(1) << 0,
     inventory_item_angular_null  = u8(1) << 1,
     inventory_item_linear_null   = u8(1) << 2   //,
-                                                // animated						= u8(1) << 3
+                                                // animated = u8(1) << 3
 };
 union mask_num_items
 {

@@ -29,7 +29,7 @@ void CSE_ALifeCreatureAbstract::on_spawn()
         s_team = monster_community.team();
 
     if (!g_Alive())
-        m_game_death_time = 0;   //alife().time_manager().game_time();
+        m_game_death_time = 0;   // alife().time_manager().game_time();
 }
 
 void CSE_ALifeCreatureActor::add_online(const bool& update_registries)

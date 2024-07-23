@@ -14,8 +14,8 @@
 
 #include "lua/library_linkage.h"
 #include "luabind/library_linkage.h"
-void          CCC_RegisterCommands();
-void          setup_luabind_allocator();
+void CCC_RegisterCommands();
+void setup_luabind_allocator();
 
 CSE_Abstract* F_entity_Create(LPCSTR section);
 extern void   clean_game_globals();

@@ -90,6 +90,7 @@ CAI_Space::~CAI_Space()
     xr_delete(m_ef_storage);
     VERIFY(!m_game_graph);
 }
+
 void CAI_Space::load_from_editor()
 {
 #ifndef MASTER_GOLD
@@ -122,6 +123,7 @@ void CAI_Space::load_from_editor()
 #endif
 #endif
 }
+
 void CAI_Space::load(LPCSTR level_name)
 {
     VERIFY(m_game_graph);
@@ -194,7 +196,7 @@ void CAI_Space::validate(const u32 level_id) const
             R_ASSERT2(false, "Graph doesn't correspond to the cross table");
         }
 
-    //	Msg						("death graph point id : %d",cross_table().vertex(455236).game_vertex_id());
+    // Msg("death graph point id : %d", cross_table().vertex(455236).game_vertex_id());
 
     for (u32 i = 0, n = game_graph().header().vertex_count(); i < n; ++i)
     {
@@ -203,14 +205,14 @@ void CAI_Space::validate(const u32 level_id) const
 
         IGameGraph::const_spawn_iterator I, E;
         game_graph().begin_spawn(i, I, E);
-        // Msg("vertex [%d] has %d death points",i,game_graph().vertex(i)->death_point_count());
+        // Msg("vertex [%d] has %d death points", i, game_graph().vertex(i)->death_point_count());
         for (; I != E; ++I)
         {
             VERIFY(cross_table().vertex((*I).level_vertex_id()).game_vertex_id() == i);
         }
     }
 
-    //	Msg						("* Graph corresponds to the cross table");
+    // Msg("* Graph corresponds to the cross table");
 }
 #endif
 
@@ -264,7 +266,7 @@ void CAI_Space::game_graph(IGameGraph* game_graph)
     VERIFY(!m_game_graph);
     m_game_graph = game_graph;
 
-    //	VERIFY					(!m_graph_engine);
+    // VERIFY(!m_graph_engine);
     xr_delete(m_graph_engine);
     m_graph_engine = xr_new<CGraphEngine>(this->game_graph().header().vertex_count());
 }

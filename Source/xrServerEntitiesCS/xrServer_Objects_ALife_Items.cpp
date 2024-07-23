@@ -28,7 +28,7 @@
 ////////////////////////////////////////////////////////////////////////////
 CSE_ALifeInventoryItem::CSE_ALifeInventoryItem(LPCSTR caSection)
 {
-    //текущее состояние вещи
+    // текущее состояние вещи
     m_fCondition = 1.0f;
 
     m_fMass      = pSettings->r_float(caSection, "inv_weight");
@@ -108,7 +108,7 @@ static inline bool check(const u8& mask, const u8& test)
 const u32 CSE_ALifeInventoryItem::m_freeze_delta_time = 1000;
 const u32 CSE_ALifeInventoryItem::random_limit        = 120;
 
-//if TRUE, then object sends update packet
+// if TRUE, then object sends update packet
 BOOL      CSE_ALifeInventoryItem::Net_Relevant()
 {
     if (!freezed)
@@ -121,7 +121,7 @@ BOOL      CSE_ALifeInventoryItem::Net_Relevant()
 
     if (!prev_freezed)
     {
-        prev_freezed = true;   //i.e. freezed
+        prev_freezed = true;   // i.e. freezed
         return TRUE;
     }
 
@@ -151,14 +151,14 @@ void CSE_ALifeInventoryItem::UPDATE_Write(NET_Packet& tNetPacket)
         num_items.mask |= inventory_item_angular_null;
     if (fis_zero(State.linear_vel.square_magnitude()))
         num_items.mask |= inventory_item_linear_null;
-    //if (anim_use)										num_items.mask |= animated;
+    // if (anim_use)										num_items.mask |= animated;
 
     tNetPacket.w_u8(num_items.common);
 
     /*if(check(num_items.mask,animated))
-	{
-		tNetPacket.w_float				(m_blend_timeCurrent);
-	}*/
+    {
+        tNetPacket.w_float				(m_blend_timeCurrent);
+    }*/
 
     {
         tNetPacket.w_vec3(State.force);
@@ -193,7 +193,7 @@ void CSE_ALifeInventoryItem::UPDATE_Read(NET_Packet& tNetPacket)
     tNetPacket.r_u8(m_u8NumItems);
     if (!m_u8NumItems)
     {
-        //Msg("--- Object [%d] has no sync items", this->cast_abstract()->ID);
+        // Msg("--- Object [%d] has no sync items", this->cast_abstract()->ID);
         return;
     }
 
@@ -204,21 +204,21 @@ void CSE_ALifeInventoryItem::UPDATE_Read(NET_Packet& tNetPacket)
     R_ASSERT2(m_u8NumItems < (u8(1) << 5), make_string("%d", m_u8NumItems));
 
     /*if (check(num_items.mask,animated))
-	{
-		tNetPacket.r_float(m_blend_timeCurrent);
-		anim_use=true;
-	}
-	else
-	{
-	anim_use=false;
-	}*/
+    {
+        tNetPacket.r_float(m_blend_timeCurrent);
+        anim_use=true;
+    }
+    else
+    {
+    anim_use=false;
+    }*/
 
     {
         tNetPacket.r_vec3(State.force);
         tNetPacket.r_vec3(State.torque);
 
         tNetPacket.r_vec3(State.position);
-        base()->o_Position.set(State.position);   //this is very important because many functions use this o_Position..
+        base()->o_Position.set(State.position);   // this is very important because many functions use this o_Position..
 
         tNetPacket.r_float(State.quaternion.x);
         tNetPacket.r_float(State.quaternion.y);
@@ -246,9 +246,9 @@ void CSE_ALifeInventoryItem::UPDATE_Read(NET_Packet& tNetPacket)
             State.linear_vel.set(0.f, 0.f, 0.f);
 
         /*if (check(num_items.mask,animated))
-		{
-			anim_use=true;
-		}*/
+        {
+            anim_use=true;
+        }*/
     }
     prev_freezed = freezed;
     if (tNetPacket.r_eof())   // in case spawn + update
@@ -394,8 +394,8 @@ BOOL CSE_ALifeItem::Net_Relevant()
         return (TRUE);
 
 #ifdef XRGAME_EXPORTS
-//	if (Device.dwTimeGlobal < (m_last_update_time + update_rate()))
-//		return					(FALSE);
+        //	if (Device->dwTimeGlobal < (m_last_update_time + update_rate()))
+        //		return					(FALSE);
 #endif   // XRGAME_EXPORTS
 
     return (FALSE);
@@ -479,6 +479,7 @@ CSE_ALifeItemWeapon::CSE_ALifeItemWeapon(LPCSTR caSection): CSE_ALifeItem(caSect
     a_elapsed                         = 0;
     a_elapsed_grenades.grenades_count = 0;
     a_elapsed_grenades.grenades_type  = 0;
+
     wpn_flags                         = 0;
     wpn_state                         = 0;
     ammo_type                         = 0;
@@ -1135,7 +1136,7 @@ void CSE_ALifeItemBolt::UPDATE_Read(NET_Packet& tNetPacket)
 
 bool CSE_ALifeItemBolt::can_save() const
 {
-    return (false);   //!attached());
+    return (false);   // !attached());
 }
 bool CSE_ALifeItemBolt::used_ai_locations() const
 {

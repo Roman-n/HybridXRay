@@ -119,7 +119,6 @@
     <ClInclude Include="..\..\xrServerEntitiesCS\character_info.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\character_info_defs.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\clsid_game.h" />
-    <ClInclude Include="..\..\xrServerEntitiesCS\gametype_chooser.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\game_base_space.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\InfoPortionDefs.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\inventory_space.h" />

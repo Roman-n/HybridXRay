@@ -28,8 +28,8 @@ enum eTraderFlags
     eTraderFlagInfiniteAmmo = u32(1) << 0,
     eTraderFlagDummy        = u32(-1),
 };
-//	float							m_fCumulativeItemMass;
-//	int								m_iCumulativeItemVolume;
+// float m_fCumulativeItemMass;
+// int m_iCumulativeItemVolume;
 u32     m_dwMoney;
 float   m_fMaxItemMass;
 Flags32 m_trader_flags;
@@ -52,7 +52,7 @@ bool                       m_deadbody_can_take;
 bool                       m_deadbody_closed;
 
 #ifdef XRGAME_EXPORTS
-//��� ������ � relation system
+// для работы с relation system
 u16                        object_id() const;
 CHARACTER_COMMUNITY_INDEX  Community() const;
 LPCSTR                     CommunityName() const;
@@ -65,7 +65,7 @@ void                       SetRank(CHARACTER_RANK_VALUE val);
 shared_str            m_sCharacterProfile;
 shared_str            m_SpecificCharacter;
 
-//�������� ������ ����������� ����������
+// буферный вектор проверенных персонажей
 xr_vector<shared_str> m_CheckedCharacters;
 xr_vector<shared_str> m_DefaultCharacters;
 
@@ -91,7 +91,7 @@ void OnChangeProfile(PropValue* sender);
 virtual void add_online(const bool& update_registries);
 virtual void add_offline(const xr_vector<ALife::_OBJECT_ID>& saved_children, const bool& update_registries);
 #if 0   // def DEBUG
-			bool					check_inventory_consistency	();
+    bool check_inventory_consistency();
 #endif
 void         vfInitInventory();
 virtual void spawn_supplies();
@@ -185,7 +185,7 @@ virtual u32 ef_anomaly_type() const;
 virtual u32 ef_weapon_type() const;
 virtual u32 ef_creature_type() const;
 #ifdef XRGAME_EXPORTS
-//			void					spawn_artefacts			();
+// void spawn_artefacts();
 virtual void                    on_spawn();
 virtual CSE_ALifeItemWeapon*    tpfGetBestWeapon(ALife::EHitType& tHitType, float& fHitPower);
 virtual ALife::EMeetActionType  tfGetActionType(CSE_ALifeSchedulable* tpALifeSchedulable, int iGroupIndex, bool bMutualDetection);
@@ -230,8 +230,8 @@ float                        m_fIntelligence;
 
 u32                          timestamp;   // server(game) timestamp
 u8                           flags;
-float                        o_model;   // model yaw
-SRotation                    o_torso;   // torso in world coords
+float                        o_model;     // model yaw
+SRotation                    o_torso;     // torso in world coords
 bool                         m_bDeathIsProcessed;
 
 xr_vector<ALife::_OBJECT_ID> m_dynamic_out_restrictions;
@@ -288,7 +288,7 @@ add_to_type_list(CSE_ALifeCreatureAbstract)
 
     SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeMonsterAbstract, CSE_ALifeCreatureAbstract, CSE_ALifeSchedulable, CMovementManagerHolder)
 
-        float m_fMaxHealthValue;
+float                              m_fMaxHealthValue;
 float                              m_fRetreatThreshold;
 float                              m_fEyeRange;
 float                              m_fHitPower;
@@ -397,17 +397,17 @@ add_to_type_list(CSE_ALifeMonsterAbstract)
         u16 mstate;
 Fvector     accel;
 Fvector     velocity;
-//	float							fArmor;
+// float    fArmor;
 float       fRadiation;
 u8          weapon;
 ///////////////////////////////////////////
 u16         m_u16NumItems;
 u16         m_holderID;
-//	DEF_DEQUE		(PH_STATES, SPHNetState);
+// DEF_DEQUE(PH_STATES, SPHNetState);
 SPHNetState m_AliveState;
-//	PH_STATES						m_DeadStates;
+// PH_STATES m_DeadStates;
 
-// ����������� ������ - 6 float(������� �������� �����������) + m_u16NumItems*(7 u8) (������� � ������� �����)
+// статический массив - 6 float(вектора пределов квантизации) + m_u16NumItems*(7 u8) (позиция и поворот кости)
 u8          m_BoneDataSize;
 char        m_DeadBodyData[1024];
 ///////////////////////////////////////////

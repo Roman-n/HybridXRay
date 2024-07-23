@@ -190,14 +190,14 @@ bool CALifeUpdateManager::change_level(NET_Packet& net_packet)
         holder->o_Angle             = graph().actor()->o_Angle;
     }
 
-    string256 autoave_name;
-    strconcat(sizeof(autoave_name), autoave_name, Core.UserName, "_", "autosave");
+    string256 autosave_name;
+    strconcat(sizeof(autosave_name), autosave_name, Core.UserName, "_", "autosave");
     LPCSTR temp0 = strstr(**m_server_command_line, "/");
     VERIFY(temp0);
     string256 temp;
-    *m_server_command_line = strconcat(sizeof(temp), temp, autoave_name, temp0);
+    *m_server_command_line = strconcat(sizeof(temp), temp, autosave_name, temp0);
 
-    save(autoave_name);
+    save(autosave_name);
 
     graph().actor()->m_tGraphID = safe_graph_vertex_id;
     graph().actor()->m_tNodeID  = safe_level_vertex_id;
@@ -218,6 +218,29 @@ bool CALifeUpdateManager::change_level(NET_Packet& net_packet)
 }
 
 #include "../xrEngine/igame_persistent.h"
+void CALifeUpdateManager::new_game_for_editor()
+{
+    Msg("* Creating new game...");
+    unload();
+    reload(m_section);
+    spawns().load_from_editor();
+    graph().on_load();
+    server().PerformIDgen(0x0000);
+    time_manager().init(m_section);
+    VERIFY(can_register_objects());
+
+    can_register_objects(false);
+    spawn_new_objects();
+    can_register_objects(true);
+
+    CALifeObjectRegistry::OBJECT_REGISTRY::iterator I = objects().objects().begin();
+    CALifeObjectRegistry::OBJECT_REGISTRY::iterator E = objects().objects().end();
+    for (; I != E; ++I)
+        (*I).second->on_register();
+
+    Msg("* New game is successfully created!");
+}
+
 void CALifeUpdateManager::new_game(LPCSTR save_name)
 {
     g_pGamePersistent->LoadTitle("st_creating_new_game");
@@ -299,6 +322,15 @@ bool CALifeUpdateManager::load_game(LPCSTR game_name, bool no_assert)
     strconcat(sizeof(S1), S1, game_name, temp);
     *m_server_command_line = S1;
     return (true);
+}
+
+void CALifeUpdateManager::load_from_editor()
+{
+    xr_strcpy(g_last_saved_game, "editor");
+    new_game_for_editor();
+
+    if (g_pGameLevel)
+        Level().OnAlifeSimulatorLoaded();
 }
 
 void CALifeUpdateManager::set_switch_online(ALife::_OBJECT_ID id, bool value)

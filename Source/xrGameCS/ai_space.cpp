@@ -89,6 +89,35 @@ CAI_Space::~CAI_Space()
     VERIFY(!m_game_graph);
 }
 
+void CAI_Space::load_from_editor()
+{
+    unload(true);
+
+#ifdef DEBUG
+    Memory.mem_compact();
+    u32    mem_usage = Memory.mem_usage();
+    CTimer timer;
+    timer.Start();
+#endif
+
+    const IGameGraph::SLevel& current_level = game_graph().header().level("test");
+
+    m_level_graph = EditorScene->GetLevelGraph();
+
+    game_graph().set_current_level(current_level.id());
+    R_ASSERT2(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
+    R_ASSERT2(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");
+    m_graph_engine = xr_new<CGraphEngine>(_max(game_graph().header().vertex_count(), level_graph().header().vertex_count()));
+
+    VERIFY(m_game_graph);
+    m_cover_manager->compute_static_cover();
+    m_moving_objects->on_level_load();
+
+#ifdef DEBUG
+    Msg("* Loading ai space is successfully completed (%.3fs, %7.3f Mb)", timer.GetElapsed_sec(), float(Memory.mem_usage() - mem_usage) / 1048576.0);
+#endif
+}
+
 void CAI_Space::load(LPCSTR level_name)
 {
     VERIFY(m_game_graph);
@@ -104,7 +133,11 @@ void CAI_Space::load(LPCSTR level_name)
 
     const IGameGraph::SLevel& current_level = game_graph().header().level(level_name);
 
-    m_level_graph = xr_new<CLevelGraph>();
+    if (Device->IsEditorMode() && EditorScene)
+        m_level_graph = EditorScene->GetLevelGraph();
+    else
+        m_level_graph = xr_new<CLevelGraph>();
+
     game_graph().set_current_level(current_level.id());
     R_ASSERT2(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
     R_ASSERT2(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");
@@ -131,8 +164,11 @@ void CAI_Space::unload(bool reload)
         return;
 
     script_engine().unload();
+
     xr_delete(m_graph_engine);
-    xr_delete(m_level_graph);
+    if (!Device->IsEditorMode() || !EditorScene)
+        xr_delete(m_level_graph);
+
     if (!reload && m_game_graph)
         m_graph_engine = xr_new<CGraphEngine>(game_graph().header().vertex_count());
 }
@@ -148,7 +184,7 @@ void CAI_Space::validate(const u32 level_id) const
             R_ASSERT2(false, "Graph doesn't correspond to the cross table");
         }
 
-    //	Msg						("death graph point id : %d",cross_table().vertex(455236).game_vertex_id());
+    // Msg("death graph point id : %d", cross_table().vertex(455236).game_vertex_id());
 
     for (u32 i = 0, n = game_graph().header().vertex_count(); i < n; ++i)
     {
@@ -157,14 +193,14 @@ void CAI_Space::validate(const u32 level_id) const
 
         IGameGraph::const_spawn_iterator I, E;
         game_graph().begin_spawn(i, I, E);
-        // Msg("vertex [%d] has %d death points",i,game_graph().vertex(i)->death_point_count());
+        // Msg("vertex [%d] has %d death points", i, game_graph().vertex(i)->death_point_count());
         for (; I != E; ++I)
         {
             VERIFY(cross_table().vertex((*I).level_vertex_id()).game_vertex_id() == i);
         }
     }
 
-    //	Msg						("* Graph corresponds to the cross table");
+    // Msg("* Graph corresponds to the cross table");
 }
 #endif
 
@@ -188,6 +224,15 @@ void CAI_Space::patrol_path_storage(IReader& stream)
     m_patrol_path_storage->load(stream);
 }
 
+void CAI_Space::patrol_path_storage_from_editor()
+{
+    if (g_dedicated_server)
+        return;
+
+    xr_delete(m_patrol_path_storage);
+    m_patrol_path_storage = xr_new<CPatrolPathStorage>();
+}
+
 void CAI_Space::set_alife(CALifeSimulator* alife_simulator)
 {
     VERIFY((!m_alife_simulator && alife_simulator) || (m_alife_simulator && !alife_simulator));
@@ -209,7 +254,7 @@ void CAI_Space::game_graph(IGameGraph* game_graph)
     VERIFY(!m_game_graph);
     m_game_graph = game_graph;
 
-    //	VERIFY					(!m_graph_engine);
+    // VERIFY(!m_graph_engine);
     xr_delete(m_graph_engine);
     m_graph_engine = xr_new<CGraphEngine>(this->game_graph().header().vertex_count());
 }

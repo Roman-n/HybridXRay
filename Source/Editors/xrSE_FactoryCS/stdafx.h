@@ -16,7 +16,7 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#define ENGINE_API
+#define ENGINE_API __declspec(dllimport)
 #define ECORE_API
 #define DLL_API __declspec(dllexport)
 #define TIXML_USE_STL

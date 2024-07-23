@@ -137,6 +137,7 @@ void CAI_Stalker::choose_weapon(ALife::EWeaponPriorityType weapon_priority_type)
             continue;
 
         ai().ef_storage().non_alife().member_item() = &(*I).m_item->object();
+
         int   j                                     = ai().ef_storage().m_pfPersonalWeaponType->dwfGetWeaponType();
         float current_value                         = -1.f;
         switch (weapon_priority_type)

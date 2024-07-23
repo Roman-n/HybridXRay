@@ -47,9 +47,21 @@ Fvector CVertex__game_point(const IGameGraph::CVertex* vertex)
 #pragma optimize("s", on)
 void CGameGraph::script_register(lua_State* L)
 {
-    module(L)[def("game_graph", &get_game_graph),
+    module(L)
+    [
+             def("game_graph", &get_game_graph),
 
-        class_<IGameGraph>("CGameGraph").def("accessible", &get_accessible1).def("accessible", &get_accessible2).def("valid_vertex_id", &IGameGraph::valid_vertex_id).def("vertex", &IGameGraph::vertex).def("vertex_id", &IGameGraph::vertex_id),
+        class_<IGameGraph>("CGameGraph")
+            .def("accessible", &get_accessible1)
+            .def("accessible", &get_accessible2)
+            .def("valid_vertex_id", &IGameGraph::valid_vertex_id)
+            .def("vertex", &IGameGraph::vertex)
+            .def("vertex_id", &IGameGraph::vertex_id),
 
-        class_<CVertex>("GameGraph__CVertex").def("level_point", &CVertex__level_point).def("game_point", &CVertex__game_point).def("level_id", &CVertex::level_id).def("level_vertex_id", &CVertex::level_vertex_id)];
+        class_<CVertex>("GameGraph__CVertex")
+            .def("level_point", &CVertex__level_point)
+            .def("game_point", &CVertex__game_point)
+            .def("level_id", &CVertex::level_id)
+            .def("level_vertex_id", &CVertex::level_vertex_id)
+    ];
 }

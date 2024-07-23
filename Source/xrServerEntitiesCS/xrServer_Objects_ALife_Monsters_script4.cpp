@@ -48,7 +48,7 @@ ALife::_OBJECT_ID smart_terrain_id(CSE_ALifeMonsterAbstract* monster)
     THROW(monster);
     return (monster->m_smart_terrain_id);
 }
-
+#ifdef XRGAME_EXPORTS
 float travel_speed(CSE_ALifeMonsterAbstract* self)
 {
     return (self->m_fGoingSpeed);
@@ -69,6 +69,7 @@ void current_level_travel_speed2(CSE_ALifeMonsterAbstract* self, float travel_sp
     self->m_fCurrentLevelGoingSpeed = travel_speed;
 }
 
+#endif   // #ifdef XRGAME_EXPORTS
 #pragma optimize("s", on)
 void CSE_ALifeMonsterAbstract::script_register(lua_State* L)
 {
@@ -80,10 +81,13 @@ void CSE_ALifeMonsterAbstract::script_register(lua_State* L)
                   .def("rank", &CSE_ALifeMonsterAbstract::Rank)
                   .def("smart_terrain_task_activate", &smart_terrain_task_activate)
                   .def("smart_terrain_task_deactivate", &smart_terrain_task_deactivate)
+#ifdef XRGAME_EXPORTS
                   .def("travel_speed", &travel_speed)
                   .def("travel_speed", &travel_speed2)
                   .def("current_level_travel_speed", &current_level_travel_speed)
-                  .def("current_level_travel_speed", &current_level_travel_speed2)];
+                  .def("current_level_travel_speed", &current_level_travel_speed2)
+#endif   // #ifdef XRGAME_EXPORTS
+    ];
 }
 
 void CSE_ALifeHumanAbstract::script_register(lua_State* L)

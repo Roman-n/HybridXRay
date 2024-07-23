@@ -13,10 +13,8 @@
 #include "patrol_path.h"
 #include "patrol_point.h"
 
-#ifdef DEBUG
 #include "level_graph.h"
 #include "game_graph.h"
-#endif
 
 void CALifeSmartTerrainTask::setup_patrol_point(const shared_str& patrol_path_name, const u32& patrol_point_index)
 {

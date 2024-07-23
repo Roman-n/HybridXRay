@@ -13,7 +13,7 @@
 #include "game_graph.h"
 #include "ai_debug.h"
 
-//#define FULL_LEVEL_UPDATE
+// #define FULL_LEVEL_UPDATE
 
 class CSE_ALifeDynamicObject;
 

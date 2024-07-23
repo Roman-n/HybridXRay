@@ -111,21 +111,22 @@ void CALifeSpawnRegistry::load_from_editor()
     chunk->close();
 
 #if 0
-	SPAWN_GRAPH::vertex_iterator			I = m_spawns.vertices().begin();
-	SPAWN_GRAPH::vertex_iterator			E = m_spawns.vertices().end();
-	for (; I != E; ++I) {
-		luabind::wrap_base* base = smart_cast<luabind::wrap_base*>(&(*I).second->data()->object());
-		if (!base)
-			continue;
+    SPAWN_GRAPH::vertex_iterator			I = m_spawns.vertices().begin();
+    SPAWN_GRAPH::vertex_iterator			E = m_spawns.vertices().end();
+    for (; I != E; ++I)
+    {
+        luabind::wrap_base* base = smart_cast<luabind::wrap_base*>(&(*I).second->data()->object());
+        if (!base)
+            continue;
 
-		if (xr_strcmp((*I).second->data()->object().name_replace(), "rostok_stalker_outfit"))
-			continue;
+        if (xr_strcmp((*I).second->data()->object().name_replace(), "rostok_stalker_outfit"))
+            continue;
 
-		dummy* _dummy = (dummy*)((void*)base->m_self.m_impl);
-		lua_State** _state = &_dummy->state;
-		Msg("0x%08x", *(int*)&_state);
-		break;
-	}
+        dummy* _dummy = (dummy*)((void*)base->m_self.m_impl);
+        lua_State** _state = &_dummy->state;
+        Msg("0x%08x", *(int*)&_state);
+        break;
+    }
 #endif
 
     chunk = F->open_chunk(2);

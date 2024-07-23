@@ -146,8 +146,7 @@ CSE_ALifeTraderAbstract::CSE_ALifeTraderAbstract(LPCSTR caSection)
 CSE_Abstract* CSE_ALifeTraderAbstract::init()
 {
     string4096 S;
-    // xr_sprintf						(S,"%s\r\n[game_info]\r\nname_id = default\r\n",!*base()->m_ini_string ? "" :
-    // *base()->m_ini_string);
+    // xr_sprintf(S, "%s\r\n[game_info]\r\nname_id = default\r\n", !*base()->m_ini_string ? "" : *base()->m_ini_string);
     xr_sprintf(S, "%s\r\n[game_info]\r\n", !*base()->m_ini_string ? "" : *base()->m_ini_string);
     base()->m_ini_string = S;
 
@@ -167,7 +166,7 @@ void CSE_ALifeTraderAbstract::STATE_Write(NET_Packet& tNetPacket)
     tNetPacket.w_stringZ(s);
 #endif
     tNetPacket.w_u32(m_trader_flags.get());
-    //	tNetPacket.w_s32			(m_iCharacterProfile);
+    // tNetPacket.w_s32(m_iCharacterProfile);
     tNetPacket.w_stringZ(m_sCharacterProfile);
 
 #ifdef XRGAME_EXPORTS
@@ -633,7 +632,7 @@ void CSE_ALifeTrader::FillProps(LPCSTR _pref, PropItemVec& items)
 CSE_ALifeCustomZone::CSE_ALifeCustomZone(LPCSTR caSection): CSE_ALifeSpaceRestrictor(caSection)
 {
     m_owner_id = u32(-1);
-    //	m_maxPower					= pSettings->r_float(caSection,"min_start_power");
+    // m_maxPower = pSettings->r_float(caSection, "min_start_power");
     if (pSettings->line_exist(caSection, "hit_type"))
         m_tHitType = ALife::g_tfString2HitType(pSettings->r_string(caSection, "hit_type"));
     else
@@ -879,8 +878,8 @@ CSE_ALifeZoneVisual::CSE_ALifeZoneVisual(LPCSTR caSection): CSE_ALifeAnomalousZo
 {
     if (pSettings->line_exist(caSection, "visual"))
         set_visual(pSettings->r_string(caSection, "visual"));
-    //	if(pSettings->line_exist(caSection,"blast_animation"))
-    //		attack_animation=pSettings->r_string(caSection,"blast_animation");
+    // if(pSettings->line_exist(caSection, "blast_animation"))
+    //     attack_animation=pSettings->r_string(caSection, "blast_animation");
 }
 
 CSE_ALifeZoneVisual::~CSE_ALifeZoneVisual() {}
@@ -1342,7 +1341,7 @@ CSE_ALifeCreatureActor::CSE_ALifeCreatureActor(LPCSTR caSection): CSE_ALifeCreat
     if (pSettings->section_exist(caSection) && pSettings->line_exist(caSection, "visual"))
         set_visual(pSettings->r_string(caSection, "visual"));
     m_u16NumItems = 0;
-    //	fArmor						= 0.f;
+    // fArmor     = 0.f;
     fRadiation    = 0.f;
     accel.set(0.f, 0.f, 0.f);
     velocity.set(0.f, 0.f, 0.f);
@@ -1630,7 +1629,7 @@ CSE_ALifeMonsterRat::CSE_ALifeMonsterRat(LPCSTR caSection): CSE_ALifeMonsterAbst
     // personal charactersitics
     fEyeFov   = 120;
     fEyeRange = 10;
-    set_health(5);   // fHealth						= 5;
+    set_health(5);   // fHealth  = 5;
     fMinSpeed                    = .5;
     fMaxSpeed                    = 1.5;
     fAttackSpeed                 = 4.0;
@@ -1789,7 +1788,7 @@ CSE_ALifeMonsterZombie::CSE_ALifeMonsterZombie(LPCSTR caSection): CSE_ALifeMonst
     // personal charactersitics
     fEyeFov   = 120;
     fEyeRange = 30;
-    set_health(200);   // fHealth						= 200;
+    set_health(200);   // fHealth = 200;
     fMinSpeed         = 1.5;
     fMaxSpeed         = 1.75;
     fAttackSpeed      = 2.0;

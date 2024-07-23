@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>XRGAME_EXPORTS;dSINGLE;;_DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>XRGAME_EXPORTS;dSINGLE;_DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;..\xrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -63,7 +63,7 @@
     <ClCompile>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>XRGAME_EXPORTS;dSINGLE;;NDEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>XRGAME_EXPORTS;dSINGLE;NDEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;..\xrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -1702,8 +1702,10 @@
     <ClInclude Include="Wound.h" />
     <ClInclude Include="wrapper_abstract.h" />
     <ClInclude Include="wrapper_abstract_inline.h" />
+    <ClInclude Include="xrGameEditor.h" />
     <ClInclude Include="xrGameSpyServer.h" />
     <ClInclude Include="xrGameSpyServer_callbacks.h" />
+    <ClInclude Include="xrLevelEditor.h" />
     <ClInclude Include="xrServer.h" />
     <ClInclude Include="xrServerMapSync.h" />
     <ClInclude Include="xrServer_svclient_validation.h" />
@@ -4678,6 +4680,7 @@
     <ClCompile Include="weapon_dump_impl.cpp" />
     <ClCompile Include="Wound.cpp" />
     <ClCompile Include="xrGame.cpp" />
+    <ClCompile Include="xrGameEditor.cpp" />
     <ClCompile Include="xrGameSpyServer.cpp" />
     <ClCompile Include="xrGameSpyServer_callbacks.cpp" />
     <ClCompile Include="xrGameSpy_GameSpyFuncs.cpp" />
@@ -4687,6 +4690,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="xrLevelEditor.cpp" />
     <ClCompile Include="xrServer.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>

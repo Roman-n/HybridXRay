@@ -88,22 +88,24 @@ protected:
     CDebugRenderer* m_debug_renderer;
 #endif
 
+protected:
     CPHCommander* m_ph_commander;
     CPHCommander* m_ph_commander_scripts;
 
+private:
     // Local events
-    EVENT         eChangeRP;
-    EVENT         eDemoPlay;
-    EVENT         eChangeTrack;
-    EVENT         eEnvironment;
-    EVENT         eEntitySpawn;
+    EVENT       eChangeRP;
+    EVENT       eDemoPlay;
+    EVENT       eChangeTrack;
+    EVENT       eEnvironment;
+    EVENT       eEntitySpawn;
     //---------------------------------------------
-    CStatGraph*   pStatGraphS;
-    u32           m_dwSPC;   // SendedPacketsCount
-    u32           m_dwSPS;   // SendedPacketsSize
-    CStatGraph*   pStatGraphR;
-    u32           m_dwRPC;   // ReceivedPacketsCount
-    u32           m_dwRPS;   // ReceivedPacketsSize
+    CStatGraph* pStatGraphS;
+    u32         m_dwSPC;   // SendedPacketsCount
+    u32         m_dwSPS;   // SendedPacketsSize
+    CStatGraph* pStatGraphR;
+    u32         m_dwRPC;   // ReceivedPacketsCount
+    u32         m_dwRPS;   // ReceivedPacketsSize
     //---------------------------------------------
 
 public:
@@ -170,7 +172,7 @@ public:
         pCurrentControlEntity = O;
     }
 
-private:
+protected:
     void       make_NetCorrectionPrediction();
 
     u32        m_dwDeltaUpdate;
@@ -188,7 +190,7 @@ public:
         return m_client_digest;
     };
 
-private:
+protected:
     bool      m_bConnectResultReceived;
     bool      m_bConnectResult;
     xr_string m_sConnectResult;
@@ -232,7 +234,7 @@ protected:
     BOOL             net_start_result_total;
     BOOL             connected_to_server;
 
-    BOOL             deny_m_spawn;   //only for debug...
+    BOOL             deny_m_spawn;   // only for debug...
 
     BOOL             sended_request_connection_data;
 
@@ -399,7 +401,7 @@ public:
         return *m_pBulletManager;
     }
 
-    //by Mad Max
+    // by Mad Max
     bool          IsServer();
     bool          IsClient();
     CSE_Abstract* spawn_item(LPCSTR section, const Fvector& position, u32 level_vertex_id, u16 parent_id, bool return_item = false);
@@ -500,7 +502,7 @@ IC CPHCommander& CLevel::ph_commander_scripts()
     VERIFY(m_ph_commander_scripts);
     return *m_ph_commander_scripts;
 }
-//by Mad Max
+// by Mad Max
 IC bool OnServer()
 {
     return Level().IsServer();
