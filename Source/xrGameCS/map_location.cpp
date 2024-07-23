@@ -720,7 +720,7 @@ CRelationMapLocation::~CRelationMapLocation() {}
 
 xr_vector<CMapLocation*> find_locations_res;
 
-bool                     CRelationMapLocation::Update()
+bool CRelationMapLocation::Update()
 {
     if (false == inherited::Update())
         return false;
@@ -779,13 +779,32 @@ bool                     CRelationMapLocation::Update()
         {
             CEntityAlive* ea = smart_cast<CEntityAlive*>(_object_);
             if (ea && !ea->g_Alive())
-                return true;
-
-            vis_res = Actor()->memory().visual().visible_now(smart_cast<const CGameObject*>(_object_));
+                vis_res = true;
+            else
+            {
+                const CGameObject* pObj = smart_cast<const CGameObject*>(_object_);
+                vis_res = Actor()->memory().visual().visible_now(pObj);
+            }
         }
         else
             vis_res = false;
     }
+    if (bAlive == false)
+    {
+        CObject* _object_ = Level().Objects.net_Find(m_objectID);
+        if (_object_)
+        {
+            const CGameObject* pObj = smart_cast<const CGameObject*>(_object_);
+            CActor* pAct = smart_cast<CActor*>(Level().Objects.net_Find(m_pInvOwnerActorID));
+            if (/*pAct->Position().distance_to_sqr(pObj->Position()) < 100.0F && */abs(pObj->Position().y - pAct->Position().y) < 3.0f)
+                vis_res = true;
+            else
+                vis_res = false;
+        }
+        else
+            vis_res = false;
+    }
+
     if (m_b_visible == false && vis_res == true)
         m_minimap_spot->ResetXformAnimation();
 
