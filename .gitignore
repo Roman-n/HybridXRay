@@ -31,7 +31,11 @@ gamedata/meshes/
 gamedata/sounds/
 gamedata/spawns/
 gamedata/textures/
-gamedata_cs/
+gamedata_cs/levels/
+gamedata_cs/meshes/
+gamedata_cs/sounds/
+gamedata_cs/spawns/
+gamedata_cs/textures/
 gamedata_soc/levels/
 gamedata_soc/meshes/
 gamedata_soc/sounds/
@@ -47,7 +51,7 @@ rt_object_props.ltx
 *.ini
 *.bak
 *.log
-*.logSource/External/RedImage/ispc_texcomp/kernel_ispc_avx.h
+Source/External/RedImage/ispc_texcomp/kernel_ispc_avx.h
 Source/External/RedImage/ispc_texcomp/kernel_astc_ispc_avx2.h
 Source/External/RedImage/ispc_texcomp/kernel_ispc_avx.h
 Source/External/RedImage/ispc_texcomp/kernel_ispc_avx2.h

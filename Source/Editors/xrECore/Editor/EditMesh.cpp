@@ -186,7 +186,8 @@ void CEditableMesh::GenerateVNormals(bool force, bool silent, bool only_one_msg)
                 {
                     if (!silent)
                     {
-                        Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+                        if (g_extendedLog)
+                            Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
                     }
                     N.set(m_FaceNormals[a_lst.front()]);
                 }
@@ -227,7 +228,8 @@ void CEditableMesh::GenerateVNormals(bool force, bool silent, bool only_one_msg)
                         {
                             if (!silent)
                             {
-                                Msg("! Invalid smooth group found (MAX type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+                                if (g_extendedLog)
+                                    Msg("! Invalid smooth group found (MAX type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
                             }
                             N.set(m_FaceNormals[a_lst.front()]);
                         }
@@ -268,7 +270,8 @@ void CEditableMesh::GenerateVNormals(bool force, bool silent, bool only_one_msg)
                         {
                             if (!silent)
                             {
-                                Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+                                if (g_extendedLog)
+                                    Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
                             }
                             N.set(m_FaceNormals[a_lst.front()]);
                         }

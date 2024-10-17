@@ -1250,7 +1250,7 @@ void EScene::LoadXrAICompilerError(LPCSTR fn)
                         vector.z = val;
                 }
                 need_next_line = false;
-                Tools->m_DebugDraw.AppendPoint(vector, 0xff00ff00, true, true, "! cannot be reached to the node");
+                Tools->m_DebugDraw.AppendPoint(vector, 0xffff0000, true, true, "cannot be reached to the node");
             }
 
             if (line.find("Node ") != line.npos)
